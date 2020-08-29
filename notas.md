@@ -1,13 +1,6 @@
----
-title: "Notas"
-output: html_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ## de Excel a R
+
+### Notas para quien enseña
 
 Este curso está pensado para personas que usan Excel para la manipulación y análisis de datos pero les gustaría aprender a usar R. En particular pensamos en:
 
@@ -18,34 +11,35 @@ Este curso está pensado para personas que usan Excel para la manipulación y an
 
 ### Contenidos
 
-**Primer encuentro: **
+**Primer encuentro**
 
 - ¿Por qué R?
-- Mapa para navegar RStudio. 
-- Definir variables. 
-Ejecutar funciones.
-Instalar paquetes. 
-Acceder y entender la ayuda y documentación de funciones y paquetes.
-Manejo de proyectos con RStudio
-Crear proyectos en RStudio.
-Administrar una estructura de directorios.
-Saber dónde está el working directory.
-Introducción a {RMarkdown} 
-Sintaxis básica de Markdown.
-Unificar código, gráficos y prosa.
-Lectura de datos ordenados
-Cargar tablas en memoria (csv y xlsx).
-Identificar datos ordenados.
-Diferenciar tablas “anchas” y “largas”.
-Tipos de datos en R.
-Dar formato a los distintos tipos de datos.
-Desafío: leer correctamente una base de datos 
+- Cómo funciona
+  - Mapa para navegar RStudio. 
+  - Definir variables. 
+  - Ejecutar funciones.
+  - Instalar paquetes. 
+  - Acceder y entender la ayuda y documentación de funciones y paquetes.
+- Manejo de proyectos con RStudio
+  - Administrar una estructura de directorios.
+  - Saber dónde está el working directory.
+- Introducción a `{RMarkdown}`
+  - Sintaxis básica de Markdown.
+  - Unificar código, gráficos y prosa.
+- Lectura de datos ordenados
+  - Cargar tablas en memoria (csv y xlsx).
+  - Identificar datos ordenados.
+  - Diferenciar tablas “anchas” y “largas”.
+  - Tipos de datos en R.
+  - Dar formato a los distintos tipos de datos.
+*Desafío: leer correctamente una base de datos*
 
-Segundo encuentro
-Manipulación de datos ordenados usando {dplyr} 
-Agregar y quitar filas y columnas.
-Crear nuevas columnas incluyendo cálculos y comparación de datos.
-Operador pipe %>%
+**Segundo encuentro**
+
+- Manipulación de datos ordenados usando `{dplyr}`
+  - Agregar y quitar filas y columnas.
+  - Crear nuevas columnas incluyendo cálculos y comparación de datos.
+  - Operador pipe %>%
 Calcular medidas de resumen sobre los datos
 Visualización de datos con {ggplot2} - Primera parte
 Graficar utilizando líneas y puntos (geometrías)
