@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Trabajar con proyectos en RStudio</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">de Excel a R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="hoja-de-ruta.html">Hoja de ruta</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Temas
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01-intro.html">Introducción</a>
+    </li>
+    <li>
+      <a href="02-proyectos.html">Proyectos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Trabajar con proyectos en RStudio</h1>
+
+</div>
+
+
+<p>Trabajar con proyectos de RStudio no solo hace tus anális más ordenados y reproducibles, también hacen tu vida más simple.</p>
+<p>Al comienzo posiblemente tengan un script y uno o dos archivos con datos, pero es posible que rápidamente te encuentres con una docena de archivos con nombres parecidos pero que pertenecen a análisis totalmente disntintos. Antes de que la cosa comience a complicarse te proponemos trabajar con proyectos.</p>
+<div id="qué-ventajas-tiene" class="section level3">
+<h3>¿Qué ventajas tiene?</h3>
+<ul>
+<li>Te permite ”cuidar” los datos que usas al ordenarnos en carpetas que diferencien entre la versión original o cruda y los datos limpios o los resultados finales.</li>
+<li>Te permite compartir tu trabajo fácilmente con otras personas. Solo tendrías que compartir la carpeta del proyecto sabiendo que incluye todo lo necesario para que cualquier persona reproduzca tu análisis.</li>
+<li>Te permite publicar de manera ordenada tu código si vas a presentar o publicar tu trabajo.</li>
+<li>Te permite continuar con lo que estabas haciendo hace una semana o hace un mes como si el tiempo no hubiera pasado. De alguna manera es un regalo para tu yo futuro.</li>
+</ul>
+<div class="alert alert-info">
+<h4 id="primer-desafío-crea-un-nuevo-proyecto-en-rstudio">Primer desafío: Crea un nuevo proyecto en RStudio</h4>
+<ol style="list-style-type: decimal">
+<li>Hacé click en el menú “Archivo” (“File”) y luego en “Nuevo Proyecto” (“New Project”).</li>
+<li>Hacé click en “Nueva Carpeta” (“New Directory”).</li>
+<li>Hacé click en “Nuevo Proyecto” (“New Project”).</li>
+<li>Escribí el nombre de la carpeta que alojará a tu proyecto, por ejemplo “mi_proyecto”</li>
+<li>Si aparece (y sabés usarlo), seleccioná “Crear un repositorio de git” (“Create a git repository”).</li>
+<li>Hacé click en “Crear Proyecto” (“Create Project”).</li>
+</ol>
+</div>
+<p>Si todo salió bien, ahora deberías tener una nueva carpeta que se llama <em>mi_proyecto</em>. Pero si bien es una carpeta común y corriente, le llamamos proyecto porque además contiene un archivo con el mismo nombre <em>mi_proyecto.Rproj</em> (o solo <em>mi_proyecto</em> si en tu computadora no ves la extensión de los archivos).</p>
+</div>
+<div id="abrir-un-proyecto" class="section level3">
+<h3>Abrir un proyecto</h3>
+<p>La manera más simple de abrir un proyecto es abriendo la carpeta que lo contiene y haciendo doble click sobre el archivo <em>mi_proyecto.Rproj</em>. Al hacer esto se abrirá RStudio y la sensión de R en la misma carpeta y, por defecto, cualquier archivo que quieras abrir o guardar lo hará en esa misma ubicación. Esto ayuda a mantener tu trabajo ordenado y que luego sea simple retomar o compartir lo que hiciste.</p>
+<p>RStudio permite tener varios proyectos abiertos, y esto es posible porque justamente cada proyecto tiene su propia carpeta. Si en algún momento trabajas con proyectos en paralelo vas a poder hacerlo sin que el código o los resultados de un análisis interfieran con otro.</p>
+<div class="alert alert-info">
+<h4 id="segundo-desafío-abrí-tu-nuevo-proyecto-desde-el-explorador-de-archivos">Segundo desafío: Abrí tu nuevo proyecto desde el explorador de archivos</h4>
+<ol style="list-style-type: decimal">
+<li>Cerrá RStudio</li>
+<li>Desde el explorador de archivos, buscá la carpeta donde creaste tu proyecto.</li>
+<li>Hacé doble click en el archivo que tiene el nombre de tu proyecto (y que termina con <em>.Rproj</em>) que encontrarás en esa carpeta.</li>
+</ol>
+</div>
+</div>
+<div id="cómo-se-organiza" class="section level3">
+<h3>¿Cómo se organiza?</h3>
+<p>No existe una “mejor” forma de organizar un proyecto pero acá van algunos principios generales que nos hacen la vida más simple::</p>
+<ul>
+<li><strong>Tratar los datos como sólo de lectura</strong> Es posible que la toma de los datos que querés analizar te haya costado mucho trabajo, o te haya costado conseguirlos. Trabajar con datos de forma interactiva (por ejemplo, en Excel) tiene la ventaja de permitirte hacer algunos análisis rápidamente pero al mismo tiempo tiena la desventaja de que esos datos pueden ser modificados fácilmente. Esto significa que a veces no conozcas de la procedencia de los datos, o no recuerdes como los modificastes desde que los obtuviste. Por lo tanto, es una buena idea tratar los datos como “sólo de lectura” y nunca modificar los archivos originales.</li>
+<li><strong>Limpieza de datos</strong> En muchos casos tus datos estarán “sucios”, necesitarán un preprocesamiento importante para organizarlos en un formato que R (o cualquier otro lenguaje de programación) pueda analizados fácilmente. Esta tarea se denomina a veces “amasado” o “masticado de datos”. Es una buena costumbre guardar el código que te permitió limpiar estos datos por si los volvieras a necesitar. También es recomendable guardar esa versión de los datos limpios, de “sólo lectura”, para que puedas usarlos en tu análisis sin necesidad de repetir cada vez todo el proceso de limpieza de los datos.</li>
+<li><strong>Tratar las salidas o resultados generados como descartables</strong> Cualquier resultado (gráficos, tablas, valores) debe poder repetirse o rehacerse a partir del código guardado. Si bien las pruebas rápidas para <em>ver si el código funciona</em> se pueden hacer en la consola, es importante guardar el código que genera los resultados y asegurarnos de que sean reproducibles. Aún mejor, si organizas esos resultados en distintas sub-carpetas, luego tendrás todo aún más ordenado.</li>
+</ul>
+</div>
+<div id="borrón-y-cuenta-nueva-todos-los-días" class="section level3">
+<h3>Borrón y cuenta nueva… todos los días!</h3>
+<p>¿Cómo nos aseguramos de que el análsis sea realmente reproducible? Esta es una pregunta bastante amplia y hay muchas herramientas para resolver este problema. Por ahora nos vamos a concentrar en que al menos en tu computadora puedas repetir los cálculos o el análisis desde cero. Y además de organizar proyectos y no modificar los datos originales, ¿cómo podés asegurarte de que guardaste todo el código que estuviste escribiendo y usaste? La manera más directa es reiniciar la sesión de R y correr el código de nuevo, si da error o no devuelve lo que esperabas significa que te faltó guardar algún paso.</p>
+<div class="alert alert-success">
+<p>Tip: Podés reiniciar la sesión de R con el atajo <code>Ctrl+Shif+F10</code></p>
+</div>
+<p>Esto puede pasar si por ejemplo leemos una base de datos en memoria pero no guardamos el código que lo hace. Mientras estemos trabajando, R tendrá esa base de datos en memoria y podremos hacer cálculos y gráficos. Por defecto además RStudio va a recordar las variables que estes usando mañana o pasado en un archivo oculto (.RData) a menos que le indiques lo contrario. Y si bien suena práctico volver a R al otro día y tener el análisis tal cual lo dejamos, esto puede significar que nunca nos demos cuenta que nos faltó guardar una línea de código clave en nuestro análisis.</p>
+<div class="alert alert-info">
+<h4 id="tercer-desafío-configurá-rstudio">Tercer desafío: Configurá RStudio</h4>
+<ol style="list-style-type: decimal">
+<li>Hacé click en el menú “Herramientas (“Tools”) y luego “Opciones globales” (“Global Options”).</li>
+<li>Destildá la opción “Recuperar .RData al inicio de la sesión” (“Restore .RData into workspace at startup”).</li>
+<li>Hacé click en “Aplicar” (“Apply”).</li>
+</ol>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiVHJhYmFqYXIgY29uIHByb3llY3RvcyBlbiBSU3R1ZGlvIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCiAgICB0b2M6IHRydWUKICAgIHRvY19mbG9hdDogdHJ1ZQotLS0KClRyYWJhamFyIGNvbiBwcm95ZWN0b3MgZGUgUlN0dWRpbyBubyBzb2xvIGhhY2UgdHVzIGFuw6FsaXMgbcOhcyBvcmRlbmFkb3MgeSByZXByb2R1Y2libGVzLCB0YW1iacOpbiBoYWNlbiB0dSB2aWRhIG3DoXMgc2ltcGxlLiAKCkFsIGNvbWllbnpvIHBvc2libGVtZW50ZSB0ZW5nYW4gdW4gc2NyaXB0IHkgdW5vIG8gZG9zIGFyY2hpdm9zIGNvbiBkYXRvcywgcGVybyBlcyBwb3NpYmxlIHF1ZSByw6FwaWRhbWVudGUgdGUgZW5jdWVudHJlcyBjb24gdW5hIGRvY2VuYSBkZSBhcmNoaXZvcyBjb24gbm9tYnJlcyBwYXJlY2lkb3MgcGVybyBxdWUgcGVydGVuZWNlbiBhIGFuw6FsaXNpcyB0b3RhbG1lbnRlIGRpc250aW50b3MuIEFudGVzIGRlIHF1ZSBsYSBjb3NhIGNvbWllbmNlIGEgY29tcGxpY2Fyc2UgdGUgcHJvcG9uZW1vcyB0cmFiYWphciBjb24gcHJveWVjdG9zLiAgCgojIyMgwr9RdcOpIHZlbnRhamFzIHRpZW5lPwoKLSBUZSBwZXJtaXRlIOKAnWN1aWRhcuKAnSBsb3MgZGF0b3MgcXVlIHVzYXMgYWwgb3JkZW5hcm5vcyBlbiBjYXJwZXRhcyBxdWUgZGlmZXJlbmNpZW4gZW50cmUgbGEgdmVyc2nDs24gb3JpZ2luYWwgbyBjcnVkYSB5IGxvcyBkYXRvcyBsaW1waW9zIG8gbG9zIHJlc3VsdGFkb3MgZmluYWxlcy4gCi0gVGUgcGVybWl0ZSBjb21wYXJ0aXIgdHUgdHJhYmFqbyBmw6FjaWxtZW50ZSBjb24gb3RyYXMgcGVyc29uYXMuIFNvbG8gdGVuZHLDrWFzIHF1ZSBjb21wYXJ0aXIgbGEgY2FycGV0YSBkZWwgcHJveWVjdG8gc2FiaWVuZG8gcXVlIGluY2x1eWUgdG9kbyBsbyBuZWNlc2FyaW8gcGFyYSBxdWUgY3VhbHF1aWVyIHBlcnNvbmEgcmVwcm9kdXpjYSB0dSBhbsOhbGlzaXMuCi0gVGUgcGVybWl0ZSBwdWJsaWNhciBkZSBtYW5lcmEgb3JkZW5hZGEgdHUgY8OzZGlnbyBzaSB2YXMgYSBwcmVzZW50YXIgbyBwdWJsaWNhciB0dSB0cmFiYWpvLgotIFRlIHBlcm1pdGUgY29udGludWFyIGNvbiBsbyBxdWUgZXN0YWJhcyBoYWNpZW5kbyBoYWNlIHVuYSBzZW1hbmEgbyBoYWNlIHVuIG1lcyBjb21vIHNpIGVsIHRpZW1wbyBubyBodWJpZXJhIHBhc2Fkby4gRGUgYWxndW5hIG1hbmVyYSBlcyB1biByZWdhbG8gcGFyYSB0dSB5byBmdXR1cm8uCgo6Ojogey5hbGVydCAuYWxlcnQtaW5mb30KIyMjIyBQcmltZXIgZGVzYWbDrW86IENyZWEgdW4gbnVldm8gcHJveWVjdG8gZW4gUlN0dWRpbyAKCjEuIEhhY8OpIGNsaWNrIGVuIGVsIG1lbsO6IOKAnEFyY2hpdm/igJ0gKOKAnEZpbGXigJ0pIHkgbHVlZ28gZW4g4oCcTnVldm8gUHJveWVjdG/igJ0gKOKAnE5ldyBQcm9qZWN04oCdKS4KMi4gSGFjw6kgY2xpY2sgZW4g4oCcTnVldmEgQ2FycGV0YeKAnSAo4oCcTmV3IERpcmVjdG9yeeKAnSkuCjMuIEhhY8OpIGNsaWNrIGVuIOKAnE51ZXZvIFByb3llY3Rv4oCdICjigJxOZXcgUHJvamVjdOKAnSkuCjQuIEVzY3JpYsOtIGVsIG5vbWJyZSBkZSBsYSBjYXJwZXRhIHF1ZSBhbG9qYXLDoSBhIHR1IHByb3llY3RvLCBwb3IgZWplbXBsbyDigJxtaV9wcm95ZWN0b+KAnQo1LiBTaSBhcGFyZWNlICh5IHNhYsOpcyB1c2FybG8pLCBzZWxlY2Npb27DoSDigJxDcmVhciB1biByZXBvc2l0b3JpbyBkZSBnaXTigJ0gKOKAnENyZWF0ZSBhIGdpdCByZXBvc2l0b3J54oCdKS4KNi4gSGFjw6kgY2xpY2sgZW4g4oCcQ3JlYXIgUHJveWVjdG/igJ0gKOKAnENyZWF0ZSBQcm9qZWN04oCdKS4KOjo6CgpTaSB0b2RvIHNhbGnDsyBiaWVuLCBhaG9yYSBkZWJlcsOtYXMgdGVuZXIgdW5hIG51ZXZhIGNhcnBldGEgcXVlIHNlIGxsYW1hICptaV9wcm95ZWN0byouIFBlcm8gc2kgYmllbiBlcyB1bmEgY2FycGV0YSBjb23Dum4geSBjb3JyaWVudGUsIGxlIGxsYW1hbW9zIHByb3llY3RvIHBvcnF1ZSBhZGVtw6FzIGNvbnRpZW5lIHVuIGFyY2hpdm8gY29uIGVsIG1pc21vIG5vbWJyZSAqbWlfcHJveWVjdG8uUnByb2oqIChvIHNvbG8gKm1pX3Byb3llY3RvKiBzaSBlbiB0dSBjb21wdXRhZG9yYSBubyB2ZXMgbGEgZXh0ZW5zacOzbiBkZSBsb3MgYXJjaGl2b3MpLiAKCiMjIyBBYnJpciB1biBwcm95ZWN0bwoKTGEgbWFuZXJhIG3DoXMgc2ltcGxlIGRlIGFicmlyIHVuIHByb3llY3RvIGVzIGFicmllbmRvIGxhIGNhcnBldGEgcXVlIGxvIGNvbnRpZW5lIHkgaGFjaWVuZG8gZG9ibGUgY2xpY2sgc29icmUgZWwgYXJjaGl2byAqbWlfcHJveWVjdG8uUnByb2oqLiBBbCBoYWNlciBlc3RvIHNlIGFicmlyw6EgUlN0dWRpbyB5IGxhIHNlbnNpw7NuIGRlIFIgZW4gbGEgbWlzbWEgY2FycGV0YSB5LCBwb3IgZGVmZWN0bywgY3VhbHF1aWVyIGFyY2hpdm8gcXVlIHF1aWVyYXMgYWJyaXIgbyBndWFyZGFyIGxvIGhhcsOhIGVuIGVzYSBtaXNtYSB1YmljYWNpw7NuLiBFc3RvIGF5dWRhIGEgbWFudGVuZXIgdHUgdHJhYmFqbyBvcmRlbmFkbyB5IHF1ZSBsdWVnbyBzZWEgc2ltcGxlIHJldG9tYXIgbyBjb21wYXJ0aXIgbG8gcXVlIGhpY2lzdGUuIAoKUlN0dWRpbyBwZXJtaXRlIHRlbmVyIHZhcmlvcyBwcm95ZWN0b3MgYWJpZXJ0b3MsIHkgZXN0byBlcyBwb3NpYmxlIHBvcnF1ZSBqdXN0YW1lbnRlIGNhZGEgcHJveWVjdG8gdGllbmUgc3UgcHJvcGlhIGNhcnBldGEuIFNpIGVuIGFsZ8O6biBtb21lbnRvIHRyYWJhamFzIGNvbiBwcm95ZWN0b3MgZW4gcGFyYWxlbG8gdmFzIGEgcG9kZXIgaGFjZXJsbyBzaW4gcXVlIGVsIGPDs2RpZ28gbyBsb3MgcmVzdWx0YWRvcyBkZSB1biBhbsOhbGlzaXMgaW50ZXJmaWVyYW4gY29uIG90cm8uCgo6Ojogey5hbGVydCAuYWxlcnQtaW5mb30KIyMjIyBTZWd1bmRvIGRlc2Fmw61vOiBBYnLDrSB0dSBudWV2byBwcm95ZWN0byBkZXNkZSBlbCBleHBsb3JhZG9yIGRlIGFyY2hpdm9zCgoxLiBDZXJyw6EgUlN0dWRpbwoyLiBEZXNkZSBlbCBleHBsb3JhZG9yIGRlIGFyY2hpdm9zLCBidXNjw6EgbGEgY2FycGV0YSBkb25kZSBjcmVhc3RlIHR1IHByb3llY3RvLgozLiBIYWPDqSBkb2JsZSBjbGljayBlbiBlbCBhcmNoaXZvIHF1ZSB0aWVuZSBlbCBub21icmUgZGUgdHUgcHJveWVjdG8gKHkgcXVlIHRlcm1pbmEgY29uICouUnByb2oqKSBxdWUgZW5jb250cmFyw6FzIGVuIGVzYSBjYXJwZXRhLgo6OjoKCiMjIyDCv0PDs21vIHNlIG9yZ2FuaXphPwoKTm8gZXhpc3RlIHVuYSAibWVqb3IiIGZvcm1hIGRlIG9yZ2FuaXphciB1biBwcm95ZWN0byBwZXJvIGFjw6EgdmFuIGFsZ3Vub3MgcHJpbmNpcGlvcyBnZW5lcmFsZXMgcXVlIG5vcyBoYWNlbiBsYSB2aWRhIG3DoXMgc2ltcGxlOjoKCiogKipUcmF0YXIgbG9zIGRhdG9zIGNvbW8gc8OzbG8gZGUgbGVjdHVyYSoqCkVzIHBvc2libGUgcXVlIGxhIHRvbWEgZGUgbG9zIGRhdG9zIHF1ZSBxdWVyw6lzIGFuYWxpemFyIHRlIGhheWEgY29zdGFkbyBtdWNobyB0cmFiYWpvLCBvIHRlIGhheWEgY29zdGFkbyBjb25zZWd1aXJsb3MuIFRyYWJhamFyIGNvbiBkYXRvcyBkZSBmb3JtYSBpbnRlcmFjdGl2YSAocG9yIGVqZW1wbG8sIGVuIEV4Y2VsKSB0aWVuZSBsYSB2ZW50YWphIGRlIHBlcm1pdGlydGUgaGFjZXIgYWxndW5vcyBhbsOhbGlzaXMgcsOhcGlkYW1lbnRlIHBlcm8gYWwgbWlzbW8gdGllbXBvIHRpZW5hIGxhIGRlc3ZlbnRhamEgZGUgcXVlIGVzb3MgZGF0b3MgcHVlZGVuIHNlciBtb2RpZmljYWRvcyBmw6FjaWxtZW50ZS4gRXN0byBzaWduaWZpY2EgcXVlIGEgdmVjZXMgbm8gY29ub3pjYXMgZGUgbGEgcHJvY2VkZW5jaWEgZGUgbG9zIGRhdG9zLCBvIG5vIHJlY3VlcmRlcyBjb21vIGxvcyBtb2RpZmljYXN0ZXMgZGVzZGUgcXVlIGxvcyBvYnR1dmlzdGUuIFBvciBsbyB0YW50bywgZXMgdW5hIGJ1ZW5hIGlkZWEgdHJhdGFyIGxvcyBkYXRvcyBjb21vICJzw7NsbyBkZSBsZWN0dXJhIiB5IG51bmNhIG1vZGlmaWNhciBsb3MgYXJjaGl2b3Mgb3JpZ2luYWxlcy4KKiAqKkxpbXBpZXphIGRlIGRhdG9zKioKRW4gbXVjaG9zIGNhc29zIHR1cyBkYXRvcyBlc3RhcsOhbiAic3VjaW9zIiwgbmVjZXNpdGFyw6FuIHVuIHByZXByb2Nlc2FtaWVudG8gaW1wb3J0YW50ZSBwYXJhIG9yZ2FuaXphcmxvcyBlbiB1biBmb3JtYXRvIHF1ZSAgUiAobyBjdWFscXVpZXIgb3RybyBsZW5ndWFqZSBkZSBwcm9ncmFtYWNpw7NuKSBwdWVkYSBhbmFsaXphZG9zIGbDoWNpbG1lbnRlLiBFc3RhIHRhcmVhIHNlIGRlbm9taW5hIGEgdmVjZXMgImFtYXNhZG8iIG8gIm1hc3RpY2FkbyBkZSBkYXRvcyIuIEVzIHVuYSBidWVuYSBjb3N0dW1icmUgZ3VhcmRhciBlbCBjw7NkaWdvIHF1ZSB0ZSBwZXJtaXRpw7MgbGltcGlhciBlc3RvcyBkYXRvcyBwb3Igc2kgbG9zIHZvbHZpZXJhcyBhIG5lY2VzaXRhci4gVGFtYmnDqW4gZXMgcmVjb21lbmRhYmxlIGd1YXJkYXIgZXNhIHZlcnNpw7NuIGRlIGxvcyBkYXRvcyBsaW1waW9zLCBkZSAic8OzbG8gbGVjdHVyYSIsIHBhcmEgcXVlIHB1ZWRhcyB1c2FybG9zIGVuIHR1IGFuw6FsaXNpcyBzaW4gbmVjZXNpZGFkIGRlIHJlcGV0aXIgY2FkYSB2ZXogdG9kbyBlbCBwcm9jZXNvIGRlIGxpbXBpZXphIGRlIGxvcyBkYXRvcy4KKiAqKlRyYXRhciBsYXMgc2FsaWRhcyBvIHJlc3VsdGFkb3MgZ2VuZXJhZG9zIGNvbW8gZGVzY2FydGFibGVzKioKQ3VhbHF1aWVyIHJlc3VsdGFkbyAoZ3LDoWZpY29zLCB0YWJsYXMsIHZhbG9yZXMpIGRlYmUgcG9kZXIgcmVwZXRpcnNlIG8gcmVoYWNlcnNlIGEgcGFydGlyIGRlbCBjw7NkaWdvIGd1YXJkYWRvLiBTaSBiaWVuIGxhcyBwcnVlYmFzIHLDoXBpZGFzIHBhcmEgKnZlciBzaSBlbCBjw7NkaWdvIGZ1bmNpb25hKiBzZSBwdWVkZW4gaGFjZXIgZW4gbGEgY29uc29sYSwgZXMgaW1wb3J0YW50ZSBndWFyZGFyIGVsIGPDs2RpZ28gcXVlIGdlbmVyYSBsb3MgcmVzdWx0YWRvcyB5IGFzZWd1cmFybm9zIGRlIHF1ZSBzZWFuIHJlcHJvZHVjaWJsZXMuIEHDum4gbWVqb3IsIHNpIG9yZ2FuaXphcyBlc29zIHJlc3VsdGFkb3MgZW4gZGlzdGludGFzIHN1Yi1jYXJwZXRhcywgbHVlZ28gdGVuZHLDoXMgdG9kbyBhw7puIG3DoXMgb3JkZW5hZG8uCgojIyMgQm9ycsOzbiB5IGN1ZW50YSBudWV2YS4uLiB0b2RvcyBsb3MgZMOtYXMhCgrCv0PDs21vIG5vcyBhc2VndXJhbW9zIGRlIHF1ZSBlbCBhbsOhbHNpcyBzZWEgcmVhbG1lbnRlIHJlcHJvZHVjaWJsZT8gRXN0YSBlcyB1bmEgcHJlZ3VudGEgYmFzdGFudGUgYW1wbGlhIHkgaGF5IG11Y2hhcyBoZXJyYW1pZW50YXMgcGFyYSByZXNvbHZlciBlc3RlIHByb2JsZW1hLiBQb3IgYWhvcmEgbm9zIHZhbW9zIGEgY29uY2VudHJhciBlbiBxdWUgYWwgbWVub3MgZW4gdHUgY29tcHV0YWRvcmEgcHVlZGFzIHJlcGV0aXIgbG9zIGPDoWxjdWxvcyBvIGVsIGFuw6FsaXNpcyBkZXNkZSBjZXJvLiBZIGFkZW3DoXMgZGUgb3JnYW5pemFyIHByb3llY3RvcyB5IG5vIG1vZGlmaWNhciBsb3MgZGF0b3Mgb3JpZ2luYWxlcywgwr9jw7NtbyBwb2TDqXMgYXNlZ3VyYXJ0ZSBkZSBxdWUgZ3VhcmRhc3RlIHRvZG8gZWwgY8OzZGlnbyBxdWUgZXN0dXZpc3RlIGVzY3JpYmllbmRvIHkgdXNhc3RlPyBMYSBtYW5lcmEgbcOhcyBkaXJlY3RhIGVzIHJlaW5pY2lhciBsYSBzZXNpw7NuIGRlIFIgeSBjb3JyZXIgZWwgY8OzZGlnbyBkZSBudWV2bywgc2kgZGEgZXJyb3IgbyBubyBkZXZ1ZWx2ZSBsbyBxdWUgZXNwZXJhYmFzIHNpZ25pZmljYSBxdWUgdGUgZmFsdMOzIGd1YXJkYXIgYWxnw7puIHBhc28uIAoKOjo6ey5hbGVydCAuYWxlcnQtc3VjY2Vzc30KVGlwOiBQb2TDqXMgcmVpbmljaWFyIGxhIHNlc2nDs24gZGUgUiBjb24gZWwgYXRham8gYEN0cmwrU2hpZitGMTBgCjo6OgoKRXN0byBwdWVkZSBwYXNhciBzaSBwb3IgZWplbXBsbyBsZWVtb3MgdW5hIGJhc2UgZGUgZGF0b3MgZW4gbWVtb3JpYSBwZXJvIG5vIGd1YXJkYW1vcyBlbCBjw7NkaWdvIHF1ZSBsbyBoYWNlLiBNaWVudHJhcyBlc3RlbW9zIHRyYWJhamFuZG8sIFIgdGVuZHLDoSBlc2EgYmFzZSBkZSBkYXRvcyBlbiBtZW1vcmlhIHkgcG9kcmVtb3MgaGFjZXIgY8OhbGN1bG9zIHkgZ3LDoWZpY29zLiBQb3IgZGVmZWN0byBhZGVtw6FzIFJTdHVkaW8gdmEgYSByZWNvcmRhciBsYXMgdmFyaWFibGVzIHF1ZSBlc3RlcyB1c2FuZG8gbWHDsWFuYSBvIHBhc2FkbyBlbiB1biBhcmNoaXZvIG9jdWx0byAoLlJEYXRhKSBhIG1lbm9zIHF1ZSBsZSBpbmRpcXVlcyBsbyBjb250cmFyaW8uIFkgc2kgYmllbiBzdWVuYSBwcsOhY3RpY28gdm9sdmVyIGEgUiBhbCBvdHJvIGTDrWEgeSB0ZW5lciBlbCBhbsOhbGlzaXMgdGFsIGN1YWwgbG8gZGVqYW1vcywgZXN0byBwdWVkZSBzaWduaWZpY2FyIHF1ZSBudW5jYSBub3MgZGVtb3MgY3VlbnRhIHF1ZSBub3MgZmFsdMOzIGd1YXJkYXIgdW5hIGzDrW5lYSBkZSBjw7NkaWdvIGNsYXZlIGVuIG51ZXN0cm8gYW7DoWxpc2lzLgoKCjo6OiB7LmFsZXJ0IC5hbGVydC1pbmZvfQojIyMjIFRlcmNlciBkZXNhZsOtbzogQ29uZmlndXLDoSBSU3R1ZGlvIAoKMS4gSGFjw6kgY2xpY2sgZW4gZWwgbWVuw7og4oCcSGVycmFtaWVudGFzICjigJxUb29sc+KAnSkgeSBsdWVnbyDigJxPcGNpb25lcyBnbG9iYWxlc+KAnSAo4oCcR2xvYmFsIE9wdGlvbnPigJ0pLgoyLiBEZXN0aWxkw6EgbGEgb3BjacOzbiDigJxSZWN1cGVyYXIgLlJEYXRhIGFsIGluaWNpbyBkZSBsYSBzZXNpw7Nu4oCdICjigJxSZXN0b3JlIC5SRGF0YSBpbnRvIHdvcmtzcGFjZSBhdCBzdGFydHVw4oCdKS4KMy4gSGFjw6kgY2xpY2sgZW4g4oCcQXBsaWNhcuKAnSAo4oCcQXBwbHnigJ0pLgo6OjoKCg==</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("02-proyectos.Rmd");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

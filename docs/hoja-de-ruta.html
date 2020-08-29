@@ -11,7 +11,7 @@
 
 
 
-<title>Primer encuentro</title>
+<title>Hoja de ruta</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,12 +19,7 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
-<script src="site_libs/navigation-1.1/sourceembed.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
@@ -70,9 +65,6 @@ h6 {
 }
 .table th:not([align]) {
   text-align: left;
-}
-#rmd-source-code {
-  display: none;
 }
 </style>
 
@@ -253,73 +245,7 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
-
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
 
 
 
@@ -329,16 +255,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -383,23 +299,20 @@ div.tocify {
 
 <div class="fluid-row" id="header">
 
-<div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
-</ul>
-</div>
 
 
-
-<h1 class="title toc-ignore">Primer encuentro</h1>
+<h1 class="title toc-ignore">Hoja de ruta</h1>
 
 </div>
 
 
+<p>La organización de los contenidos asume que se darán en 4 encuentros de 3 horas, pero podría ser disinto. Hay cierta interrelación entre los temas y asumimos que si vas directo a Visualización de datos, ya sabés como leerlos en R.</p>
+<div id="primer-encuentro" class="section level3">
+<h3>Primer encuentro</h3>
+<div id="contenidos" class="section level4">
+<h4>Contenidos</h4>
 <ul>
-<li>¿Por qué R?</li>
-<li>Cómo funciona
+<li><a href="01-intro.html">¿Por qué R?</a>
 <ul>
 <li>Mapa para navegar RStudio.</li>
 <li>Definir variables.</li>
@@ -407,7 +320,7 @@ div.tocify {
 <li>Instalar paquetes.</li>
 <li>Acceder y entender la ayuda y documentación de funciones y paquetes.</li>
 </ul></li>
-<li>Manejo de proyectos con RStudio
+<li><a href="02-proyectos.html">Manejo de proyectos con RStudio</a>
 <ul>
 <li>Administrar una estructura de directorios.</li>
 <li>Saber dónde está el working directory.</li>
@@ -426,12 +339,112 @@ div.tocify {
 <li>Dar formato a los distintos tipos de datos.</li>
 </ul></li>
 </ul>
-
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiUHJpbWVyIGVuY3VlbnRybyIKIyBkYXRlOiAiMjkvMDgvMjAyMCIKb3V0cHV0OiAKICBodG1sX2RvY3VtZW50OgogICAgY29kZV9kb3dubG9hZDogdHJ1ZQogICAgdG9jOiB0cnVlCiAgICB0b2NfZmxvYXQ6IHRydWUKLS0tCgoKCi0gwr9Qb3IgcXXDqSBSPwotIEPDs21vIGZ1bmNpb25hCiAgLSBNYXBhIHBhcmEgbmF2ZWdhciBSU3R1ZGlvLiAKICAtIERlZmluaXIgdmFyaWFibGVzLiAKICAtIEVqZWN1dGFyIGZ1bmNpb25lcy4KICAtIEluc3RhbGFyIHBhcXVldGVzLiAKICAtIEFjY2VkZXIgeSBlbnRlbmRlciBsYSBheXVkYSB5IGRvY3VtZW50YWNpw7NuIGRlIGZ1bmNpb25lcyB5IHBhcXVldGVzLgotIE1hbmVqbyBkZSBwcm95ZWN0b3MgY29uIFJTdHVkaW8KICAtIEFkbWluaXN0cmFyIHVuYSBlc3RydWN0dXJhIGRlIGRpcmVjdG9yaW9zLgogIC0gU2FiZXIgZMOzbmRlIGVzdMOhIGVsIHdvcmtpbmcgZGlyZWN0b3J5LgotIEludHJvZHVjY2nDs24gYSBge1JNYXJrZG93bn1gCiAgLSBTaW50YXhpcyBiw6FzaWNhIGRlIE1hcmtkb3duLgogIC0gVW5pZmljYXIgY8OzZGlnbywgZ3LDoWZpY29zIHkgcHJvc2EuCi0gTGVjdHVyYSBkZSBkYXRvcyBvcmRlbmFkb3MKICAtIENhcmdhciB0YWJsYXMgZW4gbWVtb3JpYSAoY3N2IHkgeGxzeCkuCiAgLSBJZGVudGlmaWNhciBkYXRvcyBvcmRlbmFkb3MuCiAgLSBEaWZlcmVuY2lhciB0YWJsYXMg4oCcYW5jaGFz4oCdIHkg4oCcbGFyZ2Fz4oCdLgogIC0gVGlwb3MgZGUgZGF0b3MgZW4gUi4KICAtIERhciBmb3JtYXRvIGEgbG9zIGRpc3RpbnRvcyB0aXBvcyBkZSBkYXRvcy4=</div>
-
-
+<p><em>Desafío: leer correctamente una base de datos</em></p>
+</div>
+<div id="objetivos-de-aprendizaje" class="section level4">
+<h4>Objetivos de aprendizaje</h4>
+<ol style="list-style-type: decimal">
+<li>Identificar las diferencias entre una sentencia de código y una acción en Excel.</li>
+<li>Entender los conceptos de variables, funciones.</li>
+<li>Entender la diferencia entre paquetes y librería.</li>
+<li>Acceder a la ayuda de una función e identificar el contenido.</li>
+<li>Poder:
+<ul>
+<li>crear un proyecto de RStudio,</li>
+<li>armar un .Rmd,</li>
+<li>leer datos,</li>
+<li>compilar el documento.</li>
+</ul></li>
+</ol>
 </div>
 </div>
+<div id="segundo-encuentro" class="section level3">
+<h3>Segundo encuentro</h3>
+<div id="contenidos-1" class="section level4">
+<h4>Contenidos</h4>
+<ul>
+<li>Manipulación de datos ordenados usando <code>{dplyr}</code>
+<ul>
+<li>Agregar y quitar filas y columnas.</li>
+<li>Crear nuevas columnas incluyendo cálculos y comparación de datos.</li>
+<li>Operador pipe %&gt;%</li>
+<li>Calcular medidas de resumen sobre los datos</li>
+</ul></li>
+<li>Visualización de datos con <code>{ggplot2}</code> - Primera parte
+<ul>
+<li>Graficar utilizando líneas y puntos (geometrías)</li>
+<li>Modificar parámetros estéticos de las geometrías.</li>
+<li>Agregar suavizado y líneas de tendencia.</li>
+</ul></li>
+</ul>
+<p><em>Desafío: generar una nueva columna a partir de información de otras columnas y generar resúmenes a partir de los datos.</em></p>
+</div>
+<div id="objetivos" class="section level4">
+<h4>Objetivos</h4>
+</div>
+</div>
+<div id="tercer-encuentro" class="section level3">
+<h3>Tercer encuentro</h3>
+<div id="contenidos-2" class="section level4">
+<h4>Contenidos</h4>
+<ul>
+<li>Visualización de datos con <code>{ggplot2}</code> - Segunda parte
+<ul>
+<li>Crear gráficos con múltiples geometrías.</li>
+<li>Graficar transformaciones estadísticas</li>
+<li>Usar paneles para graficar múltiples relaciones.</li>
+</ul></li>
+<li>Manipulación de datos ordenados usando <code>{dplyr}</code> y <code>{tidyr}</code> - Segunda parte
+<ul>
+<li>“Alargar” y “ensanchar” tablas.<br />
+</li>
+<li>Organizar columnas y sus nombres</li>
+<li>Combinar tablas de datos a partir de variables llave</li>
+</ul></li>
+<li>Creación de funciones
+<ul>
+<li>Definir una función y sus argumentos</li>
+<li>Definir valores por defecto para los argumentos</li>
+<li>Testear los posibles resultados de una función</li>
+</ul></li>
+</ul>
+<p><em>Desafío: generar gráficos a partir de la base de datos usada.</em></p>
+</div>
+<div id="objetivos-de-aprendizaje-1" class="section level4">
+<h4>Objetivos de aprendizaje</h4>
+</div>
+</div>
+<div id="cuarto-encuentro" class="section level3">
+<h3>Cuarto encuentro</h3>
+<div id="contenidos-3" class="section level4">
+<h4>Contenidos</h4>
+<ul>
+<li>Generación de informes con <code>{RMarkdown}</code>
+<ul>
+<li>Uso de distintos formatos de salida.</li>
+<li>Parametrización de reportes.</li>
+<li>Apariencia y temas</li>
+</ul></li>
+<li>Apariencia de tablas
+<ul>
+<li><code>{kable}</code> y <code>{kableExtra}</code></li>
+</ul></li>
+<li>Apariencia de gráficos para publicar
+<ul>
+<li>Escalas de colores</li>
+<li>Temas</li>
+<li>Definir etiquetas y títulos</li>
+</ul></li>
+</ul>
+<p><em>Desafío: generar un informe que incluya gráficos, texto y aplique lo visto previamente</em></p>
+</div>
+<div id="objetivos-de-aprendizaje-2" class="section level4">
+<h4>Objetivos de aprendizaje</h4>
+</div>
+</div>
+
+
+
 
 </div>
 
@@ -463,38 +476,7 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeSourceEmbed("01-intro.Rmd");
-});
-</script>
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
