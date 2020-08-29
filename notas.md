@@ -31,7 +31,7 @@ Crear proyectos en RStudio.
 Administrar una estructura de directorios.
 Saber dónde está el working directory.
 Introducción a {RMarkdown} 
-Sintaxis básica de Markdown.
+Sintaxis básica de Markdown. %>% 
 Unificar código, gráficos y prosa.
 Lectura de datos ordenados
 Cargar tablas en memoria (csv y xlsx).
@@ -40,6 +40,11 @@ Diferenciar tablas “anchas” y “largas”.
 Tipos de datos en R.
 Dar formato a los distintos tipos de datos.
 Desafío: leer correctamente una base de datos 
+
+
+
+
+
 
 Segundo encuentro
 Manipulación de datos ordenados usando {dplyr} 

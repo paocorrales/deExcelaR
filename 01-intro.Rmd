@@ -1,0 +1,31 @@
+---
+title: "Primer encuentro"
+# date: "29/08/2020"
+output: 
+  html_document:
+    code_download: true
+    toc: true
+    toc_float: true
+---
+
+
+
+- ¿Por qué R?
+- Cómo funciona
+  - Mapa para navegar RStudio. 
+  - Definir variables. 
+  - Ejecutar funciones.
+  - Instalar paquetes. 
+  - Acceder y entender la ayuda y documentación de funciones y paquetes.
+- Manejo de proyectos con RStudio
+  - Administrar una estructura de directorios.
+  - Saber dónde está el working directory.
+- Introducción a `{RMarkdown}`
+  - Sintaxis básica de Markdown.
+  - Unificar código, gráficos y prosa.
+- Lectura de datos ordenados
+  - Cargar tablas en memoria (csv y xlsx).
+  - Identificar datos ordenados.
+  - Diferenciar tablas “anchas” y “largas”.
+  - Tipos de datos en R.
+  - Dar formato a los distintos tipos de datos.

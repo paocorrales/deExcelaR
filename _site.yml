@@ -1,0 +1,12 @@
+navbar: 
+  title: de Excel a R
+  left: 
+  - text: Cronograma
+  - text: Temas
+    menu: 
+      - text: Introducción
+        href: 01-intro.html
+output_dir: docs
+output:
+  html_document:
+    theme: flatly
