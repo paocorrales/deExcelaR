@@ -1,3 +1,16 @@
 ---
 title: "de Excel a R"
 ---
+
+## Bienvenida!
+
+
+## ¿Qué es esto?
+
+Este es un curso para usuarios de Excel que quieren empezar a trabajar con R. 
+
+El curso asume que tenés instalado R y Rstudio. Para hacerlo, 
+
+## Recursos
+
+
