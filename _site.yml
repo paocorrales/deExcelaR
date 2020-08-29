@@ -2,10 +2,11 @@ navbar:
   title: de Excel a R
   left: 
   - text: Cronograma
+    href: cronograma.html
   - text: Temas
     menu: 
       - text: Introducción
-        href: 01-intro.html
+        href: 01-introduccion.html
 output_dir: docs
 output:
   html_document:

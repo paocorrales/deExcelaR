@@ -1,3 +1,7 @@
+---
+title: Cronograma
+---
+
 ## de Excel a R
 
 ### Notas para quien enseña
