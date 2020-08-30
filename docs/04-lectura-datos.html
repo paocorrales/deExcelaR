@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Lectura de datos ordenados</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">de Excel a R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="hoja-de-ruta.html">Hoja de ruta</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Temas
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01-introduccion.html">Introducción</a>
+    </li>
+    <li>
+      <a href="02-proyectos.html">Proyectos</a>
+    </li>
+    <li>
+      <a href="03-reportes-I.html">Reportes I</a>
+    </li>
+    <li>
+      <a href="04-lectura-datos.html">Lectura de datos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Lectura de datos ordenados</h1>
+
+</div>
+
+
+<div id="leer-datos-csv" class="section level2">
+<h2>Leer datos csv</h2>
+<p>Existen muchas funciones distintas para leer datos dependiendo del formato en el que están guardados. Para datos tabulares, la forma más útil es el formato csv, que es un archivo de texto plano con datos separados por coma.</p>
+<p>Obviamene para importar datos hace falta escrbir el códgo correspondiente pero para empezar, podés usar una ayuda de RStudio:</p>
+<div class="alert alert-secondary">
+<p>File → Import Dataset → From Text (readr)…</p>
+</div>
+<p>Esto nos va abrir una ventana donde podemos elegir el archivo que queremos importar (ya está elegido en la siguiente imagen) y otros detalles.</p>
+<p><img src="img/importar-paises.png" alt="Diálogo de importar datos" /> En la pantalla principal van a tener una previsualización de los datos para guiarte. Abajo a la izquierda tenés varias opciones, como el nombre que vas a usar para la variable (<code>paises</code>), si la primera fila tiene la columna (sí), qué deliimtador tienen los datos (coma), etc…</p>
+<p>Abajo a la derecha es lo importante, que es el código que vas a usar para efectivamente importar los datos. Vas a copiar ese código, cerrar esa ventana con el botón “Cancel”, y pegar el código en un chunk. Cuando lo ejecutes, vas tener una variable llamada “paises” con los datos.</p>
+<pre class="r"><code>library(readr)
+paises &lt;- read_csv(&quot;datos/paises.csv&quot;)</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   pais = col_character(),
+##   continente = col_character(),
+##   anio = col_double(),
+##   esperanza_de_vida = col_double(),
+##   poblacion = col_double(),
+##   pib_per_capita = col_double()
+## )</code></pre>
+<div class="alert alert-success">
+<p><strong>Nota</strong>: Notar que en este caso el código para leer los datos consta de dos líneas. La primera carga el paquete readr y el segundo usa la función <code>read_csv()</code> (del paquete readr) para leer el archivo .csv.</p>
+</div>
+<div class="alert alert-success">
+<p><strong>Nota</strong>: La interfaz de usuario de RStudio sirve para autogenerar el código que lee el archivo. Una vez que lo tenés, no necesitás abrirla de nuevo.</p>
+</div>
+<p>Todo ese texto naranja/rojo es intimidante pero no te preocupes, es sólo un mensaje que nos informa que los datos se leyeron y qué tipo de dato tiene cada columna. Podemos explorar la estructura de la variable <code>paises</code> usando la función <code>str</code> (de “structure”).</p>
+<pre class="r"><code>str(paises)</code></pre>
+<pre><code>## tibble [1,704 × 6] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ pais             : chr [1:1704] &quot;Afganistán&quot; &quot;Afganistán&quot; &quot;Afganistán&quot; &quot;Afganistán&quot; ...
+##  $ continente       : chr [1:1704] &quot;Asia&quot; &quot;Asia&quot; &quot;Asia&quot; &quot;Asia&quot; ...
+##  $ anio             : num [1:1704] 1952 1957 1962 1967 1972 ...
+##  $ esperanza_de_vida: num [1:1704] 28.8 30.3 32 34 36.1 ...
+##  $ poblacion        : num [1:1704] 8425333 9240934 10267083 11537966 13079460 ...
+##  $ pib_per_capita   : num [1:1704] 779 821 853 836 740 ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   pais = col_character(),
+##   ..   continente = col_character(),
+##   ..   anio = col_double(),
+##   ..   esperanza_de_vida = col_double(),
+##   ..   poblacion = col_double(),
+##   ..   pib_per_capita = col_double()
+##   .. )</code></pre>
+<p>Esto nos dice un montón. La primera línea dice que es una <code>tibble</code>, que es un caso especial de la estructura de datos tabular básica de R llamada data.frame. Tiene 1704 filas y 6 columnas. Las siguienes líneas nos dicen los nombres de las columnas (“pais”, “continente”, “anio”, “esperanza_de_vida”, “poblacion” y “pbi_per_capita”), su tipo de dato (<code>chr</code> o <code>num</code>), la longitud (<code>[1:1704]</code>) y sus primeros elementos. Cada columna de la tabla <code>paises</code> es un <strong>vector</strong>. Dado que los vectores son como los “ladrillos” que hacen a los data.frames, merecen una atención especial.</p>
+</div>
+<div id="vectores" class="section level2">
+<h2>Vectores</h2>
+<p>Un vector en R es esencialmente una lista ordenada de cosas, con la condición especial de que todos los elementos en un vector tienen que ser del mismo tipo de datos básico.</p>
+<p>R tiene 5 tipos de datos básicos: double (doble), integer (entero), complex (complejo), logical (lógico) y character (caracter). Existen otros pero son formas un poco más sofisticadas de estos tipos básicos. Por ejemplo, el formato POSIXct (de tiempo) se guarda como doble, representando la cantidad de segundos pasados desde el 01/01/1970.</p>
+<p>Una forma conveniente de crear un vector es con la función <code>c()</code> (de combinar)</p>
+<pre class="r"><code>x &lt;- c(1, 2, 3, 4)
+x</code></pre>
+<pre><code>## [1] 1 2 3 4</code></pre>
+<p><code>x</code> es una serie con 4 elementos. Si usamos la función <code>str()</code>:</p>
+<pre class="r"><code>str(x)</code></pre>
+<pre><code>##  num [1:4] 1 2 3 4</code></pre>
+<p>Esta salida nos está informando que <code>x</code> es de tipo numérico (un nombre para dobles y enteros). Los vectores sólo pueden ser de un tipo. Por lo tanto, si intentás combinar un caracter con números, R va a tratar de “coercer” todo a un tipo común:</p>
+<pre class="r"><code>x &lt;- c(&quot;uno&quot;, 2)
+str(x)</code></pre>
+<pre><code>##  chr [1:2] &quot;uno&quot; &quot;2&quot;</code></pre>
+<p>El vector <code>x</code> es de tipo caracter y el número 2 se convirtió en el caracter “2”. Este tipo de conversión automática puede ser fuente de muchos dolores de cabeza! Por ejemplo, ¿qué creés que va a pasar si tratás de sumarle 1 a la variable x?</p>
+<pre class="r"><code>x + 1</code></pre>
+<pre><code>## Error in x + 1: non-numeric argument to binary operator</code></pre>
+<p>¡Un error! ¿Cuál es el problema? El mensaje de error nos da una pista usamos un “argumento no numérico”. R puede hacer <code>2 + 1</code>, pero <code>"2" + 1</code> no significa nada!</p>
+<p>Las reglas de coerción son: logical -&gt; integer -&gt; numeric -&gt; complex -&gt; character, donde -&gt; se puede leer como se transforma en. Para forzar la coerción en contra de esta cadena podés usar las funciones <code>as...</code>.</p>
+<pre class="r"><code>as.numeric(x)</code></pre>
+<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<pre><code>## [1] NA  2</code></pre>
+<p>¡Pero no siempre funciona! Recordá que <code>x</code> tiene los valores “uno” y “2”. R pudo convertir “2” en 2, pero no sabe cómo transformar “uno” en un numérico. Lo que devuelve es un vector que en el lugar de “2” tiene 2, pero en el lugar de “uno” tiene <code>NA</code>, que es un tipo de elemento especial que representa un valor faltante. Pero R avisa, así que no es traidor: el warning advierte que la coerción introdujo valores faltantes.</p>
+<div id="vectorización" class="section level3">
+<h3>Vectorización</h3>
+<p>La mayoría de las funciones de R pueden trabajar sobre vectores y lo hacen <strong>elemento a elemento</strong>. Esto significa que si creás estos dos vectores:</p>
+<pre class="r"><code>x &lt;- 1:4   # 1:4 crea un vector que empieza en 1 y terminaen 4,
+y &lt;- 6:9</code></pre>
+<pre class="r"><code>x</code></pre>
+<pre><code>## [1] 1 2 3 4</code></pre>
+<pre class="r"><code>y</code></pre>
+<pre><code>## [1] 6 7 8 9</code></pre>
+<p>y los sumás</p>
+<pre class="r"><code>x + y</code></pre>
+<pre><code>## [1]  7  9 11 13</code></pre>
+<p>el resultado es un vector de la misma longitud de <code>x</code> e <code>y</code> que en cada posición tiene la suma de cada elemento de <code>x</code> e <code>y</code></p>
+<pre><code>x:  1  2  3  4
+    +  +  +  +
+y:  6  7  8  9
+---------------
+    7  9 11 13</code></pre>
+<p>Lo mismo sucede al multiplicar vectores</p>
+<pre class="r"><code>x*y</code></pre>
+<pre><code>## [1]  6 14 24 36</code></pre>
+<pre><code>x:  1   2   3   4
+    *   *   *   *
+y:  6   7   8   9
+-----------------
+    6  14  24  36</code></pre>
+<p>Si los vectores no tiene la misma longitud, los elementos del más corto se “reciclan”.</p>
+<pre class="r"><code>y &lt;- c(6, 7, 8)
+x * y</code></pre>
+<pre><code>## Warning in x * y: longer object length is not a multiple of shorter object
+## length</code></pre>
+<pre><code>## [1]  6 14 24 24</code></pre>
+<pre><code>x:  1   2   3   4
+    *   *   *   *
+y:  6   7   8   6
+-----------------
+    6  14  24  24</code></pre>
+<p>R emite una advertencia <strong>sólo si la longitud del vector largo no es múltiplo de la longitud del vector corto</strong>. Casi siempre el reciclado de vectores es señal de que algo salió mal. La única excepción es cuando el vector corto es de longitud 1. Por ejemplo, es totalmente razonable usar <code>x * 2</code> para duplicar los elementos de x.</p>
+</div>
+</div>
+<div id="leer-datos-de-excel" class="section level2">
+<h2>Leer datos de excel</h2>
+<p>Si tenés la vista avispada, habrás notado que en el menu de “Import Dataset” hay una opción para leer datos de Excel. En efecto, RStudio provee la misma ayuda para leer este tipo de datos:</p>
+<div class="alert alert-secondary">
+<p>File → Import Dataset → From Excel…</p>
+</div>
+<p><img src="img/importar-paises-xl.png" /></p>
+<p>Notá que entre las opciones de abajo a la izquierda aparecen dos variables importantes. Podés seleccionar de qué hoja leer los datos y qué rango usar. Esto seguro que te va a ser muy útil para esos archivos de Excel con mútiples tablas en un archivo, o incluso múltiples tablas en cada hoja!</p>
+<p>En este caso paises.xlsx es un Excel buena onda, y el código para leer los datos es muy simple:</p>
+<pre class="r"><code>library(readxl)
+paises &lt;- read_excel(&quot;datos/paises.xlsx&quot;)</code></pre>
+<p>Con la función <code>str()</code> podés confirmar que los datos leídos son los mísmos que para el csv.</p>
+<pre class="r"><code>str(paises)</code></pre>
+<pre><code>## tibble [1,704 × 6] (S3: tbl_df/tbl/data.frame)
+##  $ pais             : chr [1:1704] &quot;Afganistán&quot; &quot;Afganistán&quot; &quot;Afganistán&quot; &quot;Afganistán&quot; ...
+##  $ continente       : chr [1:1704] &quot;Asia&quot; &quot;Asia&quot; &quot;Asia&quot; &quot;Asia&quot; ...
+##  $ anio             : num [1:1704] 1952 1957 1962 1967 1972 ...
+##  $ esperanza_de_vida: num [1:1704] 28.8 30.3 32 34 36.1 ...
+##  $ poblacion        : num [1:1704] 8425333 9240934 10267083 11537966 13079460 ...
+##  $ pib_per_capita   : num [1:1704] 779 821 853 836 740 ...</code></pre>
+</div>
+<div id="formatos-de-tablas" class="section level2">
+<h2>Formatos de tablas</h2>
+<p>Pensá un momento en la estructura de los datos de <code>paises</code>. Tiene seis columnas, pero sólo tres de ellas contienen valores observados (<code>esperanza_de_vida</code>, <code>poblacion</code> y <code>pib_per_capita</code>) y las otras tres son las “coordenadas”: <code>pais</code>, <code>continente</code> y <code>anio</code> son columnas que identifican la obsevación. De hecho, la columna <code>pais</code> tiene un montón de datos repetidos!</p>
+<p>Esto es un ejemplo de formato “largo” (o “tidy” en inglés). La idea básica de datos “largos” es que:</p>
+<ul>
+<li>cada columna es una variable</li>
+<li>cada fila es una observación</li>
+</ul>
+<p>La tabla <code>paises</code> es basante larga (tiene 1704 filas y 6 columnas!) pero podría ser más larga aún</p>
+<pre class="r"><code>paises_largo &lt;- read_csv(&quot;datos/paises_largo.csv&quot;)
+str(paises_largo)</code></pre>
+<pre><code>## tibble [5,112 × 5] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ pais      : chr [1:5112] &quot;Afganistán&quot; &quot;Afganistán&quot; &quot;Afganistán&quot; &quot;Afganistán&quot; ...
+##  $ continente: chr [1:5112] &quot;Asia&quot; &quot;Asia&quot; &quot;Asia&quot; &quot;Asia&quot; ...
+##  $ anio      : num [1:5112] 1952 1957 1962 1967 1972 ...
+##  $ variable  : chr [1:5112] &quot;esperanza_de_vida&quot; &quot;esperanza_de_vida&quot; &quot;esperanza_de_vida&quot; &quot;esperanza_de_vida&quot; ...
+##  $ valor     : num [1:5112] 28.8 30.3 32 34 36.1 ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   pais = col_character(),
+##   ..   continente = col_character(),
+##   ..   anio = col_double(),
+##   ..   variable = col_character(),
+##   ..   valor = col_double()
+##   .. )</code></pre>
+<p>La tabla <code>paises_largo</code> tiene ¡5112 filas! Tiene un valor para cada país, año y variable. Es decir, las tres columnas que contenían valores numéricos, en esta tabla son una sola columna llamada “valor”.</p>
+<p>Pero también pueden ser podría ser más “ancha”:</p>
+<pre class="r"><code>paises_ancho &lt;- read_csv(&quot;datos/paises_ancho.csv&quot;)
+str(paises_ancho)</code></pre>
+<pre><code>## tibble [142 × 38] (S3: spec_tbl_df/tbl_df/tbl/data.frame)
+##  $ continente            : chr [1:142] &quot;Africa&quot; &quot;Africa&quot; &quot;Africa&quot; &quot;Africa&quot; ...
+##  $ pais                  : chr [1:142] &quot;Algeria&quot; &quot;Angola&quot; &quot;Benin&quot; &quot;Botswana&quot; ...
+##  $ pib_per_capita_1952   : num [1:142] 2449 3521 1063 851 543 ...
+##  $ pib_per_capita_1957   : num [1:142] 3014 3828 960 918 617 ...
+##  $ pib_per_capita_1962   : num [1:142] 2551 4269 949 984 723 ...
+##  $ pib_per_capita_1967   : num [1:142] 3247 5523 1036 1215 795 ...
+##  $ pib_per_capita_1972   : num [1:142] 4183 5473 1086 2264 855 ...
+##  $ pib_per_capita_1977   : num [1:142] 4910 3009 1029 3215 743 ...
+##  $ pib_per_capita_1982   : num [1:142] 5745 2757 1278 4551 807 ...
+##  $ pib_per_capita_1987   : num [1:142] 5681 2430 1226 6206 912 ...
+##  $ pib_per_capita_1992   : num [1:142] 5023 2628 1191 7954 932 ...
+##  $ pib_per_capita_1997   : num [1:142] 4797 2277 1233 8647 946 ...
+##  $ pib_per_capita_2002   : num [1:142] 5288 2773 1373 11004 1038 ...
+##  $ pib_per_capita_2007   : num [1:142] 6223 4797 1441 12570 1217 ...
+##  $ esperanza_de_vida_1952: num [1:142] 43.1 30 38.2 47.6 32 ...
+##  $ esperanza_de_vida_1957: num [1:142] 45.7 32 40.4 49.6 34.9 ...
+##  $ esperanza_de_vida_1962: num [1:142] 48.3 34 42.6 51.5 37.8 ...
+##  $ esperanza_de_vida_1967: num [1:142] 51.4 36 44.9 53.3 40.7 ...
+##  $ esperanza_de_vida_1972: num [1:142] 54.5 37.9 47 56 43.6 ...
+##  $ esperanza_de_vida_1977: num [1:142] 58 39.5 49.2 59.3 46.1 ...
+##  $ esperanza_de_vida_1982: num [1:142] 61.4 39.9 50.9 61.5 48.1 ...
+##  $ esperanza_de_vida_1987: num [1:142] 65.8 39.9 52.3 63.6 49.6 ...
+##  $ esperanza_de_vida_1992: num [1:142] 67.7 40.6 53.9 62.7 50.3 ...
+##  $ esperanza_de_vida_1997: num [1:142] 69.2 41 54.8 52.6 50.3 ...
+##  $ esperanza_de_vida_2002: num [1:142] 71 41 54.4 46.6 50.6 ...
+##  $ esperanza_de_vida_2007: num [1:142] 72.3 42.7 56.7 50.7 52.3 ...
+##  $ poblacion_1952        : num [1:142] 9279525 4232095 1738315 442308 4469979 ...
+##  $ poblacion_1957        : num [1:142] 10270856 4561361 1925173 474639 4713416 ...
+##  $ poblacion_1962        : num [1:142] 11000948 4826015 2151895 512764 4919632 ...
+##  $ poblacion_1967        : num [1:142] 12760499 5247469 2427334 553541 5127935 ...
+##  $ poblacion_1972        : num [1:142] 14760787 5894858 2761407 619351 5433886 ...
+##  $ poblacion_1977        : num [1:142] 17152804 6162675 3168267 781472 5889574 ...
+##  $ poblacion_1982        : num [1:142] 20033753 7016384 3641603 970347 6634596 ...
+##  $ poblacion_1987        : num [1:142] 23254956 7874230 4243788 1151184 7586551 ...
+##  $ poblacion_1992        : num [1:142] 26298373 8735988 4981671 1342614 8878303 ...
+##  $ poblacion_1997        : num [1:142] 29072015 9875024 6066080 1536536 10352843 ...
+##  $ poblacion_2002        : num [1:142] 31287142 10866106 7026113 1630347 12251209 ...
+##  $ poblacion_2007        : num [1:142] 33333216 12420476 8078314 1639131 14326203 ...
+##  - attr(*, &quot;spec&quot;)=
+##   .. cols(
+##   ..   continente = col_character(),
+##   ..   pais = col_character(),
+##   ..   pib_per_capita_1952 = col_double(),
+##   ..   pib_per_capita_1957 = col_double(),
+##   ..   pib_per_capita_1962 = col_double(),
+##   ..   pib_per_capita_1967 = col_double(),
+##   ..   pib_per_capita_1972 = col_double(),
+##   ..   pib_per_capita_1977 = col_double(),
+##   ..   pib_per_capita_1982 = col_double(),
+##   ..   pib_per_capita_1987 = col_double(),
+##   ..   pib_per_capita_1992 = col_double(),
+##   ..   pib_per_capita_1997 = col_double(),
+##   ..   pib_per_capita_2002 = col_double(),
+##   ..   pib_per_capita_2007 = col_double(),
+##   ..   esperanza_de_vida_1952 = col_double(),
+##   ..   esperanza_de_vida_1957 = col_double(),
+##   ..   esperanza_de_vida_1962 = col_double(),
+##   ..   esperanza_de_vida_1967 = col_double(),
+##   ..   esperanza_de_vida_1972 = col_double(),
+##   ..   esperanza_de_vida_1977 = col_double(),
+##   ..   esperanza_de_vida_1982 = col_double(),
+##   ..   esperanza_de_vida_1987 = col_double(),
+##   ..   esperanza_de_vida_1992 = col_double(),
+##   ..   esperanza_de_vida_1997 = col_double(),
+##   ..   esperanza_de_vida_2002 = col_double(),
+##   ..   esperanza_de_vida_2007 = col_double(),
+##   ..   poblacion_1952 = col_double(),
+##   ..   poblacion_1957 = col_double(),
+##   ..   poblacion_1962 = col_double(),
+##   ..   poblacion_1967 = col_double(),
+##   ..   poblacion_1972 = col_double(),
+##   ..   poblacion_1977 = col_double(),
+##   ..   poblacion_1982 = col_double(),
+##   ..   poblacion_1987 = col_double(),
+##   ..   poblacion_1992 = col_double(),
+##   ..   poblacion_1997 = col_double(),
+##   ..   poblacion_2002 = col_double(),
+##   ..   poblacion_2007 = col_double()
+##   .. )</code></pre>
+<p><code>paises_ancho</code> tiene una sola fila para cada país, y los datos de cada variable y año está en una columan propia.</p>
+<p>Ninguna estructura de datos es “la correcta”; distintos análisis y distintas funciones se llevan mejor con los datos en distinto “grado de longitud”. Es muy normal empezar con datos largos, tener que pasarlos a anchos para hacer un análisis y luego volver a pasar a largos (tan normal que hay <a href="https://github.com/dgrtwo/widyr">un paquete de R que encapsula ese proceso</a>).</p>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTGVjdHVyYSBkZSBkYXRvcyBvcmRlbmFkb3MiCm91dHB1dDogCiAgaHRtbF9kb2N1bWVudDoKICAgIGNvZGVfZG93bmxvYWQ6IHRydWUKICAgIHRvYzogdHJ1ZQogICAgdG9jX2Zsb2F0OiB0cnVlCi0tLQoKCiMjIExlZXIgZGF0b3MgY3N2CgpFeGlzdGVuIG11Y2hhcyBmdW5jaW9uZXMgZGlzdGludGFzIHBhcmEgbGVlciBkYXRvcyBkZXBlbmRpZW5kbyBkZWwgZm9ybWF0byBlbiBlbCBxdWUgZXN0w6FuIGd1YXJkYWRvcy4gUGFyYSBkYXRvcyB0YWJ1bGFyZXMsIGxhIGZvcm1hIG3DoXMgw7p0aWwgZXMgZWwgZm9ybWF0byBjc3YsIHF1ZSBlcyB1biBhcmNoaXZvIGRlIHRleHRvIHBsYW5vIGNvbiBkYXRvcyBzZXBhcmFkb3MgcG9yIGNvbWEuIAoKT2J2aWFtZW5lIHBhcmEgaW1wb3J0YXIgZGF0b3MgaGFjZSBmYWx0YSBlc2NyYmlyIGVsIGPDs2RnbyBjb3JyZXNwb25kaWVudGUgcGVybyBwYXJhIGVtcGV6YXIsIHBvZMOpcyB1c2FyIHVuYSBheXVkYSBkZSBSU3R1ZGlvOgoKOjo6IHsuYWxlcnQgLmFsZXJ0LXNlY29uZGFyeX0KRmlsZSDihpIgSW1wb3J0IERhdGFzZXQg4oaSIEZyb20gVGV4dCAocmVhZHIpLi4uCjo6OgoKRXN0byBub3MgdmEgYWJyaXIgdW5hIHZlbnRhbmEgZG9uZGUgcG9kZW1vcyBlbGVnaXIgZWwgYXJjaGl2byBxdWUgcXVlcmVtb3MgaW1wb3J0YXIgKHlhIGVzdMOhIGVsZWdpZG8gZW4gbGEgc2lndWllbnRlIGltYWdlbikgeSBvdHJvcyBkZXRhbGxlcy4KCiFbRGnDoWxvZ28gZGUgaW1wb3J0YXIgZGF0b3NdKGltZy9pbXBvcnRhci1wYWlzZXMucG5nKQpFbiBsYSBwYW50YWxsYSBwcmluY2lwYWwgdmFuIGEgdGVuZXIgdW5hIHByZXZpc3VhbGl6YWNpw7NuIGRlIGxvcyBkYXRvcyBwYXJhIGd1aWFydGUuIEFiYWpvIGEgbGEgaXpxdWllcmRhIHRlbsOpcyB2YXJpYXMgb3BjaW9uZXMsIGNvbW8gZWwgbm9tYnJlIHF1ZSB2YXMgYSB1c2FyIHBhcmEgbGEgdmFyaWFibGUgKGBwYWlzZXNgKSwgc2kgbGEgcHJpbWVyYSBmaWxhIHRpZW5lIGxhIGNvbHVtbmEgKHPDrSksIHF1w6kgZGVsaWltdGFkb3IgdGllbmVuIGxvcyBkYXRvcyAoY29tYSksIGV0Yy4uLiAKCkFiYWpvIGEgbGEgZGVyZWNoYSBlcyBsbyBpbXBvcnRhbnRlLCBxdWUgZXMgZWwgY8OzZGlnbyBxdWUgdmFzIGEgdXNhciBwYXJhIGVmZWN0aXZhbWVudGUgaW1wb3J0YXIgbG9zIGRhdG9zLiBWYXMgYSBjb3BpYXIgZXNlIGPDs2RpZ28sIGNlcnJhciBlc2EgdmVudGFuYSBjb24gZWwgYm90w7NuICJDYW5jZWwiLCB5IHBlZ2FyIGVsIGPDs2RpZ28gZW4gdW4gY2h1bmsuIEN1YW5kbyBsbyBlamVjdXRlcywgdmFzIHRlbmVyIHVuYSB2YXJpYWJsZSBsbGFtYWRhICJwYWlzZXMiIGNvbiBsb3MgZGF0b3MuICAKCgpgYGB7cn0KbGlicmFyeShyZWFkcikKcGFpc2VzIDwtIHJlYWRfY3N2KCJkYXRvcy9wYWlzZXMuY3N2IikKYGBgCjo6OiB7LmFsZXJ0IC5hbGVydC1zdWNjZXNzfQoqKk5vdGEqKjogTm90YXIgcXVlIGVuIGVzdGUgY2FzbyBlbCBjw7NkaWdvIHBhcmEgbGVlciBsb3MgZGF0b3MgY29uc3RhIGRlIGRvcyBsw61uZWFzLiBMYSBwcmltZXJhIGNhcmdhIGVsIHBhcXVldGUgcmVhZHIgeSBlbCBzZWd1bmRvIHVzYSBsYSBmdW5jacOzbiBgcmVhZF9jc3YoKWAgKGRlbCBwYXF1ZXRlIHJlYWRyKSBwYXJhIGxlZXIgZWwgYXJjaGl2byAuY3N2Lgo6OjoKCjo6OiB7LmFsZXJ0IC5hbGVydC1zdWNjZXNzfQoqKk5vdGEqKjogTGEgaW50ZXJmYXogZGUgdXN1YXJpbyBkZSBSU3R1ZGlvIHNpcnZlIHBhcmEgYXV0b2dlbmVyYXIgZWwgY8OzZGlnbyBxdWUgbGVlIGVsIGFyY2hpdm8uIFVuYSB2ZXogcXVlIGxvIHRlbsOpcywgbm8gbmVjZXNpdMOhcyBhYnJpcmxhIGRlIG51ZXZvLiAKOjo6CgpUb2RvIGVzZSB0ZXh0byBuYXJhbmphL3Jvam8gZXMgaW50aW1pZGFudGUgcGVybyBubyB0ZSBwcmVvY3VwZXMsIGVzIHPDs2xvIHVuIG1lbnNhamUgcXVlIG5vcyBpbmZvcm1hIHF1ZSBsb3MgZGF0b3Mgc2UgbGV5ZXJvbiB5IHF1w6kgdGlwbyBkZSBkYXRvIHRpZW5lIGNhZGEgY29sdW1uYS4gUG9kZW1vcyBleHBsb3JhciBsYSBlc3RydWN0dXJhIGRlIGxhIHZhcmlhYmxlIGBwYWlzZXNgIHVzYW5kbyBsYSBmdW5jacOzbiBgc3RyYCAoZGUgInN0cnVjdHVyZSIpLiAKCmBgYHtyfQpzdHIocGFpc2VzKQpgYGAKRXN0byBub3MgZGljZSB1biBtb250w7NuLiBMYSBwcmltZXJhIGzDrW5lYSBkaWNlIHF1ZSBlcyB1bmEgYHRpYmJsZWAsIHF1ZSBlcyB1biBjYXNvIGVzcGVjaWFsIGRlIGxhIGVzdHJ1Y3R1cmEgZGUgZGF0b3MgdGFidWxhciBiw6FzaWNhIGRlIFIgbGxhbWFkYSBkYXRhLmZyYW1lLiBUaWVuZSAxNzA0IGZpbGFzIHkgNiBjb2x1bW5hcy4gTGFzIHNpZ3VpZW5lcyBsw61uZWFzIG5vcyBkaWNlbiBsb3Mgbm9tYnJlcyBkZSBsYXMgY29sdW1uYXMgKCJwYWlzIiwgImNvbnRpbmVudGUiLCAiYW5pbyIsICJlc3BlcmFuemFfZGVfdmlkYSIsICJwb2JsYWNpb24iIHkgInBiaV9wZXJfY2FwaXRhIiksIHN1IHRpcG8gZGUgZGF0byAoYGNocmAgbyBgbnVtYCksIGxhIGxvbmdpdHVkIChgWzE6MTcwNF1gKSB5IHN1cyBwcmltZXJvcyBlbGVtZW50b3MuIENhZGEgY29sdW1uYSBkZSBsYSB0YWJsYSBgcGFpc2VzYCBlcyB1biAqKnZlY3RvcioqLiBEYWRvIHF1ZSBsb3MgdmVjdG9yZXMgc29uIGNvbW8gbG9zICJsYWRyaWxsb3MiIHF1ZSBoYWNlbiBhIGxvcyBkYXRhLmZyYW1lcywgbWVyZWNlbiB1bmEgYXRlbmNpw7NuIGVzcGVjaWFsLgoKCiMjIFZlY3RvcmVzCgpVbiB2ZWN0b3IgZW4gUiBlcyBlc2VuY2lhbG1lbnRlIHVuYSBsaXN0YSBvcmRlbmFkYSBkZSBjb3NhcywgY29uIGxhIGNvbmRpY2nDs24gZXNwZWNpYWwgZGUgcXVlIHRvZG9zIGxvcyBlbGVtZW50b3MgZW4gdW4gdmVjdG9yIHRpZW5lbiBxdWUgc2VyIGRlbCBtaXNtbyB0aXBvIGRlIGRhdG9zIGLDoXNpY28uCgpSIHRpZW5lIDUgdGlwb3MgZGUgZGF0b3MgYsOhc2ljb3M6IGRvdWJsZSAoZG9ibGUpLCBpbnRlZ2VyIChlbnRlcm8pLCBjb21wbGV4IChjb21wbGVqbyksIGxvZ2ljYWwgKGzDs2dpY28pIHkgIGNoYXJhY3RlciAoY2FyYWN0ZXIpLiBFeGlzdGVuIG90cm9zIHBlcm8gc29uIGZvcm1hcyB1biBwb2NvIG3DoXMgc29maXN0aWNhZGFzIGRlIGVzdG9zIHRpcG9zIGLDoXNpY29zLiBQb3IgZWplbXBsbywgZWwgZm9ybWF0byBQT1NJWGN0IChkZSB0aWVtcG8pIHNlIGd1YXJkYSBjb21vIGRvYmxlLCByZXByZXNlbnRhbmRvIGxhIGNhbnRpZGFkIGRlIHNlZ3VuZG9zIHBhc2Fkb3MgZGVzZGUgZWwgMDEvMDEvMTk3MC4gCgpVbmEgZm9ybWEgY29udmVuaWVudGUgZGUgY3JlYXIgdW4gdmVjdG9yIGVzIGNvbiBsYSBmdW5jacOzbiBgYygpYCAoZGUgY29tYmluYXIpCgpgYGB7cn0KeCA8LSBjKDEsIDIsIDMsIDQpCngKYGBgCmB4YCBlcyB1bmEgc2VyaWUgY29uIDQgZWxlbWVudG9zLiBTaSB1c2Ftb3MgbGEgZnVuY2nDs24gYHN0cigpYDoKCmBgYHtyfQpzdHIoeCkKYGBgCkVzdGEgc2FsaWRhIG5vcyBlc3TDoSBpbmZvcm1hbmRvIHF1ZSBgeGAgZXMgZGUgdGlwbyBudW3DqXJpY28gKHVuIG5vbWJyZSBwYXJhIGRvYmxlcyB5IGVudGVyb3MpLiBMb3MgdmVjdG9yZXMgc8OzbG8gcHVlZGVuIHNlciBkZSB1biB0aXBvLiBQb3IgbG8gdGFudG8sIHNpIGludGVudMOhcyBjb21iaW5hciB1biBjYXJhY3RlciBjb24gbsO6bWVyb3MsIFIgdmEgYSB0cmF0YXIgZGUgImNvZXJjZXIiIHRvZG8gYSB1biB0aXBvIGNvbcO6bjoKCmBgYHtyfQp4IDwtIGMoInVubyIsIDIpCnN0cih4KQpgYGAKRWwgdmVjdG9yIGB4YCBlcyBkZSB0aXBvIGNhcmFjdGVyIHkgZWwgbsO6bWVybyAyIHNlIGNvbnZpcnRpw7MgZW4gZWwgY2FyYWN0ZXIgIjIiLiBFc3RlIHRpcG8gZGUgY29udmVyc2nDs24gYXV0b23DoXRpY2EgcHVlZGUgc2VyIGZ1ZW50ZSBkZSBtdWNob3MgZG9sb3JlcyBkZSBjYWJlemEhIFBvciBlamVtcGxvLCDCv3F1w6kgY3Jlw6lzIHF1ZSB2YSBhIHBhc2FyIHNpIHRyYXTDoXMgZGUgc3VtYXJsZSAxIGEgbGEgdmFyaWFibGUgeD8KCmBgYHtyLCBlcnJvciA9IFRSVUV9CnggKyAxCmBgYArCoVVuIGVycm9yISDCv0N1w6FsIGVzIGVsIHByb2JsZW1hPyBFbCBtZW5zYWplIGRlIGVycm9yIG5vcyBkYSB1bmEgcGlzdGEgdXNhbW9zIHVuICJhcmd1bWVudG8gbm8gbnVtw6lyaWNvIi4gUiBwdWVkZSBoYWNlciBgMiArIDFgLCBwZXJvIGAiMiIgKyAxYCBubyBzaWduaWZpY2EgbmFkYSEgCgpMYXMgcmVnbGFzIGRlIGNvZXJjacOzbiBzb246IGxvZ2ljYWwgLT4gaW50ZWdlciAtPiBudW1lcmljIC0+IGNvbXBsZXggLT4gY2hhcmFjdGVyLCBkb25kZSAtPiBzZSBwdWVkZSBsZWVyIGNvbW8gc2UgdHJhbnNmb3JtYSBlbi4gUGFyYSBmb3J6YXIgbGEgY29lcmNpw7NuIGVuIGNvbnRyYSBkZSBlc3RhIGNhZGVuYSBwb2TDqXMgdXNhciBsYXMgZnVuY2lvbmVzIGBhcy4uLmAuIAoKYGBge3J9CmFzLm51bWVyaWMoeCkKYGBgCsKhUGVybyBubyBzaWVtcHJlIGZ1bmNpb25hISBSZWNvcmTDoSBxdWUgYHhgIHRpZW5lIGxvcyB2YWxvcmVzICJ1bm8iIHkgIjIiLiBSIHB1ZG8gY29udmVydGlyICIyIiBlbiAyLCBwZXJvIG5vIHNhYmUgY8OzbW8gdHJhbnNmb3JtYXIgInVubyIgZW4gdW4gbnVtw6lyaWNvLiBMbyBxdWUgZGV2dWVsdmUgZXMgdW4gdmVjdG9yIHF1ZSBlbiBlbCBsdWdhciBkZSAiMiIgdGllbmUgMiwgcGVybyBlbiBlbCBsdWdhciBkZSAidW5vIiB0aWVuZSBgTkFgLCBxdWUgZXMgdW4gdGlwbyBkZSBlbGVtZW50byBlc3BlY2lhbCBxdWUgcmVwcmVzZW50YSB1biB2YWxvciBmYWx0YW50ZS4gUGVybyBSIGF2aXNhLCBhc8OtIHF1ZSBubyBlcyB0cmFpZG9yOiBlbCB3YXJuaW5nIGFkdmllcnRlIHF1ZSBsYSBjb2VyY2nDs24gaW50cm9kdWpvIHZhbG9yZXMgZmFsdGFudGVzLgoKCiMjIyBWZWN0b3JpemFjacOzbgoKTGEgbWF5b3LDrWEgZGUgbGFzIGZ1bmNpb25lcyBkZSBSIHB1ZWRlbiB0cmFiYWphciBzb2JyZSB2ZWN0b3JlcyB5IGxvIGhhY2VuICoqZWxlbWVudG8gYSBlbGVtZW50byoqLiBFc3RvIHNpZ25pZmljYSBxdWUgc2kgY3Jlw6FzIGVzdG9zIGRvcyB2ZWN0b3JlczoKCmBgYHtyfQp4IDwtIDE6NCAgICMgMTo0IGNyZWEgdW4gdmVjdG9yIHF1ZSBlbXBpZXphIGVuIDEgeSB0ZXJtaW5hZW4gNCwKeSA8LSA2OjkKYGBgCgpgYGB7cn0KeApgYGAKYGBge3J9CnkKYGBgCnkgbG9zIHN1bcOhcwoKYGBge3J9CnggKyB5CmBgYAplbCByZXN1bHRhZG8gZXMgdW4gdmVjdG9yIGRlIGxhIG1pc21hIGxvbmdpdHVkIGRlIGB4YCBlIGB5YCBxdWUgZW4gY2FkYSBwb3NpY2nDs24gdGllbmUgbGEgc3VtYSBkZSBjYWRhIGVsZW1lbnRvIGRlIGB4YCBlIGB5YAoKYGBgCng6ICAxICAyICAzICA0CiAgICArICArICArICArCnk6ICA2ICA3ICA4ICA5Ci0tLS0tLS0tLS0tLS0tLQogICAgNyAgOSAxMSAxMwpgYGAKCkxvIG1pc21vIHN1Y2VkZSBhbCBtdWx0aXBsaWNhciB2ZWN0b3JlcwoKYGBge3J9CngqeQpgYGAKYGBgCng6ICAxICAgMiAgIDMgICA0CiAgICAqICAgKiAgICogICAqCnk6ICA2ICAgNyAgIDggICA5Ci0tLS0tLS0tLS0tLS0tLS0tCiAgICA2ICAxNCAgMjQgIDM2CmBgYAoKU2kgbG9zIHZlY3RvcmVzIG5vIHRpZW5lIGxhIG1pc21hIGxvbmdpdHVkLCBsb3MgZWxlbWVudG9zIGRlbCBtw6FzIGNvcnRvIHNlICJyZWNpY2xhbiIuCgpgYGB7cn0KeSA8LSBjKDYsIDcsIDgpCnggKiB5CmBgYApgYGAKeDogIDEgICAyICAgMyAgIDQKICAgICogICAqICAgKiAgICoKeTogIDYgICA3ICAgOCAgIDYKLS0tLS0tLS0tLS0tLS0tLS0KICAgIDYgIDE0ICAyNCAgMjQKYGBgCgpSIGVtaXRlIHVuYSBhZHZlcnRlbmNpYSAqKnPDs2xvIHNpIGxhIGxvbmdpdHVkIGRlbCB2ZWN0b3IgbGFyZ28gbm8gZXMgbcO6bHRpcGxvIGRlIGxhIGxvbmdpdHVkIGRlbCB2ZWN0b3IgY29ydG8qKi4gQ2FzaSBzaWVtcHJlIGVsIHJlY2ljbGFkbyBkZSB2ZWN0b3JlcyBlcyBzZcOxYWwgZGUgcXVlIGFsZ28gc2FsacOzIG1hbC4gTGEgw7puaWNhIGV4Y2VwY2nDs24gZXMgY3VhbmRvIGVsIHZlY3RvciBjb3J0byBlcyBkZSBsb25naXR1ZCAxLiBQb3IgZWplbXBsbywgZXMgdG90YWxtZW50ZSByYXpvbmFibGUgdXNhciBgeCAqIDJgIHBhcmEgZHVwbGljYXIgbG9zIGVsZW1lbnRvcyBkZSB4LiAKCgojIyBMZWVyIGRhdG9zIGRlIGV4Y2VsCgpTaSB0ZW7DqXMgbGEgdmlzdGEgYXZpc3BhZGEsIGhhYnLDoXMgbm90YWRvIHF1ZSBlbiBlbCBtZW51IGRlICJJbXBvcnQgRGF0YXNldCIgaGF5IHVuYSBvcGNpw7NuIHBhcmEgbGVlciBkYXRvcyBkZSBFeGNlbC4gRW4gZWZlY3RvLCBSU3R1ZGlvIHByb3ZlZSBsYSBtaXNtYSBheXVkYSBwYXJhIGxlZXIgZXN0ZSB0aXBvIGRlIGRhdG9zOgoKOjo6IHsuYWxlcnQgLmFsZXJ0LXNlY29uZGFyeX0KRmlsZSDihpIgSW1wb3J0IERhdGFzZXQg4oaSIEZyb20gRXhjZWwuLi4KOjo6CgohW10oaW1nL2ltcG9ydGFyLXBhaXNlcy14bC5wbmcpCgpOb3TDoSBxdWUgZW50cmUgbGFzIG9wY2lvbmVzIGRlIGFiYWpvIGEgbGEgaXpxdWllcmRhIGFwYXJlY2VuIGRvcyB2YXJpYWJsZXMgaW1wb3J0YW50ZXMuIFBvZMOpcyBzZWxlY2Npb25hciBkZSBxdcOpIGhvamEgbGVlciBsb3MgZGF0b3MgeSBxdcOpIHJhbmdvIHVzYXIuIEVzdG8gc2VndXJvIHF1ZSB0ZSB2YSBhIHNlciBtdXkgw7p0aWwgcGFyYSBlc29zIGFyY2hpdm9zIGRlIEV4Y2VsIGNvbiBtw7p0aXBsZXMgdGFibGFzIGVuIHVuIGFyY2hpdm8sIG8gaW5jbHVzbyBtw7psdGlwbGVzIHRhYmxhcyBlbiBjYWRhIGhvamEhCgpFbiBlc3RlIGNhc28gcGFpc2VzLnhsc3ggZXMgdW4gRXhjZWwgYnVlbmEgb25kYSwgeSBlbCBjw7NkaWdvIHBhcmEgbGVlciBsb3MgZGF0b3MgZXMgbXV5IHNpbXBsZToKCmBgYHtyfQpsaWJyYXJ5KHJlYWR4bCkKcGFpc2VzIDwtIHJlYWRfZXhjZWwoImRhdG9zL3BhaXNlcy54bHN4IikKYGBgCgpDb24gbGEgZnVuY2nDs24gYHN0cigpYCBwb2TDqXMgY29uZmlybWFyIHF1ZSBsb3MgZGF0b3MgbGXDrWRvcyBzb24gbG9zIG3DrXNtb3MgcXVlIHBhcmEgZWwgY3N2LgoKYGBge3J9CnN0cihwYWlzZXMpCmBgYAoKIyMgRm9ybWF0b3MgZGUgdGFibGFzCgpQZW5zw6EgdW4gbW9tZW50byBlbiBsYSBlc3RydWN0dXJhIGRlIGxvcyBkYXRvcyBkZSBgcGFpc2VzYC4gVGllbmUgc2VpcyBjb2x1bW5hcywgcGVybyBzw7NsbyB0cmVzIGRlIGVsbGFzIGNvbnRpZW5lbiB2YWxvcmVzIG9ic2VydmFkb3MgKGBlc3BlcmFuemFfZGVfdmlkYWAsIGBwb2JsYWNpb25gIHkgYHBpYl9wZXJfY2FwaXRhYCkgeSBsYXMgb3RyYXMgdHJlcyBzb24gbGFzICJjb29yZGVuYWRhcyI6IGBwYWlzYCwgYGNvbnRpbmVudGVgIHkgYGFuaW9gIHNvbiBjb2x1bW5hcyBxdWUgaWRlbnRpZmljYW4gbGEgb2JzZXZhY2nDs24uIERlIGhlY2hvLCBsYSBjb2x1bW5hIGBwYWlzYCB0aWVuZSB1biBtb250w7NuIGRlIGRhdG9zIHJlcGV0aWRvcyEgCgpFc3RvIGVzIHVuIGVqZW1wbG8gZGUgZm9ybWF0byAibGFyZ28iIChvICJ0aWR5IiBlbiBpbmdsw6lzKS4gTGEgaWRlYSBiw6FzaWNhIGRlIGRhdG9zICJsYXJnb3MiIGVzIHF1ZTogCgoqIGNhZGEgY29sdW1uYSBlcyB1bmEgdmFyaWFibGUKKiBjYWRhIGZpbGEgZXMgdW5hIG9ic2VydmFjacOzbgoKTGEgdGFibGEgYHBhaXNlc2AgZXMgYmFzYW50ZSBsYXJnYSAodGllbmUgMTcwNCBmaWxhcyB5IDYgY29sdW1uYXMhKSBwZXJvIHBvZHLDrWEgc2VyIG3DoXMgbGFyZ2EgYcO6bgoKCmBgYHtyLCBtZXNzYWdlPUZBTFNFfQpwYWlzZXNfbGFyZ28gPC0gcmVhZF9jc3YoImRhdG9zL3BhaXNlc19sYXJnby5jc3YiKQpzdHIocGFpc2VzX2xhcmdvKQpgYGAKTGEgdGFibGEgYHBhaXNlc19sYXJnb2AgdGllbmUgwqE1MTEyIGZpbGFzISBUaWVuZSB1biB2YWxvciBwYXJhIGNhZGEgcGHDrXMsIGHDsW8geSB2YXJpYWJsZS4gRXMgZGVjaXIsIGxhcyB0cmVzIGNvbHVtbmFzIHF1ZSBjb250ZW7DrWFuIHZhbG9yZXMgbnVtw6lyaWNvcywgZW4gZXN0YSB0YWJsYSBzb24gdW5hIHNvbGEgY29sdW1uYSBsbGFtYWRhICJ2YWxvciIuIAoKUGVybyB0YW1iacOpbiBwdWVkZW4gc2VyIHBvZHLDrWEgc2VyIG3DoXMgImFuY2hhIjoKCmBgYHtyLCBtZXNzYWdlPUZBTFNFfQpwYWlzZXNfYW5jaG8gPC0gcmVhZF9jc3YoImRhdG9zL3BhaXNlc19hbmNoby5jc3YiKQpzdHIocGFpc2VzX2FuY2hvKQpgYGAKYHBhaXNlc19hbmNob2AgdGllbmUgdW5hIHNvbGEgZmlsYSBwYXJhIGNhZGEgcGHDrXMsIHkgbG9zIGRhdG9zIGRlIGNhZGEgdmFyaWFibGUgeSBhw7FvIGVzdMOhIGVuIHVuYSBjb2x1bWFuIHByb3BpYS4gCgpOaW5ndW5hIGVzdHJ1Y3R1cmEgZGUgZGF0b3MgZXMgImxhIGNvcnJlY3RhIjsgZGlzdGludG9zIGFuw6FsaXNpcyB5IGRpc3RpbnRhcyBmdW5jaW9uZXMgc2UgbGxldmFuIG1lam9yIGNvbiBsb3MgZGF0b3MgZW4gZGlzdGludG8gImdyYWRvIGRlIGxvbmdpdHVkIi4gRXMgbXV5IG5vcm1hbCBlbXBlemFyIGNvbiBkYXRvcyBsYXJnb3MsIHRlbmVyIHF1ZSBwYXNhcmxvcyBhIGFuY2hvcyBwYXJhIGhhY2VyIHVuIGFuw6FsaXNpcyB5IGx1ZWdvIHZvbHZlciBhIHBhc2FyIGEgbGFyZ29zICh0YW4gbm9ybWFsIHF1ZSBoYXkgW3VuIHBhcXVldGUgZGUgUiBxdWUgZW5jYXBzdWxhIGVzZSBwcm9jZXNvXShodHRwczovL2dpdGh1Yi5jb20vZGdydHdvL3dpZHlyKSkuIA==</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("04-lectura-datos.Rmd");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

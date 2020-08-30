@@ -11,7 +11,7 @@
 
 
 
-<title>Hoja de ruta</title>
+<title>Mi primer RMarkdown</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -307,146 +307,45 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Hoja de ruta</h1>
+<h1 class="title toc-ignore">Mi primer RMarkdown</h1>
 
 </div>
 
 
-<p>La organización de los contenidos asume que se darán en 4 encuentros de 3 horas, pero podría ser disinto. Hay cierta interrelación entre los temas y asumimos que si vas directo a Visualización de datos, ya sabés como leerlos en R.</p>
-<div id="primer-encuentro" class="section level3">
-<h3>Primer encuentro</h3>
-<div id="contenidos" class="section level4">
-<h4>Contenidos</h4>
-<ul>
-<li><a href="01-introducion.html">¿Por qué R?</a>
-<ul>
-<li>Mapa para navegar RStudio.</li>
-<li>Definir variables.</li>
-<li>Ejecutar funciones.</li>
-<li>Instalar paquetes.</li>
-<li>Acceder y entender la ayuda y documentación de funciones y paquetes.</li>
-</ul></li>
-<li><a href="02-proyectos.html">Manejo de proyectos con RStudio</a>
-<ul>
-<li>Administrar una estructura de directorios.</li>
-<li>Saber dónde está el working directory.</li>
-</ul></li>
-<li><a href="03-reportes-I.html">Introducción a <code>{RMarkdown}</code></a>
-<ul>
-<li>Sintaxis básica de Markdown.</li>
-<li>Unificar código, gráficos y prosa.</li>
-</ul></li>
-<li><a href="04-lectura-datos.html">Lectura de datos ordenados</a>
-<ul>
-<li>Cargar tablas en memoria (csv y xlsx).</li>
-<li>Identificar datos ordenados.</li>
-<li>Diferenciar tablas “anchas” y “largas”.</li>
-<li>Tipos de datos en R.</li>
-<li>Dar formato a los distintos tipos de datos.</li>
-</ul></li>
-</ul>
-<p><em>Desafío: leer correctamente una base de datos</em></p>
+<div id="vamos-a-analizar-información-sobre-diamantes" class="section level2">
+<h2>Vamos a analizar información sobre diamantes</h2>
+<p>El paquete <code>datos</code> incluye muchas vaces de datos que se usan normalmente en ejemplos o en cursos y talleres para enseñar R. Uno de ellos es es <code>diamantes</code>. Veamos un resumen de este data set.</p>
+<pre class="r"><code>summary(diamantes)</code></pre>
+<pre><code>##      precio         quilate             corte       color        claridad    
+##  Min.   :  326   Min.   :0.2000   Regular  : 1610   D: 6775   SI1    :13065  
+##  1st Qu.:  950   1st Qu.:0.4000   Bueno    : 4906   E: 9797   VS2    :12258  
+##  Median : 2401   Median :0.7000   Muy bueno:12082   F: 9542   SI2    : 9194  
+##  Mean   : 3933   Mean   :0.7979   Premium  :13791   G:11292   VS1    : 8171  
+##  3rd Qu.: 5324   3rd Qu.:1.0400   Ideal    :21551   H: 8304   VVS2   : 5066  
+##  Max.   :18823   Max.   :5.0100                     I: 5422   VVS1   : 3655  
+##                                                     J: 2808   (Other): 2531  
+##   profundidad        tabla             x                y         
+##  Min.   :43.00   Min.   :43.00   Min.   : 0.000   Min.   : 0.000  
+##  1st Qu.:61.00   1st Qu.:56.00   1st Qu.: 4.710   1st Qu.: 4.720  
+##  Median :61.80   Median :57.00   Median : 5.700   Median : 5.710  
+##  Mean   :61.75   Mean   :57.46   Mean   : 5.731   Mean   : 5.735  
+##  3rd Qu.:62.50   3rd Qu.:59.00   3rd Qu.: 6.540   3rd Qu.: 6.540  
+##  Max.   :79.00   Max.   :95.00   Max.   :10.740   Max.   :58.900  
+##                                                                   
+##        z         
+##  Min.   : 0.000  
+##  1st Qu.: 2.910  
+##  Median : 3.530  
+##  Mean   : 3.539  
+##  3rd Qu.: 4.040  
+##  Max.   :31.800  
+## </code></pre>
 </div>
-<div id="objetivos-de-aprendizaje" class="section level4">
-<h4>Objetivos de aprendizaje</h4>
-<ol style="list-style-type: decimal">
-<li>Identificar las diferencias entre una sentencia de código y una acción en Excel.</li>
-<li>Entender los conceptos de variables, funciones.</li>
-<li>Entender la diferencia entre paquetes y librería.</li>
-<li>Acceder a la ayuda de una función e identificar el contenido.</li>
-<li>Poder:
-<ul>
-<li>crear un proyecto de RStudio,</li>
-<li>armar un .Rmd,</li>
-<li>leer datos,</li>
-<li>compilar el documento.</li>
-</ul></li>
-</ol>
-</div>
-</div>
-<div id="segundo-encuentro" class="section level3">
-<h3>Segundo encuentro</h3>
-<div id="contenidos-1" class="section level4">
-<h4>Contenidos</h4>
-<ul>
-<li>Manipulación de datos ordenados usando <code>{dplyr}</code>
-<ul>
-<li>Agregar y quitar filas y columnas.</li>
-<li>Crear nuevas columnas incluyendo cálculos y comparación de datos.</li>
-<li>Operador pipe %&gt;%</li>
-<li>Calcular medidas de resumen sobre los datos</li>
-</ul></li>
-<li>Visualización de datos con <code>{ggplot2}</code> - Primera parte
-<ul>
-<li>Graficar utilizando líneas y puntos (geometrías)</li>
-<li>Modificar parámetros estéticos de las geometrías.</li>
-<li>Agregar suavizado y líneas de tendencia.</li>
-</ul></li>
-</ul>
-<p><em>Desafío: generar una nueva columna a partir de información de otras columnas y generar resúmenes a partir de los datos.</em></p>
-</div>
-<div id="objetivos" class="section level4">
-<h4>Objetivos</h4>
-</div>
-</div>
-<div id="tercer-encuentro" class="section level3">
-<h3>Tercer encuentro</h3>
-<div id="contenidos-2" class="section level4">
-<h4>Contenidos</h4>
-<ul>
-<li>Visualización de datos con <code>{ggplot2}</code> - Segunda parte
-<ul>
-<li>Crear gráficos con múltiples geometrías.</li>
-<li>Graficar transformaciones estadísticas</li>
-<li>Usar paneles para graficar múltiples relaciones.</li>
-</ul></li>
-<li>Manipulación de datos ordenados usando <code>{dplyr}</code> y <code>{tidyr}</code> - Segunda parte
-<ul>
-<li>“Alargar” y “ensanchar” tablas.<br />
-</li>
-<li>Organizar columnas y sus nombres</li>
-<li>Combinar tablas de datos a partir de variables llave</li>
-</ul></li>
-<li>Creación de funciones
-<ul>
-<li>Definir una función y sus argumentos</li>
-<li>Definir valores por defecto para los argumentos</li>
-<li>Testear los posibles resultados de una función</li>
-</ul></li>
-</ul>
-<p><em>Desafío: generar gráficos a partir de la base de datos usada.</em></p>
-</div>
-<div id="objetivos-de-aprendizaje-1" class="section level4">
-<h4>Objetivos de aprendizaje</h4>
-</div>
-</div>
-<div id="cuarto-encuentro" class="section level3">
-<h3>Cuarto encuentro</h3>
-<div id="contenidos-3" class="section level4">
-<h4>Contenidos</h4>
-<ul>
-<li>Generación de informes con <code>{RMarkdown}</code>
-<ul>
-<li>Uso de distintos formatos de salida.</li>
-<li>Parametrización de reportes.</li>
-<li>Apariencia y temas</li>
-</ul></li>
-<li>Apariencia de tablas
-<ul>
-<li><code>{kable}</code> y <code>{kableExtra}</code></li>
-</ul></li>
-<li>Apariencia de gráficos para publicar
-<ul>
-<li>Escalas de colores</li>
-<li>Temas</li>
-<li>Definir etiquetas y títulos</li>
-</ul></li>
-</ul>
-<p><em>Desafío: generar un informe que incluya gráficos, texto y aplique lo visto previamente</em></p>
-</div>
-<div id="objetivos-de-aprendizaje-2" class="section level4">
-<h4>Objetivos de aprendizaje</h4>
-</div>
+<div id="algunos-gráficos" class="section level2">
+<h2>Algunos gráficos</h2>
+<p>También es interesante graficar estas observaciones para ver la relación entre variables.</p>
+<p><img src="mi-primer-rmarkdown_files/figure-html/pressure-1.png" width="672" /></p>
+<p>Si te preguntábas que hace <code>echo = FALSE</code> al comienzo del bloque de código, está ahí para no incluir el código de R en el archivo final pero si el plot que genera.</p>
 </div>
 
 
