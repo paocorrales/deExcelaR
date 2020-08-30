@@ -19,7 +19,7 @@ Al comienzo posiblemente tengan un script y uno o dos archivos con datos, pero e
 - Te permite continuar con lo que estabas haciendo hace una semana o hace un mes como si el tiempo no hubiera pasado. De alguna manera es un regalo para tu yo futuro.
 
 ::: {.alert .alert-info}
-#### Primer desafío: Crea un nuevo proyecto en RStudio 
+**Primer desafío: Crea un nuevo proyecto en RStudio**
 
 1. Hacé click en el menú “Archivo” (“File”) y luego en “Nuevo Proyecto” (“New Project”).
 2. Hacé click en “Nueva Carpeta” (“New Directory”).
@@ -38,7 +38,7 @@ La manera más simple de abrir un proyecto es abriendo la carpeta que lo contien
 RStudio permite tener varios proyectos abiertos, y esto es posible porque justamente cada proyecto tiene su propia carpeta. Si en algún momento trabajas con proyectos en paralelo vas a poder hacerlo sin que el código o los resultados de un análisis interfieran con otro.
 
 ::: {.alert .alert-info}
-#### Segundo desafío: Abrí tu nuevo proyecto desde el explorador de archivos
+**Segundo desafío: Abrí tu nuevo proyecto desde el explorador de archivos**
 
 1. Cerrá RStudio
 2. Desde el explorador de archivos, buscá la carpeta donde creaste tu proyecto.
@@ -68,7 +68,7 @@ Esto puede pasar si por ejemplo leemos una base de datos en memoria pero no guar
 
 
 ::: {.alert .alert-info}
-#### Tercer desafío: Configurá RStudio 
+**Tercer desafío: Configurá RStudio** 
 
 1. Hacé click en el menú “Herramientas (“Tools”) y luego “Opciones globales” (“Global Options”).
 2. Destildá la opción “Recuperar .RData al inicio de la sesión” (“Restore .RData into workspace at startup”).
