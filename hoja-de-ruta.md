@@ -8,7 +8,7 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
 
 #### Contenidos
 
-- [¿Por qué R?](01-intro.html)
+- [¿Por qué R?](01-introducion.html)
   - Mapa para navegar RStudio. 
   - Definir variables. 
   - Ejecutar funciones.
@@ -17,7 +17,7 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
 - [Manejo de proyectos con RStudio](02-proyectos.html)
   - Administrar una estructura de directorios.
   - Saber dónde está el working directory.
-- Introducción a `{RMarkdown}`
+- [Introducción a `{RMarkdown}`](03-reportes-I.html)
   - Sintaxis básica de Markdown.
   - Unificar código, gráficos y prosa.
 - Lectura de datos ordenados

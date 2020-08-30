@@ -9,6 +9,8 @@ navbar:
         href: 01-intro.html
       - text: Proyectos
         href: 02-proyectos.html
+      - text: Reportes I
+        href: 03-reportes-I.html
 output_dir: docs
 output:
   html_document:
