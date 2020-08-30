@@ -193,6 +193,6 @@ Pero también pueden ser podría ser más "ancha":
 paises_ancho <- read_csv("datos/paises_ancho.csv")
 str(paises_ancho)
 ```
-`paises_ancho` tiene una sola fila para cada país, y los datos de cada variable y año está en una columan propia. 
+`paises_ancho` tiene una sola fila para cada país, y los datos de cada variable y año está en una columna propia. 
 
 Ninguna estructura de datos es "la correcta"; distintos análisis y distintas funciones se llevan mejor con los datos en distinto "grado de longitud". Es muy normal empezar con datos largos, tener que pasarlos a anchos para hacer un análisis y luego volver a pasar a largos (tan normal que hay [un paquete de R que encapsula ese proceso](https://github.com/dgrtwo/widyr)). 
