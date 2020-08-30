@@ -1,5 +1,6 @@
 ---
 title: "Hoja de ruta"
+
 ---
 
 La organización de los contenidos asume que se darán en 4 encuentros de 3 horas, pero podría ser disinto. Hay cierta interrelación entre los temas y asumimos que si vas directo a Visualización de datos, ya sabés como leerlos en R.
@@ -20,7 +21,7 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
 - [Introducción a `{RMarkdown}`](03-reportes-I.html)
   - Sintaxis básica de Markdown.
   - Unificar código, gráficos y prosa.
-- Lectura de datos ordenados
+- [Lectura de datos ordenados](04-lectura-datos.html)
   - Cargar tablas en memoria (csv y xlsx).
   - Identificar datos ordenados.
   - Diferenciar tablas “anchas” y “largas”.
