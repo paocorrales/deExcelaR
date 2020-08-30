@@ -6,7 +6,7 @@ navbar:
   - text: Temas
     menu: 
       - text: Introducción
-        href: 01-intro.html
+        href: 01-introduccion.html
       - text: Proyectos
         href: 02-proyectos.html
       - text: Reportes I
