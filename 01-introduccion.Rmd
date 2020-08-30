@@ -128,20 +128,20 @@ R es un lenguaje creado por estadísticos y pensado para la estadística, por lo
 Para instalar paquetes de R, la forma mas fácil es con la función `install.packages()`. Entonces, por ejemplo, 
 
 ```{r, eval=FALSE}
-install.packages("stringi")
+install.packages("readr")
 ```
 
-te instala un paquete que contiene muchas funciones para el manejo de texto. Luego, usando el comando
+te instala un paquete que contiene funciones para leer datos. Luego, usando el comando
 
 ```{r}
-library(stringi)
+library(readr)
 ```
 
-le decís a R que cargue las funciones que vienen en el paquete stringi para usarlas.
+le decís a R que cargue las funciones que vienen en el paquete readr para usarlas.
 
 
 ::: {.alert .alert-success}
-**Nota**: Si cerrás y volveś a abrir R, vas a tener que usar `library(stringi)` nuevamente para acceder a la funcionalidad del paquete stringi.
+**Nota**: Si cerrás y volveś a abrir R, vas a tener que usar `library(readr)` nuevamente para acceder a la funcionalidad del paquete readr
 :::
 
 
