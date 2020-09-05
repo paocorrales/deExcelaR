@@ -53,7 +53,7 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
   - Crear nuevas columnas incluyendo cálculos y comparación de datos.
   - Operador pipe %>%
   - Calcular medidas de resumen sobre los datos
-- Visualización de datos con `{ggplot2}` - Primera parte
+- [Visualización de datos con `{ggplot2}` - Primera parte](06-graficos-I.html)
     - Graficar utilizando líneas y puntos (geometrías)
     - Modificar parámetros estéticos de las geometrías.
     - Agregar suavizado y líneas de tendencia.
