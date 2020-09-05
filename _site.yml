@@ -17,6 +17,10 @@ navbar:
         href: 05-dplyr-I.html
       - text: Gráficos I
         href: 06-graficos-I.html
+  - text: Desafíos
+    menu:
+      - text: Leer datos
+        href: desafio-1.html
 output_dir: docs
 output:
   html_document:

@@ -28,7 +28,7 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
   - Tipos de datos en R.
   - Dar formato a los distintos tipos de datos.
 
-*Desafío: leer correctamente una base de datos*
+*Desafío: [leer correctamente una base de datos](desafio-1.html)*
 
 
 #### Objetivos de aprendizaje
