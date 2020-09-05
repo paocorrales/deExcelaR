@@ -1,0 +1,28 @@
+---
+title: "Desafío 1: Leer una base de datos"
+output: 
+  html_document:
+    theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+La idea de este desafío es que te armes un proyecto y que leas datos para usar el resto del curso. 
+
+
+## Creá un proyecto de RStudio
+
+Si te olvidaste cómo se hace, fijate en [esta sección](02-proyectos.html). Asegurate de usar un nombre descriptivo. 
+
+## Decidí que datos usar
+
+Buscá algún set de datos que hayas usado para algo o quieras usar. Puede ser en formato .csv o de Excel. Guardalo en una carpeta llamada "datos" dentro de tu proyecto.
+
+## Lee los datos en R 
+
+Creá un archivo de RMarkdown (fijate en  [esta sección](03-reportes-I.html)) y describí los datos con tus palabras. Qué datos son, qué tiene cada columna y de dónde salieron. Armá un *chunk* que lea los datos (fijate en [esta sección](04-lectura-datos.html) y mostralos. 
+
+
+
