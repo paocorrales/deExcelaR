@@ -1,5 +1,5 @@
 ---
-title: "Reportes I"
+title: "Introducción a {RMarkdown}"
 output: 
   html_document:
     code_download: true
