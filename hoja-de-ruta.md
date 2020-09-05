@@ -48,7 +48,7 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
 
 #### Contenidos
 
-- Manipulación de datos ordenados usando `{dplyr}`
+- [Manipulación de datos ordenados usando `{dplyr}`](05-dplyr-I.html)
   - Agregar y quitar filas y columnas.
   - Crear nuevas columnas incluyendo cálculos y comparación de datos.
   - Operador pipe %>%
