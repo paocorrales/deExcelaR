@@ -25,25 +25,102 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -385,6 +462,18 @@ div.tocify {
     </li>
   </ul>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Desafíos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="desafio-1.html">Leer datos</a>
+    </li>
+  </ul>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -396,9 +485,9 @@ div.tocify {
 <div class="fluid-row" id="header">
 
 <div class="btn-group pull-right">
-<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Código</span> <span class="caret"></span></button>
 <ul class="dropdown-menu" style="min-width: 50px;">
-<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+<li><a id="rmd-download-source" href="#">Descargar Rmd</a></li>
 </ul>
 </div>
 
@@ -413,9 +502,9 @@ div.tocify {
 <div id="primera-capa-el-área-del-gráfico" class="section level3">
 <h3>Primera capa: el área del gráfico</h3>
 <p>Cómo siempre será necesario cargar los paquetes que vamos a usar y ya que estamos los datos con los que venimos trabajando:</p>
-<pre class="r"><code>library(readr)
-library(ggplot2)
-paises &lt;- read_csv(&quot;datos/paises.csv&quot;)</code></pre>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(readr)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>paises &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   pais = col_character(),
@@ -428,14 +517,14 @@ paises &lt;- read_csv(&quot;datos/paises.csv&quot;)</code></pre>
 <p>La función principal de ggplot2 es justamente <code>ggplot()</code> que nos permite <em>iniciar</em> el gráfico y además definir las características <em>globales</em>. El primer argumento de esta función serán los datos que queremos visualizar, siempre en un data.frame. En este caso usamos <code>paises</code>.</p>
 <p>El segundo argumento se llama mapping justamente porque <em>mapea</em> o <em>dibuja</em> los ejes del gráfico y <strong>siempre</strong> va acompañado de la función <code>aes()</code>. La función <code>aes()</code> recibe las propiedades estésticas del gráfico (o <em>aesthetic</em> en inglés) a partir de las variables (o columnas) del data.frame estamos usando. En este caso le indicamos que en el eje <strong>x</strong> querremos graficar la variable <code>pib_per_capita</code> y en eje <strong>y</strong> la variable <code>esperanza_de_vida</code>.</p>
 <p>Pero esta sola función no es suficiente, solo genera la primera capa: el área del gráfico.</p>
-<pre class="r"><code>ggplot(data = paises, mapping = aes(x = pib_per_capita, y = esperanza_de_vida))</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> pib_per_capita, <span class="dt">y =</span> esperanza_de_vida))</span></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="segunda-capa-geometrías" class="section level3">
 <h3>Segunda capa: geometrías</h3>
 <p>Necesitamos agregar una nueva capa a nuestro gráfico, los elementos geométricos o <em>geoms</em> que representaran los datos. Para esto <em>sumamos</em> una función geom, por ejemplo si queremos representar los datos con puntos usaremos <code>geom_point()</code></p>
-<pre class="r"><code>ggplot(data = paises, mapping = aes(x = pib_per_capita, y = esperanza_de_vida)) +
-  geom_point()</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> pib_per_capita, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>¡Nuestro primer gráfico!</p>
 <div class="alert alert-info">
@@ -444,15 +533,15 @@ paises &lt;- read_csv(&quot;datos/paises.csv&quot;)</code></pre>
 <p>¿Te parece útil este gráfico?</p>
 </div>
 <p>Este gráfico tiene muchísima información porque tiene un punto por cada país para cada año para visualizar la esperanza de vida. Pero por ahora no podemos identificar esos paises, necesitamos agregar información al gráfico.</p>
-<pre class="r"><code>ggplot(data = paises, mapping = aes(x = anio, y = esperanza_de_vida)) +
-  geom_point()</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> anio, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="mapear-variables-a-elementos" class="section level3">
 <h3>Mapear variables a elementos</h3>
 <p>Una posible solución sería utilizar otras variables de nuestros datos, por ejemplo <code>continente</code> y <em>mapear</em> el color de los puntos de a cuerdo al continente que pertenecen.</p>
-<pre class="r"><code>ggplot(data = paises, mapping = aes(x = anio, y = esperanza_de_vida)) +
-  geom_point(aes(color = continente))</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> anio, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente))</span></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Ahh, ahora está un poco mejor. Por ejemplo ya podemos ver que muchos paises de Europa (los puntos celestes) tienen en promedio mayor esperanza de vida a lo largo de los años que muchos paises de África (los puntos rojos). Aún no podemos identificar los paises individualmente pero podemos sacar algo más de información de nuestros datos.</p>
 <p>Algo muy importante a tener en cuenta: <strong>los puntos toman un color de acuerdo a una variable de los datos</strong>, y para que ggplot2 identifique esa variable (en este caso <code>continente</code>) es necesario incluirla dentro de una función <code>aes()</code>.</p>
@@ -460,12 +549,12 @@ paises &lt;- read_csv(&quot;datos/paises.csv&quot;)</code></pre>
 <div id="otras-geometrías" class="section level3">
 <h3>Otras geometrías</h3>
 <p>Este gráfico posiblemente no sea muy adecuado si queremos visualizar la <em>evolución</em> de una variable a lo largo del tiempo, necesitamos cambiar la geometría a lineas usando <code>geom_line()</code></p>
-<pre class="r"><code>ggplot(data = paises, mapping = aes(x = anio, y = esperanza_de_vida)) +
-  geom_line(aes(color = continente))</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> anio, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente))</span></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Por suerte las funciones <code>geom_*()</code> tienen más o menos nombres amigables. Pero el gráfico sigue teniendo problemas, al parecer dibujó una línea por continente (o algo así). Si estuvieramos dibujando este gráfico con lapiz y papel muy posiblemente hubieramos identificado los puntos que corresponden a cada país y los hubieramos “unido con líneas”, necesitamos que ggplot2 haga esto. ¿Cómo le indicamos que puntos corresponde a cada pais? Necesitamos que los <em>agrupe</em> por la variablel <code>pais</code> (¡qué bueno que tenemos toda esa información en nuestra base de datos!).</p>
-<pre class="r"><code>ggplot(data = paises, mapping = aes(x = anio, y = esperanza_de_vida)) +
-  geom_line(aes(color = continente, group = pais))</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> anio, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">group =</span> pais))</span></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Usamos el argumento <code>group =</code> y de nuevo, lo incluimos dentro de la función <code>aes()</code> para indicarle a ggplot2 que busque la variable <code>pais</code> dentro del data.frame que estamos usando.</p>
 <p>Y ahora si, conseguimos el gráfico que estamos buscando.</p>
@@ -479,9 +568,9 @@ paises &lt;- read_csv(&quot;datos/paises.csv&quot;)</code></pre>
 </ol>
 </div>
 <p>Acá surge una característica importante de las capas: pueden tener apariencia independiente si solo <em>mapeamos</em> el color en la capa de las líneas y no en la capa de los puntos. Al mismo tiempo, si quisieramos que todas las capas tenga la misma apariencia podemos incluir el argumento <code>color =</code>en la función global <code>ggpplot()</code> o repetirlo en cada capa.</p>
-<pre class="r"><code>ggplot(paises, aes(anio, esperanza_de_vida)) +
-  geom_line(aes(color = continente, group = pais)) +
-  geom_point()</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">ggplot</span>(paises, <span class="kw">aes</span>(anio, esperanza_de_vida)) <span class="op">+</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">group =</span> pais)) <span class="op">+</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <div class="alert alert-success">
 <p>Si te preguntabas a donde fueron a parar el <code>data =</code>, el <code>mapping =</code> y los nombres de los argumentos adentro de la función <code>aes()</code>, <code>x =</code> e <code>y =</code>, resulta que estamos aprovechando que tanto ggplot2 como nosotros ahora sabemos en que orden recibe la información cada función. Siempre el primer elemento que le <em>pasemos</em> o indiquemos a la función <code>ggplot()</code> será el data.frame.</p>
@@ -499,7 +588,7 @@ paises &lt;- read_csv(&quot;datos/paises.csv&quot;)</code></pre>
 <div class="alert alert-success">
 <p><strong>Modificar elementos utilizando un valor único</strong></p>
 <p>Es posible que en algún momento necesites cambiar la apariencia de los elementos o geometrías independientemente de las variables de tu data.frame. Por ejemplo podrías querere que todos los puntos sean de un único color: rojos. En este caso `geom_point(aes(color = “red”)) -ojo que los colores van en inglés- no va a funcionar, de hecho ggplot2 intentará encontrar una variable “red” dentro del data.frame sin exito.</p>
-<p>Ahora que no nos interesa <em>mapear</em> el color a una variable, podemos mover ese argumento <strong>afuera</strong> de la función <code>aes()</code>: <code>geom_point(color = &quot;red&quot;)</code>.</p>
+<p>Ahora que no nos interesa <em>mapear</em> el color a una variable, podemos mover ese argumento <strong>afuera</strong> de la función <code>aes()</code>: <code>geom_point(color = "red")</code>.</p>
 </div>
 </div>
 <div id="relación-entre-variables" class="section level3">
@@ -507,23 +596,23 @@ paises &lt;- read_csv(&quot;datos/paises.csv&quot;)</code></pre>
 <p>Muchas veces no es suficiente con mirar un gráfico para identificar la relación entre las variables y entonces calculamos una tendencia o ajustamos los datos a una función (por ejemplo a una recta). Por supuesto ggplot2 tiene una geometría para sumar esta capa a los gráficos.</p>
 <p>También es posible que necesitemos manipular los datos antes de poder hacer un gráfico. A veces esa mannipulación será compleja y entonces para no repetir el cálculo muchas veces, guardaremos los datos modificados en una nueva variable. Pero también podemos <em>encadenar</em> la manipulación de los datos y el gráfico resultante.</p>
 <p>Por ejemplo, calculemos la esperanza de vida media por continente y para cada año usando <a href="05-dplyr-I.html"><code>dplyr</code></a> y luego grafiquemos la <code>esperanza_de_vida_media</code> a los largo de los <code>anios</code>:</p>
-<pre class="r"><code>library(dplyr)
-
-paises %&gt;% 
-  group_by(continente, anio) %&gt;% 
-  summarise(esperanza_de_vida_media = mean(esperanza_de_vida)) %&gt;% 
-  ggplot(aes(anio, esperanza_de_vida_media)) +  # Acá se acaban los %&gt;% y comienzan los &quot;+&quot;
-  geom_point()</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="st">  </span><span class="kw">group_by</span>(continente, anio) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">esperanza_de_vida_media =</span> <span class="kw">mean</span>(esperanza_de_vida)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-6"><a href="#cb10-6"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, esperanza_de_vida_media)) <span class="op">+</span><span class="st">  </span><span class="co"># Acá se acaban los %&gt;% y comienzan los &quot;+&quot;</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;continente&#39; (override with `.groups` argument)</code></pre>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Esto es posible gracias al operador <code>%&gt;%</code> que le <em>pasa</em> el resutado de <code>summarise()</code> a la función <code>ggplot()</code>. Y este resultado no es ni más ni menos que el data.frame que necesitamos para hacer nuestro gráfico. Es importante notar que una vez que comenzamos el gráfico ya <strong>no</strong> se puede usar el operador <code>%&gt;%</code> y las capas del gráfico se <em>suman</em> como siempre con <code>+</code>.</p>
 <p>Este gráfico entonces parece mostrar que la esperanza de vida fue aumentado a lo largo de los años pero sería interesante ver esa relación más explicitamente agregando una nueva capa con <code>geom_smooth()</code>.</p>
-<pre class="r"><code>paises %&gt;% 
-  group_by(continente, anio) %&gt;% 
-  summarise(esperanza_de_vida_media = mean(esperanza_de_vida)) %&gt;% 
-  ggplot(aes(anio, esperanza_de_vida_media)) +  
-  geom_point() +
-  geom_smooth()</code></pre>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="st">  </span><span class="kw">group_by</span>(continente, anio) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">esperanza_de_vida_media =</span> <span class="kw">mean</span>(esperanza_de_vida)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, esperanza_de_vida_media)) <span class="op">+</span><span class="st">  </span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="st">  </span><span class="kw">geom_smooth</span>()</span></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;continente&#39; (override with `.groups` argument)</code></pre>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
@@ -532,19 +621,19 @@ paises %&gt;%
 <div class="alert alert-info">
 <p><strong>Tercer desafío</strong></p>
 <p>Modificá el siguiente código para obtener el gráfico que se muestra más abajo.</p>
-<pre class="r"><code>paises %&gt;% 
-  group_by(continente, _____) %&gt;% 
-  summarise(esperanza_de_vida_media = mean(esperanza_de_vida)) %&gt;% 
-  ggplot(aes(anio, ________________)) +  
-  geom_point(aes(color = continente), size = 3) +
-  geom_smooth(color = continente) </code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="st">  </span><span class="kw">group_by</span>(continente, _____) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">esperanza_de_vida_media =</span> <span class="kw">mean</span>(esperanza_de_vida)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-4"><a href="#cb15-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, ________________)) <span class="op">+</span><span class="st">  </span></span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente), <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
+<span id="cb15-6"><a href="#cb15-6"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">color =</span> continente) </span></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;continente&#39; (override with `.groups` argument)</code></pre>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiVmlzdWFsaXphY2nDs24gZGUgZGF0b3MgY29uIHtnZ3Bsb3QyfSBJIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCiAgICB0b2M6IHRydWUKICAgIHRvY19mbG9hdDogdHJ1ZQotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUpCmBgYAoKVmlzdWFsaXphciBkYXRvcyBlcyDDunRpbCBwYXJhIGlkZW50aWZpY2FyIGEgcmVsYWNpw7NuIGVudHJlIGRpc3RpbnRhcyB2YXJpYWJsZXMgcGVybyB0YW1iacOpbiBwYXJhIGNvbXVuaWNhciBlbCBhbsOhbGlzaXMgZGUgbG9zIGRhdG9zIHkgcmVzdWx0YWRvcy4gRWwgcGFxdWV0ZSBgZ2dwbG90MmAgcGVybWl0ZSBnZW5lcmFyIGdyw6FmaWNvcyBkZSBncmFuIGNhbGlkYWQgZW4gcG9jb3MgcGFzb3MuIEN1YWxxdWllciBncsOhZmljbyBkZSBnZ3Bsb3QgdGVuZHLDoSBjb21vIG3DrW5pbW8gMyBjb21wb25lbnRlczogbG9zICoqZGF0b3MqKiwgdW4gKipzaXN0ZW1hIGRlIGNvb3JkZW5hZGFzKiogeSB1bmEgKipnZW9tZXRyw61hKiogKGxhIHJlcHJlc2VudGFjacOzbiB2aXN1YWwgZGUgbG9zIGRhdG9zKSB5IHNlIGlyw6EgY29uc3RydXllbmRvIHBvciBjYXBhcy4gCgojIyMgUHJpbWVyYSBjYXBhOiBlbCDDoXJlYSBkZWwgZ3LDoWZpY28KCkPDs21vIHNpZW1wcmUgc2Vyw6EgbmVjZXNhcmlvIGNhcmdhciBsb3MgcGFxdWV0ZXMgcXVlIHZhbW9zIGEgdXNhciB5IHlhIHF1ZSBlc3RhbW9zIGxvcyBkYXRvcyBjb24gbG9zIHF1ZSB2ZW5pbW9zIHRyYWJhamFuZG86CgpgYGB7cn0KbGlicmFyeShyZWFkcikKbGlicmFyeShnZ3Bsb3QyKQpwYWlzZXMgPC0gcmVhZF9jc3YoImRhdG9zL3BhaXNlcy5jc3YiKQpgYGAKCkxhIGZ1bmNpw7NuIHByaW5jaXBhbCBkZSBnZ3Bsb3QyIGVzIGp1c3RhbWVudGUgYGdncGxvdCgpYCBxdWUgbm9zIHBlcm1pdGUgKmluaWNpYXIqIGVsIGdyw6FmaWNvIHkgYWRlbcOhcyBkZWZpbmlyIGxhcyBjYXJhY3RlcsOtc3RpY2FzICpnbG9iYWxlcyouIEVsIHByaW1lciBhcmd1bWVudG8gZGUgZXN0YSBmdW5jacOzbiBzZXLDoW4gbG9zIGRhdG9zIHF1ZSBxdWVyZW1vcyB2aXN1YWxpemFyLCBzaWVtcHJlIGVuIHVuIGRhdGEuZnJhbWUuIEVuIGVzdGUgY2FzbyB1c2Ftb3MgYHBhaXNlc2AuIAoKRWwgc2VndW5kbyBhcmd1bWVudG8gc2UgbGxhbWEgbWFwcGluZyBqdXN0YW1lbnRlIHBvcnF1ZSAqbWFwZWEqIG8gKmRpYnVqYSogbG9zIGVqZXMgZGVsIGdyw6FmaWNvIHkgKipzaWVtcHJlKiogdmEgYWNvbXBhw7FhZG8gZGUgbGEgZnVuY2nDs24gYGFlcygpYC4gTGEgZnVuY2nDs24gYGFlcygpYCByZWNpYmUgbGFzIHByb3BpZWRhZGVzIGVzdMOpc3RpY2FzIGRlbCBncsOhZmljbyAobyAqYWVzdGhldGljKiBlbiBpbmdsw6lzKSBhIHBhcnRpciBkZSBsYXMgdmFyaWFibGVzIChvIGNvbHVtbmFzKSBkZWwgZGF0YS5mcmFtZSBlc3RhbW9zIHVzYW5kby4gRW4gZXN0ZSBjYXNvIGxlIGluZGljYW1vcyBxdWUgZW4gZWwgZWplICoqeCoqIHF1ZXJyZW1vcyBncmFmaWNhciBsYSB2YXJpYWJsZSBgcGliX3Blcl9jYXBpdGFgIHkgZW4gZWplICoqeSoqIGxhIHZhcmlhYmxlIGBlc3BlcmFuemFfZGVfdmlkYWAuCgpQZXJvIGVzdGEgc29sYSBmdW5jacOzbiBubyBlcyBzdWZpY2llbnRlLCBzb2xvIGdlbmVyYSBsYSBwcmltZXJhIGNhcGE6IGVsIMOhcmVhIGRlbCBncsOhZmljby4KCmBgYHtyfQpnZ3Bsb3QoZGF0YSA9IHBhaXNlcywgbWFwcGluZyA9IGFlcyh4ID0gcGliX3Blcl9jYXBpdGEsIHkgPSBlc3BlcmFuemFfZGVfdmlkYSkpCmBgYAoKIyMjIFNlZ3VuZGEgY2FwYTogZ2VvbWV0csOtYXMKTmVjZXNpdGFtb3MgYWdyZWdhciB1bmEgbnVldmEgY2FwYSBhIG51ZXN0cm8gZ3LDoWZpY28sIGxvcyBlbGVtZW50b3MgZ2VvbcOpdHJpY29zIG8gKmdlb21zKiBxdWUgcmVwcmVzZW50YXJhbiBsb3MgZGF0b3MuIFBhcmEgZXN0byAqc3VtYW1vcyogdW5hIGZ1bmNpw7NuIGdlb20sIHBvciBlamVtcGxvIHNpIHF1ZXJlbW9zIHJlcHJlc2VudGFyIGxvcyBkYXRvcyBjb24gcHVudG9zIHVzYXJlbW9zIGBnZW9tX3BvaW50KClgCgpgYGB7cn0KZ2dwbG90KGRhdGEgPSBwYWlzZXMsIG1hcHBpbmcgPSBhZXMoeCA9IHBpYl9wZXJfY2FwaXRhLCB5ID0gZXNwZXJhbnphX2RlX3ZpZGEpKSArCiAgZ2VvbV9wb2ludCgpCmBgYAoKwqFOdWVzdHJvIHByaW1lciBncsOhZmljbyEgCgo6Ojogey5hbGVydCAuYWxlcnQtaW5mb30KKipQcmltZXIgZGVzYWbDrW8KCkFob3JhIGVzIHR1IHR1cm5vLiBNb2RpZmljYSBlbCBncsOhZmljbyBhbnRlcmlvciBwYXJhIHZpc3VhbGl6YXIgY8OzbW8gY2FtYmlhIGxhIGVzcGVyYW56YSBkZSB2aWRhIGEgbG8gbGFyZ28gZGUgbG9zIGHDsW9zLiAKCsK/VGUgcGFyZWNlIMO6dGlsIGVzdGUgZ3LDoWZpY28/Cjo6OgoKRXN0ZSBncsOhZmljbyB0aWVuZSBtdWNow61zaW1hIGluZm9ybWFjacOzbiBwb3JxdWUgdGllbmUgdW4gcHVudG8gcG9yIGNhZGEgcGHDrXMgcGFyYSBjYWRhIGHDsW8gcGFyYSB2aXN1YWxpemFyIGxhIGVzcGVyYW56YSBkZSB2aWRhLiBQZXJvIHBvciBhaG9yYSBubyBwb2RlbW9zIGlkZW50aWZpY2FyIGVzb3MgcGFpc2VzLCBuZWNlc2l0YW1vcyBhZ3JlZ2FyIGluZm9ybWFjacOzbiBhbCBncsOhZmljby4KCmBgYHtyfQpnZ3Bsb3QoZGF0YSA9IHBhaXNlcywgbWFwcGluZyA9IGFlcyh4ID0gYW5pbywgeSA9IGVzcGVyYW56YV9kZV92aWRhKSkgKwogIGdlb21fcG9pbnQoKQpgYGAKCiMjIyBNYXBlYXIgdmFyaWFibGVzIGEgZWxlbWVudG9zCgpVbmEgcG9zaWJsZSBzb2x1Y2nDs24gc2Vyw61hIHV0aWxpemFyIG90cmFzIHZhcmlhYmxlcyBkZSBudWVzdHJvcyBkYXRvcywgcG9yIGVqZW1wbG8gYGNvbnRpbmVudGVgIHkgKm1hcGVhciogZWwgY29sb3IgZGUgbG9zIHB1bnRvcyBkZSBhIGN1ZXJkbyBhbCBjb250aW5lbnRlIHF1ZSBwZXJ0ZW5lY2VuLgoKYGBge3J9CmdncGxvdChkYXRhID0gcGFpc2VzLCBtYXBwaW5nID0gYWVzKHggPSBhbmlvLCB5ID0gZXNwZXJhbnphX2RlX3ZpZGEpKSArCiAgZ2VvbV9wb2ludChhZXMoY29sb3IgPSBjb250aW5lbnRlKSkKYGBgCgpBaGgsIGFob3JhIGVzdMOhIHVuIHBvY28gbWVqb3IuIFBvciBlamVtcGxvIHlhIHBvZGVtb3MgdmVyIHF1ZSBtdWNob3MgcGFpc2VzIGRlIEV1cm9wYSAobG9zIHB1bnRvcyBjZWxlc3RlcykgdGllbmVuIGVuIHByb21lZGlvIG1heW9yIGVzcGVyYW56YSBkZSB2aWRhIGEgbG8gbGFyZ28gZGUgbG9zIGHDsW9zIHF1ZSBtdWNob3MgcGFpc2VzIGRlIMOBZnJpY2EgKGxvcyBwdW50b3Mgcm9qb3MpLiBBw7puIG5vIHBvZGVtb3MgaWRlbnRpZmljYXIgbG9zIHBhaXNlcyBpbmRpdmlkdWFsbWVudGUgcGVybyBwb2RlbW9zIHNhY2FyIGFsZ28gbcOhcyBkZSBpbmZvcm1hY2nDs24gZGUgbnVlc3Ryb3MgZGF0b3MuIAoKQWxnbyBtdXkgaW1wb3J0YW50ZSBhIHRlbmVyIGVuIGN1ZW50YTogKipsb3MgcHVudG9zIHRvbWFuIHVuIGNvbG9yIGRlIGFjdWVyZG8gYSB1bmEgdmFyaWFibGUgZGUgbG9zIGRhdG9zKiosIHkgcGFyYSBxdWUgZ2dwbG90MiBpZGVudGlmaXF1ZSBlc2EgdmFyaWFibGUgKGVuIGVzdGUgY2FzbyBgY29udGluZW50ZWApIGVzIG5lY2VzYXJpbyBpbmNsdWlybGEgZGVudHJvIGRlIHVuYSBmdW5jacOzbiBgYWVzKClgLgoKIyMjIE90cmFzIGdlb21ldHLDrWFzCgpFc3RlIGdyw6FmaWNvIHBvc2libGVtZW50ZSBubyBzZWEgbXV5IGFkZWN1YWRvIHNpIHF1ZXJlbW9zIHZpc3VhbGl6YXIgbGEgKmV2b2x1Y2nDs24qIGRlIHVuYSB2YXJpYWJsZSBhIGxvIGxhcmdvIGRlbCB0aWVtcG8sIG5lY2VzaXRhbW9zIGNhbWJpYXIgbGEgZ2VvbWV0csOtYSBhIGxpbmVhcyB1c2FuZG8gYGdlb21fbGluZSgpYAoKYGBge3J9CmdncGxvdChkYXRhID0gcGFpc2VzLCBtYXBwaW5nID0gYWVzKHggPSBhbmlvLCB5ID0gZXNwZXJhbnphX2RlX3ZpZGEpKSArCiAgZ2VvbV9saW5lKGFlcyhjb2xvciA9IGNvbnRpbmVudGUpKQpgYGAKClBvciBzdWVydGUgbGFzIGZ1bmNpb25lcyBgZ2VvbV8qKClgIHRpZW5lbiBtw6FzIG8gbWVub3Mgbm9tYnJlcyBhbWlnYWJsZXMuIFBlcm8gZWwgZ3LDoWZpY28gc2lndWUgdGVuaWVuZG8gcHJvYmxlbWFzLCBhbCBwYXJlY2VyIGRpYnVqw7MgdW5hIGzDrW5lYSBwb3IgY29udGluZW50ZSAobyBhbGdvIGFzw60pLiBTaSBlc3R1dmllcmFtb3MgZGlidWphbmRvIGVzdGUgZ3LDoWZpY28gY29uIGxhcGl6IHkgcGFwZWwgbXV5IHBvc2libGVtZW50ZSBodWJpZXJhbW9zIGlkZW50aWZpY2FkbyBsb3MgcHVudG9zIHF1ZSBjb3JyZXNwb25kZW4gYSBjYWRhIHBhw61zIHkgbG9zIGh1YmllcmFtb3MgInVuaWRvIGNvbiBsw61uZWFzIiwgbmVjZXNpdGFtb3MgcXVlIGdncGxvdDIgaGFnYSBlc3RvLiDCv0PDs21vIGxlIGluZGljYW1vcyBxdWUgcHVudG9zIGNvcnJlc3BvbmRlIGEgY2FkYSBwYWlzPyBOZWNlc2l0YW1vcyBxdWUgbG9zICphZ3J1cGUqIHBvciBsYSB2YXJpYWJsZWwgYHBhaXNgICjCoXF1w6kgYnVlbm8gcXVlIHRlbmVtb3MgdG9kYSBlc2EgaW5mb3JtYWNpw7NuIGVuIG51ZXN0cmEgYmFzZSBkZSBkYXRvcyEpLgoKYGBge3J9CmdncGxvdChkYXRhID0gcGFpc2VzLCBtYXBwaW5nID0gYWVzKHggPSBhbmlvLCB5ID0gZXNwZXJhbnphX2RlX3ZpZGEpKSArCiAgZ2VvbV9saW5lKGFlcyhjb2xvciA9IGNvbnRpbmVudGUsIGdyb3VwID0gcGFpcykpCmBgYAoKVXNhbW9zIGVsIGFyZ3VtZW50byBgZ3JvdXAgPWAgeSBkZSBudWV2bywgbG8gaW5jbHVpbW9zIGRlbnRybyBkZSBsYSBmdW5jacOzbiBgYWVzKClgIHBhcmEgaW5kaWNhcmxlIGEgZ2dwbG90MiBxdWUgYnVzcXVlIGxhIHZhcmlhYmxlIGBwYWlzYCBkZW50cm8gZGVsIGRhdGEuZnJhbWUgcXVlIGVzdGFtb3MgdXNhbmRvLiAKClkgYWhvcmEgc2ksIGNvbnNlZ3VpbW9zIGVsIGdyw6FmaWNvIHF1ZSBlc3RhbW9zIGJ1c2NhbmRvLiAKCjo6OiB7LmFsZXJ0IC5hbGVydC1pbmZvfQoqKlNlZ3VuZG8gZGVzYWbDrW8KCkN1YW5kbyBtZW5jaW9uYW1vcyBxdWUgZ2dwbG90MiBjb25zdHJ1eWUgZ3LDoWZpY29zIHBvciBjYXBhcywgbG8gZGVjw61hbW9zIGVuIHNlcmlvISBIYXN0YSBhaG9yYSB0ZW5lbW9zIGRvcyBjYXBhczogZWwgw6FyZWEgZGVsIGdyw6FmaWNvIHkgdW5hIGdlb21ldHLDrWEgKGxhcyBsw61uZWFzKS4gCgoxLiBTdW3DoSB1bmEgdGVyY2VyYSBjYXBhIHBhcmEgdmlzdWFsaXphciBwdW50b3MgYWRlbcOhcyBkZSBsYXMgbMOtbmVhcy4KMi4gwr9Qb3JxdcOpIGxvcyBwdW50b3MgYWhvcmEgbm8gc2lndWVuIGxvcyBjb2xvcmVzIGRlIGxvcyBjb250aW5lbnRlcz8KMy4gwr9RdcOpIGNhbWJpbyBwb2Ryw61hcyBoYWNlciBwYXJhIHF1ZSBsb3MgcHVudG9zIHRhbWJpw6luIHRlbmdhbiBjb2xvciBzZWfDum4gZWwgY29udGluZW50ZT8KOjo6CgpBY8OhIHN1cmdlIHVuYSBjYXJhY3RlcsOtc3RpY2EgaW1wb3J0YW50ZSBkZSBsYXMgY2FwYXM6IHB1ZWRlbiB0ZW5lciBhcGFyaWVuY2lhIGluZGVwZW5kaWVudGUgc2kgc29sbyAqbWFwZWFtb3MqIGVsIGNvbG9yIGVuIGxhIGNhcGEgZGUgbGFzIGzDrW5lYXMgeSBubyBlbiBsYSBjYXBhIGRlIGxvcyBwdW50b3MuIEFsIG1pc21vIHRpZW1wbywgc2kgcXVpc2llcmFtb3MgcXVlIHRvZGFzIGxhcyBjYXBhcyB0ZW5nYSBsYSBtaXNtYSBhcGFyaWVuY2lhIHBvZGVtb3MgaW5jbHVpciBlbCBhcmd1bWVudG8gYGNvbG9yID0gYGVuIGxhIGZ1bmNpw7NuIGdsb2JhbCBgZ2dwcGxvdCgpYCBvIHJlcGV0aXJsbyBlbiBjYWRhIGNhcGEuCgpgYGB7cn0KZ2dwbG90KHBhaXNlcywgYWVzKGFuaW8sIGVzcGVyYW56YV9kZV92aWRhKSkgKwogIGdlb21fbGluZShhZXMoY29sb3IgPSBjb250aW5lbnRlLCBncm91cCA9IHBhaXMpKSArCiAgZ2VvbV9wb2ludCgpCmBgYAoKOjo6IHsuYWxlcnQgLmFsZXJ0LXN1Y2Nlc3N9CgpTaSB0ZSBwcmVndW50YWJhcyBhIGRvbmRlIGZ1ZXJvbiBhIHBhcmFyIGVsIGBkYXRhID0gYCwgZWwgYG1hcHBpbmcgPSBgIHkgbG9zIG5vbWJyZXMgZGUgbG9zIGFyZ3VtZW50b3MgYWRlbnRybyBkZSBsYSBmdW5jacOzbiBgYWVzKClgLCBgeCA9IGAgZSBgeSA9IGAsIHJlc3VsdGEgcXVlIGVzdGFtb3MgYXByb3ZlY2hhbmRvIHF1ZSB0YW50byBnZ3Bsb3QyIGNvbW8gbm9zb3Ryb3MgYWhvcmEgc2FiZW1vcyBlbiBxdWUgb3JkZW4gcmVjaWJlIGxhIGluZm9ybWFjacOzbiBjYWRhIGZ1bmNpw7NuLiBTaWVtcHJlIGVsIHByaW1lciBlbGVtZW50byBxdWUgbGUgKnBhc2Vtb3MqIG8gaW5kaXF1ZW1vcyBhIGxhIGZ1bmNpw7NuIGBnZ3Bsb3QoKWAgc2Vyw6EgZWwgZGF0YS5mcmFtZS4KOjo6CgpBbGd1bm9zIGFyZ3VtZW50b3MgcGFyYSBjYW1iaWFyIGxhIGFwYXJpZW5jaWEgZGUgbGFzIGdlb21ldHLDrWFzIHNvbjoKCiogYGNvbG9yID0gYCBvIGBjb2xvdXIgPSBgIG1vZGlmaWNhIGVsIGNvbG9yIGRlIGzDrW5lYXMgeSBwdW50b3MKKiBgZmlsbCA9IGBtb2RpZmljYSBlbCBjb2xvciBkZWwgw6FyZWEgZGUgdW4gZWxlbWVudG8sIHBvciBlamVtcGxvIGVsIHJlbGxlbm8gZGUgdW4gcHVudG8KKiBgbGluZXR5cGUgPSBgIG1vZGljYSBlbCB0aXBvIGRlIGzDrW5lYSAocHVudGVhZGEsIGNvbnRpbnVhLCBjb24gZ3Vpb25lcywgZXRjLikKKiBgcGNoID0gYCBtb2RpZmljYSBlbCB0YW1hw7FvIGRlbCBwdW50bwoqIGBzaXplID0gYCBtb2RpZmljYSBlbCB0YW1hw7FvIGRlIGxvcyBlbGVtZW50b3MgKHBvciBlamVtcGxvIGVsIHRhbWHDsW8gZGUgcHVudG9zIG8gZWwgZ3Jvc29yIGRlIGzDrW5lYXMpCiogYGFscGhhID0gYCBtb2RpZmljYSBsYSB0cmFuc3BhcmVuY2lhIGRlIGxvcyBlbGVtZW50b3MgKDEgPSBvcGFjbywgMCA9IHRyYW5zcGFyZW50ZSkKKiBgc2hhcGUgPSBgIG1vZGlmaWNhIGVsIHRpcG8gZGUgcHVudG8gKGNpcmN1bG9zLCBjdWFkcmFkb3MsIHRyw61hbmd1bG9zLCBldGMuKQoKOjo6IHsuYWxlcnQgLmFsZXJ0LXN1Y2Nlc3N9CioqTW9kaWZpY2FyIGVsZW1lbnRvcyB1dGlsaXphbmRvIHVuIHZhbG9yIMO6bmljbyoqCgpFcyBwb3NpYmxlIHF1ZSBlbiBhbGfDum4gbW9tZW50byBuZWNlc2l0ZXMgY2FtYmlhciBsYSBhcGFyaWVuY2lhIGRlIGxvcyBlbGVtZW50b3MgbyBnZW9tZXRyw61hcyBpbmRlcGVuZGllbnRlbWVudGUgZGUgbGFzIHZhcmlhYmxlcyBkZSB0dSBkYXRhLmZyYW1lLiBQb3IgZWplbXBsbyBwb2Ryw61hcyBxdWVyZXJlIHF1ZSB0b2RvcyBsb3MgcHVudG9zIHNlYW4gZGUgdW4gw7puaWNvIGNvbG9yOiByb2pvcy4gRW4gZXN0ZSBjYXNvIGBnZW9tX3BvaW50KGFlcyhjb2xvciA9ICJyZWQiKSkgLW9qbyBxdWUgbG9zIGNvbG9yZXMgdmFuIGVuIGluZ2zDqXMtIG5vIHZhIGEgZnVuY2lvbmFyLCBkZSBoZWNobyBnZ3Bsb3QyIGludGVudGFyw6EgZW5jb250cmFyIHVuYSB2YXJpYWJsZSAicmVkIiBkZW50cm8gZGVsIGRhdGEuZnJhbWUgc2luIGV4aXRvLgoKQWhvcmEgcXVlIG5vIG5vcyBpbnRlcmVzYSAqbWFwZWFyKiBlbCBjb2xvciBhIHVuYSB2YXJpYWJsZSwgcG9kZW1vcyBtb3ZlciBlc2UgYXJndW1lbnRvICoqYWZ1ZXJhKiogZGUgbGEgZnVuY2nDs24gYGFlcygpYDogYGdlb21fcG9pbnQoY29sb3IgPSAicmVkIilgLgo6OjogCgojIyMgUmVsYWNpw7NuIGVudHJlIHZhcmlhYmxlcwoKTXVjaGFzIHZlY2VzIG5vIGVzIHN1ZmljaWVudGUgY29uIG1pcmFyIHVuIGdyw6FmaWNvIHBhcmEgaWRlbnRpZmljYXIgbGEgcmVsYWNpw7NuIGVudHJlIGxhcyB2YXJpYWJsZXMgeSBlbnRvbmNlcyBjYWxjdWxhbW9zIHVuYSB0ZW5kZW5jaWEgbyBhanVzdGFtb3MgbG9zIGRhdG9zIGEgdW5hIGZ1bmNpw7NuIChwb3IgZWplbXBsbyBhIHVuYSByZWN0YSkuIFBvciBzdXB1ZXN0byBnZ3Bsb3QyIHRpZW5lIHVuYSBnZW9tZXRyw61hIHBhcmEgc3VtYXIgZXN0YSBjYXBhIGEgbG9zIGdyw6FmaWNvcy4KClRhbWJpw6luIGVzIHBvc2libGUgcXVlIG5lY2VzaXRlbW9zIG1hbmlwdWxhciBsb3MgZGF0b3MgYW50ZXMgZGUgcG9kZXIgaGFjZXIgdW4gZ3LDoWZpY28uIEEgdmVjZXMgZXNhIG1hbm5pcHVsYWNpw7NuIHNlcsOhIGNvbXBsZWphIHkgZW50b25jZXMgcGFyYSBubyByZXBldGlyIGVsIGPDoWxjdWxvIG11Y2hhcyB2ZWNlcywgZ3VhcmRhcmVtb3MgbG9zIGRhdG9zIG1vZGlmaWNhZG9zIGVuIHVuYSBudWV2YSB2YXJpYWJsZS4gUGVybyB0YW1iacOpbiBwb2RlbW9zICplbmNhZGVuYXIqIGxhIG1hbmlwdWxhY2nDs24gZGUgbG9zIGRhdG9zIHkgZWwgZ3LDoWZpY28gcmVzdWx0YW50ZS4KClBvciBlamVtcGxvLCBjYWxjdWxlbW9zIGxhIGVzcGVyYW56YSBkZSB2aWRhIG1lZGlhIHBvciBjb250aW5lbnRlIHkgcGFyYSBjYWRhIGHDsW8gdXNhbmRvIFtgZHBseXJgXSgwNS1kcGx5ci1JLmh0bWwpIHkgbHVlZ28gZ3JhZmlxdWVtb3MgbGEgYGVzcGVyYW56YV9kZV92aWRhX21lZGlhYCBhIGxvcyBsYXJnbyBkZSBsb3MgYGFuaW9zYDoKCmBgYHtyfQpsaWJyYXJ5KGRwbHlyKQoKcGFpc2VzICU+JSAKICBncm91cF9ieShjb250aW5lbnRlLCBhbmlvKSAlPiUgCiAgc3VtbWFyaXNlKGVzcGVyYW56YV9kZV92aWRhX21lZGlhID0gbWVhbihlc3BlcmFuemFfZGVfdmlkYSkpICU+JSAKICBnZ3Bsb3QoYWVzKGFuaW8sIGVzcGVyYW56YV9kZV92aWRhX21lZGlhKSkgKyAgIyBBY8OhIHNlIGFjYWJhbiBsb3MgJT4lIHkgY29taWVuemFuIGxvcyAiKyIKICBnZW9tX3BvaW50KCkKYGBgCgpFc3RvIGVzIHBvc2libGUgZ3JhY2lhcyBhbCBvcGVyYWRvciBgJT4lYCBxdWUgbGUgKnBhc2EqIGVsIHJlc3V0YWRvIGRlIGBzdW1tYXJpc2UoKWAgYSBsYSBmdW5jacOzbiBgZ2dwbG90KClgLiBZIGVzdGUgcmVzdWx0YWRvIG5vIGVzIG5pIG3DoXMgbmkgbWVub3MgcXVlIGVsIGRhdGEuZnJhbWUgcXVlIG5lY2VzaXRhbW9zIHBhcmEgaGFjZXIgbnVlc3RybyBncsOhZmljby4gRXMgaW1wb3J0YW50ZSBub3RhciBxdWUgdW5hIHZleiBxdWUgY29tZW56YW1vcyBlbCBncsOhZmljbyB5YSAqKm5vKiogc2UgcHVlZGUgdXNhciBlbCBvcGVyYWRvciBgJT4lYCB5IGxhcyBjYXBhcyBkZWwgZ3LDoWZpY28gc2UgKnN1bWFuKiBjb21vIHNpZW1wcmUgY29uIGArYC4KCkVzdGUgZ3LDoWZpY28gZW50b25jZXMgcGFyZWNlIG1vc3RyYXIgcXVlIGxhIGVzcGVyYW56YSBkZSB2aWRhIGZ1ZSBhdW1lbnRhZG8gYSBsbyBsYXJnbyBkZSBsb3MgYcOxb3MgcGVybyBzZXLDrWEgaW50ZXJlc2FudGUgdmVyIGVzYSByZWxhY2nDs24gbcOhcyBleHBsaWNpdGFtZW50ZSBhZ3JlZ2FuZG8gdW5hIG51ZXZhIGNhcGEgY29uIGBnZW9tX3Ntb290aCgpYC4KCmBgYHtyfQpwYWlzZXMgJT4lIAogIGdyb3VwX2J5KGNvbnRpbmVudGUsIGFuaW8pICU+JSAKICBzdW1tYXJpc2UoZXNwZXJhbnphX2RlX3ZpZGFfbWVkaWEgPSBtZWFuKGVzcGVyYW56YV9kZV92aWRhKSkgJT4lIAogIGdncGxvdChhZXMoYW5pbywgZXNwZXJhbnphX2RlX3ZpZGFfbWVkaWEpKSArICAKICBnZW9tX3BvaW50KCkgKwogIGdlb21fc21vb3RoKCkKYGBgCgpQb3IgZGVmZWN0byBlc3RhIGdlb21ldHLDrWEgdW5hIGVsIG3DqXRvZG8gKmxvZXNzKiBwYXJhIGlkZW50aWZpY2FyIGxhIHJlbGFjacOzbiBlbnRyZSB2YXJpYWJsZXMsIHBlcm8gaGF5IG90cm9zIChwb2TDqXMgcmV2aXNhciBsYSBkb2N1bWVudGFjacOzbiBkZSBsYSBmdW5jacOzbiBwYXJhIGxlZXIgbcOhcyBkZXRhbGxlcykuIEVuIGdyaXMgbm9zIG11ZXN0cmEgZWwgaW50ZXJ2YWxvIGRlIGNvbmZpYW56YSBhbCByZWRlZG9yIGRlIGVzdGUgc3Vhdml6YWRvIHF1ZSBlbiBlc3RlIGNhc28gZXMgYmFzdGFudGUgZ3JhbmRlIHBvcnF1ZSB0ZW5lbW9zIHBvY29zIGRhdG9zISAKCkPDs21vIGN1YWxxdWllciBnZW9tLCBwb2RlbW9zIG1vZGlmaWNhciBlbCBjb2xvciwgZWwgZ3Jvc29yIGRlIGxhIGzDrW5lYSB5IGNhc2kgY3VhbHF1aWVyIGNvc2EgcXVlIHNlIHRlIG9jdXJyYS4KCjo6OiB7LmFsZXJ0IC5hbGVydC1pbmZvfQoqKlRlcmNlciBkZXNhZsOtbyoqCgpNb2RpZmljw6EgZWwgc2lndWllbnRlIGPDs2RpZ28gcGFyYSBvYnRlbmVyIGVsIGdyw6FmaWNvIHF1ZSBzZSBtdWVzdHJhIG3DoXMgYWJham8uCgpgYGB7ciBldmFsPUZBTFNFfQpwYWlzZXMgJT4lIAogIGdyb3VwX2J5KGNvbnRpbmVudGUsIF9fX19fKSAlPiUgCiAgc3VtbWFyaXNlKGVzcGVyYW56YV9kZV92aWRhX21lZGlhID0gbWVhbihlc3BlcmFuemFfZGVfdmlkYSkpICU+JSAKICBnZ3Bsb3QoYWVzKGFuaW8sIF9fX19fX19fX19fX19fX18pKSArICAKICBnZW9tX3BvaW50KGFlcyhjb2xvciA9IGNvbnRpbmVudGUpLCBzaXplID0gMykgKwogIGdlb21fc21vb3RoKGNvbG9yID0gY29udGluZW50ZSkgCmBgYAoKYGBge3IgZWNobz1GQUxTRX0KcGFpc2VzICU+JSAKICBncm91cF9ieShjb250aW5lbnRlLCBhbmlvKSAlPiUgCiAgc3VtbWFyaXNlKGVzcGVyYW56YV9kZV92aWRhX21lZGlhID0gbWVhbihlc3BlcmFuemFfZGVfdmlkYSkpICU+JSAKICBnZ3Bsb3QoYWVzKGFuaW8sIGVzcGVyYW56YV9kZV92aWRhX21lZGlhKSkgKyAgCiAgZ2VvbV9zbW9vdGgoYWVzKGNvbG9yID0gY29udGluZW50ZSkpICsKICBnZW9tX3BvaW50KGFlcyhjb2xvciA9IGNvbnRpbmVudGUpLCBzaGFwZSA9IDgsIHNpemUgPSAzKSAKYGBgCjo6OiAKCgo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiVmlzdWFsaXphY2nDs24gZGUgZGF0b3MgY29uIHtnZ3Bsb3QyfSBJIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCiAgICB0b2M6IHRydWUKICAgIHRvY19mbG9hdDogdHJ1ZQogICAgdGVtcGxhdGU6ICJfdGVtcGxhdGUuaHRtbCIgICAgCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkKYGBgCgpWaXN1YWxpemFyIGRhdG9zIGVzIMO6dGlsIHBhcmEgaWRlbnRpZmljYXIgYSByZWxhY2nDs24gZW50cmUgZGlzdGludGFzIHZhcmlhYmxlcyBwZXJvIHRhbWJpw6luIHBhcmEgY29tdW5pY2FyIGVsIGFuw6FsaXNpcyBkZSBsb3MgZGF0b3MgeSByZXN1bHRhZG9zLiBFbCBwYXF1ZXRlIGBnZ3Bsb3QyYCBwZXJtaXRlIGdlbmVyYXIgZ3LDoWZpY29zIGRlIGdyYW4gY2FsaWRhZCBlbiBwb2NvcyBwYXNvcy4gQ3VhbHF1aWVyIGdyw6FmaWNvIGRlIGdncGxvdCB0ZW5kcsOhIGNvbW8gbcOtbmltbyAzIGNvbXBvbmVudGVzOiBsb3MgKipkYXRvcyoqLCB1biAqKnNpc3RlbWEgZGUgY29vcmRlbmFkYXMqKiB5IHVuYSAqKmdlb21ldHLDrWEqKiAobGEgcmVwcmVzZW50YWNpw7NuIHZpc3VhbCBkZSBsb3MgZGF0b3MpIHkgc2UgaXLDoSBjb25zdHJ1eWVuZG8gcG9yIGNhcGFzLiAKCiMjIyBQcmltZXJhIGNhcGE6IGVsIMOhcmVhIGRlbCBncsOhZmljbwoKQ8OzbW8gc2llbXByZSBzZXLDoSBuZWNlc2FyaW8gY2FyZ2FyIGxvcyBwYXF1ZXRlcyBxdWUgdmFtb3MgYSB1c2FyIHkgeWEgcXVlIGVzdGFtb3MgbG9zIGRhdG9zIGNvbiBsb3MgcXVlIHZlbmltb3MgdHJhYmFqYW5kbzoKCmBgYHtyfQpsaWJyYXJ5KHJlYWRyKQpsaWJyYXJ5KGdncGxvdDIpCnBhaXNlcyA8LSByZWFkX2NzdigiZGF0b3MvcGFpc2VzLmNzdiIpCmBgYAoKTGEgZnVuY2nDs24gcHJpbmNpcGFsIGRlIGdncGxvdDIgZXMganVzdGFtZW50ZSBgZ2dwbG90KClgIHF1ZSBub3MgcGVybWl0ZSAqaW5pY2lhciogZWwgZ3LDoWZpY28geSBhZGVtw6FzIGRlZmluaXIgbGFzIGNhcmFjdGVyw61zdGljYXMgKmdsb2JhbGVzKi4gRWwgcHJpbWVyIGFyZ3VtZW50byBkZSBlc3RhIGZ1bmNpw7NuIHNlcsOhbiBsb3MgZGF0b3MgcXVlIHF1ZXJlbW9zIHZpc3VhbGl6YXIsIHNpZW1wcmUgZW4gdW4gZGF0YS5mcmFtZS4gRW4gZXN0ZSBjYXNvIHVzYW1vcyBgcGFpc2VzYC4gCgpFbCBzZWd1bmRvIGFyZ3VtZW50byBzZSBsbGFtYSBtYXBwaW5nIGp1c3RhbWVudGUgcG9ycXVlICptYXBlYSogbyAqZGlidWphKiBsb3MgZWplcyBkZWwgZ3LDoWZpY28geSAqKnNpZW1wcmUqKiB2YSBhY29tcGHDsWFkbyBkZSBsYSBmdW5jacOzbiBgYWVzKClgLiBMYSBmdW5jacOzbiBgYWVzKClgIHJlY2liZSBsYXMgcHJvcGllZGFkZXMgZXN0w6lzdGljYXMgZGVsIGdyw6FmaWNvIChvICphZXN0aGV0aWMqIGVuIGluZ2zDqXMpIGEgcGFydGlyIGRlIGxhcyB2YXJpYWJsZXMgKG8gY29sdW1uYXMpIGRlbCBkYXRhLmZyYW1lIGVzdGFtb3MgdXNhbmRvLiBFbiBlc3RlIGNhc28gbGUgaW5kaWNhbW9zIHF1ZSBlbiBlbCBlamUgKip4KiogcXVlcnJlbW9zIGdyYWZpY2FyIGxhIHZhcmlhYmxlIGBwaWJfcGVyX2NhcGl0YWAgeSBlbiBlamUgKip5KiogbGEgdmFyaWFibGUgYGVzcGVyYW56YV9kZV92aWRhYC4KClBlcm8gZXN0YSBzb2xhIGZ1bmNpw7NuIG5vIGVzIHN1ZmljaWVudGUsIHNvbG8gZ2VuZXJhIGxhIHByaW1lcmEgY2FwYTogZWwgw6FyZWEgZGVsIGdyw6FmaWNvLgoKYGBge3J9CmdncGxvdChkYXRhID0gcGFpc2VzLCBtYXBwaW5nID0gYWVzKHggPSBwaWJfcGVyX2NhcGl0YSwgeSA9IGVzcGVyYW56YV9kZV92aWRhKSkKYGBgCgojIyMgU2VndW5kYSBjYXBhOiBnZW9tZXRyw61hcwpOZWNlc2l0YW1vcyBhZ3JlZ2FyIHVuYSBudWV2YSBjYXBhIGEgbnVlc3RybyBncsOhZmljbywgbG9zIGVsZW1lbnRvcyBnZW9tw6l0cmljb3MgbyAqZ2VvbXMqIHF1ZSByZXByZXNlbnRhcmFuIGxvcyBkYXRvcy4gUGFyYSBlc3RvICpzdW1hbW9zKiB1bmEgZnVuY2nDs24gZ2VvbSwgcG9yIGVqZW1wbG8gc2kgcXVlcmVtb3MgcmVwcmVzZW50YXIgbG9zIGRhdG9zIGNvbiBwdW50b3MgdXNhcmVtb3MgYGdlb21fcG9pbnQoKWAKCmBgYHtyfQpnZ3Bsb3QoZGF0YSA9IHBhaXNlcywgbWFwcGluZyA9IGFlcyh4ID0gcGliX3Blcl9jYXBpdGEsIHkgPSBlc3BlcmFuemFfZGVfdmlkYSkpICsKICBnZW9tX3BvaW50KCkKYGBgCgrCoU51ZXN0cm8gcHJpbWVyIGdyw6FmaWNvISAKCjo6OiB7LmFsZXJ0IC5hbGVydC1pbmZvfQoqKlByaW1lciBkZXNhZsOtbwoKQWhvcmEgZXMgdHUgdHVybm8uIE1vZGlmaWNhIGVsIGdyw6FmaWNvIGFudGVyaW9yIHBhcmEgdmlzdWFsaXphciBjw7NtbyBjYW1iaWEgbGEgZXNwZXJhbnphIGRlIHZpZGEgYSBsbyBsYXJnbyBkZSBsb3MgYcOxb3MuIAoKwr9UZSBwYXJlY2Ugw7p0aWwgZXN0ZSBncsOhZmljbz8KOjo6CgpFc3RlIGdyw6FmaWNvIHRpZW5lIG11Y2jDrXNpbWEgaW5mb3JtYWNpw7NuIHBvcnF1ZSB0aWVuZSB1biBwdW50byBwb3IgY2FkYSBwYcOtcyBwYXJhIGNhZGEgYcOxbyBwYXJhIHZpc3VhbGl6YXIgbGEgZXNwZXJhbnphIGRlIHZpZGEuIFBlcm8gcG9yIGFob3JhIG5vIHBvZGVtb3MgaWRlbnRpZmljYXIgZXNvcyBwYWlzZXMsIG5lY2VzaXRhbW9zIGFncmVnYXIgaW5mb3JtYWNpw7NuIGFsIGdyw6FmaWNvLgoKYGBge3J9CmdncGxvdChkYXRhID0gcGFpc2VzLCBtYXBwaW5nID0gYWVzKHggPSBhbmlvLCB5ID0gZXNwZXJhbnphX2RlX3ZpZGEpKSArCiAgZ2VvbV9wb2ludCgpCmBgYAoKIyMjIE1hcGVhciB2YXJpYWJsZXMgYSBlbGVtZW50b3MKClVuYSBwb3NpYmxlIHNvbHVjacOzbiBzZXLDrWEgdXRpbGl6YXIgb3RyYXMgdmFyaWFibGVzIGRlIG51ZXN0cm9zIGRhdG9zLCBwb3IgZWplbXBsbyBgY29udGluZW50ZWAgeSAqbWFwZWFyKiBlbCBjb2xvciBkZSBsb3MgcHVudG9zIGRlIGEgY3VlcmRvIGFsIGNvbnRpbmVudGUgcXVlIHBlcnRlbmVjZW4uCgpgYGB7cn0KZ2dwbG90KGRhdGEgPSBwYWlzZXMsIG1hcHBpbmcgPSBhZXMoeCA9IGFuaW8sIHkgPSBlc3BlcmFuemFfZGVfdmlkYSkpICsKICBnZW9tX3BvaW50KGFlcyhjb2xvciA9IGNvbnRpbmVudGUpKQpgYGAKCkFoaCwgYWhvcmEgZXN0w6EgdW4gcG9jbyBtZWpvci4gUG9yIGVqZW1wbG8geWEgcG9kZW1vcyB2ZXIgcXVlIG11Y2hvcyBwYWlzZXMgZGUgRXVyb3BhIChsb3MgcHVudG9zIGNlbGVzdGVzKSB0aWVuZW4gZW4gcHJvbWVkaW8gbWF5b3IgZXNwZXJhbnphIGRlIHZpZGEgYSBsbyBsYXJnbyBkZSBsb3MgYcOxb3MgcXVlIG11Y2hvcyBwYWlzZXMgZGUgw4FmcmljYSAobG9zIHB1bnRvcyByb2pvcykuIEHDum4gbm8gcG9kZW1vcyBpZGVudGlmaWNhciBsb3MgcGFpc2VzIGluZGl2aWR1YWxtZW50ZSBwZXJvIHBvZGVtb3Mgc2FjYXIgYWxnbyBtw6FzIGRlIGluZm9ybWFjacOzbiBkZSBudWVzdHJvcyBkYXRvcy4gCgpBbGdvIG11eSBpbXBvcnRhbnRlIGEgdGVuZXIgZW4gY3VlbnRhOiAqKmxvcyBwdW50b3MgdG9tYW4gdW4gY29sb3IgZGUgYWN1ZXJkbyBhIHVuYSB2YXJpYWJsZSBkZSBsb3MgZGF0b3MqKiwgeSBwYXJhIHF1ZSBnZ3Bsb3QyIGlkZW50aWZpcXVlIGVzYSB2YXJpYWJsZSAoZW4gZXN0ZSBjYXNvIGBjb250aW5lbnRlYCkgZXMgbmVjZXNhcmlvIGluY2x1aXJsYSBkZW50cm8gZGUgdW5hIGZ1bmNpw7NuIGBhZXMoKWAuCgojIyMgT3RyYXMgZ2VvbWV0csOtYXMKCkVzdGUgZ3LDoWZpY28gcG9zaWJsZW1lbnRlIG5vIHNlYSBtdXkgYWRlY3VhZG8gc2kgcXVlcmVtb3MgdmlzdWFsaXphciBsYSAqZXZvbHVjacOzbiogZGUgdW5hIHZhcmlhYmxlIGEgbG8gbGFyZ28gZGVsIHRpZW1wbywgbmVjZXNpdGFtb3MgY2FtYmlhciBsYSBnZW9tZXRyw61hIGEgbGluZWFzIHVzYW5kbyBgZ2VvbV9saW5lKClgCgpgYGB7cn0KZ2dwbG90KGRhdGEgPSBwYWlzZXMsIG1hcHBpbmcgPSBhZXMoeCA9IGFuaW8sIHkgPSBlc3BlcmFuemFfZGVfdmlkYSkpICsKICBnZW9tX2xpbmUoYWVzKGNvbG9yID0gY29udGluZW50ZSkpCmBgYAoKUG9yIHN1ZXJ0ZSBsYXMgZnVuY2lvbmVzIGBnZW9tXyooKWAgdGllbmVuIG3DoXMgbyBtZW5vcyBub21icmVzIGFtaWdhYmxlcy4gUGVybyBlbCBncsOhZmljbyBzaWd1ZSB0ZW5pZW5kbyBwcm9ibGVtYXMsIGFsIHBhcmVjZXIgZGlidWrDsyB1bmEgbMOtbmVhIHBvciBjb250aW5lbnRlIChvIGFsZ28gYXPDrSkuIFNpIGVzdHV2aWVyYW1vcyBkaWJ1amFuZG8gZXN0ZSBncsOhZmljbyBjb24gbGFwaXogeSBwYXBlbCBtdXkgcG9zaWJsZW1lbnRlIGh1YmllcmFtb3MgaWRlbnRpZmljYWRvIGxvcyBwdW50b3MgcXVlIGNvcnJlc3BvbmRlbiBhIGNhZGEgcGHDrXMgeSBsb3MgaHViaWVyYW1vcyAidW5pZG8gY29uIGzDrW5lYXMiLCBuZWNlc2l0YW1vcyBxdWUgZ2dwbG90MiBoYWdhIGVzdG8uIMK/Q8OzbW8gbGUgaW5kaWNhbW9zIHF1ZSBwdW50b3MgY29ycmVzcG9uZGUgYSBjYWRhIHBhaXM/IE5lY2VzaXRhbW9zIHF1ZSBsb3MgKmFncnVwZSogcG9yIGxhIHZhcmlhYmxlbCBgcGFpc2AgKMKhcXXDqSBidWVubyBxdWUgdGVuZW1vcyB0b2RhIGVzYSBpbmZvcm1hY2nDs24gZW4gbnVlc3RyYSBiYXNlIGRlIGRhdG9zISkuCgpgYGB7cn0KZ2dwbG90KGRhdGEgPSBwYWlzZXMsIG1hcHBpbmcgPSBhZXMoeCA9IGFuaW8sIHkgPSBlc3BlcmFuemFfZGVfdmlkYSkpICsKICBnZW9tX2xpbmUoYWVzKGNvbG9yID0gY29udGluZW50ZSwgZ3JvdXAgPSBwYWlzKSkKYGBgCgpVc2Ftb3MgZWwgYXJndW1lbnRvIGBncm91cCA9YCB5IGRlIG51ZXZvLCBsbyBpbmNsdWltb3MgZGVudHJvIGRlIGxhIGZ1bmNpw7NuIGBhZXMoKWAgcGFyYSBpbmRpY2FybGUgYSBnZ3Bsb3QyIHF1ZSBidXNxdWUgbGEgdmFyaWFibGUgYHBhaXNgIGRlbnRybyBkZWwgZGF0YS5mcmFtZSBxdWUgZXN0YW1vcyB1c2FuZG8uIAoKWSBhaG9yYSBzaSwgY29uc2VndWltb3MgZWwgZ3LDoWZpY28gcXVlIGVzdGFtb3MgYnVzY2FuZG8uIAoKOjo6IHsuYWxlcnQgLmFsZXJ0LWluZm99CioqU2VndW5kbyBkZXNhZsOtbwoKQ3VhbmRvIG1lbmNpb25hbW9zIHF1ZSBnZ3Bsb3QyIGNvbnN0cnV5ZSBncsOhZmljb3MgcG9yIGNhcGFzLCBsbyBkZWPDrWFtb3MgZW4gc2VyaW8hIEhhc3RhIGFob3JhIHRlbmVtb3MgZG9zIGNhcGFzOiBlbCDDoXJlYSBkZWwgZ3LDoWZpY28geSB1bmEgZ2VvbWV0csOtYSAobGFzIGzDrW5lYXMpLiAKCjEuIFN1bcOhIHVuYSB0ZXJjZXJhIGNhcGEgcGFyYSB2aXN1YWxpemFyIHB1bnRvcyBhZGVtw6FzIGRlIGxhcyBsw61uZWFzLgoyLiDCv1BvcnF1w6kgbG9zIHB1bnRvcyBhaG9yYSBubyBzaWd1ZW4gbG9zIGNvbG9yZXMgZGUgbG9zIGNvbnRpbmVudGVzPwozLiDCv1F1w6kgY2FtYmlvIHBvZHLDrWFzIGhhY2VyIHBhcmEgcXVlIGxvcyBwdW50b3MgdGFtYmnDqW4gdGVuZ2FuIGNvbG9yIHNlZ8O6biBlbCBjb250aW5lbnRlPwo6OjoKCkFjw6Egc3VyZ2UgdW5hIGNhcmFjdGVyw61zdGljYSBpbXBvcnRhbnRlIGRlIGxhcyBjYXBhczogcHVlZGVuIHRlbmVyIGFwYXJpZW5jaWEgaW5kZXBlbmRpZW50ZSBzaSBzb2xvICptYXBlYW1vcyogZWwgY29sb3IgZW4gbGEgY2FwYSBkZSBsYXMgbMOtbmVhcyB5IG5vIGVuIGxhIGNhcGEgZGUgbG9zIHB1bnRvcy4gQWwgbWlzbW8gdGllbXBvLCBzaSBxdWlzaWVyYW1vcyBxdWUgdG9kYXMgbGFzIGNhcGFzIHRlbmdhIGxhIG1pc21hIGFwYXJpZW5jaWEgcG9kZW1vcyBpbmNsdWlyIGVsIGFyZ3VtZW50byBgY29sb3IgPSBgZW4gbGEgZnVuY2nDs24gZ2xvYmFsIGBnZ3BwbG90KClgIG8gcmVwZXRpcmxvIGVuIGNhZGEgY2FwYS4KCmBgYHtyfQpnZ3Bsb3QocGFpc2VzLCBhZXMoYW5pbywgZXNwZXJhbnphX2RlX3ZpZGEpKSArCiAgZ2VvbV9saW5lKGFlcyhjb2xvciA9IGNvbnRpbmVudGUsIGdyb3VwID0gcGFpcykpICsKICBnZW9tX3BvaW50KCkKYGBgCgo6Ojogey5hbGVydCAuYWxlcnQtc3VjY2Vzc30KClNpIHRlIHByZWd1bnRhYmFzIGEgZG9uZGUgZnVlcm9uIGEgcGFyYXIgZWwgYGRhdGEgPSBgLCBlbCBgbWFwcGluZyA9IGAgeSBsb3Mgbm9tYnJlcyBkZSBsb3MgYXJndW1lbnRvcyBhZGVudHJvIGRlIGxhIGZ1bmNpw7NuIGBhZXMoKWAsIGB4ID0gYCBlIGB5ID0gYCwgcmVzdWx0YSBxdWUgZXN0YW1vcyBhcHJvdmVjaGFuZG8gcXVlIHRhbnRvIGdncGxvdDIgY29tbyBub3NvdHJvcyBhaG9yYSBzYWJlbW9zIGVuIHF1ZSBvcmRlbiByZWNpYmUgbGEgaW5mb3JtYWNpw7NuIGNhZGEgZnVuY2nDs24uIFNpZW1wcmUgZWwgcHJpbWVyIGVsZW1lbnRvIHF1ZSBsZSAqcGFzZW1vcyogbyBpbmRpcXVlbW9zIGEgbGEgZnVuY2nDs24gYGdncGxvdCgpYCBzZXLDoSBlbCBkYXRhLmZyYW1lLgo6OjoKCkFsZ3Vub3MgYXJndW1lbnRvcyBwYXJhIGNhbWJpYXIgbGEgYXBhcmllbmNpYSBkZSBsYXMgZ2VvbWV0csOtYXMgc29uOgoKKiBgY29sb3IgPSBgIG8gYGNvbG91ciA9IGAgbW9kaWZpY2EgZWwgY29sb3IgZGUgbMOtbmVhcyB5IHB1bnRvcwoqIGBmaWxsID0gYG1vZGlmaWNhIGVsIGNvbG9yIGRlbCDDoXJlYSBkZSB1biBlbGVtZW50bywgcG9yIGVqZW1wbG8gZWwgcmVsbGVubyBkZSB1biBwdW50bwoqIGBsaW5ldHlwZSA9IGAgbW9kaWNhIGVsIHRpcG8gZGUgbMOtbmVhIChwdW50ZWFkYSwgY29udGludWEsIGNvbiBndWlvbmVzLCBldGMuKQoqIGBwY2ggPSBgIG1vZGlmaWNhIGVsIHRhbWHDsW8gZGVsIHB1bnRvCiogYHNpemUgPSBgIG1vZGlmaWNhIGVsIHRhbWHDsW8gZGUgbG9zIGVsZW1lbnRvcyAocG9yIGVqZW1wbG8gZWwgdGFtYcOxbyBkZSBwdW50b3MgbyBlbCBncm9zb3IgZGUgbMOtbmVhcykKKiBgYWxwaGEgPSBgIG1vZGlmaWNhIGxhIHRyYW5zcGFyZW5jaWEgZGUgbG9zIGVsZW1lbnRvcyAoMSA9IG9wYWNvLCAwID0gdHJhbnNwYXJlbnRlKQoqIGBzaGFwZSA9IGAgbW9kaWZpY2EgZWwgdGlwbyBkZSBwdW50byAoY2lyY3Vsb3MsIGN1YWRyYWRvcywgdHLDrWFuZ3Vsb3MsIGV0Yy4pCgo6Ojogey5hbGVydCAuYWxlcnQtc3VjY2Vzc30KKipNb2RpZmljYXIgZWxlbWVudG9zIHV0aWxpemFuZG8gdW4gdmFsb3Igw7puaWNvKioKCkVzIHBvc2libGUgcXVlIGVuIGFsZ8O6biBtb21lbnRvIG5lY2VzaXRlcyBjYW1iaWFyIGxhIGFwYXJpZW5jaWEgZGUgbG9zIGVsZW1lbnRvcyBvIGdlb21ldHLDrWFzIGluZGVwZW5kaWVudGVtZW50ZSBkZSBsYXMgdmFyaWFibGVzIGRlIHR1IGRhdGEuZnJhbWUuIFBvciBlamVtcGxvIHBvZHLDrWFzIHF1ZXJlcmUgcXVlIHRvZG9zIGxvcyBwdW50b3Mgc2VhbiBkZSB1biDDum5pY28gY29sb3I6IHJvam9zLiBFbiBlc3RlIGNhc28gYGdlb21fcG9pbnQoYWVzKGNvbG9yID0gInJlZCIpKSAtb2pvIHF1ZSBsb3MgY29sb3JlcyB2YW4gZW4gaW5nbMOpcy0gbm8gdmEgYSBmdW5jaW9uYXIsIGRlIGhlY2hvIGdncGxvdDIgaW50ZW50YXLDoSBlbmNvbnRyYXIgdW5hIHZhcmlhYmxlICJyZWQiIGRlbnRybyBkZWwgZGF0YS5mcmFtZSBzaW4gZXhpdG8uCgpBaG9yYSBxdWUgbm8gbm9zIGludGVyZXNhICptYXBlYXIqIGVsIGNvbG9yIGEgdW5hIHZhcmlhYmxlLCBwb2RlbW9zIG1vdmVyIGVzZSBhcmd1bWVudG8gKiphZnVlcmEqKiBkZSBsYSBmdW5jacOzbiBgYWVzKClgOiBgZ2VvbV9wb2ludChjb2xvciA9ICJyZWQiKWAuCjo6OiAKCiMjIyBSZWxhY2nDs24gZW50cmUgdmFyaWFibGVzCgpNdWNoYXMgdmVjZXMgbm8gZXMgc3VmaWNpZW50ZSBjb24gbWlyYXIgdW4gZ3LDoWZpY28gcGFyYSBpZGVudGlmaWNhciBsYSByZWxhY2nDs24gZW50cmUgbGFzIHZhcmlhYmxlcyB5IGVudG9uY2VzIGNhbGN1bGFtb3MgdW5hIHRlbmRlbmNpYSBvIGFqdXN0YW1vcyBsb3MgZGF0b3MgYSB1bmEgZnVuY2nDs24gKHBvciBlamVtcGxvIGEgdW5hIHJlY3RhKS4gUG9yIHN1cHVlc3RvIGdncGxvdDIgdGllbmUgdW5hIGdlb21ldHLDrWEgcGFyYSBzdW1hciBlc3RhIGNhcGEgYSBsb3MgZ3LDoWZpY29zLgoKVGFtYmnDqW4gZXMgcG9zaWJsZSBxdWUgbmVjZXNpdGVtb3MgbWFuaXB1bGFyIGxvcyBkYXRvcyBhbnRlcyBkZSBwb2RlciBoYWNlciB1biBncsOhZmljby4gQSB2ZWNlcyBlc2EgbWFubmlwdWxhY2nDs24gc2Vyw6EgY29tcGxlamEgeSBlbnRvbmNlcyBwYXJhIG5vIHJlcGV0aXIgZWwgY8OhbGN1bG8gbXVjaGFzIHZlY2VzLCBndWFyZGFyZW1vcyBsb3MgZGF0b3MgbW9kaWZpY2Fkb3MgZW4gdW5hIG51ZXZhIHZhcmlhYmxlLiBQZXJvIHRhbWJpw6luIHBvZGVtb3MgKmVuY2FkZW5hciogbGEgbWFuaXB1bGFjacOzbiBkZSBsb3MgZGF0b3MgeSBlbCBncsOhZmljbyByZXN1bHRhbnRlLgoKUG9yIGVqZW1wbG8sIGNhbGN1bGVtb3MgbGEgZXNwZXJhbnphIGRlIHZpZGEgbWVkaWEgcG9yIGNvbnRpbmVudGUgeSBwYXJhIGNhZGEgYcOxbyB1c2FuZG8gW2BkcGx5cmBdKDA1LWRwbHlyLUkuaHRtbCkgeSBsdWVnbyBncmFmaXF1ZW1vcyBsYSBgZXNwZXJhbnphX2RlX3ZpZGFfbWVkaWFgIGEgbG9zIGxhcmdvIGRlIGxvcyBgYW5pb3NgOgoKYGBge3J9CmxpYnJhcnkoZHBseXIpCgpwYWlzZXMgJT4lIAogIGdyb3VwX2J5KGNvbnRpbmVudGUsIGFuaW8pICU+JSAKICBzdW1tYXJpc2UoZXNwZXJhbnphX2RlX3ZpZGFfbWVkaWEgPSBtZWFuKGVzcGVyYW56YV9kZV92aWRhKSkgJT4lIAogIGdncGxvdChhZXMoYW5pbywgZXNwZXJhbnphX2RlX3ZpZGFfbWVkaWEpKSArICAjIEFjw6Egc2UgYWNhYmFuIGxvcyAlPiUgeSBjb21pZW56YW4gbG9zICIrIgogIGdlb21fcG9pbnQoKQpgYGAKCkVzdG8gZXMgcG9zaWJsZSBncmFjaWFzIGFsIG9wZXJhZG9yIGAlPiVgIHF1ZSBsZSAqcGFzYSogZWwgcmVzdXRhZG8gZGUgYHN1bW1hcmlzZSgpYCBhIGxhIGZ1bmNpw7NuIGBnZ3Bsb3QoKWAuIFkgZXN0ZSByZXN1bHRhZG8gbm8gZXMgbmkgbcOhcyBuaSBtZW5vcyBxdWUgZWwgZGF0YS5mcmFtZSBxdWUgbmVjZXNpdGFtb3MgcGFyYSBoYWNlciBudWVzdHJvIGdyw6FmaWNvLiBFcyBpbXBvcnRhbnRlIG5vdGFyIHF1ZSB1bmEgdmV6IHF1ZSBjb21lbnphbW9zIGVsIGdyw6FmaWNvIHlhICoqbm8qKiBzZSBwdWVkZSB1c2FyIGVsIG9wZXJhZG9yIGAlPiVgIHkgbGFzIGNhcGFzIGRlbCBncsOhZmljbyBzZSAqc3VtYW4qIGNvbW8gc2llbXByZSBjb24gYCtgLgoKRXN0ZSBncsOhZmljbyBlbnRvbmNlcyBwYXJlY2UgbW9zdHJhciBxdWUgbGEgZXNwZXJhbnphIGRlIHZpZGEgZnVlIGF1bWVudGFkbyBhIGxvIGxhcmdvIGRlIGxvcyBhw7FvcyBwZXJvIHNlcsOtYSBpbnRlcmVzYW50ZSB2ZXIgZXNhIHJlbGFjacOzbiBtw6FzIGV4cGxpY2l0YW1lbnRlIGFncmVnYW5kbyB1bmEgbnVldmEgY2FwYSBjb24gYGdlb21fc21vb3RoKClgLgoKYGBge3J9CnBhaXNlcyAlPiUgCiAgZ3JvdXBfYnkoY29udGluZW50ZSwgYW5pbykgJT4lIAogIHN1bW1hcmlzZShlc3BlcmFuemFfZGVfdmlkYV9tZWRpYSA9IG1lYW4oZXNwZXJhbnphX2RlX3ZpZGEpKSAlPiUgCiAgZ2dwbG90KGFlcyhhbmlvLCBlc3BlcmFuemFfZGVfdmlkYV9tZWRpYSkpICsgIAogIGdlb21fcG9pbnQoKSArCiAgZ2VvbV9zbW9vdGgoKQpgYGAKClBvciBkZWZlY3RvIGVzdGEgZ2VvbWV0csOtYSB1bmEgZWwgbcOpdG9kbyAqbG9lc3MqIHBhcmEgaWRlbnRpZmljYXIgbGEgcmVsYWNpw7NuIGVudHJlIHZhcmlhYmxlcywgcGVybyBoYXkgb3Ryb3MgKHBvZMOpcyByZXZpc2FyIGxhIGRvY3VtZW50YWNpw7NuIGRlIGxhIGZ1bmNpw7NuIHBhcmEgbGVlciBtw6FzIGRldGFsbGVzKS4gRW4gZ3JpcyBub3MgbXVlc3RyYSBlbCBpbnRlcnZhbG8gZGUgY29uZmlhbnphIGFsIHJlZGVkb3IgZGUgZXN0ZSBzdWF2aXphZG8gcXVlIGVuIGVzdGUgY2FzbyBlcyBiYXN0YW50ZSBncmFuZGUgcG9ycXVlIHRlbmVtb3MgcG9jb3MgZGF0b3MhIAoKQ8OzbW8gY3VhbHF1aWVyIGdlb20sIHBvZGVtb3MgbW9kaWZpY2FyIGVsIGNvbG9yLCBlbCBncm9zb3IgZGUgbGEgbMOtbmVhIHkgY2FzaSBjdWFscXVpZXIgY29zYSBxdWUgc2UgdGUgb2N1cnJhLgoKOjo6IHsuYWxlcnQgLmFsZXJ0LWluZm99CioqVGVyY2VyIGRlc2Fmw61vKioKCk1vZGlmaWPDoSBlbCBzaWd1aWVudGUgY8OzZGlnbyBwYXJhIG9idGVuZXIgZWwgZ3LDoWZpY28gcXVlIHNlIG11ZXN0cmEgbcOhcyBhYmFqby4KCmBgYHtyIGV2YWw9RkFMU0V9CnBhaXNlcyAlPiUgCiAgZ3JvdXBfYnkoY29udGluZW50ZSwgX19fX18pICU+JSAKICBzdW1tYXJpc2UoZXNwZXJhbnphX2RlX3ZpZGFfbWVkaWEgPSBtZWFuKGVzcGVyYW56YV9kZV92aWRhKSkgJT4lIAogIGdncGxvdChhZXMoYW5pbywgX19fX19fX19fX19fX19fXykpICsgIAogIGdlb21fcG9pbnQoYWVzKGNvbG9yID0gY29udGluZW50ZSksIHNpemUgPSAzKSArCiAgZ2VvbV9zbW9vdGgoY29sb3IgPSBjb250aW5lbnRlKSAKYGBgCgpgYGB7ciBlY2hvPUZBTFNFfQpwYWlzZXMgJT4lIAogIGdyb3VwX2J5KGNvbnRpbmVudGUsIGFuaW8pICU+JSAKICBzdW1tYXJpc2UoZXNwZXJhbnphX2RlX3ZpZGFfbWVkaWEgPSBtZWFuKGVzcGVyYW56YV9kZV92aWRhKSkgJT4lIAogIGdncGxvdChhZXMoYW5pbywgZXNwZXJhbnphX2RlX3ZpZGFfbWVkaWEpKSArICAKICBnZW9tX3Ntb290aChhZXMoY29sb3IgPSBjb250aW5lbnRlKSkgKwogIGdlb21fcG9pbnQoYWVzKGNvbG9yID0gY29udGluZW50ZSksIHNoYXBlID0gOCwgc2l6ZSA9IDMpIApgYGAKOjo6IAoKCg==</div>
 
 
 </div>
@@ -613,15 +702,6 @@ $(document).ready(function ()  {
 });
 </script>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
 
 </body>
 </html>
