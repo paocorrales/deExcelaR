@@ -377,6 +377,12 @@ div.tocify {
     <li>
       <a href="04-lectura-datos.html">Lectura de datos</a>
     </li>
+    <li>
+      <a href="05-dplyr-I.html">Maninupulación de datos I</a>
+    </li>
+    <li>
+      <a href="06-graficos-I.html">Gráficos I</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -417,7 +423,7 @@ div.tocify {
 <p>En principio se podría escribir código de R con el Bloc de Notas y luego ejecutarlo, pero nosotros vamos a usar RStudio, que brinda una interfaz gráfica con un montón de herramientas extra para hacernos la vida maś fácil.</p>
 <p>Cuando abras RStudio te vas a encontrar con una ventana con cuatro paneles como esta:</p>
 <div class="figure">
-<img src="img/rstudio.png" alt="" />
+<img src="img/rstudio.png" alt="Ventana de RStudio" />
 <p class="caption">Ventana de RStudio</p>
 </div>
 <p>Los dos paneles de la izquierda son las dos formas principales de interactuar con R. El panel de abajo a la izquierda es <strong>la consola</strong>. Es el lugar que te permite <em>conversar</em> con R. Podés escribir comandos que se van a ejecutar inmediátamente cuando apretes Enter y cuyo resultado se va a mostar en la consola.</p>
@@ -429,7 +435,7 @@ div.tocify {
 <p>A la derecha hay paneles más bien informativos y que tienen varias solapas que vamos a ir descubriendo a su tiempo. Para destacar, arriba a la derecha está el “environment”, que es forma de ver qué es lo que está “pensando” R en este momento. Ahí vas a poder ver un listado de los datos que están abiertos y otros objetos que están cargados en la memoria de R. Ahora está vacío porque todavía no cargaste ni creaste ningún dato. Abajo a la derecha tienen un explorador de archivos rudimentario y también el panel de ayuda, que es donde vas a pasar el otro 13% del tiempo usando R.</p>
 <p>Entonces, para resumir:</p>
 <div class="figure">
-<img src="img/rstudio-cocina.png" alt="" />
+<img src="img/rstudio-cocina.png" alt="La cocina de RStudio" />
 <p class="caption">La cocina de RStudio</p>
 </div>
 </div>
@@ -474,8 +480,8 @@ div.tocify {
 <p>¿Qué te imaginás que va a pasar cuando ahora corra el siguiente código?</p>
 <pre class="r"><code>x + 2</code></pre>
 </div>
-<p>Ponerle nombre a las variables es a veces la parte más difícil de escribir código. A R no le viene bien cualquier nombre de variable siempre y cuando no empiece con un número o un "_". Pero a los seres humanos que lean el código y tengan que interpretarlos les va a resultas más fácil entender qué hace la variable <code>temperatura_cordoba</code> que la variable <code>xxy1</code>.</p>
-<p>El consejo es tratar en lo posible usar nombre descriptivos y consistentes. Por ejemplo, siempre usar minúsculas y separar palabras con "_".</p>
+<p>Ponerle nombre a las variables es a veces la parte más difícil de escribir código. A R no le viene bien cualquier nombre de variable siempre y cuando no empiece con un número o un &quot;_&quot;. Pero a los seres humanos que lean el código y tengan que interpretarlos les va a resultas más fácil entender qué hace la variable <code>temperatura_cordoba</code> que la variable <code>xxy1</code>.</p>
+<p>El consejo es tratar en lo posible usar nombre descriptivos y consistentes. Por ejemplo, siempre usar minúsculas y separar palabras con &quot;_&quot;.</p>
 <div class="alert alert-success">
 <p><strong>Tip</strong>: Para hacerse la vida más fácil existen “guías de estilo” para programar que explicitan reglas específicas para escribir código. Por ejemplo <a href="https://rpubs.com/FvD/guia-estilo-r" class="alert-link">esta</a> o <a href="https://github.com/eliocamp/tesis/blob/master/docs/gu%C3%ADa_de_estilo.md" class="alert-link">esta otra</a>. Se trata de reglas únicamente para los ojos humanos, y que no afectan en absoluto la eficiencia o correctitud de la programación. En general, no existen guías buenas o malas, la idea es elegir una y ser consistente. De esta manera, vas a poder entender tu código con más facilidad.</p>
 </div>
