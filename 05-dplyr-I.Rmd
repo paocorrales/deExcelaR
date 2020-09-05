@@ -3,7 +3,6 @@ title: "Manipulación de datos ordenados usando {dplyr} - Primera parte"
 output: 
   html_document:
     code_download: true
-    code_menu: false
     toc: true
     toc_float: true
     template: "_template.html"
