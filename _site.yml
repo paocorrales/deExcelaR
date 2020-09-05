@@ -13,6 +13,10 @@ navbar:
         href: 03-reportes-I.html
       - text: Lectura de datos
         href: 04-lectura-datos.html
+      - text: Maninupulación de datos I
+        href: 05-dplyr-I.html
+      - text: Gráficos I
+        href: 06-graficos-I.html
 output_dir: docs
 output:
   html_document:
