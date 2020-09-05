@@ -37,7 +37,7 @@ Al aceptar, se abrirá un nuevo archivo pero que no está vacío. RStudio ofrece
 Revisá la plantilla que trae el documento. ¿Podés identificar los bloques de código?
 :::
 
-Para generar el archivo de salida el paquete `knit` (y algunos otros) que en inglés significa *tejer* ejecutará el código en una sesión independiente de R e interpretará el teto, su formato y cualquier otra cosa que agreguemos (por ejemplo imágenes o links externos). Esto significa que nuestro archivo debe tener **todo** lo necesario para generar el análisis y si nos olvidamos de algo va a dar error. 
+Para generar el archivo de salida el paquete `knitr` (que viene de *tejer* en inglés) y algunos otros ejecutará el código en una sesión independiente de R e interpretará el texto, su formato y cualquier otra cosa que agreguemos (por ejemplo imágenes o links externos). Esto significa que nuestro archivo debe tener **todo** lo necesario para generar el análisis y si nos olvidamos de algo va a dar error. 
 
 Por esta razón es recomendable *knitear* el archivo seguido, para encontrarnos con los errores a tiempo y de paso asegurarnos que el análisis es reproducible. 
 
@@ -57,7 +57,7 @@ Cualquier archivo de este tipo tiene 3 partes principales:
 
 ![](img/rmd-ejemplo-secciones.png)
 
-Podés encontrar este archivo de ejemplo [acá](mi-primer-rmarkdown.Rmd).
+Podés encontrar este archivo de ejemplo [acá](files/mi-primer-rmarkdown.Rmd).
 
 ::: {.alert .alert-success}
 Al agregar nuevas opciones en el YAML, se crean jerarquías que se identifican escalonando (o *indentando*) los renglones. Por ejemplo:
