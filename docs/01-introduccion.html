@@ -25,14 +25,13 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -42,16 +41,14 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -60,9 +57,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -460,6 +457,9 @@ div.tocify {
     <li>
       <a href="06-graficos-I.html">Gráficos I</a>
     </li>
+    <li>
+      <a href="07-graficos-II.html">Gráficos II</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -512,26 +512,26 @@ div.tocify {
 <p>En principio se podría escribir código de R con el Bloc de Notas y luego ejecutarlo, pero nosotros vamos a usar RStudio, que brinda una interfaz gráfica con un montón de herramientas extra para hacernos la vida maś fácil.</p>
 <p>Cuando abras RStudio te vas a encontrar con una ventana con cuatro paneles como esta:</p>
 <div class="figure">
-<img src="img/rstudio.png" alt="" />
+<img src="img/rstudio.png" alt="Ventana de RStudio" />
 <p class="caption">Ventana de RStudio</p>
 </div>
 <p>Los dos paneles de la izquierda son las dos formas principales de interactuar con R. El panel de abajo a la izquierda es <strong>la consola</strong>. Es el lugar que te permite <em>conversar</em> con R. Podés escribir comandos que se van a ejecutar inmediátamente cuando apretes Enter y cuyo resultado se va a mostar en la consola.</p>
 <p>Por ejemplo, hacé click en la consola, escribí <code>2 + 2</code> y apretá Enter. Vas a ver algo como esto:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <p>Le dijiste a R que sume 2 y 2 y R te devolvió el resultado: 4 (no te preocupes del <code>[1]</code> por ahora). Eso está bueno si querés hacer una cuenta rápida o chequear algo pequeño, pero no sirve para hacer un análisis complejo y reproducible.</p>
 <p>En el panel de arriba a la izquierda tenemos esencialmente un editor de texto. Ahí es donde vas a escribir si querés guardar instrucciones para ejecutarlas en otro momento y donde vas a estar el 87% de tu tiempo usando R.</p>
 <p>A la derecha hay paneles más bien informativos y que tienen varias solapas que vamos a ir descubriendo a su tiempo. Para destacar, arriba a la derecha está el “environment”, que es forma de ver qué es lo que está “pensando” R en este momento. Ahí vas a poder ver un listado de los datos que están abiertos y otros objetos que están cargados en la memoria de R. Ahora está vacío porque todavía no cargaste ni creaste ningún dato. Abajo a la derecha tienen un explorador de archivos rudimentario y también el panel de ayuda, que es donde vas a pasar el otro 13% del tiempo usando R.</p>
 <p>Entonces, para resumir:</p>
 <div class="figure">
-<img src="img/rstudio-cocina.png" alt="" />
+<img src="img/rstudio-cocina.png" alt="La cocina de RStudio" />
 <p class="caption">La cocina de RStudio</p>
 </div>
 </div>
 <div id="hablando-con-r" class="section level3">
 <h3>Hablando con R</h3>
 <p>Ya viste cómo usar R como una calculadora.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <p>Si usaste fórmulas en Excel, esto es muy parecido a poner <code>=2+2</code> en una celda. R entiende un montón de operaciones aritméticas escritas como seguramente ya te imaginás:</p>
 <ul>
@@ -542,7 +542,7 @@ div.tocify {
 <li><code>^</code>: exponenciar</li>
 </ul>
 <p>Pero además conoce muchas otras operaciones. Para decirle a R que calcule el seno de 1 hay que escribir esto:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">sin</span>(<span class="dv">1</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">sin</span>(<span class="dv">1</span>)</a></code></pre></div>
 <pre><code>## [1] 0.841471</code></pre>
 <p>Esto es similar a poner <code>=SIN(1)</code> en Excel. La sintaxis básica para aplicar cualquier función es <code>nombre_funcion(argumentos)</code>.</p>
 <div class="alert alert-success">
@@ -559,18 +559,18 @@ div.tocify {
 </ul>
 </div>
 <p>Al hacer todas estas operaciones, lo único que hiciste fue decirle a R que haga esos cálculos. R te devuelve el resultado, pero no lo guarda en ningún lado. Para decirle que guarde el resultado de una operación hay que decirle con qué “nombre” querés guardarlo. El siguiente código hace eso:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>x &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="dv">2</span> <span class="op">+</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
 <p>La “flechita” <code>&lt;-</code> es el operador de asignación, que le dice a R que tome el resulado de la derecha y lo guarde en una variable con el nombre que está a la izquierda. Vas a ver que no te devuele el resultado. Para verlo, ejecutamos</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>x</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">x</a></code></pre></div>
 <pre><code>## [1] 4</code></pre>
 <p>Esto le dice a R que te “imprima” el contenido de la variable x.</p>
 <div class="alert alert-info">
 <p><strong>Desafío </strong></p>
 <p>¿Qué te imaginás que va a pasar cuando ahora corra el siguiente código?</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>x <span class="op">+</span><span class="st"> </span><span class="dv">2</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">x <span class="op">+</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
 </div>
-<p>Ponerle nombre a las variables es a veces la parte más difícil de escribir código. A R no le viene bien cualquier nombre de variable siempre y cuando no empiece con un número o un "_". Pero a los seres humanos que lean el código y tengan que interpretarlos les va a resultas más fácil entender qué hace la variable <code>temperatura_cordoba</code> que la variable <code>xxy1</code>.</p>
-<p>El consejo es tratar en lo posible usar nombre descriptivos y consistentes. Por ejemplo, siempre usar minúsculas y separar palabras con "_".</p>
+<p>Ponerle nombre a las variables es a veces la parte más difícil de escribir código. A R no le viene bien cualquier nombre de variable siempre y cuando no empiece con un número o un &quot;_&quot;. Pero a los seres humanos que lean el código y tengan que interpretarlos les va a resultas más fácil entender qué hace la variable <code>temperatura_cordoba</code> que la variable <code>xxy1</code>.</p>
+<p>El consejo es tratar en lo posible usar nombre descriptivos y consistentes. Por ejemplo, siempre usar minúsculas y separar palabras con &quot;_&quot;.</p>
 <div class="alert alert-success">
 <p><strong>Tip</strong>: Para hacerse la vida más fácil existen “guías de estilo” para programar que explicitan reglas específicas para escribir código. Por ejemplo <a href="https://rpubs.com/FvD/guia-estilo-r" class="alert-link">esta</a> o <a href="https://github.com/eliocamp/tesis/blob/master/docs/gu%C3%ADa_de_estilo.md" class="alert-link">esta otra</a>. Se trata de reglas únicamente para los ojos humanos, y que no afectan en absoluto la eficiencia o correctitud de la programación. En general, no existen guías buenas o malas, la idea es elegir una y ser consistente. De esta manera, vas a poder entender tu código con más facilidad.</p>
 </div>
@@ -579,9 +579,9 @@ div.tocify {
 <h3>Extendiendo R</h3>
 <p>R es un lenguaje creado por estadísticos y pensado para la estadística, por lo que ya viene con un montón de métodos estadísticos incorporados, como <code>mean()</code> o <code>median()</code>. Pero hay tantos métodos estadísticos como gente haciendo estadística así que es imposible que estén todos. La solución es que podés “agregarle” a R funciones que no vienen instaladas por defecto pero que escribieron otras personas en forma de “paquetes”. Este es el poder de <strong>la communidad de R</strong>!</p>
 <p>Para instalar paquetes de R, la forma mas fácil es con la función <code>install.packages()</code>. Entonces, por ejemplo,</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;readr&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;readr&quot;</span>)</a></code></pre></div>
 <p>te instala un paquete que contiene funciones para leer datos. Luego, usando el comando</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">library</span>(readr)</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(readr)</a></code></pre></div>
 <p>le decís a R que cargue las funciones que vienen en el paquete readr para usarlas.</p>
 <div class="alert alert-success">
 <p><strong>Nota</strong>: Si cerrás y volveś a abrir R, vas a tener que usar <code>library(readr)</code> nuevamente para acceder a la funcionalidad del paquete readr</p>
@@ -591,7 +591,7 @@ div.tocify {
 <h3>Buscando ayuda</h3>
 <p>Entre la enorme cantidad de funciones que tiene R por defecto y las que se pueden agregar instalando paquetes externos, es imposible recordar todas las funciones y cómo usarlas. Por eso, una gran proporción del tiempo que uses R vas a pasarlo leyendo documentación de funciones, ya sea para aprender a usarlas o porque no te acordás algún detalle.</p>
 <p>Para acceder a la ayuda de una función simplemente usamos el signo de pregunta:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>?sin</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">?sin</a></code></pre></div>
 <div class="alert alert-success">
 <p><strong>Nota</strong>: Otra forma de acceder a la ayuda de una función es poniendo el cursor sobre ella y apretando F1</p>
 </div>
