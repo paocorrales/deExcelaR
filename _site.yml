@@ -17,6 +17,8 @@ navbar:
         href: 05-dplyr-I.html
       - text: Gráficos I
         href: 06-graficos-I.html
+      - text: Gráficos II
+        href: 07-graficos-II.html
   - text: Desafíos
     menu:
       - text: Leer datos

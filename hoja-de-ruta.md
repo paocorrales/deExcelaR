@@ -66,7 +66,7 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
 
 #### Contenidos
 
-- Visualización de datos con `{ggplot2}` - Segunda parte
+- [Visualización de datos con `{ggplot2}` - Segunda parte](07-graficos-II.html)
     - Crear gráficos con múltiples geometrías.
     - Graficar transformaciones estadísticas
     - Usar paneles para graficar múltiples relaciones.

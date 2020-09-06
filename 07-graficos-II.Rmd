@@ -128,7 +128,7 @@ Los boxplot dan muchísima información sobre los datos pero al mismo tiempo *es
 
 ```{r}
 ggplot(diamantes, aes(claridad, precio)) +
-  geom_violin() +
+  geom_violin() 
 ```
 
 ```{r}
@@ -136,7 +136,7 @@ ggplot(diamantes, aes(claridad, precio)) +
   geom_jitter()
 ```
 
-::: {.alert .alert-::: {.alert .alert-info}
+::: {.alert .alert-success}
 Cuando nuestra base de datos es muy grande corremos el riesgo de generar de que los elementos del gráfico estén tan juntos que se solapen y no se vean. Esto se conoce como **overplotting**. La base de datos `diamantes` tiene 53940 observaciones y al graficar un punto por cada una, aún si están separados por la claridad, quedan superpuestos. 
 
 Para resolver este problema se suele modificar la estética de los elementos, cambiando el tamaño o  `size` para que ocupen menos lugar y se vean mejor, cambiando la forma  o `shape` por alguna que no tenga relleno y permita ver los elemenos que hay atrás o modificando la transparencia o `alpha` por la misma razón. En bases de datos tan grandes como la de diamantes, muchas veces hay que utilizar varios de estos recursos. 
