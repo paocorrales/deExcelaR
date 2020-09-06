@@ -9,20 +9,20 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-La idea de este desafío es que te armes un proyecto y que leas datos para usar el resto del curso. 
+El objetivo de este desafío es que armes un proyecto y que leas una archivo de datos para aplicar lo que aprendas en el resto del curso. 
 
 
-## Creá un proyecto de RStudio
+### 1. Creá un proyecto de RStudio
 
-Si te olvidaste cómo se hace, fijate en [esta sección](02-proyectos.html). Asegurate de usar un nombre descriptivo. 
+Si te olvidaste cómo se hace, revisa [esta sección](02-proyectos.html). Asegurate de usar un nombre descriptivo, asociado a los datos o el análisis que tenés en mente. 
 
-## Decidí que datos usar
+### 2. Decidí que datos usar
 
-Buscá algún set de datos que hayas usado para algo o quieras usar. Puede ser en formato .csv o de Excel. Guardalo en una carpeta llamada "datos" dentro de tu proyecto.
+Buscá algún set de datos que hayas usado para algo o quieras usar. Puede ser en formato .csv o de Excel. Guardalo en una carpeta llamada "datos" dentro de la carpeta de tu proyecto.
 
-## Lee los datos en R 
+### 3. Lee los datos en R 
 
-Creá un archivo de RMarkdown (fijate en  [esta sección](03-reportes-I.html)) y describí los datos con tus palabras. Qué datos son, qué tiene cada columna y de dónde salieron. Armá un *chunk* que lea los datos (fijate en [esta sección](04-lectura-datos.html) y mostralos. 
+Creá un archivo de RMarkdown (por las dudas, [esta es la sección asociada](03-reportes-I.html)). Además de un título informativo, describí los datos con tus palabras. ¿Cuál es la fuente? ¿Qué variables incluyen? Armá un *chunk* para leer los datos (podés revisar [esta sección](04-lectura-datos.html) y mostralos. ¿Cuántas obervaciones tiene? ¿Qué tipo de datos tiene cada columna?  
 
 
 
