@@ -44,7 +44,7 @@ ggplot(data = paises, mapping = aes(x = pib_per_capita, y = esperanza_de_vida)) 
 ¡Nuestro primer gráfico! 
 
 ::: {.alert .alert-info}
-**Primer desafío
+**Primer desafío**
 
 Ahora es tu turno. Modifica el gráfico anterior para visualizar cómo cambia la esperanza de vida a lo largo de los años. 
 

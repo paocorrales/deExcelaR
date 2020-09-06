@@ -1,0 +1,145 @@
+---
+title: "Visualización de datos con {ggplot2} II"
+output: 
+  html_document:
+    code_download: true
+    toc: true
+    toc_float: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Hasta ahora y asumiendo que recorriste los episodios anteriores, visualizamos los datos tal cual vienen en la base de datos o con ayuda de `dplyr` para transformarlos. Vamos ver como *transformar* los datos usando ggplot2.
+
+De paso vamos a usar datos incluidos en el paquete `datos` (muchos paquetes traen bases de datos para probar cosas, este en particular son todas bases de datos en español!) que podés descargar como siempres con `install.packages("datos")`. Los datos `diamantes` contiene información sobre ~ 54000 diamantes, incluido el `precio`, el `quilate`, el `color`, la `claridad` y el `corte` de cada uno.
+
+```{r}
+library(ggplot2)
+library(datos)
+str(diamantes)
+```
+
+## Gráficos de frecuencias
+
+Este es un gráfico de barras construido usando la función `geom_bar()`. En el eje x muestra el `corte` de los diamantes y en el eje y la cantidad (*count* en inglés) de diamantes en cada categoría. Pero `diamantes` no tiene una variable que se llame `count` y tampoco la generamos nosotros. ¡Es calculada internamente por ggplot2!.
+
+```{r}
+ggplot(data = diamantes, aes(x = corte)) +
+  geom_bar()
+```
+
+Cómo el gráfico de barras, también podemos graficar histogramas con `geom_histogram()` y polígonos de frecuencia con `geom_density()` para visualizar la cantidad de observaciones que caen en cada categoría (si la variable es discreta como el caso del corte de los diamantes) o rango de valores (para variables continuas). 
+
+Un ejemplo de variable continua es el `precio` de los diamantes, veamos como se ve un histograma y de paso le cambiamos el color a las barras, pero ojo, solo al borde.
+
+```{r}
+ggplot(diamantes, aes(precio)) +
+  geom_histogram(color = "darkorange")
+```
+
+::: {.alert .alert-info}
+**Primer desafío**
+
+¿Notaste el mensaje que devuelve el gráfico? 
+
+``stat_bin()` using `bins = 30`. Pick better value with `binwidth`.`
+
+Esta geometría tiene dos argumentos importantes `bins` y `binwidth`. Cambiá el valor de alguno de los dos argumentos y volvé a generar el gráfico, ¿que rol juegan los argumentos?
+
+También podés revisar la documentación.
+:::
+
+Además de contar la cantidad de elementos, ggplot2 puede calcular muchas otras transformaciones sobre los datos. Por ejemplo si quisieramos el porcentaje o la proporción que le corresponde a cada categoría de `corte` respecto del total podemos hacerlo *mapeando* esa transformación `prop` al eje y con la función `stat()`.
+
+```{r}
+ggplot(data = diamantes, aes(x = corte)) +
+  geom_bar(aes(y = stat(prop), group = 1))
+```
+
+Ahora podríamos decir que el 40% de los diamantes en la base de datos tienen un corte *ideal*. Además de la función  `stat()` agregamos `group = 1` y esto no fue sin querer. Probá correr el gráfico sin ese argumento.
+
+Al incluir `group = 1`, ggplot2 junta todas las observaciones en un único grupo y calcula la proporción o el porcentaje que representa cada corte respecto del total de diamantes. Si no incluimos eso, ggplot2 asumirá que cada categoría de corte es un grupo independiente y el cálculo del porcentaje también lo hará por separado. 
+
+### Posición
+
+Ya vimos que la estética del `color` solo modifica el borde de las barras, si quisieras modificar el relleno necesitamos cambiar el `fill` y al igual que antes podemos *mapear* una variable a esta estética.
+
+```{r}
+ggplot(data = diamantes) +
+  geom_bar(aes(x = corte, fill = claridad))
+```
+
+Al *mapear* una variable distinta, la claridad de los diamantes, podemmos visualizar información extra. Este "apilamiento" de las barras es la opción de posición por defecto `position = "stack"`, pero podrías usar una de las otras tres opciones: `"identity"`, `"dodge"` o `"fill"`.
+
+* `position = "identity"` colocará cada barra comenzando en cero quedando todas superpuestas. Para ver esa superposición, debemos hacer que las barras sean ligeramente transparentes configurando el `alpha` a un valor pequeño.
+
+```{r}
+ggplot(diamantes) +
+  geom_bar(aes(x = corte, fill = claridad), alpha = 0.2, position = "identity")
+```
+
+* `position = "fill"` apila las barras al igual que `position = "stack"`, pero transforma los datos para que cada conjunto de barras apiladas tenga la misma altura. Esto hace que sea más fácil comparar proporciones entre grupos.
+
+```{r}
+ggplot(diamantes) +
+  geom_bar(aes(x = corte, fill = claridad), position = "fill")
+```
+
+* `position = "dodge"` coloca las barras una al lado de la otra. Esto hace que sea más fácil comparar valores individuales.
+
+```{r}
+ggplot(diamantes) +
+  geom_bar(aes(x = corte, fill = claridad), position = "dodge")
+```
+
+## Gráficos de líneas suavizas
+
+Cómo vimos antes, los gráficos de líneas suavizadas (smoothers) ajustan un modelo a los datos y luego grafican las predicciones del modelo. Sin entrar en muchos detalles, se puede aplicar distintos modelos y la elección del mismo dependerá de los datos. 
+
+```{r}
+ggplot(diamantes, aes(quilate, precio)) +
+  geom_point() +
+  geom_smooth()
+```
+
+## Gráficos de caja
+
+Los diagramas de caja, mejor conocidos como boxplots calculan un resumen robusto de la distribución y luego muestran una caja con formato especial. 
+
+La línea central de la caja corresponde a la **mediana** (el valor que toma el dato central) y los extremos de la caja son los **quartil 25 y 75**, definiendo así el **rango intercuartil**. Los extremos están definidos como **1.5 x quartil 25** o **75** y cualquier observación por debajo o por encima es un **outliner** o **valor extremo**.
+
+```{r}
+ggplot(diamantes, aes(claridad, precio)) +
+  geom_boxplot()
+```
+
+Los boxplot dan muchísima información sobre los datos pero al mismo tiempo *esconden* la cantidad de observaciones que se usaron para generarlos y en particular cual es la frecuencia a lo largo del eje y. Por esta razón también existen `geom_violin()` y `geom_jittere()`.
+
+::: {.alert .alert-info}
+**Segundo desafío**
+
+¿Notaste el mensaje que devuelve el gráfico? 
+
+1. Volvé a graficar la distribución del precio para cada tipo de claridad pero ahora usando `geom_violin()` y `geom_jitter()`.
+2. ¿Qué ventajas y desventajas encuentran respecto de `geom_boxplot()`?
+:::
+
+```{r}
+ggplot(diamantes, aes(claridad, precio)) +
+  geom_violin() +
+```
+
+```{r}
+ggplot(diamantes, aes(claridad, precio)) +
+  geom_jitter()
+```
+
+::: {.alert .alert-::: {.alert .alert-info}
+Cuando nuestra base de datos es muy grande corremos el riesgo de generar de que los elementos del gráfico estén tan juntos que se solapen y no se vean. Esto se conoce como **overplotting**. La base de datos `diamantes` tiene 53940 observaciones y al graficar un punto por cada una, aún si están separados por la claridad, quedan superpuestos. 
+
+Para resolver este problema se suele modificar la estética de los elementos, cambiando el tamaño o  `size` para que ocupen menos lugar y se vean mejor, cambiando la forma  o `shape` por alguna que no tenga relleno y permita ver los elemenos que hay atrás o modificando la transparencia o `alpha` por la misma razón. En bases de datos tan grandes como la de diamantes, muchas veces hay que utilizar varios de estos recursos. 
+:::
+
+## Graficando en múltiples paneles
