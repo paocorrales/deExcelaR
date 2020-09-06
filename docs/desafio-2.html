@@ -11,7 +11,7 @@
 
 
 
-<title>Bienvenida!</title>
+<title>Desafío 2: Analizar los datos</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -331,28 +331,24 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Bienvenida!</h1>
+<h1 class="title toc-ignore">Desafío 2: Analizar los datos</h1>
 
 </div>
 
 
-<div id="qué-es-esto" class="section level3">
-<h3>¿Qué es esto?</h3>
-<p>Este curso está pensado para <a href="personas.html">personas</a> que usan Excel para la manipulación y análisis de datos pero les gustaría aprender a trabajar con R y nunca programaron. Por eso los contenidos comienzan desde el princio: ¿por qué usar R? y ¿por dónde empezar?</p>
-<p>Al mismo tiempo que proponemos trabajar con R, nos gustaría que sea de manera ordenada y reproducible. Por eso, proponemos utilizar un flujo de trabajo que le permita a quienes tomen este curso, aplicar buenas prácticas de programación, trabajar de manera colaborativa y presentar su trabajo en un documento único que incluya el análisis y los resultados.</p>
-<p>Siempre que podamos, mencionaremos como lo que proponemos resolver con R se puede también hacer con Excel, y las ventajas y desventajas de cada caso.</p>
-<p>En cada sección incluimos ejercicios y desafíos y junto con los ejemplos, usan algunos set de datos útiles para el problema que queremos resolver. Buscamos que estos datos sean realistas para que cualquier persona encuentre similaridades en sus propios datos y pueda aplicar lo aprendido a otras situaciones.</p>
-<p>Asumimos que ya tenés R y Rstudio instalados. Si no es así podés seguir estas instrucciones.</p>
-<p><a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br /> Todos los materiales de este curso se encuentran bajo la licencia <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES">Creative Commons Attribution-ShareAlike 4.0 International License</a>.</p>
+<p>El objetivo de este desafío es analizar los datos que leíste en el <a href="desafio-1.html">primer desafío</a> utlizando los verbos de <code>dplyr</code>.</p>
+<div id="abrí-tu-proyecto" class="section level3">
+<h3>1. Abrí tu proyecto</h3>
+<p>Usá el proyecto que ya creaste y abrilo desde el explorador de archivos (haciendo doble click en el archivo .Rproj) o desde a interfaz de RStudio. Allí deberías tener tu archivo .Rmd donde ya leíste y describiste los datos. Corré el código para cargar esa base de datos en memoria y no te olvides de los paquetes necesarios!</p>
 </div>
-<div id="recursos" class="section level2">
-<h2>Recursos</h2>
-<p>Parte de los materiales que encontrás acá derivan de distintos recursos:</p>
-<ul>
-<li><p><a href="https://swcarpentry.github.io/r-novice-gapminder-es/">R para Análisis Científicos Reproducibles</a> de The Carpentries</p></li>
-<li><p><a href="https://rstudio-conf-2020.github.io/r-for-excel/">R for Excel Users</a> de Dr. Julie Stewart Lowndes y Dr. Allison Horst</p></li>
-<li><p><a href="https://es.r4ds.hadley.nz/">R para Ciencia de Datos</a> de Hadley Wickham</p></li>
-</ul>
+<div id="generá-nuevas-columnas" class="section level3">
+<h3>2. Generá nuevas columnas</h3>
+<p>Es posible que necesites alguna nueva variable, por ejemplo la suma entre otras dos columnas para calcular un total o la diferencia entre otras dos. La clave será usar la función <code>mutate()</code> y ya que estamos aplicá otro verbo de dplyr para seleccionar esas nuevas columnas y mostrarlas.</p>
+</div>
+<div id="resumen-de-datos" class="section level3">
+<h3>3. Resumen de datos</h3>
+<p>Ahora calculá un promedio o determiná el valor máximo o mínimo de alguna columna usando <code>summarise()</code>. Si tu base de datos tiene alguna variable con categorías, también probá hacer los mismos cálculos pero agrupando las observaciones.</p>
+<p>Podés analizar los datos tanto como se te ocurra, la idea es que te familiarices con los verbos de dplyr al mismo tiempo que sacas información de la base de datos que estás utilizando. Siempre es una buena idea desribir el análisis y nuestra interpretación del mismo junto al <em>chunk</em> correspondiente.</p>
 </div>
 
 
