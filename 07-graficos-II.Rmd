@@ -15,8 +15,9 @@ Hasta ahora y asumiendo que recorriste los episodios anteriores, visualizamos lo
 
 De paso vamos a usar datos incluidos en el paquete `datos` (muchos paquetes traen bases de datos para probar cosas, este en particular son todas bases de datos en español!) que podés descargar como siempres con `install.packages("datos")`. Los datos `diamantes` contiene información sobre ~ 54000 diamantes, incluido el `precio`, el `quilate`, el `color`, la `claridad` y el `corte` de cada uno.
 
-```{r}
+```{r message=FALSE}
 library(ggplot2)
+library(dplyr)
 library(datos)
 str(diamantes)
 ```
@@ -143,3 +144,54 @@ Para resolver este problema se suele modificar la estética de los elementos, ca
 :::
 
 ## Graficando en múltiples paneles
+
+Vimos que es posible graficar más de dos variables en un gráfico *mapeando* una variable al `color` o por ejemplo el tipo de línea o `linetype`
+
+```{r}
+ggplot(diamantes, aes(quilate, precio)) +
+  geom_point(aes(color = color))
+```
+
+En este caso no solo visualizamos la relación entre el precio y el quilate del diamante, también podemos ver que rol juega el color. También podríamos haber intentando resolver el problema generando un gráfico por cada color filtrando las observaciones correspondientes.
+
+```{r}
+diamantes %>% 
+  filter(color == "D") %>% 
+  ggplot(aes(quilate, precio)) +
+  geom_point(aes(color = color))
+
+```
+
+Pero sería muchísimo trabajo si tenemos que hacer esto para cada una de las 7 categorías de color. La buena noticia es que ggplot2 tiene un par de funciones justo para resolver este problema:
+
+```{r}
+ggplot(diamantes, aes(quilate, precio)) +
+  geom_point(aes(color = color)) +
+  facet_wrap(~color)
+```
+
+Esta nueva capa con `facet_wrap()` divide al gráfico inicial en 7 paneles o *facets*, uno por cada color. Esta función requiere saber que variable será la responsable de separar los paneles y para eso se usa la **notación de funciones** de R: `~color`. Esto se lee como generar paneles *"en función del color"*.
+
+¿Y si quisieramos generar paneles a partir de 2 variables? Para eso existe `facet_grid()`. En este gráfico generamos paneles viendo la *"relación entre el corte y el color"* y por ejemplo en el primer panel arriba a la izquierda podremos observar los diamantes que son al mismo tiempo de color D y corte Regular. En este caso *mapear* la variable color al color de los diamantes no parece ser encesario ya que cada columna ya nos permite identificar eso, sin embargo en algunos casos ayuda a leer el gráfico más rápido. 
+
+```{r}
+ggplot(diamantes, aes(quilate, precio)) +
+  geom_point(aes(color = color)) +
+  facet_grid(corte~color)
+```
+
+::: {.alert .alert-info}
+**Tercer desafío**
+
+Generá boxplots para analizar como se comporta el `precio` según la `claridad` para cada tipo de `corte` como se ve acá.
+
+```{r echo=FALSE}
+ggplot(diamantes, aes(claridad, precio, fill = claridad)) +
+  geom_boxplot() +
+  facet_wrap(~corte)
+```
+:::
+
+
+
+
