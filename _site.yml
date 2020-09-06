@@ -19,6 +19,8 @@ navbar:
         href: 06-graficos-I.html
       - text: Gráficos II
         href: 07-graficos-II.html
+      - text: Manipulación de datos II
+        href: 08-dplyr-tidyr-II.html
   - text: Desafíos
     menu:
       - text: Leer datos

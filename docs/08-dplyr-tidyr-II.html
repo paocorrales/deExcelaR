@@ -1,0 +1,810 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Manipulación de datos ordenados usando {dplyr} y {tidyr} II</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">de Excel a R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="hoja-de-ruta.html">Hoja de ruta</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Temas
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01-introduccion.html">Introducción</a>
+    </li>
+    <li>
+      <a href="02-proyectos.html">Proyectos</a>
+    </li>
+    <li>
+      <a href="03-reportes-I.html">Reportes I</a>
+    </li>
+    <li>
+      <a href="04-lectura-datos.html">Lectura de datos</a>
+    </li>
+    <li>
+      <a href="05-dplyr-I.html">Maninupulación de datos I</a>
+    </li>
+    <li>
+      <a href="06-graficos-I.html">Gráficos I</a>
+    </li>
+    <li>
+      <a href="07-graficos-II.html">Gráficos II</a>
+    </li>
+    <li>
+      <a href="08-dplyr-tidyr-II.html">Manipulación de datos II</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Desafíos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="desafio-1.html">Leer datos</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Código</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-download-source" href="#">Descargar Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Manipulación de datos ordenados usando {dplyr} y {tidyr} II</h1>
+
+</div>
+
+
+<p>En <a href="04-lectura-datos.html#Formatos_de_tablas">la última sección de lectura de datos</a> viste el concepto de datos “anchos” y “largos”.</p>
+<p>Los datos en formato “largo” o “tidy”, son aquellos en los cuales</p>
+<ul>
+<li>cada fila es una observación</li>
+<li>cada columna es una variable</li>
+</ul>
+<p>En el formato “ancho” es un poco más complejo de definir pero la idea general es que:</p>
+<ul>
+<li>cada fila es un “item”</li>
+<li>cada columna es una variable</li>
+</ul>
+<p><img src="img/largo-ancho.png" /></p>
+<p>Una tabla en formato largo va a tener una cierta cantidad de columnas que cumplen el rol de identificadores y cuya combinación identifican una única observación y una única columna con el valor de la observación. En el ejemplo de arriba, “pais” y “anio” son las columnas identificadoras y “casos” es la columna que contiene el valor de las observaciones.</p>
+<p>En una tabla larga, cada observación única se identifica a partir de la intersección de filas y columnas. En el ejemplo, los países están en las filas y los años en las columnas.</p>
+<p>En general, el formato ancho es más compacto y legible por humanos mientras que el largo es más fácil de manejar con la computadora. Si te fijás en las tablas de arriba, es más fácil comparar los valores entre paises y entre años en la tabla ancha. Pero el nombre de las columnas (“1999”, “2000”) en realidad ¡son datos! Además este formato se empieza a complicar en cuanto hay más de dos identificadores.</p>
+<p>Un mismo set de datos puede ser representado de forma completamente “larga”, completamente “ancha” o –lo que es más común– en un formato intermedio pero no existe una forma “correcta” de organizar los datos; cada una tiene sus aplicaciones. Por esto es que es muy normal que durante un análisis los datos vayan y vuelvan entre distintos formatos dependiendo de los métodos estadísticos que se le aplican. Entonces, aprender a transformar datos anchos en largos y viceversa es un habilidad muy útil.</p>
+<div class="alert alert-info">
+<p><strong>Desafío</strong></p>
+<p>En las tablas de ejemplo cada país tiene el un valor observado de “casos” para cada año. ¿Cómo agregarías una nueva variable con información sobre “precios”? Dibujá un esquema en papel y lápiz en formato ancho y uno en formato largo. ¿En qué formato es más “natural” esa extensión?</p>
+</div>
+<p>En esta sección vas a usar el paquete {tidyr} para manipular datos. Si no lo tenés instalado, instalalo con el comando:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;tidyr&quot;</span>)</span></code></pre></div>
+<p>(como siempre, recordá que esto hay que hacerlo una única vez)</p>
+<p>Y luego cargá {tidyr} y {dplyr} (que usaste en <a href="05-dplyr-I.html">una sección anterior</a>) usando</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">library</span>(dplyr)</span></code></pre></div>
+<div id="de-ancho-a-largo-con-pivot_longer" class="section level2">
+<h2>De ancho a largo con <code>pivot_longer()</code></h2>
+<p>En secciones anteriores usaste una versión de los datos de <a href="https://www.gapminder.org/">gapminder</a>. Ahora vas a leer los datos en su formato original:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>paises_ancho &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises_ancho.csv&quot;</span>)</span></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   .default = col_double(),
+##   continente = col_character(),
+##   pais = col_character()
+## )</code></pre>
+<pre><code>## See spec(...) for full column specifications.</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>paises_ancho</span></code></pre></div>
+<pre><code>## # A tibble: 142 x 38
+##    continente pais  pib_per_capita_… pib_per_capita_… pib_per_capita_…
+##    &lt;chr&gt;      &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
+##  1 Africa     Alge…            2449.            3014.            2551.
+##  2 Africa     Ango…            3521.            3828.            4269.
+##  3 Africa     Benin            1063.             960.             949.
+##  4 Africa     Bots…             851.             918.             984.
+##  5 Africa     Burk…             543.             617.             723.
+##  6 Africa     Buru…             339.             380.             355.
+##  7 Africa     Came…            1173.            1313.            1400.
+##  8 Africa     Cent…            1071.            1191.            1193.
+##  9 Africa     Chad             1179.            1308.            1390.
+## 10 Africa     Como…            1103.            1211.            1407.
+## # … with 132 more rows, and 33 more variables: pib_per_capita_1967 &lt;dbl&gt;,
+## #   pib_per_capita_1972 &lt;dbl&gt;, pib_per_capita_1977 &lt;dbl&gt;,
+## #   pib_per_capita_1982 &lt;dbl&gt;, pib_per_capita_1987 &lt;dbl&gt;,
+## #   pib_per_capita_1992 &lt;dbl&gt;, pib_per_capita_1997 &lt;dbl&gt;,
+## #   pib_per_capita_2002 &lt;dbl&gt;, pib_per_capita_2007 &lt;dbl&gt;,
+## #   esperanza_de_vida_1952 &lt;dbl&gt;, esperanza_de_vida_1957 &lt;dbl&gt;,
+## #   esperanza_de_vida_1962 &lt;dbl&gt;, esperanza_de_vida_1967 &lt;dbl&gt;,
+## #   esperanza_de_vida_1972 &lt;dbl&gt;, esperanza_de_vida_1977 &lt;dbl&gt;,
+## #   esperanza_de_vida_1982 &lt;dbl&gt;, esperanza_de_vida_1987 &lt;dbl&gt;,
+## #   esperanza_de_vida_1992 &lt;dbl&gt;, esperanza_de_vida_1997 &lt;dbl&gt;,
+## #   esperanza_de_vida_2002 &lt;dbl&gt;, esperanza_de_vida_2007 &lt;dbl&gt;,
+## #   poblacion_1952 &lt;dbl&gt;, poblacion_1957 &lt;dbl&gt;, poblacion_1962 &lt;dbl&gt;,
+## #   poblacion_1967 &lt;dbl&gt;, poblacion_1972 &lt;dbl&gt;, poblacion_1977 &lt;dbl&gt;,
+## #   poblacion_1982 &lt;dbl&gt;, poblacion_1987 &lt;dbl&gt;, poblacion_1992 &lt;dbl&gt;,
+## #   poblacion_1997 &lt;dbl&gt;, poblacion_2002 &lt;dbl&gt;, poblacion_2007 &lt;dbl&gt;</code></pre>
+<div class="alert alert-success">
+<p>¿Notaste que en el código anterior no usaste <code>library(readr)</code> para cargar el paquete y luego leer? Con la notación <code>paquete::funcion()</code> podés acceder a las funciones de un paquete sin tener que cargarlo. Es una buena forma de no tener que cargar un montón de funciones innecesarias si vas a correr una función de un paquete pocas veces.</p>
+</div>
+<p>Esta tabla, increíblemente ancha, es muy difícil de manejar. Por ejemplo, es imposible hacer una serie de tiempo de una variable, o calcular el promedio por variable y país; ni hablar de calcular una regresión lineal.</p>
+<p>Para convertirlo en una tabla más larga, se usa <code>pivot_longer()</code> (“longer” es “más largo” en inglés):</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>paises_largo &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(paises_ancho,</span>
+<span id="cb8-2"><a href="#cb8-2"></a>                             <span class="dt">cols =</span> <span class="kw">c</span>(<span class="kw">starts_with</span>(<span class="st">&#39;pob&#39;</span>), </span>
+<span id="cb8-3"><a href="#cb8-3"></a>                                      <span class="kw">starts_with</span>(<span class="st">&#39;esperanza&#39;</span>), </span>
+<span id="cb8-4"><a href="#cb8-4"></a>                                      <span class="kw">starts_with</span>(<span class="st">&#39;pib_per&#39;</span>)),</span>
+<span id="cb8-5"><a href="#cb8-5"></a>                             <span class="dt">names_to =</span> <span class="st">&quot;variable_anio&quot;</span>, </span>
+<span id="cb8-6"><a href="#cb8-6"></a>                             <span class="dt">values_to =</span> <span class="st">&quot;valor&quot;</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>paises_largo</span></code></pre></div>
+<pre><code>## # A tibble: 5,112 x 4
+##    continente pais    variable_anio     valor
+##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;             &lt;dbl&gt;
+##  1 Africa     Algeria poblacion_1952  9279525
+##  2 Africa     Algeria poblacion_1957 10270856
+##  3 Africa     Algeria poblacion_1962 11000948
+##  4 Africa     Algeria poblacion_1967 12760499
+##  5 Africa     Algeria poblacion_1972 14760787
+##  6 Africa     Algeria poblacion_1977 17152804
+##  7 Africa     Algeria poblacion_1982 20033753
+##  8 Africa     Algeria poblacion_1987 23254956
+##  9 Africa     Algeria poblacion_1992 26298373
+## 10 Africa     Algeria poblacion_1997 29072015
+## # … with 5,102 more rows</code></pre>
+<p>El primer argumento de<code>pivot_longer()</code> es la tabla que va a modificar: <code>paises_ancho</code>. El segundo argumento se llama <code>cols</code> y es un vector con las columnas que tienen los valores a “alargar”. Podría ser un vector escrito a mano (algo como <code>c("pib_per_capita_1952", "pib_per_capita_1957"...)</code>) pero con más de 30 columnas, escribir todo eso sería tedioso y probablemente estaría lleno de erorres. Por eso {tidyr} provee funciones de ayuda para seleccionar columnas en base a patrones. El código de arriba usa <code>starts_with()</code> que, como su nombre en inglés lo indica, selecciona las columnas que empiezan con una determinada cadena de caracteres. El vector <code>c(starts_with('pob'), starts_with('esperanza'), starts_with('pib_per'))</code> le dice a <code>pivot_longer()</code> que seleccione las columnas que empieza con “pob”, las que empiezan con “esperanza” y las que empiezan con “pib_per”.</p>
+<div class="alert alert-success">
+<p>Estas funciones accesorias para seleccionar muchas funciones se llaman “tidyselect”. Si querés leer más detalles de las distintas formas que podés seleccionar variables leé la documentación usando <code>?tidyselect::language</code>.</p>
+</div>
+<p>El tercer y cuarto argumento son los nombres de las columnas de “nombre” y de “valor” que va a tener la nueva tabla. Como la nueva columna de identificación tiene los datos de la variable y el año a medir, “variable_anio” es un buen nombre. Y la columna de valor va a tener… bueno, el valor.</p>
+<p>Tomate un momento para visualizar lo que acaba de pasar. La tabla ancha tenía un montón de columnas con distintos datos. Ahora estos datos están uno arriba de otro en la columna “valor”, pero para identificar el nombre de la columna de la cual vinieron, se agrega la columna “variable_anio”.</p>
+<div class="figure">
+<img src="img/ancho-a-largo.png" alt="" />
+<p class="caption">Proceso de largo a ancho</p>
+</div>
+<p>La columna <code>variable_anio</code> todavía no es muy útil porque contiene 2 datos, la variable (población, expectativa de vida o PBI per cápita) y el año. Sería mejor separar esta información en dos columnas llamadas “variable” y “anio”. Para eso está la función <code>separate</code></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">separate</span>(paises_largo, </span>
+<span id="cb10-2"><a href="#cb10-2"></a>         <span class="dt">col =</span> variable_anio, </span>
+<span id="cb10-3"><a href="#cb10-3"></a>         <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;anio&quot;</span>), </span>
+<span id="cb10-4"><a href="#cb10-4"></a>         <span class="dt">sep =</span> <span class="dv">-4</span>)</span></code></pre></div>
+<pre><code>## # A tibble: 5,112 x 5
+##    continente pais    variable   anio     valor
+##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;    &lt;dbl&gt;
+##  1 Africa     Algeria poblacion_ 1952   9279525
+##  2 Africa     Algeria poblacion_ 1957  10270856
+##  3 Africa     Algeria poblacion_ 1962  11000948
+##  4 Africa     Algeria poblacion_ 1967  12760499
+##  5 Africa     Algeria poblacion_ 1972  14760787
+##  6 Africa     Algeria poblacion_ 1977  17152804
+##  7 Africa     Algeria poblacion_ 1982  20033753
+##  8 Africa     Algeria poblacion_ 1987  23254956
+##  9 Africa     Algeria poblacion_ 1992  26298373
+## 10 Africa     Algeria poblacion_ 1997  29072015
+## # … with 5,102 more rows</code></pre>
+<p>El primer argumento, como siempre, es la tabla a procesar. El segundo, <code>col</code>, es la columna a separar en dos (o más). El tercero, <code>into</code> es el nombre de las nuevas columnas que <code>separate()</code> va a crear. El último argumento es <code>sep</code> que define cómo realizar la separación. Por defecto, <code>sep</code> es una <a href="https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular">expresión regular</a> que cpatura cualquier caracter no alfanumérico. En el caso de <code>variable_anio</code> no sirve, porque para valores como <code>"esperanza_de_vida_1952"</code>, separaría en <code>"esperanza"</code>, <code>"de"</code>, <code>"vida"</code> y <code>"1952"</code>. Como el año tiene siempre 4 caracteres, una solución simple es usar <code>sep = -4</code>, que significa que la separacion es 4 caracteres contando desde el final.</p>
+<p>Habrás notado un problema. El texto en la columnas <code>variable</code> toavía tiene un "_" al final. Podrías usar <code>mutate()</code> y un poco de funciones de manipulación de caracteres para quitarlo, pero hay una forma un poco más simple y es separando la columna <code>vriable_anio</code> en tres, incluyendo una columna con el guión:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>paises_largo &lt;-<span class="st"> </span><span class="kw">separate</span>(paises_largo, </span>
+<span id="cb12-2"><a href="#cb12-2"></a>         <span class="dt">col =</span> variable_anio, </span>
+<span id="cb12-3"><a href="#cb12-3"></a>         <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;guion&quot;</span>, <span class="st">&quot;anio&quot;</span>), </span>
+<span id="cb12-4"><a href="#cb12-4"></a>         <span class="dt">sep =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">-4</span>))</span>
+<span id="cb12-5"><a href="#cb12-5"></a>paises_largo</span></code></pre></div>
+<pre><code>## # A tibble: 5,112 x 6
+##    continente pais    variable  guion anio     valor
+##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;
+##  1 Africa     Algeria poblacion _     1952   9279525
+##  2 Africa     Algeria poblacion _     1957  10270856
+##  3 Africa     Algeria poblacion _     1962  11000948
+##  4 Africa     Algeria poblacion _     1967  12760499
+##  5 Africa     Algeria poblacion _     1972  14760787
+##  6 Africa     Algeria poblacion _     1977  17152804
+##  7 Africa     Algeria poblacion _     1982  20033753
+##  8 Africa     Algeria poblacion _     1987  23254956
+##  9 Africa     Algeria poblacion _     1992  26298373
+## 10 Africa     Algeria poblacion _     1997  29072015
+## # … with 5,102 more rows</code></pre>
+<p>Y ya casi. Hay que eliminar la columna <code>guion</code>, que no sirve para nada. Pero fijate que debajo de la columna <code>anio</code> dice <code>&lt;chr&gt;</code>; eso significa que el tipo de la columna es caracter, pero los años son números. Usando <code>mutate()</code> podés eliminar la columna <code>guion</code> asignándole el valor <code>NULL</code> (nulo) y coercer (recordá <a href="04-lectura-datos.html#Vectores">esta sección</a>) la columna <code>anio</code> a entero usando <code>as.integer()</code>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>paises_largo &lt;-<span class="st"> </span><span class="kw">mutate</span>(paises_largo, </span>
+<span id="cb14-2"><a href="#cb14-2"></a>                       <span class="dt">guion =</span> <span class="ot">NULL</span>,</span>
+<span id="cb14-3"><a href="#cb14-3"></a>                       <span class="dt">anio =</span> <span class="kw">as.integer</span>(anio))</span>
+<span id="cb14-4"><a href="#cb14-4"></a>paises_largo</span></code></pre></div>
+<pre><code>## # A tibble: 5,112 x 5
+##    continente pais    variable   anio    valor
+##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;    &lt;dbl&gt;
+##  1 Africa     Algeria poblacion  1952  9279525
+##  2 Africa     Algeria poblacion  1957 10270856
+##  3 Africa     Algeria poblacion  1962 11000948
+##  4 Africa     Algeria poblacion  1967 12760499
+##  5 Africa     Algeria poblacion  1972 14760787
+##  6 Africa     Algeria poblacion  1977 17152804
+##  7 Africa     Algeria poblacion  1982 20033753
+##  8 Africa     Algeria poblacion  1987 23254956
+##  9 Africa     Algeria poblacion  1992 26298373
+## 10 Africa     Algeria poblacion  1997 29072015
+## # … with 5,102 more rows</code></pre>
+<div class="alert alert-info">
+<p><strong>Desafío</strong></p>
+<p>Juntá todos los pasos anteriores en una sola cadena de operaciones usando <code>%&gt;%</code>.</p>
+</div>
+</div>
+<div id="de-largo-a-ancho-con-pivot_wider" class="section level2">
+<h2>De largo a ancho con <code>pivot_wider()</code></h2>
+<p>Ahora la variable <code>paises_largo</code> está en el formato más largo posible. Tiene 5 columnas, de las cuales sólo una es la columnas con valores. Pero con los datos así no podrías hacer un gráfico de puntos que muestre la relación entre el PBI per cápita y la expectativa de vida como en la <a href="06-graficos-I.html#Segunda_capa:_geometrías">sección de gráficos</a>. Fijate que los valores de la columna <code>valor</code> no tienen todos las mismas unidades, por lo que operar con ese vector podría dar resultados sin sentido. Muchas veces es conveniente y natural tener los datos en un formato intermedio en donde hay múltiples columnas con los valores de distintas variables observadas.</p>
+<p>Pasa “ensanchar” una tabla está la función <code>pivot_wider()</code> (“wider” es “más ancha” en inglés) y el código para conseguir este formato intermedio es:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>paises_medio &lt;-<span class="st"> </span><span class="kw">pivot_wider</span>(paises_largo, <span class="dt">names_from =</span> variable, <span class="dt">values_from =</span> valor)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>paises_medio</span></code></pre></div>
+<pre><code>## # A tibble: 1,704 x 6
+##    continente pais     anio poblacion esperanza_de_vida pib_per_capita
+##    &lt;chr&gt;      &lt;chr&gt;   &lt;int&gt;     &lt;dbl&gt;             &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Africa     Algeria  1952   9279525              43.1          2449.
+##  2 Africa     Algeria  1957  10270856              45.7          3014.
+##  3 Africa     Algeria  1962  11000948              48.3          2551.
+##  4 Africa     Algeria  1967  12760499              51.4          3247.
+##  5 Africa     Algeria  1972  14760787              54.5          4183.
+##  6 Africa     Algeria  1977  17152804              58.0          4910.
+##  7 Africa     Algeria  1982  20033753              61.4          5745.
+##  8 Africa     Algeria  1987  23254956              65.8          5681.
+##  9 Africa     Algeria  1992  26298373              67.7          5023.
+## 10 Africa     Algeria  1997  29072015              69.2          4797.
+## # … with 1,694 more rows</code></pre>
+<p>Nuevamente el primer argumento es la tabla original. El segundo, <code>names_from</code> es la columna cuyos valores únicos van a convertirse en nuevas columnas. La columna <code>variable</code> tiene los valores <code>"población"</code>, <code>"esperanza_de_vida"</code> y <code>"pib_per_capita"</code> y entonces la tabla nueva tiene tres columnas con esos nombres. El tercer argumento, <code>values_from</code>, es la columna de la cual sacar los valores.</p>
+<p>Para volver al formato más ancho, basta con agregar más columnas en el argumento <code>names_from</code>:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">pivot_wider</span>(paises_largo, </span>
+<span id="cb18-2"><a href="#cb18-2"></a>            <span class="dt">names_from =</span> <span class="kw">c</span>(variable, anio), </span>
+<span id="cb18-3"><a href="#cb18-3"></a>            <span class="dt">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb18-4"><a href="#cb18-4"></a>            <span class="dt">values_from =</span> valor)</span></code></pre></div>
+<pre><code>## # A tibble: 142 x 38
+##    continente pais  poblacion_1952 poblacion_1957 poblacion_1962 poblacion_1967
+##    &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
+##  1 Africa     Alge…        9279525       10270856       11000948       12760499
+##  2 Africa     Ango…        4232095        4561361        4826015        5247469
+##  3 Africa     Benin        1738315        1925173        2151895        2427334
+##  4 Africa     Bots…         442308         474639         512764         553541
+##  5 Africa     Burk…        4469979        4713416        4919632        5127935
+##  6 Africa     Buru…        2445618        2667518        2961915        3330989
+##  7 Africa     Came…        5009067        5359923        5793633        6335506
+##  8 Africa     Cent…        1291695        1392284        1523478        1733638
+##  9 Africa     Chad         2682462        2894855        3150417        3495967
+## 10 Africa     Como…         153936         170928         191689         217378
+## # … with 132 more rows, and 32 more variables: poblacion_1972 &lt;dbl&gt;,
+## #   poblacion_1977 &lt;dbl&gt;, poblacion_1982 &lt;dbl&gt;, poblacion_1987 &lt;dbl&gt;,
+## #   poblacion_1992 &lt;dbl&gt;, poblacion_1997 &lt;dbl&gt;, poblacion_2002 &lt;dbl&gt;,
+## #   poblacion_2007 &lt;dbl&gt;, esperanza_de_vida_1952 &lt;dbl&gt;,
+## #   esperanza_de_vida_1957 &lt;dbl&gt;, esperanza_de_vida_1962 &lt;dbl&gt;,
+## #   esperanza_de_vida_1967 &lt;dbl&gt;, esperanza_de_vida_1972 &lt;dbl&gt;,
+## #   esperanza_de_vida_1977 &lt;dbl&gt;, esperanza_de_vida_1982 &lt;dbl&gt;,
+## #   esperanza_de_vida_1987 &lt;dbl&gt;, esperanza_de_vida_1992 &lt;dbl&gt;,
+## #   esperanza_de_vida_1997 &lt;dbl&gt;, esperanza_de_vida_2002 &lt;dbl&gt;,
+## #   esperanza_de_vida_2007 &lt;dbl&gt;, pib_per_capita_1952 &lt;dbl&gt;,
+## #   pib_per_capita_1957 &lt;dbl&gt;, pib_per_capita_1962 &lt;dbl&gt;,
+## #   pib_per_capita_1967 &lt;dbl&gt;, pib_per_capita_1972 &lt;dbl&gt;,
+## #   pib_per_capita_1977 &lt;dbl&gt;, pib_per_capita_1982 &lt;dbl&gt;,
+## #   pib_per_capita_1987 &lt;dbl&gt;, pib_per_capita_1992 &lt;dbl&gt;,
+## #   pib_per_capita_1997 &lt;dbl&gt;, pib_per_capita_2002 &lt;dbl&gt;,
+## #   pib_per_capita_2007 &lt;dbl&gt;</code></pre>
+<p>En esta llamada también está el argumento <code>names_sep</code>, que detemrina el caracter que se usa para crear el nombre de las nuevas columnas.</p>
+<div class="alert alert-info">
+<p><strong>Desafio</strong></p>
+<ul>
+<li><p>Creá una nueva tabla, llamada <code>paises_superduper_ancho</code> que tenga una columna para cada variable, anio y país. (Consejo: la tabla final tiene que tener 5 filas).</p></li>
+<li><p>¿Cómo es la tabla más ancha posible que podés generar con estos datos? ¿Cuántas filas y columnas tiene?</p></li>
+</ul>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTWFuaXB1bGFjacOzbiBkZSBkYXRvcyBvcmRlbmFkb3MgdXNhbmRvIHtkcGx5cn0geSB7dGlkeXJ9IElJIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCiAgICB0b2M6IHRydWUKICAgIHRvY19mbG9hdDogdHJ1ZQogICAgdGVtcGxhdGU6ICJfdGVtcGxhdGUuaHRtbCIgICAgCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkKYGBgCgoKRW4gW2xhIMO6bHRpbWEgc2VjY2nDs24gZGUgbGVjdHVyYSBkZSBkYXRvc10oMDQtbGVjdHVyYS1kYXRvcy5odG1sI0Zvcm1hdG9zX2RlX3RhYmxhcykgdmlzdGUgZWwgY29uY2VwdG8gZGUgZGF0b3MgImFuY2hvcyIgeSAibGFyZ29zIi4gCgpMb3MgZGF0b3MgZW4gZm9ybWF0byAibGFyZ28iIG8gInRpZHkiLCBzb24gYXF1ZWxsb3MgZW4gbG9zIGN1YWxlcyAKCiogY2FkYSBmaWxhIGVzIHVuYSBvYnNlcnZhY2nDs24KKiBjYWRhIGNvbHVtbmEgZXMgdW5hIHZhcmlhYmxlCgpFbiBlbCBmb3JtYXRvICJhbmNobyIgZXMgdW4gcG9jbyBtw6FzIGNvbXBsZWpvIGRlIGRlZmluaXIgcGVybyBsYSBpZGVhIGdlbmVyYWwgZXMgcXVlOgoKKiBjYWRhIGZpbGEgZXMgdW4gIml0ZW0iCiogY2FkYSBjb2x1bW5hIGVzIHVuYSB2YXJpYWJsZQoKIVtdKGltZy9sYXJnby1hbmNoby5wbmcpCgpVbmEgdGFibGEgZW4gZm9ybWF0byBsYXJnbyB2YSBhIHRlbmVyIHVuYSBjaWVydGEgY2FudGlkYWQgZGUgY29sdW1uYXMgcXVlIGN1bXBsZW4gZWwgcm9sIGRlIGlkZW50aWZpY2Fkb3JlcyB5IGN1eWEgY29tYmluYWNpw7NuIGlkZW50aWZpY2FuIHVuYSDDum5pY2Egb2JzZXJ2YWNpw7NuIHkgdW5hIMO6bmljYSBjb2x1bW5hIGNvbiBlbCB2YWxvciBkZSBsYSBvYnNlcnZhY2nDs24uIEVuIGVsIGVqZW1wbG8gZGUgYXJyaWJhLCAicGFpcyIgeSAiYW5pbyIgc29uIGxhcyBjb2x1bW5hcyBpZGVudGlmaWNhZG9yYXMgeSAiY2Fzb3MiIGVzIGxhIGNvbHVtbmEgcXVlIGNvbnRpZW5lIGVsIHZhbG9yIGRlIGxhcyBvYnNlcnZhY2lvbmVzLiAKCkVuIHVuYSB0YWJsYSBsYXJnYSwgY2FkYSBvYnNlcnZhY2nDs24gw7puaWNhIHNlIGlkZW50aWZpY2EgYSBwYXJ0aXIgZGUgbGEgaW50ZXJzZWNjacOzbiBkZSBmaWxhcyB5IGNvbHVtbmFzLiBFbiBlbCBlamVtcGxvLCBsb3MgcGHDrXNlcyBlc3TDoW4gZW4gbGFzIGZpbGFzIHkgbG9zIGHDsW9zIGVuIGxhcyBjb2x1bW5hcy4gCgpFbiBnZW5lcmFsLCBlbCBmb3JtYXRvIGFuY2hvIGVzIG3DoXMgY29tcGFjdG8geSBsZWdpYmxlIHBvciBodW1hbm9zIG1pZW50cmFzIHF1ZSBlbCBsYXJnbyBlcyBtw6FzIGbDoWNpbCBkZSBtYW5lamFyIGNvbiBsYSBjb21wdXRhZG9yYS4gU2kgdGUgZmlqw6FzIGVuIGxhcyB0YWJsYXMgZGUgYXJyaWJhLCBlcyBtw6FzIGbDoWNpbCBjb21wYXJhciBsb3MgdmFsb3JlcyBlbnRyZSBwYWlzZXMgeSBlbnRyZSBhw7FvcyBlbiBsYSB0YWJsYSBhbmNoYS4gUGVybyBlbCBub21icmUgZGUgbGFzIGNvbHVtbmFzICgiMTk5OSIsICIyMDAwIikgZW4gcmVhbGlkYWQgwqFzb24gZGF0b3MhIEFkZW3DoXMgZXN0ZSBmb3JtYXRvIHNlIGVtcGllemEgYSBjb21wbGljYXIgZW4gY3VhbnRvIGhheSBtw6FzIGRlIGRvcyBpZGVudGlmaWNhZG9yZXMuIAoKVW4gbWlzbW8gc2V0IGRlIGRhdG9zIHB1ZWRlIHNlciByZXByZXNlbnRhZG8gZGUgZm9ybWEgY29tcGxldGFtZW50ZSAibGFyZ2EiLCBjb21wbGV0YW1lbnRlICJhbmNoYSIgbyAtLWxvIHF1ZSBlcyBtw6FzIGNvbcO6bi0tIGVuIHVuIGZvcm1hdG8gaW50ZXJtZWRpbyBwZXJvIG5vIGV4aXN0ZSB1bmEgZm9ybWEgImNvcnJlY3RhIiBkZSBvcmdhbml6YXIgbG9zIGRhdG9zOyBjYWRhIHVuYSB0aWVuZSBzdXMgYXBsaWNhY2lvbmVzLiBQb3IgZXN0byBlcyBxdWUgZXMgbXV5IG5vcm1hbCBxdWUgZHVyYW50ZSB1biBhbsOhbGlzaXMgbG9zIGRhdG9zIHZheWFuIHkgdnVlbHZhbiBlbnRyZSBkaXN0aW50b3MgZm9ybWF0b3MgZGVwZW5kaWVuZG8gZGUgbG9zIG3DqXRvZG9zIGVzdGFkw61zdGljb3MgcXVlIHNlIGxlIGFwbGljYW4uIEVudG9uY2VzLCBhcHJlbmRlciBhIHRyYW5zZm9ybWFyIGRhdG9zIGFuY2hvcyBlbiBsYXJnb3MgeSB2aWNldmVyc2EgZXMgdW4gaGFiaWxpZGFkIG11eSDDunRpbC4gCgoKOjo6IHsuYWxlcnQgLmFsZXJ0LWluZm99CioqRGVzYWbDrW8qKgoKRW4gbGFzIHRhYmxhcyBkZSBlamVtcGxvIGNhZGEgcGHDrXMgdGllbmUgZWwgdW4gdmFsb3Igb2JzZXJ2YWRvIGRlICJjYXNvcyIgcGFyYSBjYWRhIGHDsW8uIMK/Q8OzbW8gYWdyZWdhcsOtYXMgdW5hIG51ZXZhIHZhcmlhYmxlIGNvbiBpbmZvcm1hY2nDs24gc29icmUgInByZWNpb3MiPyBEaWJ1asOhIHVuIGVzcXVlbWEgZW4gcGFwZWwgeSBsw6FwaXogZW4gZm9ybWF0byBhbmNobyB5IHVubyBlbiBmb3JtYXRvIGxhcmdvLiDCv0VuIHF1w6kgZm9ybWF0byBlcyBtw6FzICJuYXR1cmFsIiBlc2EgZXh0ZW5zacOzbj8KCjo6OgoKCkVuIGVzdGEgc2VjY2nDs24gdmFzIGEgdXNhciBlbCBwYXF1ZXRlIHt0aWR5cn0gcGFyYSBtYW5pcHVsYXIgZGF0b3MuIFNpIG5vIGxvIHRlbsOpcyBpbnN0YWxhZG8sIGluc3RhbGFsbyBjb24gZWwgY29tYW5kbzoKCmBgYHtyIGV2YWwgPSBGQUxTRX0KaW5zdGFsbC5wYWNrYWdlcygidGlkeXIiKQpgYGAKCihjb21vIHNpZW1wcmUsIHJlY29yZMOhIHF1ZSBlc3RvIGhheSBxdWUgaGFjZXJsbyB1bmEgw7puaWNhIHZleikKClkgbHVlZ28gY2FyZ8OhIHt0aWR5cn0geSB7ZHBseXJ9IChxdWUgdXNhc3RlIGVuIFt1bmEgc2VjY2nDs24gYW50ZXJpb3JdKDA1LWRwbHlyLUkuaHRtbCkpIHVzYW5kbyAKCmBgYHtyfQpsaWJyYXJ5KHRpZHlyKQpsaWJyYXJ5KGRwbHlyKQpgYGAKCiMjIERlIGFuY2hvIGEgbGFyZ28gY29uIGBwaXZvdF9sb25nZXIoKWAKCkVuIHNlY2Npb25lcyBhbnRlcmlvcmVzIHVzYXN0ZSB1bmEgdmVyc2nDs24gZGUgbG9zIGRhdG9zIGRlIFtnYXBtaW5kZXJdKGh0dHBzOi8vd3d3LmdhcG1pbmRlci5vcmcvKS4gQWhvcmEgdmFzIGEgbGVlciBsb3MgZGF0b3MgZW4gc3UgZm9ybWF0byBvcmlnaW5hbDoKCmBgYHtyfQpwYWlzZXNfYW5jaG8gPC0gcmVhZHI6OnJlYWRfY3N2KCJkYXRvcy9wYWlzZXNfYW5jaG8uY3N2IikKcGFpc2VzX2FuY2hvCmBgYAoKOjo6IHsuYWxlcnQgLmFsZXJ0LXN1Y2Nlc3N9CgrCv05vdGFzdGUgcXVlIGVuIGVsIGPDs2RpZ28gYW50ZXJpb3Igbm8gdXNhc3RlIGBsaWJyYXJ5KHJlYWRyKWAgcGFyYSBjYXJnYXIgZWwgcGFxdWV0ZSB5IGx1ZWdvIGxlZXI/IENvbiBsYSBub3RhY2nDs24gYHBhcXVldGU6OmZ1bmNpb24oKWAgcG9kw6lzIGFjY2VkZXIgYSBsYXMgZnVuY2lvbmVzIGRlIHVuIHBhcXVldGUgc2luIHRlbmVyIHF1ZSBjYXJnYXJsby4gRXMgdW5hIGJ1ZW5hIGZvcm1hIGRlIG5vIHRlbmVyIHF1ZSBjYXJnYXIgdW4gbW9udMOzbiBkZSBmdW5jaW9uZXMgaW5uZWNlc2FyaWFzIHNpIHZhcyBhIGNvcnJlciB1bmEgZnVuY2nDs24gZGUgdW4gcGFxdWV0ZSBwb2NhcyB2ZWNlcy4gCgo6OjoKCgpFc3RhIHRhYmxhLCBpbmNyZcOtYmxlbWVudGUgYW5jaGEsIGVzIG11eSBkaWbDrWNpbCBkZSBtYW5lamFyLiBQb3IgZWplbXBsbywgZXMgaW1wb3NpYmxlIGhhY2VyIHVuYSBzZXJpZSBkZSB0aWVtcG8gZGUgdW5hIHZhcmlhYmxlLCBvIGNhbGN1bGFyIGVsIHByb21lZGlvIHBvciB2YXJpYWJsZSB5IHBhw61zOyBuaSBoYWJsYXIgZGUgY2FsY3VsYXIgdW5hIHJlZ3Jlc2nDs24gbGluZWFsLiAKClBhcmEgY29udmVydGlybG8gZW4gdW5hIHRhYmxhIG3DoXMgbGFyZ2EsIHNlIHVzYSBgcGl2b3RfbG9uZ2VyKClgICgibG9uZ2VyIiBlcyAibcOhcyBsYXJnbyIgZW4gaW5nbMOpcyk6CgpgYGB7cn0KcGFpc2VzX2xhcmdvIDwtIHBpdm90X2xvbmdlcihwYWlzZXNfYW5jaG8sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29scyA9IGMoc3RhcnRzX3dpdGgoJ3BvYicpLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzdGFydHNfd2l0aCgnZXNwZXJhbnphJyksIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0YXJ0c193aXRoKCdwaWJfcGVyJykpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5hbWVzX3RvID0gInZhcmlhYmxlX2FuaW8iLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZXNfdG8gPSAidmFsb3IiCikKcGFpc2VzX2xhcmdvCmBgYAoKRWwgcHJpbWVyIGFyZ3VtZW50byBkZWBwaXZvdF9sb25nZXIoKWAgZXMgbGEgdGFibGEgcXVlIHZhIGEgbW9kaWZpY2FyOiBgcGFpc2VzX2FuY2hvYC4gRWwgc2VndW5kbyBhcmd1bWVudG8gc2UgbGxhbWEgYGNvbHNgIHkgZXMgdW4gdmVjdG9yIGNvbiBsYXMgY29sdW1uYXMgcXVlIHRpZW5lbiBsb3MgdmFsb3JlcyBhICJhbGFyZ2FyIi4gUG9kcsOtYSBzZXIgdW4gdmVjdG9yIGVzY3JpdG8gYSBtYW5vIChhbGdvIGNvbW8gYGMoInBpYl9wZXJfY2FwaXRhXzE5NTIiLCAicGliX3Blcl9jYXBpdGFfMTk1NyIuLi4pYCkgcGVybyBjb24gbcOhcyBkZSAzMCBjb2x1bW5hcywgZXNjcmliaXIgdG9kbyBlc28gc2Vyw61hIHRlZGlvc28geSBwcm9iYWJsZW1lbnRlIGVzdGFyw61hIGxsZW5vIGRlIGVyb3JyZXMuIFBvciBlc28ge3RpZHlyfSBwcm92ZWUgZnVuY2lvbmVzIGRlIGF5dWRhIHBhcmEgc2VsZWNjaW9uYXIgY29sdW1uYXMgZW4gYmFzZSBhIHBhdHJvbmVzLiBFbCBjw7NkaWdvIGRlIGFycmliYSB1c2EgYHN0YXJ0c193aXRoKClgIHF1ZSwgY29tbyBzdSBub21icmUgZW4gaW5nbMOpcyBsbyBpbmRpY2EsIHNlbGVjY2lvbmEgbGFzIGNvbHVtbmFzIHF1ZSBlbXBpZXphbiBjb24gdW5hIGRldGVybWluYWRhIGNhZGVuYSBkZSBjYXJhY3RlcmVzLiBFbCB2ZWN0b3IgYGMoc3RhcnRzX3dpdGgoJ3BvYicpLCBzdGFydHNfd2l0aCgnZXNwZXJhbnphJyksIHN0YXJ0c193aXRoKCdwaWJfcGVyJykpYCBsZSBkaWNlIGEgYHBpdm90X2xvbmdlcigpYCBxdWUgc2VsZWNjaW9uZSBsYXMgY29sdW1uYXMgcXVlIGVtcGllemEgY29uICJwb2IiLCBsYXMgcXVlIGVtcGllemFuIGNvbiAiZXNwZXJhbnphIiB5IGxhcyBxdWUgZW1waWV6YW4gY29uICJwaWJfcGVyIi4gCgo6Ojogey5hbGVydCAuYWxlcnQtc3VjY2Vzc30KCkVzdGFzIGZ1bmNpb25lcyBhY2Nlc29yaWFzIHBhcmEgc2VsZWNjaW9uYXIgbXVjaGFzIGZ1bmNpb25lcyBzZSBsbGFtYW4gInRpZHlzZWxlY3QiLiBTaSBxdWVyw6lzIGxlZXIgbcOhcyBkZXRhbGxlcyBkZSBsYXMgZGlzdGludGFzIGZvcm1hcyBxdWUgcG9kw6lzIHNlbGVjY2lvbmFyIHZhcmlhYmxlcyBsZcOpIGxhIGRvY3VtZW50YWNpw7NuIHVzYW5kbyBgP3RpZHlzZWxlY3Q6Omxhbmd1YWdlYC4KCjo6OgoKRWwgdGVyY2VyIHkgY3VhcnRvIGFyZ3VtZW50byBzb24gbG9zIG5vbWJyZXMgZGUgbGFzIGNvbHVtbmFzIGRlICJub21icmUiIHkgZGUgInZhbG9yIiBxdWUgdmEgYSB0ZW5lciBsYSBudWV2YSB0YWJsYS4gQ29tbyBsYSBudWV2YSBjb2x1bW5hIGRlIGlkZW50aWZpY2FjacOzbiB0aWVuZSBsb3MgZGF0b3MgZGUgbGEgdmFyaWFibGUgeSBlbCBhw7FvIGEgbWVkaXIsICJ2YXJpYWJsZV9hbmlvIiBlcyB1biBidWVuIG5vbWJyZS4gWSBsYSBjb2x1bW5hIGRlIHZhbG9yIHZhIGEgdGVuZXIuLi4gYnVlbm8sIGVsIHZhbG9yLiAKClRvbWF0ZSB1biBtb21lbnRvIHBhcmEgdmlzdWFsaXphciBsbyBxdWUgYWNhYmEgZGUgcGFzYXIuIExhIHRhYmxhIGFuY2hhIHRlbsOtYSB1biBtb250w7NuIGRlIGNvbHVtbmFzIGNvbiBkaXN0aW50b3MgZGF0b3MuIEFob3JhIGVzdG9zIGRhdG9zIGVzdMOhbiB1bm8gYXJyaWJhIGRlIG90cm8gZW4gbGEgY29sdW1uYSAidmFsb3IiLCBwZXJvIHBhcmEgaWRlbnRpZmljYXIgZWwgbm9tYnJlIGRlIGxhIGNvbHVtbmEgZGUgbGEgY3VhbCB2aW5pZXJvbiwgc2UgYWdyZWdhIGxhIGNvbHVtbmEgInZhcmlhYmxlX2FuaW8iLiAKCgohW1Byb2Nlc28gZGUgbGFyZ28gYSBhbmNob10oaW1nL2FuY2hvLWEtbGFyZ28ucG5nKQoKTGEgY29sdW1uYSBgdmFyaWFibGVfYW5pb2AgdG9kYXbDrWEgbm8gZXMgbXV5IMO6dGlsIHBvcnF1ZSBjb250aWVuZSAyIGRhdG9zLCBsYSB2YXJpYWJsZSAocG9ibGFjacOzbiwgZXhwZWN0YXRpdmEgZGUgdmlkYSBvIFBCSSBwZXIgY8OhcGl0YSkgeSBlbCBhw7FvLiBTZXLDrWEgbWVqb3Igc2VwYXJhciBlc3RhIGluZm9ybWFjacOzbiBlbiBkb3MgY29sdW1uYXMgbGxhbWFkYXMgInZhcmlhYmxlIiB5ICJhbmlvIi4gUGFyYSBlc28gZXN0w6EgbGEgZnVuY2nDs24gYHNlcGFyYXRlYAoKYGBge3J9CnNlcGFyYXRlKHBhaXNlc19sYXJnbywgCiAgICAgICAgIGNvbCA9IHZhcmlhYmxlX2FuaW8sIAogICAgICAgICBpbnRvID0gYygidmFyaWFibGUiLCAiYW5pbyIpLCAKICAgICAgICAgc2VwID0gLTQpCmBgYAoKRWwgcHJpbWVyIGFyZ3VtZW50bywgY29tbyBzaWVtcHJlLCBlcyBsYSB0YWJsYSBhIHByb2Nlc2FyLiBFbCBzZWd1bmRvLCBgY29sYCwgZXMgbGEgY29sdW1uYSBhIHNlcGFyYXIgZW4gZG9zIChvIG3DoXMpLiBFbCB0ZXJjZXJvLCBgaW50b2AgZXMgZWwgbm9tYnJlIGRlIGxhcyBudWV2YXMgY29sdW1uYXMgcXVlIGBzZXBhcmF0ZSgpYCB2YSBhIGNyZWFyLiBFbCDDumx0aW1vIGFyZ3VtZW50byBlcyBgc2VwYCBxdWUgZGVmaW5lIGPDs21vIHJlYWxpemFyIGxhIHNlcGFyYWNpw7NuLiBQb3IgZGVmZWN0bywgYHNlcGAgZXMgdW5hIFtleHByZXNpw7NuIHJlZ3VsYXJdKGh0dHBzOi8vZXMud2lraXBlZGlhLm9yZy93aWtpL0V4cHJlc2klQzMlQjNuX3JlZ3VsYXIpIHF1ZSBjcGF0dXJhIGN1YWxxdWllciBjYXJhY3RlciBubyBhbGZhbnVtw6lyaWNvLiBFbiBlbCBjYXNvIGRlIGB2YXJpYWJsZV9hbmlvYCBubyBzaXJ2ZSwgcG9ycXVlIHBhcmEgdmFsb3JlcyBjb21vIGAiZXNwZXJhbnphX2RlX3ZpZGFfMTk1MiJgLCBzZXBhcmFyw61hIGVuIGAiZXNwZXJhbnphImAsIGAiZGUiYCwgYCJ2aWRhImAgeSBgIjE5NTIiYC4gQ29tbyBlbCBhw7FvIHRpZW5lIHNpZW1wcmUgNCBjYXJhY3RlcmVzLCB1bmEgc29sdWNpw7NuIHNpbXBsZSBlcyB1c2FyIGBzZXAgPSAtNGAsIHF1ZSBzaWduaWZpY2EgcXVlIGxhIHNlcGFyYWNpb24gZXMgNCBjYXJhY3RlcmVzIGNvbnRhbmRvIGRlc2RlIGVsIGZpbmFsLiAKCkhhYnLDoXMgbm90YWRvIHVuIHByb2JsZW1hLiBFbCB0ZXh0byBlbiBsYSBjb2x1bW5hcyBgdmFyaWFibGVgIHRvYXbDrWEgdGllbmUgdW4gIl8iIGFsIGZpbmFsLiBQb2Ryw61hcyB1c2FyIGBtdXRhdGUoKWAgeSB1biBwb2NvIGRlIGZ1bmNpb25lcyBkZSBtYW5pcHVsYWNpw7NuIGRlIGNhcmFjdGVyZXMgcGFyYSBxdWl0YXJsbywgcGVybyBoYXkgdW5hIGZvcm1hIHVuIHBvY28gbcOhcyBzaW1wbGUgeSBlcyBzZXBhcmFuZG8gbGEgY29sdW1uYSBgdnJpYWJsZV9hbmlvYCBlbiB0cmVzLCBpbmNsdXllbmRvIHVuYSBjb2x1bW5hIGNvbiBlbCBndWnDs246CgpgYGB7cn0KcGFpc2VzX2xhcmdvIDwtIHNlcGFyYXRlKHBhaXNlc19sYXJnbywgCiAgICAgICAgIGNvbCA9IHZhcmlhYmxlX2FuaW8sIAogICAgICAgICBpbnRvID0gYygidmFyaWFibGUiLCAiZ3Vpb24iLCAiYW5pbyIpLCAKICAgICAgICAgc2VwID0gYygtNSwgLTQpKQpwYWlzZXNfbGFyZ28KYGBgCgpZIHlhIGNhc2kuIEhheSBxdWUgZWxpbWluYXIgbGEgY29sdW1uYSBgZ3Vpb25gLCBxdWUgbm8gc2lydmUgcGFyYSBuYWRhLiBQZXJvIGZpamF0ZSBxdWUgZGViYWpvIGRlIGxhIGNvbHVtbmEgYGFuaW9gIGRpY2UgYDxjaHI+YDsgZXNvIHNpZ25pZmljYSBxdWUgZWwgdGlwbyBkZSBsYSBjb2x1bW5hIGVzIGNhcmFjdGVyLCBwZXJvIGxvcyBhw7FvcyBzb24gbsO6bWVyb3MuIFVzYW5kbyBgbXV0YXRlKClgIHBvZMOpcyBlbGltaW5hciBsYSBjb2x1bW5hIGBndWlvbmAgYXNpZ27DoW5kb2xlIGVsIHZhbG9yIGBOVUxMYCAobnVsbykgeSBjb2VyY2VyIChyZWNvcmTDoSBbZXN0YSBzZWNjacOzbl0oMDQtbGVjdHVyYS1kYXRvcy5odG1sI1ZlY3RvcmVzKSkgbGEgY29sdW1uYSBgYW5pb2AgYSBlbnRlcm8gdXNhbmRvIGBhcy5pbnRlZ2VyKClgOgoKYGBge3J9CnBhaXNlc19sYXJnbyA8LSBtdXRhdGUocGFpc2VzX2xhcmdvLCAKICAgICAgICAgICAgICAgICAgICAgICBndWlvbiA9IE5VTEwsCiAgICAgICAgICAgICAgICAgICAgICAgYW5pbyA9IGFzLmludGVnZXIoYW5pbykpCnBhaXNlc19sYXJnbwpgYGAKCjo6OiB7LmFsZXJ0IC5hbGVydC1pbmZvfQoqKkRlc2Fmw61vKioKCkp1bnTDoSB0b2RvcyBsb3MgcGFzb3MgYW50ZXJpb3JlcyBlbiB1bmEgc29sYSBjYWRlbmEgZGUgb3BlcmFjaW9uZXMgdXNhbmRvIGAlPiVgLgoKOjo6CgoKCiMjIERlIGxhcmdvIGEgYW5jaG8gY29uIGBwaXZvdF93aWRlcigpYAoKQWhvcmEgbGEgdmFyaWFibGUgYHBhaXNlc19sYXJnb2AgZXN0w6EgZW4gZWwgZm9ybWF0byBtw6FzIGxhcmdvIHBvc2libGUuIFRpZW5lIDUgY29sdW1uYXMsIGRlIGxhcyBjdWFsZXMgc8OzbG8gdW5hIGVzIGxhIGNvbHVtbmFzIGNvbiB2YWxvcmVzLiBQZXJvIGNvbiBsb3MgZGF0b3MgYXPDrSBubyBwb2Ryw61hcyBoYWNlciB1biBncsOhZmljbyBkZSBwdW50b3MgcXVlIG11ZXN0cmUgbGEgcmVsYWNpw7NuIGVudHJlIGVsIFBCSSBwZXIgY8OhcGl0YSB5IGxhIGV4cGVjdGF0aXZhIGRlIHZpZGEgY29tbyBlbiBsYSBbc2VjY2nDs24gZGUgZ3LDoWZpY29zXSgwNi1ncmFmaWNvcy1JLmh0bWwjU2VndW5kYV9jYXBhOl9nZW9tZXRyw61hcykuIEZpamF0ZSBxdWUgbG9zIHZhbG9yZXMgZGUgbGEgY29sdW1uYSBgdmFsb3JgIG5vIHRpZW5lbiB0b2RvcyBsYXMgbWlzbWFzIHVuaWRhZGVzLCBwb3IgbG8gcXVlIG9wZXJhciBjb24gZXNlIHZlY3RvciBwb2Ryw61hIGRhciByZXN1bHRhZG9zIHNpbiBzZW50aWRvLiBNdWNoYXMgdmVjZXMgZXMgY29udmVuaWVudGUgeSBuYXR1cmFsIHRlbmVyIGxvcyBkYXRvcyBlbiB1biBmb3JtYXRvIGludGVybWVkaW8gZW4gZG9uZGUgaGF5IG3Dumx0aXBsZXMgY29sdW1uYXMgY29uIGxvcyB2YWxvcmVzIGRlIGRpc3RpbnRhcyB2YXJpYWJsZXMgb2JzZXJ2YWRhcy4gCgpQYXNhICJlbnNhbmNoYXIiIHVuYSB0YWJsYSBlc3TDoSBsYSBmdW5jacOzbiBgcGl2b3Rfd2lkZXIoKWAgKCJ3aWRlciIgZXMgIm3DoXMgYW5jaGEiIGVuIGluZ2zDqXMpIHkgZWwgY8OzZGlnbyBwYXJhIGNvbnNlZ3VpciBlc3RlIGZvcm1hdG8gaW50ZXJtZWRpbyBlczoKCmBgYHtyfQpwYWlzZXNfbWVkaW8gPC0gcGl2b3Rfd2lkZXIocGFpc2VzX2xhcmdvLCBuYW1lc19mcm9tID0gdmFyaWFibGUsIHZhbHVlc19mcm9tID0gdmFsb3IpCnBhaXNlc19tZWRpbwpgYGAKCk51ZXZhbWVudGUgZWwgcHJpbWVyIGFyZ3VtZW50byBlcyBsYSB0YWJsYSBvcmlnaW5hbC4gRWwgc2VndW5kbywgYG5hbWVzX2Zyb21gIGVzIGxhIGNvbHVtbmEgY3V5b3MgdmFsb3JlcyDDum5pY29zIHZhbiBhIGNvbnZlcnRpcnNlIGVuIG51ZXZhcyBjb2x1bW5hcy4gTGEgY29sdW1uYSBgdmFyaWFibGVgIHRpZW5lIGxvcyB2YWxvcmVzIGAicG9ibGFjacOzbiJgLCBgImVzcGVyYW56YV9kZV92aWRhImAgeSBgInBpYl9wZXJfY2FwaXRhImAgeSBlbnRvbmNlcyBsYSB0YWJsYSBudWV2YSB0aWVuZSB0cmVzIGNvbHVtbmFzIGNvbiBlc29zIG5vbWJyZXMuIEVsIHRlcmNlciBhcmd1bWVudG8sIGB2YWx1ZXNfZnJvbWAsIGVzIGxhIGNvbHVtbmEgZGUgbGEgY3VhbCBzYWNhciBsb3MgdmFsb3Jlcy4gCgpQYXJhIHZvbHZlciBhbCBmb3JtYXRvIG3DoXMgYW5jaG8sIGJhc3RhIGNvbiBhZ3JlZ2FyIG3DoXMgY29sdW1uYXMgZW4gZWwgYXJndW1lbnRvIGBuYW1lc19mcm9tYDoKCmBgYHtyfQpwaXZvdF93aWRlcihwYWlzZXNfbGFyZ28sIAogICAgICAgICAgICBuYW1lc19mcm9tID0gYyh2YXJpYWJsZSwgYW5pbyksIAogICAgICAgICAgICBuYW1lc19zZXAgPSAiXyIsCiAgICAgICAgICAgIHZhbHVlc19mcm9tID0gdmFsb3IpCmBgYAoKRW4gZXN0YSBsbGFtYWRhIHRhbWJpw6luIGVzdMOhIGVsIGFyZ3VtZW50byBgbmFtZXNfc2VwYCwgcXVlIGRldGVtcmluYSBlbCBjYXJhY3RlciBxdWUgc2UgdXNhIHBhcmEgY3JlYXIgZWwgbm9tYnJlIGRlIGxhcyBudWV2YXMgY29sdW1uYXMuIAoKCjo6OiB7LmFsZXJ0ICAuYWxlcnQtaW5mb30KKipEZXNhZmlvKioKCiogQ3Jlw6EgdW5hIG51ZXZhIHRhYmxhLCBsbGFtYWRhIGBwYWlzZXNfc3VwZXJkdXBlcl9hbmNob2AgcXVlIHRlbmdhIHVuYSBjb2x1bW5hIHBhcmEgY2FkYSB2YXJpYWJsZSwgYW5pbyB5IHBhw61zLiAoQ29uc2VqbzogbGEgdGFibGEgZmluYWwgdGllbmUgcXVlIHRlbmVyIDUgZmlsYXMpLgoKCiogwr9Dw7NtbyBlcyBsYSB0YWJsYSBtw6FzIGFuY2hhIHBvc2libGUgcXVlIHBvZMOpcyBnZW5lcmFyIGNvbiBlc3RvcyBkYXRvcz8gwr9DdcOhbnRhcyBmaWxhcyB5IGNvbHVtbmFzIHRpZW5lPwoKOjo6CgoKCgo=</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("08-dplyr-tidyr-II.Rmd");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+
+</body>
+</html>

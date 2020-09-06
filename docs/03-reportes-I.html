@@ -25,13 +25,14 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -41,14 +42,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -57,9 +60,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -460,6 +463,9 @@ div.tocify {
     <li>
       <a href="07-graficos-II.html">Gráficos II</a>
     </li>
+    <li>
+      <a href="08-dplyr-tidyr-II.html">Manipulación de datos II</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -533,14 +539,14 @@ div.tocify {
 <p>Podés encontrar este archivo de ejemplo <a href="files/mi-primer-rmarkdown.Rmd">acá</a>.</p>
 <div class="alert alert-success">
 <p>Al agregar nuevas opciones en el YAML, se crean jerarquías que se identifican escalonando (o <em>indentando</em>) los renglones. Por ejemplo:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ot">---</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="fu">title:</span><span class="at"> </span><span class="st">&quot;Mi primer RMarkdown&quot;</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="fu">output:</span><span class="at"> </span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">  <span class="fu">html_document:</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">    <span class="fu">code_download:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="fu">toc:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="fu">toc_float:</span><span class="at"> true</span></a>
-<a class="sourceLine" id="cb1-8" data-line-number="8"><span class="ot">---</span></a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1"></a><span class="pp">---</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">title</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Mi primer RMarkdown&quot;</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="fu">output</span><span class="kw">:</span><span class="at"> </span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="at">  </span><span class="fu">html_document</span><span class="kw">:</span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="at">    </span><span class="fu">code_download</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="at">    </span><span class="fu">toc</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="at">    </span><span class="fu">toc_float</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-8"><a href="#cb1-8"></a><span class="pp">---</span></span></code></pre></div>
 <p>Es muy importante que no modifiques esto ya que de otra forma al hacer <code>knit</code> dará error.</p>
 </div>
 </div>
@@ -594,9 +600,9 @@ div.tocify {
 <div id="bloques-de-código" class="section level3">
 <h3>Bloques de código</h3>
 <p>Los bloques de código o <strong>chunks</strong> se definen usando 3 acentos grave al principio y al final:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="bn">```{r nombre-del-chunk}</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="bn">```</span></a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1"></a><span class="bn">```{r nombre-del-chunk}</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="bn">```</span></span></code></pre></div>
 <p>Y se diferencia del resto de archivo con un fondo gris.</p>
 <div class="alert alert-success">
 <p>Para insertar un nuevo chunk podés: * Usar el botón <strong>Insert</strong> * El atajo de teclado Ctrl+Alt+I * Escribir a mano!</p>
