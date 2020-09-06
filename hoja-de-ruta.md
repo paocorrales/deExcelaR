@@ -70,7 +70,7 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
     - Crear gráficos con múltiples geometrías.
     - Graficar transformaciones estadísticas
     - Usar paneles para graficar múltiples relaciones.
-- Manipulación de datos ordenados usando `{dplyr}` y `{tidyr}` - Segunda parte
+- [Manipulación de datos ordenados usando `{dplyr}` y `{tidyr}` - Segunda parte](06-dplyr-tidyr-II.html)
     - “Alargar” y “ensanchar” tablas.	
     - Organizar columnas y sus nombres
     - Combinar tablas de datos a partir de variables llave
