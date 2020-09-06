@@ -15,13 +15,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 El paquete {dplyr} provee una enorme cantidad de funciones útiles para manipular y analizar datos de manera intuitiva y expresiva. 
 
-
- 
-
-El espíritu detrás de {dplyr} es que la enorme mayoría de los análisis, por más complicados que sean, involucran combinar y encadenar una serie relativamente acotada de acciones. En este curso vamos a centrarnos las cinco más comunes:
+El espíritu detrás de {dplyr} es que la enorme mayoría de los análisis, por más complicados que sean, involucran combinar y encadenar una serie relativamente acotada de acciones (o verbos). En este curso vamos a centrarnos las cinco más comunes:
 
   * `select()`: selecciona columnas de una tabla.
-  * `filter()`: selecciona filas de una tabla a partir de una o más condiciones lógicas.
+  * `filter()`: selecciona (o filtra) filas de una tabla a partir de una o más condiciones lógicas.
   * `group_by()`: agrupa una tabla en base al valor de una o más columnas.
   * `mutate()`: agrega nuevas columnas a una tabla.
   * `summarise()`: calcula estadísticas para cada grupo de una tabla.
@@ -33,13 +30,10 @@ El espíritu detrás de {dplyr} es que la enorme mayoría de los análisis, por 
 A grosso modo, las operaciones de {dplyr} permiten hacer en R lo que se hace en tablas dinámicas (pivot tables) en Excel. `filter()` vendría a ser como la sección de "Filtros", `group_by()`, la sección de "Filas", `select()`, la sección de "Columnas" y `summarise()`, la parte de "Valores". 
 :::
 
-
-Una elemento importante de {dplyr} es el operador 'pipe' (`%>%`) que agarra el resultado de una función y se lo pasa a la siguiente. Esto permite escribir el código como una cadena de funciones que van operando sobre el resultado de la anterior.
-
 ::: {.alert .alert-info}
 **Primer desafío:**
 
-Te dieron una tabla con datos de temperatura mínima y máxima para distintas estaciones meteorológicas de todo el país durante los 365 días de un año. Las columnas son: id_estacion, temperatura_maxima, temperatura_minima y provincia. En base a esos datos, te piden que computen la temperatura media anual de cada estación únicamente de las estaciones de La Pampa. 
+Te dieron una tabla con datos de temperatura mínima y máxima para distintas estaciones meteorológicas de todo el país durante los 365 días de un año. Las columnas son: `id_estacion`, `temperatura_maxima`, `temperatura_minima` y `provincia`. En base a esos datos, te piden que computen la temperatura media anual de cada estación únicamente de las estaciones de La Pampa. 
 
 ¿En qué orden ejecutarías estos pasos para obtener el resultado deseado?
 
@@ -47,9 +41,7 @@ Te dieron una tabla con datos de temperatura mínima y máxima para distintas es
 * usar `group_by()` para agrupar por la columna `id_estacion`
 * usar `mutate()` para agregar una columna llamada `temperatura_media` que sea `(temperatura_minima + temperatura_maxima)/2`.
 * usar `filter()` para seleccionar solo las filas donde la columnas `provincia` es igual a "La Pampa"
-
 :::
-
 
 Para usar {dplyr} primero hay que instalarlo (esto hay que hacerlo una sola vez) con el comando:
 
@@ -62,12 +54,14 @@ y luego cargarlo en memoria con
 ```{r}
 library(dplyr)
 ```
+
 Volvé a cargar los datos de países (para un recordatorio, podés ir a [Lectura de datos ordenados](04-lectura-datos.html)):
 
 ```{r}
 library(readr)
 paises <- read_csv("datos/paises.csv")
 ```
+
 ## Seleccionando columnas con `select()`
 
 Para quedarse únicamente con las columnas de año, país y PBI per cápita, usá `select()`
@@ -76,21 +70,18 @@ Para quedarse únicamente con las columnas de año, país y PBI per cápita, us�
 select(paises, anio, pais, pib_per_capita)
 ```
 
-
 ¿Dónde quedó este resultado? Si te fijás en la variable `paises`, ésta está intacta:
 
 ```{r}
 paises
 ```
 
-
-`select()` y el resto de las funciones de {dplyr} siempre generan una nueva tabla y nunca modifican la tabla original. Para guardar la tabla con las tres columnas `anio`, `pais` y `pbi_per_capita` tenés que asignar el resultado a una variable.
+`select()` y el resto de las funciones de {dplyr} siempre generan una nueva tabla y nunca modifican la tabla original. Para guardar la tabla con las tres columnas `anio`, `pais` y `pbi_per_capita` tenés que asignar el resultado a una nueva variable.
 
 ```{r}
 anio_pais_pbi <- select(paises, anio, pais, pib_per_capita)
 anio_pais_pbi
 ```
-
 
 ![Cómo funciona `select()`](img/dplyr-select.png)
 
@@ -104,7 +95,9 @@ filter(anio_pais_pbi, pais == "Argentina")
 
 La mayoría de los análisis consisten en varios pasos (en el primer desafío usaste 4 pasos para calcular las temperaturas medias de una serie de estaciones). La única tabla que te interesa es la última, por lo que ir asignando variables nuevas en cada paso intermedio es tedioso y poco práctico. Para eso se usa el operador 'pipe' (`%>%`). 
 
-Las dos operaciones anteriores (seleccionar tres columnas y luego filtar las filas correspondientes a Argentina) se pueden escribir uno después del otro y sin asignaciones intermedias de esta forma:
+El operador 'pipe' (`%>%`) agarra el resultado de una función y se lo pasa a la siguiente. Esto permite escribir el código como una cadena de funciones que van operando sobre el resultado de la anterior.
+
+Las dos operaciones anteriores (seleccionar tres columnas y luego filtar las filas correspondientes a Argentina) se pueden escribir uno después del otro y sin asignar los resultados intermedios a nuevas variables de esta forma:
 
 ```{r}
 paises %>% 
@@ -114,11 +107,13 @@ paises %>%
 
 La forma de "leer" esto es "Tomá la variable `paises`, **después** aplicale `select(anio, pais, pib_per_capita)`, **después** aplicale `filter(pais == "Argentina")`". 
 
+Cómo vimos, el primero argumento de todas las funciones de dplyr espera un data.frame y justamente el operador `%>%` toma el data.frame `paises` y se lo pasa al primer argumento de `select()`. Luego el data.frame resultante de seleccionar las columnas anio, país y pib_per_capita *pasa* como el primer argumento de la función `filter()` gracias al `%>%`.
+
 
 ::: {.alert .alert-success}
 **Tip:**
 
-En RStudio podés escribir `%>%` usando el atajo de teclado Ctr + Shift M. ¡Probalo!
+En RStudio podés escribir `%>%` usando el atajo de teclado Ctr + Shift + M. ¡Probalo!
 :::
 
 
@@ -156,7 +151,7 @@ paises %>%
   summarise(esperanza_de_vida_media = mean(esperanza_de_vida))
 ```
 
-¡Tadá! `summarise()` devuelve una tabla con una columna nueva, llamada "esperanza_de_vida_media" que contiene el promedio de `esperanza_de_vida` para cada grupo. Esta operación es equivalente a esta tabla dinámica en Excel:
+¡Tadá! `summarise()` devuelve una tabla con una columna para el continente y otra nueva, llamada "esperanza_de_vida_media" que contiene el promedio de `esperanza_de_vida` para cada grupo. Esta operación es equivalente a esta tabla dinámica en Excel:
 
 <figure>
 <video width=770px controls>
@@ -189,6 +184,16 @@ paises %>%
 El combo `group_by() %>% summarise()` se puede resumir en esta figura. Las filas de una tabla se dividen en grupos, y luego cada grupo se "resume" en una fila en función del estadístico usado. 
 
 ![](img/group_by-summarize.png)
+
+Al igual que hicimos "cuentas" usando algunas variables numéricas para obtener información nueva, también podemos utilizar variables categóricas. No tiene sentido calcular `mean(continente)` ya que contienen caracteres, pero tal vez nos interese *contar* la cantidad de observaciones por continente:
+
+```{r}
+paises %>% 
+  group_by(continente) %>% 
+  summarise(cantidad = n())
+```
+
+
 ## Creando nuevas columnas con `mutate()`
 
 Todo esto está bien para hacer cálculos con columnas previamente existentes, pero muchas veces tenés que crear nuevas columnas. 
@@ -201,7 +206,6 @@ paises %>%
 ```
 
 Recordá que las funciones de {dplyr} nunca modifican la tabla original. `mutate()` devolvió una nueva tabla que es igual a la tabla `paises` pero con la columna "pbi" agregada. La tabla `paises` sigue intacta.
-
 
 ## Desagrupando con `ungroup()`
 
