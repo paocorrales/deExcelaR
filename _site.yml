@@ -23,6 +23,8 @@ navbar:
     menu:
       - text: Leer datos
         href: desafio-1.html
+      - text: Analizar datos
+        href: desafio-2.html
 output_dir: docs
 output:
   html_document:

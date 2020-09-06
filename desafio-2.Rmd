@@ -1,0 +1,26 @@
+---
+title: 'Desafío 2: Analizar los datos'
+output: 
+  html_document:
+    theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+El objetivo de este desafío es analizar los datos que leíste en el [primer desafío](desafio-1.html) utlizando los verbos de `dplyr`.
+
+### 1. Abrí tu proyecto
+
+Usá el proyecto que ya creaste y abrilo desde el explorador de archivos (haciendo doble click en el archivo .Rproj) o desde a interfaz de RStudio. Allí deberías tener tu archivo .Rmd donde ya leíste y describiste los datos. Corré el código para cargar esa base de datos en memoria y no te olvides de los paquetes necesarios!
+
+### 2. Generá nuevas columnas
+
+Es posible que necesites alguna nueva variable, por ejemplo la suma entre otras dos columnas para calcular un total o la diferencia entre otras dos. La clave será usar la función `mutate()` y ya que estamos aplicá otro verbo de dplyr para seleccionar esas nuevas columnas y mostrarlas.
+
+### 3. Resumen de datos
+
+Ahora calculá un promedio o determiná el valor máximo o mínimo de alguna columna usando `summarise()`. Si tu base de datos tiene alguna variable con categorías, también probá hacer los mismos cálculos pero agrupando las observaciones.
+
+Podés analizar los datos tanto como se te ocurra, la idea es que te familiarices con los verbos de dplyr al mismo tiempo que sacas información de la base de datos que estás utilizando. Siempre es una buena idea desribir el análisis y nuestra interpretación del mismo junto al *chunk* correspondiente. 
