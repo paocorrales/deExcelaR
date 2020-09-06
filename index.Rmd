@@ -20,4 +20,11 @@ Todos los materiales de este curso se encuentran bajo la licencia <a rel="licens
 
 ## Recursos
 
+Parte de los materiales que encontrás acá derivan de distintos recursos:
 
+* [R para Análisis Científicos Reproducibles](https://swcarpentry.github.io/r-novice-gapminder-es/) de The Carpentries
+
+
+* [R for Excel Users](https://rstudio-conf-2020.github.io/r-for-excel/) de Dr. Julie Stewart Lowndes y Dr. Allison Horst
+
+* [R para Ciencia de Datos](https://es.r4ds.hadley.nz/) de Hadley Wickham

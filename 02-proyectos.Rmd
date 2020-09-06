@@ -5,9 +5,11 @@ output:
     code_download: true
     toc: true
     toc_float: true
+    template: "_template.html"    
 ---
 
-Trabajar con proyectos de RStudio no solo hace tus anális más ordenados y reproducibles, también hacen tu vida más simple. 
+
+Trabajar con proyectos de RStudio no solo hace tus análisis más ordenados y reproducibles, también hacen tu vida más simple. 
 
 Al comienzo posiblemente tengan un script y uno o dos archivos con datos, pero es posible que rápidamente te encuentres con una docena de archivos con nombres parecidos pero que pertenecen a análisis totalmente disntintos. Antes de que la cosa comience a complicarse te proponemos trabajar con proyectos.  
 
