@@ -18,7 +18,7 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
 - [Manejo de proyectos con RStudio](02-proyectos.html)
   - Administrar una estructura de directorios.
   - Saber dónde está el working directory.
-- [Introducción a `{RMarkdown}`](03-reportes-I.html)
+- [Introducción a {RMarkdown}](03-reportes-I.html)
   - Sintaxis básica de Markdown.
   - Unificar código, gráficos y prosa.
 - [Lectura de datos ordenados](04-lectura-datos.html)
@@ -48,12 +48,12 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
 
 #### Contenidos
 
-- [Manipulación de datos ordenados usando `{dplyr}`](05-dplyr-I.html)
+- [Manipulación de datos ordenados usando {dplyr}](05-dplyr-I.html)
   - Agregar y quitar filas y columnas.
   - Crear nuevas columnas incluyendo cálculos y comparación de datos.
   - Operador pipe %>%
   - Calcular medidas de resumen sobre los datos
-- [Visualización de datos con `{ggplot2}` - Primera parte](06-graficos-I.html)
+- [Visualización de datos con {ggplot2} - Primera parte](06-graficos-I.html)
     - Graficar utilizando líneas y puntos (geometrías)
     - Modificar parámetros estéticos de las geometrías.
     - Agregar suavizado y líneas de tendencia.
@@ -66,11 +66,11 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
 
 #### Contenidos
 
-- [Visualización de datos con `{ggplot2}` - Segunda parte](07-graficos-II.html)
+- [Visualización de datos con {ggplot2} - Segunda parte](07-graficos-II.html)
     - Crear gráficos con múltiples geometrías.
     - Graficar transformaciones estadísticas
     - Usar paneles para graficar múltiples relaciones.
-- Manipulación de datos ordenados usando `{dplyr}` y `{tidyr}` - Segunda parte
+- [Manipulación de datos ordenados usando {dplyr} y {tidyr} - Segunda parte](08-dplyr-tidyr-II.html)
     - “Alargar” y “ensanchar” tablas.	
     - Organizar columnas y sus nombres
     - Combinar tablas de datos a partir de variables llave
@@ -87,12 +87,12 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
 
 #### Contenidos
 
-- Generación de informes con `{RMarkdown}`
+- Generación de informes con {RMarkdown}
     - Uso de distintos formatos de salida.
     - Parametrización de reportes.
     - Apariencia y temas
 - Apariencia de tablas
-    - `{kable}` y `{kableExtra}`
+    - {kable} y {kableExtra}
 - Apariencia de gráficos para publicar
     - Escalas de colores
     - Temas
