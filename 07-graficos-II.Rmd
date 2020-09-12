@@ -11,9 +11,9 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Hasta ahora y asumiendo que recorriste los episodios anteriores, visualizamos los datos tal cual vienen en la base de datos o con ayuda de `dplyr` para transformarlos. Vamos ver como *transformar* los datos usando ggplot2.
+Hasta ahora, y asumiendo que recorriste los episodios anteriores, visualizamos los datos tal cual vienen en la base de datos o con ayuda de {dplyr} para transformarlos. Pero como adelantamos con `geom_smooth()`, hay ciertas transformaciones comunes que se pueden hacer usando {ggplot2}.
 
-De paso vamos a usar datos incluidos en el paquete `datos` (muchos paquetes traen bases de datos para probar cosas, este en particular son todas bases de datos en español!) que podés descargar como siempres con `install.packages("datos")`. Los datos `diamantes` contiene información sobre ~ 54000 diamantes, incluido el `precio`, el `quilate`, el `color`, la `claridad` y el `corte` de cada uno.
+De paso vamos a usar datos incluidos en el paquete `datos` (muchos paquetes traen bases de datos para probar cosas, ¡este en particular son todas bases de datos en español!) que podés descargar como siempre con `install.packages("datos")`. Los datos `diamantes` contiene información sobre ~ 54000 diamantes, incluido el `precio`, el `quilate`, el `color`, la `claridad` y el `corte` de cada uno.
 
 ```{r message=FALSE}
 library(ggplot2)
@@ -24,7 +24,7 @@ str(diamantes)
 
 ## Gráficos de frecuencias
 
-Este es un gráfico de barras construido usando la función `geom_bar()`. En el eje x muestra el `corte` de los diamantes y en el eje y la cantidad (*count* en inglés) de diamantes en cada categoría. Pero `diamantes` no tiene una variable que se llame `count` y tampoco la generamos nosotros. ¡Es calculada internamente por ggplot2!.
+Este es un gráfico de barras construido usando la función `geom_bar()`. En el eje x muestra el `corte` de los diamantes y en el eje y la cantidad (*count* en inglés) de diamantes en cada categoría. Pero `diamantes` no tiene una variable que se llame `count` y tampoco la generamos nosotros. ¡Es calculada internamente por {ggplot2}!
 
 ```{r}
 ggplot(data = diamantes, aes(x = corte)) +
@@ -52,20 +52,23 @@ Esta geometría tiene dos argumentos importantes `bins` y `binwidth`. Cambiá el
 También podés revisar la documentación.
 :::
 
-Además de contar la cantidad de elementos, ggplot2 puede calcular muchas otras transformaciones sobre los datos. Por ejemplo si quisieramos el porcentaje o la proporción que le corresponde a cada categoría de `corte` respecto del total podemos hacerlo *mapeando* esa transformación `prop` al eje y con la función `stat()`.
+Además de contar la cantidad de elementos, {ggplot2} puede calcular muchas otras transformaciones sobre los datos. Por ejemplo si quisiéramos el porcentaje o la proporción que le corresponde a cada categoría de `corte` respecto del total podemos hacerlo *mapeando* esa transformación `prop` al eje y con la función `stat()`.
 
 ```{r}
 ggplot(data = diamantes, aes(x = corte)) +
   geom_bar(aes(y = stat(prop), group = 1))
 ```
 
+Fijate que la variable `prop` no es una columna de `diamantes` sino que es el nombre de una variable computada por `geom_bar()`, por eso hay que rodearla de la función `stat()`. El nombre de las variables computadas por cada geoms está en su documentación (abajo de todo, antes de los ejemplos).
+
 Ahora podríamos decir que el 40% de los diamantes en la base de datos tienen un corte *ideal*. Además de la función  `stat()` agregamos `group = 1` y esto no fue sin querer. Probá correr el gráfico sin ese argumento.
 
-Al incluir `group = 1`, ggplot2 junta todas las observaciones en un único grupo y calcula la proporción o el porcentaje que representa cada corte respecto del total de diamantes. Si no incluimos eso, ggplot2 asumirá que cada categoría de corte es un grupo independiente y el cálculo del porcentaje también lo hará por separado. 
+Al incluir `group = 1`, {ggplot2} junta todas las observaciones en un único grupo (con el valor `1`) y calcula la proporción o el porcentaje que representa cada corte respecto del total de diamantes. Si no incluimos eso, {ggplot2} asumirá que cada categoría de corte es un grupo independiente y el cálculo del porcentaje también lo hará por separado. 
+
 
 ### Posición
 
-Ya vimos que la estética del `color` solo modifica el borde de las barras, si quisieras modificar el relleno necesitamos cambiar el `fill` y al igual que antes podemos *mapear* una variable a esta estética.
+Ya vimos que la estética del `color` sólo modifica el borde de las barras, si quisieras modificar el relleno necesitamos cambiar el `fill` y al igual que antes podemos *mapear* una variable a esta estética.
 
 ```{r}
 ggplot(data = diamantes) +
@@ -109,19 +112,17 @@ ggplot(diamantes, aes(quilate, precio)) +
 
 Los diagramas de caja, mejor conocidos como boxplots calculan un resumen robusto de la distribución y luego muestran una caja con formato especial. 
 
-La línea central de la caja corresponde a la **mediana** (el valor que toma el dato central) y los extremos de la caja son los **quartil 25 y 75**, definiendo así el **rango intercuartil**. Los extremos están definidos como **1.5 x quartil 25** o **75** y cualquier observación por debajo o por encima es un **outliner** o **valor extremo**.
+La línea central de la caja corresponde a la **mediana** (el valor que toma el dato central) y los extremos de la caja son los **cuartiles 1 y 3**, definiendo así el **rango intercuartil** (IQR). Los extremos están definidos como el valor observado que no esté más lejos de **1.5\*IQR** de la mediana y los puntos son los las observaciones que se escapan de ese rango, que pueden ser considerados **outliners** o **valores extremos**.
 
 ```{r}
 ggplot(diamantes, aes(claridad, precio)) +
   geom_boxplot()
 ```
 
-Los boxplot dan muchísima información sobre los datos pero al mismo tiempo *esconden* la cantidad de observaciones que se usaron para generarlos y en particular cual es la frecuencia a lo largo del eje y. Por esta razón también existen `geom_violin()` y `geom_jittere()`.
+Los boxplot dan muchísima información sobre los datos pero al mismo tiempo *esconden* la cantidad de observaciones que se usaron para generarlos y en particular cual es la frecuencia a lo largo del eje y. Por esta razón también existen `geom_violin()` y `geom_jitter()`.
 
 ::: {.alert .alert-info}
 **Segundo desafío**
-
-¿Notaste el mensaje que devuelve el gráfico? 
 
 1. Volvé a graficar la distribución del precio para cada tipo de claridad pero ahora usando `geom_violin()` y `geom_jitter()`.
 2. ¿Qué ventajas y desventajas encuentran respecto de `geom_boxplot()`?
@@ -162,7 +163,7 @@ diamantes %>%
 
 ```
 
-Pero sería muchísimo trabajo si tenemos que hacer esto para cada una de las 7 categorías de color. La buena noticia es que ggplot2 tiene un par de funciones justo para resolver este problema:
+Pero sería muchísimo trabajo si tenemos que hacer esto para cada una de las 7 categorías de color. La buena noticia es que {ggplot2} tiene un par de funciones justo para resolver este problema:
 
 ```{r}
 ggplot(diamantes, aes(quilate, precio)) +

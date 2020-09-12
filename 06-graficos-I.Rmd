@@ -70,6 +70,7 @@ ggplot(data = paises, mapping = aes(x = anio, y = esperanza_de_vida)) +
 
 Ahh, ahora está un poco mejor. Por ejemplo ya podemos ver que muchos paises de Europa (los puntos celestes) tienen en promedio mayor esperanza de vida a lo largo de los años que muchos paises de África (los puntos rojos). Aún no podemos identificar los paises individualmente pero podemos sacar algo más de información de nuestros datos. 
 
+
 Algo muy importante a tener en cuenta: **los puntos toman un color de acuerdo a una variable de los datos**, y para que ggplot2 identifique esa variable (en este caso `continente`) es necesario incluirla dentro de una función `aes()`.
 
 ### Otras geometrías
@@ -81,7 +82,7 @@ ggplot(data = paises, mapping = aes(x = anio, y = esperanza_de_vida)) +
   geom_line(aes(color = continente))
 ```
 
-Por suerte las funciones `geom_*()` tienen más o menos nombres amigables. Pero el gráfico sigue teniendo problemas, al parecer dibujó una línea por continente (o algo así). Si estuvieramos dibujando este gráfico con lapiz y papel muy posiblemente hubieramos identificado los puntos que corresponden a cada país y los hubieramos "unido con líneas", necesitamos que ggplot2 haga esto. ¿Cómo le indicamos que puntos corresponde a cada pais? Necesitamos que los *agrupe* por la variablel `pais` (¡qué bueno que tenemos toda esa información en nuestra base de datos!).
+Por suerte las funciones `geom_*()` tienen más o menos nombres amigables. Pero el gráfico sigue teniendo problemas, al parecer dibujó una línea por continente. Si estuvieramos dibujando este gráfico con lapiz y papel muy posiblemente hubieramos identificado los puntos que corresponden a cada país y los hubieramos "unido con líneas", necesitamos que ggplot2 haga esto. ¿Cómo le indicamos que puntos corresponde a cada pais? Necesitamos que los *agrupe* por la variablel `pais` (¡qué bueno que tenemos toda esa información en nuestra base de datos!).
 
 ```{r}
 ggplot(data = paises, mapping = aes(x = anio, y = esperanza_de_vida)) +
@@ -93,7 +94,7 @@ Usamos el argumento `group =` y de nuevo, lo incluimos dentro de la función `ae
 Y ahora si, conseguimos el gráfico que estamos buscando. 
 
 ::: {.alert .alert-info}
-**Segundo desafío
+**Segundo desafío**
 
 Cuando mencionamos que ggplot2 construye gráficos por capas, lo decíamos en serio! Hasta ahora tenemos dos capas: el área del gráfico y una geometría (las líneas). 
 
@@ -117,27 +118,29 @@ Si te preguntabas a donde fueron a parar el `data = `, el `mapping = ` y los nom
 
 Algunos argumentos para cambiar la apariencia de las geometrías son:
 
-* `color = ` o `colour = ` modifica el color de líneas y puntos
-* `fill = `modifica el color del área de un elemento, por ejemplo el relleno de un punto
-* `linetype = ` modica el tipo de línea (punteada, continua, con guiones, etc.)
-* `pch = ` modifica el tamaño del punto
-* `size = ` modifica el tamaño de los elementos (por ejemplo el tamaño de puntos o el grosor de líneas)
-* `alpha = ` modifica la transparencia de los elementos (1 = opaco, 0 = transparente)
-* `shape = ` modifica el tipo de punto (circulos, cuadrados, tríangulos, etc.)
+* `color` o `colour` modifica el color de líneas y puntos
+* `fill`modifica el color del área de un elemento, por ejemplo el relleno de un punto
+* `linetype` modifica el tipo de línea (punteada, continua, con guiones, etc.)
+* `pch` modifica el tamaño del punto
+* `size` modifica el tamaño de los elementos (por ejemplo el tamaño de puntos o el grosor de líneas)
+* `alpha` modifica la transparencia de los elementos (1 = opaco, 0 = transparente)
+* `shape` modifica el tipo de punto (circulos, cuadrados, triángulos, etc.)
+
+El *mapeo* entre una variable y un parámetro de geometría se hace a través de una **escala**. La escala de colores es lo que define, por ejemplo, que los puntos donde la variable `continente` toma el valor `"África"` van a tener el color rosa (<span style="color:#F77D75">&#9679;</span>), donde toma el valor `"Américas"`, mostaza (<span style="color:#B7B940">&#9679;</span>), etc...
 
 ::: {.alert .alert-success}
 **Modificar elementos utilizando un valor único**
 
-Es posible que en algún momento necesites cambiar la apariencia de los elementos o geometrías independientemente de las variables de tu data.frame. Por ejemplo podrías querere que todos los puntos sean de un único color: rojos. En este caso `geom_point(aes(color = "red")) -ojo que los colores van en inglés- no va a funcionar, de hecho ggplot2 intentará encontrar una variable "red" dentro del data.frame sin exito.
+Es posible que en algún momento necesites cambiar la apariencia de los elementos o geometrías independientemente de las variables de tu data.frame. Por ejemplo podrías querer que todos los puntos sean de un único color: rojos. En este caso `geom_point(aes(color = "red"))` -ojo que los colores van en inglés- no va a funcionar. Lo que ese código dice es que mapee el parámetro geométrico "color" a una variable que contiene la el valor `"red"` para todas las filas. El mapeo se hace a través de la escala, que va a asignarle un valor (rosa <span style="color:#F77D75">&#9679;</span>) a los puntos correspondientes al valor `"red"`.
 
-Ahora que no nos interesa *mapear* el color a una variable, podemos mover ese argumento **afuera** de la función `aes()`: `geom_point(color = "red")`.
+Ahora que no nos interesa *mapear* el color a una variable, podemos mover ese argumento **afuera** de la función `aes()`: `geom_point(color = "red")`. 
 ::: 
 
 ### Relación entre variables
 
-Muchas veces no es suficiente con mirar un gráfico para identificar la relación entre las variables y entonces calculamos una tendencia o ajustamos los datos a una función (por ejemplo a una recta). Por supuesto ggplot2 tiene una geometría para sumar esta capa a los gráficos.
+Muchas veces no es suficiente con mirar los datos crudos para identificar la relación entre las variables; es necesario usar alguna transformación estadística que resalte esas relaciones, ya sea ajustando una recta o calculando promedios. 
 
-También es posible que necesitemos manipular los datos antes de poder hacer un gráfico. A veces esa mannipulación será compleja y entonces para no repetir el cálculo muchas veces, guardaremos los datos modificados en una nueva variable. Pero también podemos *encadenar* la manipulación de los datos y el gráfico resultante.
+Para alguna transformaciones estadísticas comunes, {ggplot2} tiene geoms ya programados, pero muchas veces es posible que necesitemos manipular los datos antes de poder hacer un gráfico. A veces esa manipulación será compleja y entonces para no repetir el cálculo muchas veces, guardaremos los datos modificados en una nueva variable. Pero también podemos *encadenar* la manipulación de los datos y el gráfico resultante.
 
 Por ejemplo, calculemos la esperanza de vida media por continente y para cada año usando [`dplyr`](05-dplyr-I.html) y luego grafiquemos la `esperanza_de_vida_media` a los largo de los `anios`:
 
@@ -151,7 +154,7 @@ paises %>%
   geom_point()
 ```
 
-Esto es posible gracias al operador `%>%` que le *pasa* el resutado de `summarise()` a la función `ggplot()`. Y este resultado no es ni más ni menos que el data.frame que necesitamos para hacer nuestro gráfico. Es importante notar que una vez que comenzamos el gráfico ya **no** se puede usar el operador `%>%` y las capas del gráfico se *suman* como siempre con `+`.
+Esto es posible gracias al operador `%>%` que le *pasa* el resultado de `summarise()` a la función `ggplot()`. Y este resultado no es ni más ni menos que el data.frame que necesitamos para hacer nuestro gráfico. Es importante notar que una vez que comenzamos el gráfico ya **no** se puede usar el operador `%>%` y las capas del gráfico se *suman* como siempre con `+`.
 
 Este gráfico entonces parece mostrar que la esperanza de vida fue aumentado a lo largo de los años pero sería interesante ver esa relación más explicitamente agregando una nueva capa con `geom_smooth()`.
 
@@ -164,7 +167,18 @@ paises %>%
   geom_smooth()
 ```
 
-Por defecto esta geometría una el método *loess* para identificar la relación entre variables, pero hay otros (podés revisar la documentación de la función para leer más detalles). En gris nos muestra el intervalo de confianza al rededor de este suavizado que en este caso es bastante grande porque tenemos pocos datos! 
+Como dice en el mensaje, por defecto `geom_smooth()` suaviza los datos usando el método *loess* (regresión lineal local) cuando hay menos de 1000 datos. Seguramente va a ser muy común que quieras ajustar una regresión lineal global. En ese caso, hay que poner `method = "lm"`:
+
+```{r}
+paises %>% 
+  group_by(continente, anio) %>% 
+  summarise(esperanza_de_vida_media = mean(esperanza_de_vida)) %>% 
+  ggplot(aes(anio, esperanza_de_vida_media)) +  
+  geom_point() +
+  geom_smooth(method = "lm")
+```
+
+En gris nos muestra el intervalo de confianza al rededor de este suavizado que en este caso es bastante grande porque tenemos pocos datos! 
 
 Cómo cualquier geom, podemos modificar el color, el grosor de la línea y casi cualquier cosa que se te ocurra.
 
@@ -178,7 +192,7 @@ paises %>%
   group_by(continente, _____) %>% 
   summarise(esperanza_de_vida_media = mean(esperanza_de_vida)) %>% 
   ggplot(aes(anio, ________________)) +  
-  geom_point(aes(color = continente), size = 3) +
+  geom_point(aes(color = continente), size = 3, shape = _____) +
   geom_smooth(color = continente) 
 ```
 

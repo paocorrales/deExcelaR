@@ -17,10 +17,12 @@ Usá el proyecto que ya creaste y abrilo desde el explorador de archivos (hacien
 
 ### 2. Generá nuevas columnas
 
-Es posible que necesites alguna nueva variable, por ejemplo la suma entre otras dos columnas para calcular un total o la diferencia entre otras dos. La clave será usar la función `mutate()` y ya que estamos aplicá otro verbo de dplyr para seleccionar esas nuevas columnas y mostrarlas.
+Es posible que necesites alguna nueva variable, por ejemplo la suma entre otras dos columnas para calcular un total o la diferencia entre otras dos. La clave será usar la función `mutate()` (como viste en [esta sección](05-dplyr-I.html#Creando_nuevas_columnas_con_mutate())) y ya que estamos aplicá otro verbo de {dplyr} para seleccionar esas nuevas columnas y mostrarlas (fijate [acá](05-dplyr-I.html#Seleccionando_columnas_con_select()) si necesitás refrescar la memoria).
+
+Hacé cada operación en un *chunk* separado explicando en el texto qué hace cada paso, por qué y qué esperás encontrar.
 
 ### 3. Resumen de datos
 
-Ahora calculá un promedio o determiná el valor máximo o mínimo de alguna columna usando `summarise()`. Si tu base de datos tiene alguna variable con categorías, también probá hacer los mismos cálculos pero agrupando las observaciones.
+Ahora calculá un promedio o determiná el valor máximo o mínimo de alguna columna usando `summarise()`. Si tu base de datos tiene alguna variable con categorías, también probá hacer los mismos cálculos pero agrupando las observaciones (viste esto [en esta sección](05-dplyr-I.html#Agrupando_y_reduciendo_con_group_by()_%%_summarise())).
 
-Podés analizar los datos tanto como se te ocurra, la idea es que te familiarices con los verbos de dplyr al mismo tiempo que sacas información de la base de datos que estás utilizando. Siempre es una buena idea desribir el análisis y nuestra interpretación del mismo junto al *chunk* correspondiente. 
+Podés analizar los datos tanto como se te ocurra, la idea es que te familiarices con los verbos de {dplyr} al mismo tiempo que sacas información de la base de datos que estás utilizando. 
