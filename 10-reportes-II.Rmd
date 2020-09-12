@@ -5,7 +5,7 @@ output:
     code_download: true
     toc: true
     toc_float: true
-    template: "_template.html"
+    highlight: tango
 params:
   pais: Argentina    
 ---
