@@ -5,7 +5,6 @@ output:
     code_download: true
     toc: true
     toc_float: true
-    template: "_template.html"    
 ---
 
 ```{r setup, include=FALSE}
@@ -138,9 +137,21 @@ Podés agregar un link a una página externa: `[text to show](http://the-web-pag
 
 Podés incluir una imagen: `![pie de figura](http://url/for/file)`
 
-Y tambień podés agregar ecuaciones en LaTeX en la misma línea `$E = mc^2$` en un línea idependiente:
+Y tambień podés agregar ecuaciones en LaTeX en la misma línea (esto:`$E = mc^2$` se ve así: $E = mc^2$) o en una línea propia. Esto:
 
-`$$y = \mu + \sum_{i=1}^p \beta_i x_i + \epsilon$$` 
+```
+$$
+y = \mu + \sum_{i=1}^p \beta_i x_i + \epsilon
+$$
+```
+
+se ve así:
+
+$$
+y = \mu + \sum_{i=1}^p \beta_i x_i + \epsilon
+$$
+
+
 
 ::: {.alert .alert-success}
 Podés revisar la guía rápida de Markdown desde RStudio (en inglés):
@@ -162,6 +173,7 @@ Y se diferencia del resto de archivo con un fondo gris.
 
 ::: {.alert .alert-success}
 Para insertar un nuevo chunk podés:
+
 * Usar el botón **Insert**
 * El atajo de teclado Ctrl+Alt+I 
 * Escribir a mano!
