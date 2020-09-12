@@ -302,6 +302,9 @@ $(document).ready(function () {
     <li>
       <a href="07-graficos-II.html">Gráficos II</a>
     </li>
+    <li>
+      <a href="08-dplyr-tidyr-II.html">Manipulación de datos II</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -343,12 +346,13 @@ $(document).ready(function () {
 </div>
 <div id="generá-nuevas-columnas" class="section level3">
 <h3>2. Generá nuevas columnas</h3>
-<p>Es posible que necesites alguna nueva variable, por ejemplo la suma entre otras dos columnas para calcular un total o la diferencia entre otras dos. La clave será usar la función <code>mutate()</code> y ya que estamos aplicá otro verbo de dplyr para seleccionar esas nuevas columnas y mostrarlas.</p>
+<p>Es posible que necesites alguna nueva variable, por ejemplo la suma entre otras dos columnas para calcular un total o la diferencia entre otras dos. La clave será usar la función <code>mutate()</code> (como viste en <a href="05-dplyr-I.html#Creando_nuevas_columnas_con_mutate()">esta sección</a>) y ya que estamos aplicá otro verbo de {dplyr} para seleccionar esas nuevas columnas y mostrarlas (fijate <a href="05-dplyr-I.html#Seleccionando_columnas_con_select()">acá</a> si necesitás refrescar la memoria).</p>
+<p>Hacé cada operación en un <em>chunk</em> separado explicando en el texto qué hace cada paso, por qué y qué esperás encontrar.</p>
 </div>
 <div id="resumen-de-datos" class="section level3">
 <h3>3. Resumen de datos</h3>
-<p>Ahora calculá un promedio o determiná el valor máximo o mínimo de alguna columna usando <code>summarise()</code>. Si tu base de datos tiene alguna variable con categorías, también probá hacer los mismos cálculos pero agrupando las observaciones.</p>
-<p>Podés analizar los datos tanto como se te ocurra, la idea es que te familiarices con los verbos de dplyr al mismo tiempo que sacas información de la base de datos que estás utilizando. Siempre es una buena idea desribir el análisis y nuestra interpretación del mismo junto al <em>chunk</em> correspondiente.</p>
+<p>Ahora calculá un promedio o determiná el valor máximo o mínimo de alguna columna usando <code>summarise()</code>. Si tu base de datos tiene alguna variable con categorías, también probá hacer los mismos cálculos pero agrupando las observaciones (viste esto <a href="05-dplyr-I.html#Agrupando_y_reduciendo_con_group_by()_%%_summarise()">en esta sección</a>).</p>
+<p>Podés analizar los datos tanto como se te ocurra, la idea es que te familiarices con los verbos de {dplyr} al mismo tiempo que sacas información de la base de datos que estás utilizando.</p>
 </div>
 
 

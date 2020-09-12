@@ -590,8 +590,8 @@ div.tocify {
 ## 10 Afganistán Asia        1997              41.8  22227415           635.
 ## # … with 1,694 more rows</code></pre>
 <p><code>select()</code> y el resto de las funciones de {dplyr} siempre generan una nueva tabla y nunca modifican la tabla original. Para guardar la tabla con las tres columnas <code>anio</code>, <code>pais</code> y <code>pbi_per_capita</code> tenés que asignar el resultado a una nueva variable.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">anio_pais_pbi &lt;-<span class="st"> </span><span class="kw">select</span>(paises, anio, pais, pib_per_capita)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">anio_pais_pbi</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>anio_pais_pbi &lt;-<span class="st"> </span><span class="kw">select</span>(paises, anio, pais, pib_per_capita)</span>
+<span id="cb12-2"><a href="#cb12-2"></a>anio_pais_pbi</span></code></pre></div>
 <pre><code>## # A tibble: 1,704 x 3
 ##     anio pais       pib_per_capita
 ##    &lt;dbl&gt; &lt;chr&gt;               &lt;dbl&gt;
@@ -633,9 +633,9 @@ div.tocify {
 <p>La mayoría de los análisis consisten en varios pasos (en el primer desafío usaste 4 pasos para calcular las temperaturas medias de una serie de estaciones). La única tabla que te interesa es la última, por lo que ir asignando variables nuevas en cada paso intermedio es tedioso y poco práctico. Para eso se usa el operador ‘pipe’ (<code>%&gt;%</code>).</p>
 <p>El operador ‘pipe’ (<code>%&gt;%</code>) agarra el resultado de una función y se lo pasa a la siguiente. Esto permite escribir el código como una cadena de funciones que van operando sobre el resultado de la anterior.</p>
 <p>Las dos operaciones anteriores (seleccionar tres columnas y luego filtar las filas correspondientes a Argentina) se pueden escribir uno después del otro y sin asignar los resultados intermedios a nuevas variables de esta forma:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">  </span><span class="kw">select</span>(anio, pais, pib_per_capita) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb16-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(pais <span class="op">==</span><span class="st"> &quot;Argentina&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="st">  </span><span class="kw">select</span>(anio, pais, pib_per_capita) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="st">  </span><span class="kw">filter</span>(pais <span class="op">==</span><span class="st"> &quot;Argentina&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 12 x 3
 ##     anio pais      pib_per_capita
 ##    &lt;dbl&gt; &lt;chr&gt;              &lt;dbl&gt;
@@ -651,7 +651,7 @@ div.tocify {
 ## 10  1997 Argentina         10967.
 ## 11  2002 Argentina          8798.
 ## 12  2007 Argentina         12779.</code></pre>
-<p>La forma de “leer” esto es “Tomá la variable <code>paises</code>, <strong>después</strong> aplicale <code>select(anio, pais, pib_per_capita)</code>, <strong>después</strong> aplicale <code>filter(pais == &quot;Argentina&quot;)</code>”.</p>
+<p>La forma de “leer” esto es “Tomá la variable <code>paises</code>, <strong>después</strong> aplicale <code>select(anio, pais, pib_per_capita)</code>, <strong>después</strong> aplicale <code>filter(pais == "Argentina")</code>”.</p>
 <p>Cómo vimos, el primero argumento de todas las funciones de dplyr espera un data.frame y justamente el operador <code>%&gt;%</code> toma el data.frame <code>paises</code> y se lo pasa al primer argumento de <code>select()</code>. Luego el data.frame resultante de seleccionar las columnas anio, país y pib_per_capita <em>pasa</em> como el primer argumento de la función <code>filter()</code> gracias al <code>%&gt;%</code>.</p>
 <div class="alert alert-success">
 <p><strong>Tip:</strong></p>
@@ -737,9 +737,9 @@ div.tocify {
 <p>El combo <code>group_by() %&gt;% summarise()</code> se puede resumir en esta figura. Las filas de una tabla se dividen en grupos, y luego cada grupo se “resume” en una fila en función del estadístico usado.</p>
 <p><img src="img/group_by-summarize.png" /></p>
 <p>Al igual que hicimos “cuentas” usando algunas variables numéricas para obtener información nueva, también podemos utilizar variables categóricas. No tiene sentido calcular <code>mean(continente)</code> ya que contienen caracteres, pero tal vez nos interese <em>contar</em> la cantidad de observaciones por continente:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(continente) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">cantidad =</span> <span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="st">  </span><span class="kw">group_by</span>(continente) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">cantidad =</span> <span class="kw">n</span>())</span></code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <pre><code>## # A tibble: 5 x 2
 ##   continente cantidad
@@ -754,8 +754,8 @@ div.tocify {
 <h2>Creando nuevas columnas con <code>mutate()</code></h2>
 <p>Todo esto está bien para hacer cálculos con columnas previamente existentes, pero muchas veces tenés que crear nuevas columnas.</p>
 <p>La tabla <code>paises</code> tiene información de PBI per cápita y de población, por lo que es posible computar el PBI de cada país multiplicando los valores de estas columnas. <code>mutate()</code> permite agregar una nueva columna llamada “pbi” con esa información:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb31-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pbi =</span> pib_per_capita<span class="op">*</span>poblacion)</a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1"></a>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb31-2"><a href="#cb31-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pbi =</span> pib_per_capita<span class="op">*</span>poblacion)</span></code></pre></div>
 <pre><code>## # A tibble: 1,704 x 7
 ##    pais     continente  anio esperanza_de_vi… poblacion pib_per_capita       pbi
 ##    &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt;     &lt;dbl&gt;
@@ -778,18 +778,18 @@ div.tocify {
 <div class="alert alert-info">
 <p><strong>Desafío:</strong></p>
 <p>¿Cuál de estos dos códigos agrega una columna llamada “pbi_continente” con el pbi promedio del continente correspondiente a cada país? ¿Qué hace el otro?</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(continente) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pbi_continente =</span> <span class="kw">mean</span>(pib_per_capita<span class="op">*</span>poblacion)) </a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pbi_continente =</span> <span class="kw">mean</span>(pib_per_capita<span class="op">*</span>poblacion)) </a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1"></a>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb33-2"><a href="#cb33-2"></a><span class="st">  </span><span class="kw">group_by</span>(continente) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb33-3"><a href="#cb33-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pbi_continente =</span> <span class="kw">mean</span>(pib_per_capita<span class="op">*</span>poblacion)) </span>
+<span id="cb33-4"><a href="#cb33-4"></a></span>
+<span id="cb33-5"><a href="#cb33-5"></a>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb33-6"><a href="#cb33-6"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pbi_continente =</span> <span class="kw">mean</span>(pib_per_capita<span class="op">*</span>poblacion)) </span></code></pre></div>
 </div>
 <p>En otras palabras, los resultados de <code>mutate()</code>, <code>filter()</code>, <code>summarise()</code> y otras funciones cambian según si la tabla está agrupada o no. Como a veces uno se puede olvidar que quedaron grupos, es conveniente usar la función <code>ungroup()</code> una vez que dejás de trabajar con grupos:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb34-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(continente) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pbi_continente =</span> <span class="kw">mean</span>(pib_per_capita<span class="op">*</span>poblacion)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="st">  </span><span class="kw">ungroup</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb34-2"><a href="#cb34-2"></a><span class="st">  </span><span class="kw">group_by</span>(continente) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb34-3"><a href="#cb34-3"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">pbi_continente =</span> <span class="kw">mean</span>(pib_per_capita<span class="op">*</span>poblacion)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb34-4"><a href="#cb34-4"></a><span class="st">  </span><span class="kw">ungroup</span>()</span></code></pre></div>
 <pre><code>## # A tibble: 1,704 x 7
 ##    pais  continente  anio esperanza_de_vi… poblacion pib_per_capita
 ##    &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt;
