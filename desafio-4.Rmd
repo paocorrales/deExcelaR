@@ -1,0 +1,30 @@
+---
+title: 'Desafío 3: Informe final'
+output: 
+  html_document:
+    theme: flatly
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Llegaste al final del curso y con suerte al final de los desafíos. Es hora de generar el informe final para presentar el análisis que estuviste haciendo en este tiempo. 
+
+### 1. Abrí tu proyecto
+
+Abrí tu proyecto desde el explorador de archivos (haciendo doble click en el archivo .Rproj) o desde a interfaz de RStudio. Trabajá sobre el mismo Rmd, que ya va tomando forma. 
+
+### 2. Revisá los gráficos y/o tablas 
+
+Agregá títulos y mejorá las etiquetas en tus gráficos, si querés, también podés cambiar el tema o alguna escala para que tenga una apariencia distinta (tenés todo [acá](12-ggplot-III.html)). 
+
+Si generaste tablas, podés mejorar su apariencia con algua de las opciones de [{kable} o {kableExtra}](11-tablas.html).
+
+### 3. Definí el formato final
+
+Decidí en que formato vas a querer tu informe, html, word o pdf. ¿Necesita un indice? 
+
+Además hace las modificaciones que consideres necesarias para que tenga la apariencia que mejor se adapte a tus objetivos, ¿es necesario que se vea el código? ¿necesitás los mensajes que devuelve R?. Podés usar [esté episodio](11-reportes-II.html) como guía. 
+
+Y finalmente... *kniteá* el documento!
