@@ -1,1 +1,32 @@
 # deExcelaR
+
+Este repositorio contiene los materiales y código fuente del curso [deExcelaR](https://paocorrales.github.io/deExcelaR/).
+
+### ¿De qué se trata este curso?
+
+Este curso está pensado para [personas](personas.html) que usan Excel para la manipulación y análisis de datos pero les gustaría aprender a trabajar con R y nunca programaron. Por eso los contenidos comienzan desde el princio: ¿por qué usar R? y ¿por dónde empezar? 
+
+Al mismo tiempo que proponemos trabajar con R, nos gustaría que sea de manera ordenada y reproducible. Por eso, proponemos utilizar un flujo de trabajo que le permita a quienes tomen este curso, aplicar buenas prácticas de programación,  trabajar de manera colaborativa y presentar su trabajo en un documento único que incluya el análisis y los resultados. 
+
+Siempre que podamos, mencionaremos como lo que proponemos resolver con R se puede también hacer con Excel, y las ventajas y desventajas de cada caso.
+
+En cada sección incluimos ejercicios y desafíos y junto con los ejemplos, usan algunos set de datos útiles para el problema que queremos resolver. Buscamos que estos datos sean realistas para que cualquier persona encuentre similaridades en sus propios datos y pueda aplicar lo aprendido a otras situaciones.
+
+Asumimos que ya tenés R y Rstudio instalados. Si no es así podés seguir [estas instrucciones](instalacion.html).
+
+### ¿Quiénes somos? 
+
+Este curso está desarrollado por [Elio Campitelli](https://eliocamp.github.io/codigo-r/) y [Paola Corrales](https://paocorrales.github.io/).
+
+#### Licencia
+
+<a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />
+Todos los materiales de este curso se encuentran bajo la licencia <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+
+En muchos casos tomamos inspiración o nos basamos en los siguientes recursos:
+
+* [R para Análisis Científicos Reproducibles](https://swcarpentry.github.io/r-novice-gapminder-es/) de The Carpentries
+
+* [R for Excel Users](https://rstudio-conf-2020.github.io/r-for-excel/) de Dr. Julie Stewart Lowndes y Dr. Allison Horst
+
+* [R para Ciencia de Datos](https://es.r4ds.hadley.nz/) de Hadley Wickham
