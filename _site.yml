@@ -13,7 +13,7 @@ navbar:
         href: 03-reportes-I.html
       - text: Lectura de datos
         href: 04-lectura-datos.html
-      - text: Maninupulación de datos I
+      - text: Manipulación de datos I
         href: 05-dplyr-I.html
       - text: Gráficos I
         href: 06-graficos-I.html
@@ -21,12 +21,24 @@ navbar:
         href: 07-graficos-II.html
       - text: Manipulación de datos II
         href: 08-dplyr-tidyr-II.html
+      - text: Funciones
+        href: 09-funciones.html
+      - text: Reportes II
+        href: 10-reportes-II.html
+      - text: Estilo de tablas
+        href: 11-tablas.html
+      - text: Gráficos para publicar
+        href: 12-ggplot-III.html
   - text: Desafíos
     menu:
       - text: Leer datos
         href: desafio-1.html
       - text: Analizar datos
         href: desafio-2.html
+      - text: Graficar datos
+        href: desafio-3.html
+      - text: Generar un informe
+        href: desafio-4.html
 output_dir: docs
 output:
   html_document:

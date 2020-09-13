@@ -31,19 +31,6 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
 *Desafío: [leer correctamente una base de datos](desafio-1.html)*
 
 
-#### Objetivos de aprendizaje
-
-1. Identificar las diferencias entre una sentencia de código y una acción en Excel.
-1. Entender los conceptos de variables, funciones.
-1. Entender la diferencia entre paquetes y librería.
-1. Acceder a la ayuda de una función e identificar el contenido. 
-1. Poder:
-    - crear un proyecto de RStudio,
-    - armar un .Rmd,
-    - leer datos,
-    - compilar el documento.
-
-
 ### Segundo encuentro
 
 #### Contenidos
@@ -58,9 +45,8 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
     - Modificar parámetros estéticos de las geometrías.
     - Agregar suavizado y líneas de tendencia.
 
-*Desafío: generar una nueva columna a partir de información de otras columnas y generar resúmenes a partir de los datos.*
+*Desafío: [generar nuevas columnas a partir de información de otras columnas y generar resúmenes a partir de los datos.](desafio-2html)*
 
-#### Objetivos
 
 ### Tercer encuentro 
 
@@ -74,30 +60,28 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
     - “Alargar” y “ensanchar” tablas.	
     - Organizar columnas y sus nombres
     - Combinar tablas de datos a partir de variables llave
-- Creación de funciones
+- [Creación de funciones](09-funciones.html)
     - Definir una función y sus argumentos
     - Definir valores por defecto para los argumentos
-    - Testear los posibles resultados de una función
+    - Definir pruebas para una función
 
-*Desafío: generar gráficos a partir de la base de datos usada.*
+*Desafío: [generar gráficos a partir de la base de datos usada.](desafio-3.html)*
 
-#### Objetivos de aprendizaje
 
 ### Cuarto encuentro
 
 #### Contenidos
 
-- Generación de informes con {RMarkdown}
+- [Generación de informes con {RMarkdown}](10-reportes-II.html)
     - Uso de distintos formatos de salida.
     - Parametrización de reportes.
     - Apariencia y temas
-- Apariencia de tablas
+- [Apariencia de tablas](11-tablas.html)
     - {kable} y {kableExtra}
-- Apariencia de gráficos para publicar
+- [Apariencia de gráficos para publicar](12-ggplot-III.html)
     - Escalas de colores
     - Temas
     - Definir etiquetas y títulos
 
-*Desafío: generar un informe que incluya gráficos, texto y aplique lo visto previamente*
+*Desafío: [generar un informe que incluya gráficos, texto y un análisis descriptivo.](desafío-4.html*
 
-#### Objetivos de aprendizaje

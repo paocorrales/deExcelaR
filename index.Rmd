@@ -2,7 +2,7 @@
 title: "Bienvenida!"
 ---
 
-### ¿Qué es esto?
+### ¿De qué se trata este curso?
 
 Este curso está pensado para [personas](personas.html) que usan Excel para la manipulación y análisis de datos pero les gustaría aprender a trabajar con R y nunca programaron. Por eso los contenidos comienzan desde el princio: ¿por qué usar R? y ¿por dónde empezar? 
 
@@ -14,17 +14,21 @@ En cada sección incluimos ejercicios y desafíos y junto con los ejemplos, usan
 
 Asumimos que ya tenés R y Rstudio instalados. Si no es así podés seguir estas instrucciones.
 
+### ¿Quiénes somos? 
+
+Este curso está desarrollado por [Elio Campitelli](https://eliocamp.github.io/codigo-r/) y [Paola Corrales](https://paocorrales.github.io/).
+
+#### Licencia
 
 <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />
 Todos los materiales de este curso se encuentran bajo la licencia <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/deed.es_ES">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
 
-## Recursos
-
-Parte de los materiales que encontrás acá derivan de distintos recursos:
+En muchos casos tomamos inspiración o nos basamos en los siguientes recursos:
 
 * [R para Análisis Científicos Reproducibles](https://swcarpentry.github.io/r-novice-gapminder-es/) de The Carpentries
-
 
 * [R for Excel Users](https://rstudio-conf-2020.github.io/r-for-excel/) de Dr. Julie Stewart Lowndes y Dr. Allison Horst
 
 * [R para Ciencia de Datos](https://es.r4ds.hadley.nz/) de Hadley Wickham
+
+El código fuente de estos materiales y página web se encuentrá [acá](https://github.com/paocorrales/deExcelaR).
