@@ -131,7 +131,7 @@ El *mapeo* entre una variable y un parámetro de geometría se hace a través de
 ::: {.alert .alert-success}
 **Modificar elementos utilizando un valor único**
 
-Es posible que en algún momento necesites cambiar la apariencia de los elementos o geometrías independientemente de las variables de tu data.frame. Por ejemplo podrías querer que todos los puntos sean de un único color: rojos. En este caso `geom_point(aes(color = "red"))` -ojo que los colores van en inglés- no va a funcionar. Lo que ese código dice es que mapee el parámetro geométrico "color" a una variable que contiene la el valor `"red"` para todas las filas. El mapeo se hace a través de la escala, que va a asignarle un valor (rosa <span style="color:#F77D75">&#9679;</span>) a los puntos correspondientes al valor `"red"`.
+Es posible que en algún momento necesites cambiar la apariencia de los elementos o geometrías independientemente de las variables de tu data.frame. Por ejemplo podrías querer que todos los puntos sean de un único color: rojos. En este caso `geom_point(aes(color = "red"))` no va a funcionar -ojo que los colores van en inglés-. Lo que ese código dice es que mapee el parámetro geométrico "color" a una variable que contiene el valor `"red"` para todas las filas. El mapeo se hace a través de la escala, que va a asignarle un valor (rosa <span style="color:#F77D75">&#9679;</span>) a los puntos correspondientes al valor `"red"`.
 
 Ahora que no nos interesa *mapear* el color a una variable, podemos mover ese argumento **afuera** de la función `aes()`: `geom_point(color = "red")`. 
 ::: 

@@ -5,6 +5,7 @@ output:
     code_download: true
     toc: true
     toc_float: true
+    highlight: tango
 ---
 
 ```{r setup, include=FALSE}
