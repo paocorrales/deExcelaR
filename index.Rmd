@@ -12,7 +12,7 @@ Siempre que podamos, mencionaremos como lo que proponemos resolver con R se pued
 
 En cada sección incluimos ejercicios y desafíos y junto con los ejemplos, usan algunos set de datos útiles para el problema que queremos resolver. Buscamos que estos datos sean realistas para que cualquier persona encuentre similaridades en sus propios datos y pueda aplicar lo aprendido a otras situaciones.
 
-Asumimos que ya tenés R y Rstudio instalados. Si no es así podés seguir estas instrucciones.
+Asumimos que ya tenés R y Rstudio instalados. Si no es así podés seguir [estas instrucciones](instalacion.html).
 
 ### ¿Quiénes somos? 
 
