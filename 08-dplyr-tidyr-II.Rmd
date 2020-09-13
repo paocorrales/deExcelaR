@@ -180,37 +180,38 @@ En esta llamada también está el argumento `names_sep`, que detemrina el caract
 
 ## Uniendo tablas
 
-Ahora vamos a ver como unir tablas de datos a partir de una variable en común o *key*. En Excel o cualquier hoja de cálculo resolvemos esto con las funciones `VLOOKUP`, en R y en particular dentro del mundo de dplyr vamos a usar las funciones `*_join()` que justamente *unen* tablas.
+Hasta ahora todo lo que usaste de {dplyr} involucra trabajar y modificar con una sola tabla a la vez, pero es muy común tener dos o más tablas con datos relacionados. En ese caso, tenemos que *unir* estas tablas. a partir de una o más variables en común o *keys*. En Excel u otro programa de hojas de cálculo, esto se resuelve con la función "VLOOKUP" o  "BUSCARV", en R y en particular dentro del mundo de {dplyr} hay que usar la familia de funciones `*_join()`. Hay una función cada tipo de unión que queramos hacer. 
 
-Estas funciones son una familia, hay una por cada tipo de unión que querramos hacer. Vamos a ver algunas, asumiendo que queremos unir dos data.frames o tablas `x` e `y` que tienen en común una variable `A`:
+Asumiendo que querés unir dos data.frames o tablas `x` e `y` que tienen en común una variable `A`:
 
 ![](img/join.png)
 
-* `full_join()`: devuelve todas las filas y todas las columnas de ambas tablas `x` e `y`. Cuando no coinciden los elementos en `x1`, devuelve `NA`. Esto significa que no se pierden filas de ninguna de las dos tablas aún cuando no hay coincidencia. Está es la manera más segura de unir tablas.
+* `full_join()`: devuelve todas las filas y todas las columnas de ambas tablas `x` e `y`. Cuando no coinciden los elementos en `x1`, devuelve `NA` (dato faltante). Esto significa que no se pierden filas de ninguna de las dos tablas aún cuando no hay coincidencia. Está es la manera más segura de unir tablas.
 
-* `left_join()`: devuelve todas las filas de `x` y todas las columnas de `x` e `y`. Las filas en `x` que no tengan coincidencia con `y` tendran `NA` en las nuevas columnas. Si hay multiples coincidencias entre `x`e `y`, devuelve todas las coincidencias posibles. 
+* `left_join()`: devuelve todas las filas de `x` y todas las columnas de `x` e `y`. Las filas en `x` que no tengan coincidencia con `y` tendrán `NA` en las nuevas columnas. Si hay múltiples coincidencias entre `x`e `y`, devuelve todas las coincidencias posibles. 
 
-* `inner_join()`: devuelve todas las filas de `x` donde hay coincidencias con `y` y todas las columnas de `x` e `y`. Si hay multiples coincidencias entre `x` e `y`, entonces devuelve todas las coincidencias. Esto significa que eliminará las filas (observaciones) que no coincidan en ambas tablas, lo que puede ser peligroso.
+* `right_join()`: es igual que `left_join()` pero intercambiando el orden de `x` e `y`. En otras palabras, `right_join(x, y)` es idéntico a `left_join(y, x)`.
+
+* `inner_join()`: devuelve todas las filas de `x` donde hay coincidencias con `y` y todas las columnas de `x` e `y`. Si hay múltiples coincidencias entre `x` e `y`, entonces devuelve todas las coincidencias. Esto significa que eliminará las filas (observaciones) que no coincidan en ambas tablas, lo que puede ser peligroso.
 
 ![](img/join_family.png)
 
 Ahora vamos a seguir trabajando con las base de datos de `paises` pero nos vamos a quedar solo con las observaciones del 2007 y de paso unirlo a una nueva base de datos `co2` que contiene información de la emisión de dióxido de carbono de cada pais para ese mismo año. 
 
-```{r}
-paises <- readr::read_csv("datos/paises.csv")
-
-paises_2007 <- paises %>% 
+```{r, message=FALSE}
+paises_2007 <- readr::read_csv("datos/paises.csv") %>% 
   filter(anio == 2007) 
 
 co2_2007 <- readr::read_csv("datos/co2_2007.csv")
+co2_2007
 ```
 
-En esta nueva tabla tenemos 3 columnas, el `codigo_iso` de cada país (abreviaturas que se usan internacionalmente), `emision_co2`y `pais`. Esta última columna también está presente en la tabla paises_2007 y es la que nos servrá como variable llave para unir las dos tablas. 
+Esta nueva tabla tiene 3 columnas: `codigo_iso` tiene el código ISO de 3 letreas de (abreviaturas que se usan internacionalmente), `emision_co2` tiene las emisiones anuales per cápita de CO2 en toneladas, `pais` tiene el nombre del país. Esta última columna también está presente en la tabla `paises_2007` y es la que va a servir como variable llave para unir las dos tablas. 
 
 Para unir las dos tablas, cualquier función *join* requiere cierta información:
 
 * las tablas a unir: son los dos primeros argumentos.
-* que variable o variables (se puede usar más de una!) usar para identificar coincidencias: el argumento `by`.
+* qué variable o variables (se puede usar más de una!) usar para identificar coincidencias: el argumento `by`.
 
 Unamos `paises_2007` y `co2_2007` primero con `full_join()`:
 
@@ -222,7 +223,7 @@ paises_co2_2007
 Si miramos de cerca la tabla unida veremos un par de cosas:
 
 * Todas las columnas de `paises_2007` y de `co2_2007` están presentes.
-* Todas las observaciones están presentes, aún los paises que están presentes en `co2_2007` pero no en `paises_2007` y viseversa. En esos casos ahora tenemos `NA`. Esto genera una tabla con 241 filas.
+* Todas las observaciones están presentes, aún los paises que están presentes en `co2_2007` pero no en `paises_2007` y viceversa. En esos casos ahora tenemos `NA`. Esto genera una tabla con 241 filas.
 
 Esta es la opción más segura si no sabemos si todas las observaciones de una tabla están presente en a otra. 
 
@@ -233,9 +234,10 @@ paises_co2_2007 <- left_join(paises_2007, co2_2007, by = "pais")
 paises_co2_2007
 ```
 
-Ahora esperamos que la tabla resultante tenga la misma cantidad de filas que `paises_2007` y efectivamente eso ocurre. Pero al mismo tiempo varios paises en esa tabla no encontraron coincidencia en `co2_2007` y por esa razón, la columna nueva columna `emisiones_co2` tiene `NA`.
+Ahora esperamos que la tabla resultante tenga la misma cantidad de filas que `paises_2007` y efectivamente eso ocurre. Pero al mismo tiempo varios paises en esa tabla no encontraron coincidencia en `co2_2007` y por esa razón, la columna nueva columna `emisiones_co2` tiene `NA`. 
 
-Finalmente, si quiseramos quedarnos solo con las observaciones, en este caso paises, que están presentes en ambas tablas usamos `inner_join()`.
+
+Finalmente, si quiseramos quedarnos solo con las observaciones que están presentes en ambas tablas usamos `inner_join()`.
 
 ```{r}
 paises_co2_2007 <- inner_join(paises_2007, co2_2007, by = "pais")
@@ -251,5 +253,5 @@ Estuvimos trabajando con una parte de la base de datos de emisiones. Pero tambi�
 
 1. Lee la base de datos `co2_completo.csv` en una nueva variable que se llame `co2`.
 2. Revisá el nombre de las variables en esta base de datos, ¿se llaman igual que las variables en `paises`?
-3. Uní las dos tablas usando `full_join()`, tené en cuenta que ahora usamos dos variables llave `pais` y `anio`. Buscá en la documentación cómo indicarle eso a la función join. 
+3. Uní las dos tablas usando `full_join()`, tené en cuenta que ahora usamos dos variables llave `pais` y `anio`. Buscá en la documentación cómo indicarle eso a la función `full_join()`.  
 :::
