@@ -12,6 +12,7 @@ params:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+chunk <- "```"
 ```
 
 Durante este curso fuiste creando varios documentos con R Markdown en HTML. Este es un formato bastante gauchito que tiene un montón de flexibilidad, pero seguramente no es el único que necesitás. Casi seguro que los informes los tengas que presentar en formato PDF o, incluso, ¡en papel impreso! {rmarkdown}, y todo un amplio ecosistema de otros paquetes, permite generar documentos en múltiples formatos usando el mismo archivo de texto plano. 
@@ -188,3 +189,86 @@ params:
 Agregá al menos un parámetro al reporte que venís armando. 
 :::
 
+
+## Control de chunks
+
+Si te acordás, en la sección de [reportes I](10-reportes-I.html) te dijimos que un chunk tiene una pinta como esta:
+
+    `r chunk`{r nombre-del-chunk}
+    
+    `r chunk`
+    
+
+
+
+Ponerle nombre al chunk no es obligatorio pero está bueno para tener una idea de qué hace cada uno, lo cual se vuelve más importante a medida que un reporte se vuelve más largo y complejo. Pero lo que no dijimos es que además del nombre, entre las llave se pueden poner un montón de opciones que cambian el comportamiento y la apariencia del resultado del chunk. 
+
+Para cambiar las opciones de un chunk, lo único que hay que hacer es listarlas dentro de los corchetes. Por ejemplo:
+
+
+    `r chunk`{r nombre-del-chunk, echo = FALSE, message = FALSE}
+    
+    `r chunk`
+    
+
+
+Hay una serie de opciones particularmente importante es la que controla si el código se ejecuta y si el resultado del código va a quedar en el reporte o no:
+
+
+* `eval = FALSE` evita que se corra el código del chunk, de manera que tampoco va a mostrar resultados. Es útil para mostrar códigos de ejemplo si estás escribiendo, por ejemplo un documento para enseñar R.
+
+
+* `echo = FALSE` corre el código del chunk y muestra los resultados, pero oculta el código en el reporte. Esto es útil para escribir reportes para personas que no necesitan ver el código de R que generó el gráfico o tabla. 
+
+* `include = FALSE` corre el código pero oculta tanto el código como los resultados. Es útil para usar en chunks de configuración general. 
+
+
+Si estás escribiendo un informe en el que no querés que se muestre ningún código, agregarle `echo = FALSE` a cada chunk nuevo se vuelve tedioso. La solución es cambiar la opción de forma global de manera que aplique a todos los chunks. Esto se hace mediante la función `knitr::opts_chunk$set()`, que setea las opciones globales de los chunks que le siguen. Si queŕes que todos los chunks tengan `echo = TRUE` crearías un chunk así:
+
+
+    `r chunk`{r setup, include = FALSE}
+    knitr::opts_chunk$set(echo = TRUE)
+    `r chunk`
+    
+Generalmente tiene sentido poner esto en el primer chunk de un documento, que como suele ser cuestiones de setup del reporte, también conviene ponerle `include = FALSE`.
+
+Habrás visto que a vece algunas funciones escupen mensajes sobre lo que hacen. Por ejemplo, cuando `read_csv` lee un archivo describe el tipo de dato de cada columna:
+
+```{r}
+paises <- read_csv("datos/paises.csv")
+```
+
+Esto es útil cuando uno está haciendo trabajo interactivo pero en general no quiere que quede en el reporte. Para que no muestre estos mensajes basta con poner la opción `message = FALSE`
+
+    `r chunk`{r message = FALSE}
+    paises <- read_csv("datos/paises.csv")
+    `r chunk`
+    
+En general no pasa nada si ignorás los mensajes. Son cuestiones diagnósticas extra que sirven para que vos, como humano, te enteres de lo que hizo una función. Distinto son las advertencias, o "warnigns". Una advertencia te está diciendo que hay algo "raro" en el código que puede significar que hay algo mal. No llega al nivel de error, que es algo que literalmente "no computa". Por ejemplo, `sqrt` tira una advertencia cuando recibe números negativos.
+
+```{r}
+i <- sqrt(-1)
+```
+Si un chunk tira una advertencia que es esperable pero no querés que aparezca en el repote, podés ocultarlas con la opción `warning = FALSE`.
+
+    `r chunk`{r warning = FALSE}
+    i <- sqrt(-1)
+    `r chunk`
+    
+
+Finalmente, una opción tan poderosa como peligrosa es `cache = TRUE`. Lo que hace es que en vez de correr el código de un chunk cada vez que *kniteás* el documento, guarda el resultado del chunk en el disco para reutilizar la próxima vez que crees el reporte. Esto es muy cómo si un chunk se un código que tarda mucho en correr. Por ejemplo el siguiente chunk va a tardar 10 minutos en correr la primera vez que knitees el reporte, pero luego va a ser mucho más rápido: 
+
+    `r chunk`{r cache = FALSE}
+    datos <- funcion_que_tarda_10_minutos(x)
+    `r chunk`
+
+{knitr} es bastante inteligente y va a invalidar la cache si cambia el código del chunk. Pero, ¿qué pasa si cambiás algo del código previo que cambia el valor de `x` o incluso el funcionamiento de `function_que_targa_10_minutos`? {knitr} no se da cuenta y va a usar la cache, resultando que `datos` va a tener un valor incorrecto. Hay formas de decirle a {knitr} de qué depende cada chunk y así obtener una cache más "inteligente" pero es algo que se vuelve complicado muy rápido. 
+
+El resumen es usar la cache sólo cuando es imprescindible.
+
+::: {.alert .alert-info}
+**Desafío**
+
+Guardá el cógido de esta u otra sección yendo a Código → Descargar Rmd arriba de todo a la derecha. Mirá los chunks y las opciones que están puestas. ¿Por qué usamos cada opción en cada chunk?
+
+:::

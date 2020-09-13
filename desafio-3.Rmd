@@ -9,7 +9,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Ahora que ya leiste y te familiarizaste con los datos que elegiste para trabajar, el objetivo de este desafío es generar gráficos que te permitan profundizar en el anaálisis. 
+Ahora que ya leiste y te familiarizaste con los datos que elegiste para trabajar, el objetivo de este desafío es generar gráficos que te permitan profundizar en el análisis. 
 
 ### 1. Abrí tu proyecto
 
@@ -17,11 +17,13 @@ Abrí tu proyecto desde el explorador de archivos (haciendo doble click en el ar
 
 ### 2. Generá un gráfico 
 
-Generá un gráfico que muestre la relación entre 2 variables. Podés usar líneas, puntos, mapear el color a una variable distinta o aplicar cualquier cosa que hayamos visto en [Graficos I](06-graficos-I.html) o [Graficos II](07-graficos-II.html) para representar tus datos y ayudarte en el análisis. 
+Generá uno o más gráficos que muestre la relación entre 2 variables. Podés usar líneas, puntos, mapear el color a una variable distinta o aplicar cualquier cosa que hayamos visto en [Graficos I](06-graficos-I.html) o [Graficos II](07-graficos-II.html) para representar tus datos y ayudarte en el análisis. 
+
+En el texto, asegurate de describir los gráficos (que variable está representada en cada coordenada y asepcto gráfico) y de interpretarlos. 
 
 ### 3. Resumen de datos
 
-Ahora probá hacer un gráfico usando facetas. 
+Ahora probá hacer un gráfico usando paneles. 
 
 
 Podés graficar los datos tanto como se te ocurra, la idea es que te familiarices con ggplot al mismo tiempo que profundizas en el análisis de datos que estás utilizando. Siempre es una buena idea desribir tu interpretación de los gráficos junto al *chunk* correspondiente. 
