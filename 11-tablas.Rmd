@@ -86,7 +86,7 @@ paises_tabla %>%
 ```
 
 
-El primer argumetno es el número de la columna que define el grupo. En este caso, la columna `pais` es la primera. El segundo argumento es la alineación vertical. Por defecto, `collapse_rows` pone las etiquetas en el centro, pero la convención más general es ponerlas arriba. 
+El primer argumento es el número de la columna que queremos agrupar. En este caso, la columna `pais` es la primera. El segundo argumento es la alineación vertical. Por defecto, `collapse_rows` pone las etiquetas en el centro, pero la convención más general es ponerlas arriba. 
 
 ¿Qué es esa `kable_styling()`? {kableExtra} permite cambiar el estilo de las tablas muy fácilmente. `kable_styling` es el estilo por defecto, que es igual al que produce `kable`, pero tiene muchos otros. Si viste tablas hechas en LaTeX, quizás est estilo te resulte familiar:
 
@@ -96,7 +96,7 @@ paises_tabla %>%
   kable_classic_2()
 ```
 
-La función `column_spec` permite cambiar los parámetros gráficos de una o más columnas.
+La función `column_spec` permite cambiar los parámetros gráficos de una o más columnas. En este caso cambiamos la primera columna (`column = 1`) para que las palabras aparezcan italizadas (`italic = TRUE`):
 
 ```{r}
 paises_tabla %>% 
@@ -105,7 +105,7 @@ paises_tabla %>%
   kable_styling() 
 ```
 
-Lo notable de `column_spec` es que en sus argumentos se pueden poner vectores de manera de generar formato condicional. Para resaltar únicamente el país "Argentina"
+Lo notable de `column_spec` es que en sus argumentos se pueden poner vectores de manera de generar formato condicional. Para resaltar con negrita únicamente el país "Argentina":
 
 ```{r}
 paises_tabla %>% 
@@ -117,10 +117,10 @@ paises_tabla %>%
 Conviene detenerse para mirar un poco con detalle el código. La llamada a `column_spec` está cambiando el formato de la columna 1. En particular, va a determinar si el texto es en negrita (bold) o no. Y la forma para determinarlo es el vector `paises$pais == "Argentina"`. ¿Qué es ese vector?
 
 
-
 ```{r}
 paises_seleccion$pais == "Argentina"
 ```
+
 Por lo tanto, `column_spec(column = 1, bold = (paises$pais == "Argentina"))` va a hacer que las dos primera filas de la columna uno estén en negrita, y las demás no. Luego, `collapse_rows` colapsa las filas según el país y entonces esas dos primeras filas se transforman en una. 
 
 Esto da un montón de flexibilidad en el estilo del texto. Por ejemplo, se puede hacer que el color del texto cambie según el valor usando `column_spec` y `spec_color`.
