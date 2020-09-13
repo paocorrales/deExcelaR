@@ -1,0 +1,99 @@
+---
+title: "Apariencia de gráficos"
+output: 
+  html_document:
+    code_download: true
+    toc: true
+    toc_float: true
+    highlight: tango
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+```
+
+## Escalas
+
+[Previamente](06-graficos-I.html) comentamos que el *mapeo* de una variable en un elemento geométrico, por ejemplo cuando le asignamos distintos colores a los puntos que representan cada continente, usa una **escala** para definir, en este caso, que color le corresponde a cada elemento. 
+
+También cambiamos la apariencia del relleno (o `fill`) de barras y la forma de los puntos (o `shape`). Para esto, {ggplot2} siempre usa una escala que podemos modificar de acuerdo a nuestro gusto y teniendo en cuenta cómo queremos comunicar nuestros resultados. 
+
+Por supuesto, modificar una escala implica sumar una nueva capa al gráfico sumando una nueva función. Todas las funciones de escala comienzan con `scale` (de escala en inglés), el típo de apariencia que queremos modificar (`color`, `fill`, `shape`, etc) y en muchos casos un nombre o una característica de esa escala. 
+
+Para mostrar como funciona, vamos a utilizar la base de datos de paises y con suerte al final de este documento tendremos un gráfico listo para publicar.
+
+```{r}
+paises <- readr::read_csv("datos/paises.csv")
+
+paises %>% 
+  filter(anio == 2007) %>% 
+  ggplot(aes(pib_per_capita, esperanza_de_vida)) +
+  geom_point()
+
+```
+
+### Escala de colores y otras
+
+Lo primero que podemos hacer es cambiar el color de los puntos de a cuerdo al continente.
+
+```{r}
+paises %>% 
+  filter(anio == 2007) %>% 
+  ggplot(aes(pib_per_capita, esperanza_de_vida)) +
+  geom_point(aes(color = continente))
+```
+
+Pero esta escala de colores que usa {ggplot2} por defecto no es de las mejores, de hecho las personas que tienen daltonísmo muy posiblemente no logren diferenciar todos los puntos. Una escala o paleta de colores muy usada es [**viridis**](https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html) que fue creada justamente para resolver este y otros problemas. También existe otra gran familia de paletas de colores llamada [**ColorBrewer**](https://colorbrewer2.org/).
+
+Vamos a probar la paleta "Dark2" de ColorBrewer, esta paleta es *qualitativa* y es justo lo que necesitamos para identificar elementos en categorías como los continentes. Cómo estamos modificando el *color*, la función a usar será `scale_color_brewer()`:
+
+```{r}
+paises %>% 
+  filter(anio == 2007) %>% 
+  ggplot(aes(pib_per_capita, esperanza_de_vida)) +
+  geom_point(aes(color = continente)) +
+  scale_color_brewer(type = "qual", palette = "Dark2")
+```
+
+Nuestro gráfico va quedando mejor y podemos aprovechar la capacidad de {ggplot2} de *mapear* variables a los elementos del gráfico y mostrar la población de cada país.
+
+
+
+```{r}
+paises %>% 
+  filter(anio == 2007) %>% 
+  ggplot(aes(pib_per_capita, esperanza_de_vida)) +
+  geom_point(aes(color = continente, size = poblacion)) +
+  scale_color_brewer(type = "qual", palette = "Dark2")
+```
+
+Esto nos da más información, pero al mismo tiempo vemos que los puntos se superponen. Vamos a arreglar eso agregando transparencia y de paso modificar el tamaño de los puntos con la escala correspondiente `scale_size()` y sacar la legenda con `guide = NULL`.
+
+```{r}
+paises %>% 
+  filter(anio == 2007) %>% 
+  ggplot(aes(pib_per_capita, esperanza_de_vida)) +
+  geom_point(aes(color = continente, size = poblacion), alpha = 0.5) +
+  scale_color_brewer(type = "qual", palette = "Dark2") +
+  scale_size_area(max_size = 15, guide = NULL)
+```
+
+### Escalas de ejes
+
+Tal vez notaste que el comportamiento entre la esperanza de vida y el PBI no es lineal, de hecho el PBI varía mucho mientras que la esperanza de vida va apenas entre 40 y 80 y algo. Eso puede esta indicando que el PBI tiene un comportamiento *logarítmico* y si bien podríamos transformar los datos antes de hacer el gráfico, también podemos elegir una escala logarítmica para el eje del gráfico correspondiente. 
+
+```{r}
+paises %>% 
+  filter(anio == 2007) %>% 
+  ggplot(aes(pib_per_capita, esperanza_de_vida)) +
+  geom_point(aes(color = continente, size = poblacion), alpha = 0.5) +
+  scale_color_brewer(type = "qual", palette = "Dark2") +
+  scale_size_area(max_size = 15, guide = NULL) +
+  scale_x_log10()
+```
+
+En este caso las escalas que modifican los ejes justamente comienzan con `scala_x_` o `scale_y_` según sea el caso. Y por supuesto hay una variedad importante de scalas con muchas opciones. 
+
+Ya sumamos 3 escalas, pero el gráfico ya se ve muy bien.
