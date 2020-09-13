@@ -59,7 +59,11 @@ paises %>%
 
 Nuestro gráfico va quedando mejor y podemos aprovechar la capacidad de {ggplot2} de *mapear* variables a los elementos del gráfico y mostrar la población de cada país.
 
+::: {.alert .alert-info}
+**Desafío**
 
+A modo de prueba, cambia la paleta de colores actual por la de Viridis. Para eso tenés que usar `scale_color_viridis_d()`. La "d" del final viene de *discrete* y se usa para variables discretas o categorías, mientrs que si los datos son continuos, se usa "c".
+:::
 
 ```{r}
 paises %>% 
@@ -96,4 +100,98 @@ paises %>%
 
 En este caso las escalas que modifican los ejes justamente comienzan con `scala_x_` o `scale_y_` según sea el caso. Y por supuesto hay una variedad importante de scalas con muchas opciones. 
 
-Ya sumamos 3 escalas, pero el gráfico ya se ve muy bien.
+## Elementos de texto
+
+Ya sumamos 3 escalas, pero el gráfico ya se ve muy bien. ¿Cómo hacemos si queremos identificar paises individuales? Por ahora es difícil, pero podríamos agregar etiquetas de texto con el nombre de cada país al lado de cada punto usando `geom_text()`, y en este caso la apariencia está dada por `label` o etiqueta:
+
+```{r}
+paises %>% 
+  filter(anio == 2007) %>% 
+  ggplot(aes(pib_per_capita, esperanza_de_vida)) +
+  geom_point(aes(color = continente, size = poblacion), alpha = 0.5) +
+  scale_color_brewer(type = "qual", palette = "Dark2") +
+  scale_size_area(max_size = 15, guide = NULL) +
+  scale_x_log10() +
+  geom_text(aes(label = pais)) 
+```
+
+Pero nos olvidamos que tenemos casi 200 paises, es razonable agregarle etiquetas a todos. Pero podríamos querer resaltar algunos, tal vez los de un continente en particular o los que cumplen con la condición de tener las mayores poblaciones del mundo. Para eso vamos a generarnos una nueva tabla con los paises que queremos resaltar y de paso usarla dentro de `geom_text()`.
+
+```{r}
+mucha_poblacion <- paises %>% 
+  filter(anio == 2007) %>% 
+  filter(poblacion > 1000000000) # Paises con más de un billón de habitantes!
+
+paises %>% 
+  filter(anio == 2007) %>% 
+  ggplot(aes(pib_per_capita, esperanza_de_vida)) +
+  geom_point(aes(color = continente, size = poblacion), alpha = 0.5) +
+  scale_color_brewer(type = "qual", palette = "Dark2") +
+  scale_size_area(max_size = 15, guide = NULL) +
+  scale_x_log10() +
+  geom_text(aes(label = pais), 
+            data = mucha_poblacion)  # Esta capa usa la tabla mucha_población!
+```
+
+::: {.alert .alert-success}
+
+Del código anterior surge algo muy importante: es posible generar capas en un gráfico usando una data.frame *distinto* al que usamos para graficar las capas anteriores. Esto es útil principalmente para definir etiquetas o resaltar determinadas observaciones. 
+
+Y el truco está en que ambos data.frames tienen las variables `pib_per_capita` y `esperanza_de_vida` y entonces {ggplot2} puede identificar en que parte del gráfico (en que valores de x y en que valores de y) colocar cada elemento.
+:::
+
+Veamos ahora una (de varias) maneras agregar o modificar elementos de texto en el gráfico. Vamos a usar una nueva función (y una nueva capa!), `labs()`:
+
+```{r}
+paises %>% 
+  filter(anio == 2007) %>% 
+  ggplot(aes(pib_per_capita, esperanza_de_vida)) +
+  geom_point(aes(color = continente, size = poblacion), alpha = 0.5) +
+  scale_color_brewer(type = "qual", palette = "Dark2") +
+  scale_size_area(max_size = 15, guide = NULL) +
+  scale_x_log10() +
+  geom_text(aes(label = pais), data = mucha_poblacion) +
+  labs(title = "Paises del mundo",
+       subtitle = "Año 2007",
+       caption = "El tamaño de cada circulo representa la población.",
+       x = "PBI per capita",
+       y = "Esperanza de vida",
+       color = "")
+```
+
+Agregamos un título, un subtítulo, el epígrafe de la figura (*caption*) para las aclaraciones y cambiamos el nombre de los ejes para que se vean mejor. Pero ademas eliminamos el nombre de la leyenda porque era un poco redundante. 
+
+## Temas
+
+Nos queda una última cosa por hacer, cambiar la apariencia global del gráfico. {ggplot2} tiene muchos *temas* disponibles y para todos los gustos. Pero además hay otros paquetes que extienden las posibilidades, por ejemplo [{ggthemes}](https://github.com/jrnold/ggthemes).
+
+Por defecto {ggplot2} usa `theme_grey()`, probemos `theme_light()`:
+
+```{r}
+paises %>% 
+  filter(anio == 2007) %>% 
+  ggplot(aes(pib_per_capita, esperanza_de_vida)) +
+  geom_point(aes(color = continente, size = poblacion), alpha = 0.5) +
+  scale_color_brewer(type = "qual", palette = "Dark2") +
+  scale_size_area(max_size = 15, guide = NULL) +
+  scale_x_log10() +
+  geom_text(aes(label = pais), data = mucha_poblacion) +
+  labs(title = "Paises del mundo",
+       subtitle = "Año 2007",
+       caption = "El tamaño de cada circulo representa la población.",
+       x = "PBI per capita",
+       y = "Esperanza de vida",
+       color = "") +
+  theme_light()
+```
+
+::: {.alert .alert-info}
+
+Ahora es tu turno. Elegí un [tema que te guste](https://es.r4ds.hadley.nz/images/visualization-themes.png){.alert-link} y probalo. Además, si se te ocurre algún título mejor modificalo! 
+:::
+
+::: {.alert .alert-success}
+
+Junto con las funciones `theme_...()`, hay una función llamada `theme()` que permite cambiar la apariencia de cualquier elemento del gráfico. Tiene casi infinitas opciones y si algún momento te desvelas intentando cambiar esa línea o ese borde, seguro que `theme()` tiene alguna opción par ahacer eso.
+
+:::
