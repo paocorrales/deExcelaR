@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Reportes II</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">de Excel a R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="hoja-de-ruta.html">Hoja de ruta</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Temas
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01-introduccion.html">Introducción</a>
+    </li>
+    <li>
+      <a href="02-proyectos.html">Proyectos</a>
+    </li>
+    <li>
+      <a href="03-reportes-I.html">Reportes I</a>
+    </li>
+    <li>
+      <a href="04-lectura-datos.html">Lectura de datos</a>
+    </li>
+    <li>
+      <a href="05-dplyr-I.html">Manipulación de datos I</a>
+    </li>
+    <li>
+      <a href="06-graficos-I.html">Gráficos I</a>
+    </li>
+    <li>
+      <a href="07-graficos-II.html">Gráficos II</a>
+    </li>
+    <li>
+      <a href="08-dplyr-tidyr-II.html">Manipulación de datos II</a>
+    </li>
+    <li>
+      <a href="09-funciones.html">Funciones</a>
+    </li>
+    <li>
+      <a href="10-reportes-II.html">Reportes II</a>
+    </li>
+    <li>
+      <a href="11-tablas.html">Estilo de tablas</a>
+    </li>
+    <li>
+      <a href="12-ggplot-III.html">Gráficos para publicar</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Desafíos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="desafio-1.html">Leer datos</a>
+    </li>
+    <li>
+      <a href="desafio-2.html">Analizar datos</a>
+    </li>
+    <li>
+      <a href="desafio-3.html">Graficar datos</a>
+    </li>
+    <li>
+      <a href="desafio-4.html">Generar un informe</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Reportes II</h1>
+
+</div>
+
+
+<p>Durante este curso fuiste creando varios documentos con R Markdown en HTML. Este es un formato que tiene un montón de flexibilidad, pero seguramente no es el único que necesitás. Casi seguro que los informes los tengas que presentar en formato PDF o, incluso, ¡en papel impreso! {Rmarkdown}, y todo un amplio ecosistema de otros paquetes, permite generar documentos en múltiples formatos usando el mismo archivo de texto plano.</p>
+<div id="eligiendo-el-formato-de-salida" class="section level2">
+<h2>Eligiendo el formato de salida</h2>
+<p>Ya habrás visto esto cuando creás un archivo markdown nuevo, RStudio te permite elegir entre tres formatos de salida:</p>
+<p><img src="img/nuevo-rmd.png" /></p>
+<p>Cuál es el formato de salida de un archivo de R Markdown se determina principalmente con la opción <code>output</code> en el encabezado yaml. Si mirás el encabezado del <a href="files/mi-primer-rmarkdown.Rmd">archivo R Markdown de ejemplo</a> vas a ver que la opción <code>output</code> dice <code>html_document</code>.</p>
+<p><img src="img/rmd-ejemplo-secciones.png" /></p>
+<p>Ese <code>html_document</code> no es otra cosa que una función de {Rmarkdown} llamada <code>html_document</code>. Como te podrás imaginar, {Rmarkdown} tiene una serie de otras funciones que definen formatos de salida. Los dos que seguramente te van a servir más son <code>pdf_document</code> y <code>word_document</code> que justamente generan PDFs y archivos de Word, respectivamente.</p>
+<p>Para crear un documento de R Markdown que genere un archivo PDF basta con cambiar el <code>output</code> en el encabezado por esto:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="ot">---</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="fu">output:</span><span class="at"> pdf_document</span></a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="ot">---</span></a></code></pre></div>
+<p>Para que el documento se genere correctamente hace falta instalar LaTeX, que es un sistema de composición de textos. Aunque parezca mentira, la mejor forma de instalar LaTeX para usar R Markdown es instalando el paquete {<a href="https://yihui.org/tinytex/">tinytex</a>} con <code>install.packages(&quot;tinytex&quot;)</code> y luego correr <code>tinytex::install_tinytex()</code>. Esto va a instalar una versión pequeña de LaTeX en un lugar donde luego {Rmarkdown} lo puede usar. Esta es la forma altamente recomendada para generar PDFs con R Markdown que va a evitarte un montón de dolores de cabeza.</p>
+<p>Análogamente, podés generar un archivo de word cambiando el <code>output</code> así:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="ot">---</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="fu">output:</span><span class="at"> word_document</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="ot">---</span></a></code></pre></div>
+<p>Y ya está. En la gran mayoría de los casos no vas a tener que modificar nada más del código ni el texto.</p>
+<div class="alert alert-info">
+<p><strong>Desafío</strong></p>
+<p>Agarrá el reporte que estuviste armando en los desafíos o alguno que usaste durante el curso y compilalo en PDF y luego en Word.</p>
+</div>
+</div>
+<div id="personalizando-la-salida" class="section level2">
+<h2>Personalizando la salida</h2>
+<p>Cada función de formato viene con sus opciones de personalización que podés acceder leyendo su documentación. Para ver la documentación de <code>html_document</code>, usa este comando:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">?rmarkdown<span class="op">::</span>html_document</a></code></pre></div>
+<p>Vas a ver que tiene un montón de argumentos que modifican la salida. La forma de setear estos argumentos en un documento de R Markdown es, de nuevo, en el encabezado. Cada argumento de la función de salida (<code>html_document</code> en este caso) es un elemento debajo de la función de output.</p>
+<p>Por ejemplo, para que un documento de html tenga una tabla de contenidos hay que setear el argumento <code>toc</code> (de <strong>t</strong>able <strong>o</strong>f <strong>c</strong>ontents) a <code>TRUE</code>. En el encabezado, esto queda así:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="ot">---</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="fu">output:</span><span class="at"> </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">  <span class="fu">html_document:</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    <span class="fu">toc:</span><span class="at"> TRUE</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="ot">---</span></a></code></pre></div>
+<p>Conviene mirar eso con un poco de detenimeinto porque requiere “traducir” código de R –cual los argumentos de una función se fijan entre paréntesis y con <code>=</code>– en código de yaml –donde los argumentos de la función son una lista cuyos elementos se definen con <code>:</code>.</p>
+<p>En R lo que vemos como <code>html_document(toc = TRUE)</code> se traduce a yaml como</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="fu">html_document:</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">  <span class="fu">toc:</span><span class="at"> TRUE</span></a></code></pre></div>
+<p>Si vas a la ayuda de <code>pdf_document</code> vas a ver que también tiene un argumento llamado <code>toc</code>. Algunos argumentos son compartidos, lo cual hace que se aún más fácil generar un mismo reporte en muchos formatos haciendo muy pocos cambios.</p>
+<p>Una forma rápida de hacer tus informes más vistosos es cambiarle el tema visual. <code>html_document</code> permite elegir entre una serie de temeas usando el argumento <code>theme</code>. Por ejemplo, poniendo esto en el encabezado, generás un documetno HTML con un fondo oscuro</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="fu">output:</span><span class="at"> </span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">  <span class="fu">html_document:</span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">    <span class="fu">toc:</span><span class="at"> TRUE</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">    <span class="fu">theme:</span><span class="at"> darkly</span></a></code></pre></div>
+<div class="alert alert-info">
+<p><strong>Desafío</strong></p>
+<p>Andá a la ayuda de <code>html_document</code> y fijate cuáles son los valores válidos para el argumento <code>theme</code>. ¡Probá algunos!</p>
+</div>
+</div>
+<div id="reportes-parametrizados" class="section level2">
+<h2>Reportes parametrizados</h2>
+<p>Es muy común tener que hacer un reporte cuyo resultado dependa de ciertos parámetros.</p>
+<p>Por ejemplo, podrías tener un reporte que analiza la evolución de la expectativa de vida de Argentina con el siguiente código</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">paises &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb7-7" data-line-number="7">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-8" data-line-number="8"><span class="st">  </span><span class="kw">filter</span>(pais <span class="op">==</span><span class="st"> &quot;Argentina&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-9" data-line-number="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_line</span>()</a></code></pre></div>
+<p><img src="10-reportes-II_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Si ahora querés hacer el mismo reporte pero para Uruguay, tenés que abrir el archivo y modificar la llamada a <code>filter</code> para quedarte sólo con ese país:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5">paises &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-8" data-line-number="8"><span class="st">  </span><span class="kw">filter</span>(pais <span class="op">==</span><span class="st"> &quot;Uruguay&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-9" data-line-number="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_line</span>()</a></code></pre></div>
+<p>Si el reporte es largo y usa el nombre del país en múltiples lugares cambiar “Argentina” por “Uruguay” puede ser tedioso y propenso a error, ya que te obliga a modificar muchas partes del código. Y si después tenés que hacer el mismo reporte para Chile…</p>
+<p>En estas situaciones podés crear un reporte parametrizado. La idea es que el reporte tiene una serie de parámetros que puede modificar la salida. Es como si el archivo de R Markdown fuera una gran función con sus argumentos!</p>
+<p>Para generar un reporte parametrizado hay que agregar un elemento llamado <code>params</code> al encabezado con la lista de parámetros y sus valores por default.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="fu">params:</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="fu">pais:</span><span class="at"> Argentina</span></a></code></pre></div>
+<p>Luego, en el código de R vas a tener acceso a una variable llamada <code>params</code> que es una lista que contiene los parámetros y su valor. Para acceder al valor de cada parámetros se usa el operador <code>$</code> de la siguiente manera:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">params<span class="op">$</span>pais</a></code></pre></div>
+<pre><code>## [1] &quot;Argentina&quot;</code></pre>
+<p>De esta manera, el código original se puede modificar para usar el valor del país almacenado en <code>params$pais</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">paises &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="st">  </span><span class="kw">filter</span>(pais <span class="op">==</span><span class="st"> </span>params<span class="op">$</span>pais) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="st">  </span><span class="kw">geom_line</span>()</a></code></pre></div>
+<p>Y ahora el mismo código puede funcionar para distintos países. Para crear reportes distintos para cada país sólo hay que modificar el valor del parámetro en el encabezado:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode yaml"><code class="sourceCode yaml"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="fu">params:</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2">  <span class="fu">pais:</span><span class="at"> Uruguay</span></a></code></pre></div>
+<div class="alert alert-info">
+<p><strong>Desafío</strong></p>
+<p>Agregá al menos un parámetro al reporte que venís armando.</p>
+</div>
+</div>
+<div id="control-de-chunks" class="section level2">
+<h2>Control de chunks</h2>
+<p>Si te acordás, en la sección de <a href="10-reportes-I.html">reportes I</a> te dijimos que un chunk tiene una pinta como esta:</p>
+<pre><code>```{r nombre-del-chunk}
+
+```</code></pre>
+<p>Ponerle nombre al chunk no es obligatorio pero está bueno para tener una idea de qué hace cada uno, lo cual se vuelve más importante a medida que un reporte se vuelve más largo y complejo. Pero lo que no dijimos es que además del nombre, entre las llave se pueden poner un montón de opciones que cambian el comportamiento y la apariencia del resultado del chunk.</p>
+<p>Para cambiar las opciones de un chunk, lo único que hay que hacer es listarlas dentro de los corchetes. Por ejemplo:</p>
+<pre><code>```{r nombre-del-chunk, echo = FALSE, message = FALSE}
+
+```</code></pre>
+<p>Hay una serie de opciones particularmente importante es la que controla si el código se ejecuta y si el resultado del código va a quedar en el reporte o no:</p>
+<ul>
+<li><p><code>eval = FALSE</code> evita que se corra el código del chunk, de manera que tampoco va a mostrar resultados. Es útil para mostrar códigos de ejemplo si estás escribiendo, por ejemplo un documento para enseñar R.</p></li>
+<li><p><code>echo = FALSE</code> corre el código del chunk y muestra los resultados, pero oculta el código en el reporte. Esto es útil para escribir reportes para personas que no necesitan ver el código de R que generó el gráfico o tabla.</p></li>
+<li><p><code>include = FALSE</code> corre el código pero oculta tanto el código como los resultados. Es útil para usar en chunks de configuración general donde cargas las librerías.</p></li>
+</ul>
+<p>Si estás escribiendo un informe en el que no querés que se muestre ningún código, agregarle <code>echo = FALSE</code> a cada chunk nuevo se vuelve tedioso. La solución es cambiar la opción de forma global de manera que aplique a todos los chunks. Esto se hace mediante la función <code>knitr::opts_chunk$set()</code>, que setea las opciones globales de los chunks que le siguen. Si queŕes que todos los chunks tengan <code>echo = TRUE</code> crearías un chunk así:</p>
+<pre><code>```{r setup, include = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```</code></pre>
+<p>Generalmente tiene sentido poner esto en el primer chunk de un documento, que como suele ser cuestiones de configuración del reporte, también conviene ponerle <code>include = FALSE</code>.</p>
+<p>Habrás visto que a vece algunas funciones escupen mensajes sobre lo que hacen. Por ejemplo, cuando <code>read_csv</code> lee un archivo describe el tipo de dato de cada columna:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">paises &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>)</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   pais = col_character(),
+##   continente = col_character(),
+##   anio = col_double(),
+##   esperanza_de_vida = col_double(),
+##   poblacion = col_double(),
+##   pib_per_capita = col_double()
+## )</code></pre>
+<p>Esto es útil cuando uno está haciendo trabajo interactivo pero en general no quiere que quede en el reporte. Para que no muestre estos mensajes basta con poner la opción <code>message = FALSE</code></p>
+<pre><code>```{r message = FALSE}
+paises &lt;- read_csv(&quot;datos/paises.csv&quot;)
+```</code></pre>
+<p>En general no pasa nada si ignorás los mensajes. Son cuestiones diagnósticas extra que sirven para que vos, como humano, te enteres de lo que hizo una función. Distinto son las advertencias, o “warnigns”. Una advertencia te está diciendo que hay algo “raro” en el código que puede significar que hay algo mal. No llega al nivel de error, que es algo que literalmente “no computa”. Por ejemplo, <code>sqrt</code> tira una advertencia cuando recibe números negativos.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">i &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="op">-</span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## Warning in sqrt(-1): NaNs produced</code></pre>
+<p>Si un chunk tira una advertencia que es esperable pero no querés que aparezca en el repote, podés ocultarlas con la opción <code>warning = FALSE</code>.</p>
+<pre><code>```{r warning = FALSE}
+i &lt;- sqrt(-1)
+```</code></pre>
+<p>Finalmente, una opción tan poderosa como peligrosa es <code>cache = TRUE</code>. Lo que hace es que en vez de correr el código de un chunk cada vez que <em>kniteás</em> el documento, guarda el resultado del chunk en el disco para reutilizar la próxima vez que crees el reporte. Esto es muy cómo si un chunk se un código que tarda mucho en correr. Por ejemplo el siguiente chunk va a tardar 10 minutos en correr la primera vez que knitees el reporte, pero luego va a ser mucho más rápido:</p>
+<pre><code>```{r cache = FALSE}
+datos &lt;- funcion_que_tarda_10_minutos(x)
+```</code></pre>
+<p>{knitr} es bastante inteligente y va a invalidar la cache si cambia el código del chunk. Pero, ¿qué pasa si cambiás algo del código previo que cambia el valor de <code>x</code> o incluso el funcionamiento de <code>function_que_targa_10_minutos</code>? {knitr} no se da cuenta y va a usar la cache, resultando que <code>datos</code> va a tener un valor incorrecto. Hay formas de decirle a {knitr} de qué depende cada chunk y así obtener una cache más “inteligente” pero es algo que se vuelve complicado muy rápido.</p>
+<p>El resumen es usar la cache sólo cuando es imprescindible.</p>
+<div class="alert alert-info">
+<p><strong>Desafío</strong></p>
+<p>Guardá el cógido de esta u otra sección yendo a Código → Descargar Rmd arriba de todo a la derecha. Mirá los chunks y las opciones que están puestas. ¿Por qué usamos cada opción en cada chunk?</p>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiUmVwb3J0ZXMgSUkiCm91dHB1dDogCiAgaHRtbF9kb2N1bWVudDoKICAgIGNvZGVfZG93bmxvYWQ6IHRydWUKICAgIHRvYzogdHJ1ZQogICAgdG9jX2Zsb2F0OiB0cnVlCiAgICBoaWdobGlnaHQ6IHRhbmdvCnBhcmFtczoKICBwYWlzOiBBcmdlbnRpbmEgICAgCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkKY2h1bmsgPC0gImBgYCIKYGBgCgpEdXJhbnRlIGVzdGUgY3Vyc28gZnVpc3RlIGNyZWFuZG8gdmFyaW9zIGRvY3VtZW50b3MgY29uIFIgTWFya2Rvd24gZW4gSFRNTC4gRXN0ZSBlcyB1biBmb3JtYXRvIHF1ZSB0aWVuZSB1biBtb250w7NuIGRlIGZsZXhpYmlsaWRhZCwgcGVybyBzZWd1cmFtZW50ZSBubyBlcyBlbCDDum5pY28gcXVlIG5lY2VzaXTDoXMuIENhc2kgc2VndXJvIHF1ZSBsb3MgaW5mb3JtZXMgbG9zIHRlbmdhcyBxdWUgcHJlc2VudGFyIGVuIGZvcm1hdG8gUERGIG8sIGluY2x1c28sIMKhZW4gcGFwZWwgaW1wcmVzbyEge1JtYXJrZG93bn0sIHkgdG9kbyB1biBhbXBsaW8gZWNvc2lzdGVtYSBkZSBvdHJvcyBwYXF1ZXRlcywgcGVybWl0ZSBnZW5lcmFyIGRvY3VtZW50b3MgZW4gbcO6bHRpcGxlcyBmb3JtYXRvcyB1c2FuZG8gZWwgbWlzbW8gYXJjaGl2byBkZSB0ZXh0byBwbGFuby4gCgojIyBFbGlnaWVuZG8gZWwgZm9ybWF0byBkZSBzYWxpZGEKCllhIGhhYnLDoXMgdmlzdG8gZXN0byBjdWFuZG8gY3Jlw6FzIHVuIGFyY2hpdm8gbWFya2Rvd24gbnVldm8sIFJTdHVkaW8gdGUgcGVybWl0ZSBlbGVnaXIgZW50cmUgdHJlcyBmb3JtYXRvcyBkZSBzYWxpZGE6CgohW10oaW1nL251ZXZvLXJtZC5wbmcpCgpDdcOhbCBlcyBlbCBmb3JtYXRvIGRlIHNhbGlkYSBkZSB1biBhcmNoaXZvIGRlIFIgTWFya2Rvd24gc2UgZGV0ZXJtaW5hIHByaW5jaXBhbG1lbnRlIGNvbiBsYSBvcGNpw7NuIGBvdXRwdXRgIGVuIGVsIGVuY2FiZXphZG8geWFtbC4gU2kgbWlyw6FzIGVsIGVuY2FiZXphZG8gZGVsIFthcmNoaXZvIFIgTWFya2Rvd24gZGUgZWplbXBsb10oZmlsZXMvbWktcHJpbWVyLXJtYXJrZG93bi5SbWQpIHZhcyBhIHZlciBxdWUgbGEgb3BjacOzbiBgb3V0cHV0YCBkaWNlIGBodG1sX2RvY3VtZW50YC4KCiFbXShpbWcvcm1kLWVqZW1wbG8tc2VjY2lvbmVzLnBuZykKCkVzZSBgaHRtbF9kb2N1bWVudGAgbm8gZXMgb3RyYSBjb3NhIHF1ZSB1bmEgZnVuY2nDs24gZGUge1JtYXJrZG93bn0gbGxhbWFkYSBgaHRtbF9kb2N1bWVudGAuIENvbW8gdGUgcG9kcsOhcyBpbWFnaW5hciwge1JtYXJrZG93bn0gdGllbmUgdW5hIHNlcmllIGRlIG90cmFzIGZ1bmNpb25lcyBxdWUgZGVmaW5lbiBmb3JtYXRvcyBkZSBzYWxpZGEuIExvcyBkb3MgcXVlIHNlZ3VyYW1lbnRlIHRlIHZhbiBhIHNlcnZpciBtw6FzIHNvbiBgcGRmX2RvY3VtZW50YCB5IGB3b3JkX2RvY3VtZW50YCBxdWUganVzdGFtZW50ZSBnZW5lcmFuIFBERnMgeSBhcmNoaXZvcyBkZSBXb3JkLCByZXNwZWN0aXZhbWVudGUuIAoKUGFyYSBjcmVhciB1biBkb2N1bWVudG8gZGUgUiBNYXJrZG93biBxdWUgZ2VuZXJlIHVuIGFyY2hpdm8gUERGIGJhc3RhIGNvbiBjYW1iaWFyIGVsIGBvdXRwdXRgIGVuIGVsIGVuY2FiZXphZG8gcG9yIGVzdG86CgpgYGB5YW1sCi0tLQpvdXRwdXQ6IHBkZl9kb2N1bWVudAotLS0KYGBgCgpQYXJhIHF1ZSBlbCBkb2N1bWVudG8gc2UgZ2VuZXJlIGNvcnJlY3RhbWVudGUgaGFjZSBmYWx0YSBpbnN0YWxhciBMYVRlWCwgcXVlIGVzIHVuIHNpc3RlbWEgZGUgY29tcG9zaWNpw7NuIGRlIHRleHRvcy4gQXVucXVlIHBhcmV6Y2EgbWVudGlyYSwgbGEgbWVqb3IgZm9ybWEgZGUgaW5zdGFsYXIgTGFUZVggcGFyYSB1c2FyIFIgTWFya2Rvd24gZXMgaW5zdGFsYW5kbyBlbCBwYXF1ZXRlIHtbdGlueXRleF0oaHR0cHM6Ly95aWh1aS5vcmcvdGlueXRleC8pfSBjb24gYGluc3RhbGwucGFja2FnZXMoInRpbnl0ZXgiKWAgeSBsdWVnbyBjb3JyZXIgYHRpbnl0ZXg6Omluc3RhbGxfdGlueXRleCgpYC4gRXN0byB2YSBhIGluc3RhbGFyIHVuYSB2ZXJzacOzbiBwZXF1ZcOxYSBkZSBMYVRlWCBlbiB1biBsdWdhciBkb25kZSBsdWVnbyB7Um1hcmtkb3dufSBsbyBwdWVkZSB1c2FyLiBFc3RhIGVzIGxhIGZvcm1hIGFsdGFtZW50ZSByZWNvbWVuZGFkYSBwYXJhIGdlbmVyYXIgUERGcyBjb24gUiBNYXJrZG93biBxdWUgdmEgYSBldml0YXJ0ZSB1biBtb250w7NuIGRlIGRvbG9yZXMgZGUgY2FiZXphLiAKCkFuw6Fsb2dhbWVudGUsIHBvZMOpcyBnZW5lcmFyIHVuIGFyY2hpdm8gZGUgd29yZCBjYW1iaWFuZG8gZWwgYG91dHB1dGAgYXPDrTogCgpgYGB5YW1sCi0tLQpvdXRwdXQ6IHdvcmRfZG9jdW1lbnQKLS0tCmBgYAoKWSB5YSBlc3TDoS4gRW4gbGEgZ3JhbiBtYXlvcsOtYSBkZSBsb3MgY2Fzb3Mgbm8gdmFzIGEgdGVuZXIgcXVlIG1vZGlmaWNhciBuYWRhIG3DoXMgZGVsIGPDs2RpZ28gbmkgZWwgdGV4dG8uIAoKCjo6OiB7LmFsZXJ0IC5hbGVydC1pbmZvfQoqKkRlc2Fmw61vKioKCkFnYXJyw6EgZWwgcmVwb3J0ZSBxdWUgZXN0dXZpc3RlIGFybWFuZG8gZW4gbG9zIGRlc2Fmw61vcyBvIGFsZ3VubyBxdWUgdXNhc3RlIGR1cmFudGUgZWwgY3Vyc28geSBjb21waWxhbG8gZW4gUERGIHkgbHVlZ28gZW4gV29yZC4KOjo6CgoKIyMgUGVyc29uYWxpemFuZG8gbGEgc2FsaWRhCgpDYWRhIGZ1bmNpw7NuIGRlIGZvcm1hdG8gdmllbmUgY29uIHN1cyBvcGNpb25lcyBkZSBwZXJzb25hbGl6YWNpw7NuIHF1ZSBwb2TDqXMgYWNjZWRlciBsZXllbmRvIHN1IGRvY3VtZW50YWNpw7NuLiBQYXJhIHZlciBsYSBkb2N1bWVudGFjacOzbiBkZSBgaHRtbF9kb2N1bWVudGAsIHVzYSBlc3RlIGNvbWFuZG86CgpgYGB7cn0KP3JtYXJrZG93bjo6aHRtbF9kb2N1bWVudApgYGAKClZhcyBhIHZlciBxdWUgdGllbmUgdW4gbW9udMOzbiBkZSBhcmd1bWVudG9zIHF1ZSBtb2RpZmljYW4gbGEgc2FsaWRhLiBMYSBmb3JtYSBkZSBzZXRlYXIgZXN0b3MgYXJndW1lbnRvcyBlbiB1biBkb2N1bWVudG8gZGUgUiBNYXJrZG93biBlcywgZGUgbnVldm8sIGVuIGVsIGVuY2FiZXphZG8uIENhZGEgYXJndW1lbnRvIGRlIGxhIGZ1bmNpw7NuIGRlIHNhbGlkYSAoYGh0bWxfZG9jdW1lbnRgIGVuIGVzdGUgY2FzbykgZXMgdW4gZWxlbWVudG8gZGViYWpvIGRlIGxhIGZ1bmNpw7NuIGRlIG91dHB1dC4gCgpQb3IgZWplbXBsbywgcGFyYSBxdWUgdW4gZG9jdW1lbnRvIGRlIGh0bWwgdGVuZ2EgdW5hIHRhYmxhIGRlIGNvbnRlbmlkb3MgaGF5IHF1ZSBzZXRlYXIgZWwgYXJndW1lbnRvIGB0b2NgIChkZSAqKnQqKmFibGUgKipvKipmICoqYyoqb250ZW50cykgYSBgVFJVRWAuIEVuIGVsIGVuY2FiZXphZG8sIGVzdG8gcXVlZGEgYXPDrToKCgpgYGB5YW1sCi0tLQpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICB0b2M6IFRSVUUKLS0tCmBgYAoKQ29udmllbmUgbWlyYXIgZXNvIGNvbiB1biBwb2NvIGRlIGRldGVuaW1laW50byBwb3JxdWUgcmVxdWllcmUgInRyYWR1Y2lyIiBjw7NkaWdvIGRlIFIgLS1jdWFsIGxvcyBhcmd1bWVudG9zIGRlIHVuYSBmdW5jacOzbiBzZSBmaWphbiBlbnRyZSBwYXLDqW50ZXNpcyB5IGNvbiBgPWAtLSBlbiBjw7NkaWdvIGRlIHlhbWwgLS1kb25kZSBsb3MgYXJndW1lbnRvcyBkZSBsYSBmdW5jacOzbiBzb24gdW5hIGxpc3RhIGN1eW9zIGVsZW1lbnRvcyBzZSBkZWZpbmVuIGNvbiBgOmAuIAoKRW4gUiBsbyBxdWUgdmVtb3MgY29tbyBgaHRtbF9kb2N1bWVudCh0b2MgPSBUUlVFKWAgc2UgdHJhZHVjZSBhIHlhbWwgY29tbwoKYGBgeWFtbApodG1sX2RvY3VtZW50OgogIHRvYzogVFJVRQpgYGAKClNpIHZhcyBhIGxhIGF5dWRhIGRlIGBwZGZfZG9jdW1lbnRgIHZhcyBhIHZlciBxdWUgdGFtYmnDqW4gdGllbmUgdW4gYXJndW1lbnRvIGxsYW1hZG8gYHRvY2AuIEFsZ3Vub3MgYXJndW1lbnRvcyBzb24gY29tcGFydGlkb3MsIGxvIGN1YWwgaGFjZSBxdWUgc2UgYcO6biBtw6FzIGbDoWNpbCBnZW5lcmFyIHVuIG1pc21vIHJlcG9ydGUgZW4gbXVjaG9zIGZvcm1hdG9zIGhhY2llbmRvIG11eSBwb2NvcyBjYW1iaW9zLiAKClVuYSBmb3JtYSByw6FwaWRhIGRlIGhhY2VyIHR1cyBpbmZvcm1lcyBtw6FzIHZpc3Rvc29zIGVzIGNhbWJpYXJsZSBlbCB0ZW1hIHZpc3VhbC4gYGh0bWxfZG9jdW1lbnRgIHBlcm1pdGUgZWxlZ2lyIGVudHJlIHVuYSBzZXJpZSBkZSB0ZW1lYXMgdXNhbmRvIGVsIGFyZ3VtZW50byBgdGhlbWVgLiBQb3IgZWplbXBsbywgcG9uaWVuZG8gZXN0byBlbiBlbCBlbmNhYmV6YWRvLCBnZW5lcsOhcyB1biBkb2N1bWV0bm8gSFRNTCBjb24gdW4gZm9uZG8gb3NjdXJvCgoKYGBgeWFtbApvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICB0b2M6IFRSVUUKICAgIHRoZW1lOiBkYXJrbHkKYGBgCgo6Ojogey5hbGVydCAuYWxlcnQtaW5mb30KKipEZXNhZsOtbyoqCgpBbmTDoSBhIGxhIGF5dWRhIGRlIGBodG1sX2RvY3VtZW50YCB5IGZpamF0ZSBjdcOhbGVzIHNvbiBsb3MgdmFsb3JlcyB2w6FsaWRvcyBwYXJhIGVsIGFyZ3VtZW50byBgdGhlbWVgLiDCoVByb2LDoSBhbGd1bm9zIQo6OjoKCgoKIyMgUmVwb3J0ZXMgcGFyYW1ldHJpemFkb3MKCkVzIG11eSBjb23Dum4gdGVuZXIgcXVlIGhhY2VyIHVuIHJlcG9ydGUgY3V5byByZXN1bHRhZG8gZGVwZW5kYSBkZSBjaWVydG9zIHBhcsOhbWV0cm9zLiAKClBvciBlamVtcGxvLCBwb2Ryw61hcyB0ZW5lciB1biByZXBvcnRlIHF1ZSBhbmFsaXphIGxhIGV2b2x1Y2nDs24gZGUgbGEgZXhwZWN0YXRpdmEgZGUgdmlkYSBkZSBBcmdlbnRpbmEgY29uIGVsIHNpZ3VpZW50ZSBjw7NkaWdvCgpgYGB7ciwgbWVzc2FnZT1GQUxTRX0KbGlicmFyeShyZWFkcikKbGlicmFyeShkcGx5cikKbGlicmFyeShnZ3Bsb3QyKQoKcGFpc2VzIDwtIHJlYWRfY3N2KCJkYXRvcy9wYWlzZXMuY3N2IikKCnBhaXNlcyAlPiUgCiAgZmlsdGVyKHBhaXMgPT0gIkFyZ2VudGluYSIpICU+JSAKICBnZ3Bsb3QoYWVzKGFuaW8sIGVzcGVyYW56YV9kZV92aWRhKSkgKwogIGdlb21fbGluZSgpCmBgYAoKU2kgYWhvcmEgcXVlcsOpcyBoYWNlciBlbCBtaXNtbyByZXBvcnRlIHBlcm8gcGFyYSBVcnVndWF5LCB0ZW7DqXMgcXVlIGFicmlyIGVsIGFyY2hpdm8geSBtb2RpZmljYXIgbGEgbGxhbWFkYSBhIGBmaWx0ZXJgIHBhcmEgcXVlZGFydGUgc8OzbG8gY29uIGVzZSBwYcOtczoKCmBgYHtyLCBldmFsID0gRkFMU0V9CmxpYnJhcnkocmVhZHIpCmxpYnJhcnkoZHBseXIpCmxpYnJhcnkoZ2dwbG90MikKCnBhaXNlcyA8LSByZWFkX2NzdigiZGF0b3MvcGFpc2VzLmNzdiIpCgpwYWlzZXMgJT4lIAogIGZpbHRlcihwYWlzID09ICJVcnVndWF5IikgJT4lIAogIGdncGxvdChhZXMoYW5pbywgZXNwZXJhbnphX2RlX3ZpZGEpKSArCiAgZ2VvbV9saW5lKCkKYGBgCgpTaSBlbCByZXBvcnRlIGVzIGxhcmdvIHkgdXNhIGVsIG5vbWJyZSBkZWwgcGHDrXMgZW4gbcO6bHRpcGxlcyBsdWdhcmVzIGNhbWJpYXIgIkFyZ2VudGluYSIgcG9yICJVcnVndWF5IiBwdWVkZSBzZXIgdGVkaW9zbyB5IHByb3BlbnNvIGEgZXJyb3IsIHlhIHF1ZSB0ZSBvYmxpZ2EgYSBtb2RpZmljYXIgbXVjaGFzIHBhcnRlcyBkZWwgY8OzZGlnby4gWSBzaSBkZXNwdcOpcyB0ZW7DqXMgcXVlIGhhY2VyIGVsIG1pc21vIHJlcG9ydGUgcGFyYSBDaGlsZS4uLiAKCkVuIGVzdGFzIHNpdHVhY2lvbmVzIHBvZMOpcyBjcmVhciB1biByZXBvcnRlIHBhcmFtZXRyaXphZG8uIExhIGlkZWEgZXMgcXVlIGVsIHJlcG9ydGUgdGllbmUgdW5hIHNlcmllIGRlIHBhcsOhbWV0cm9zIHF1ZSBwdWVkZSBtb2RpZmljYXIgbGEgc2FsaWRhLiBFcyBjb21vIHNpIGVsIGFyY2hpdm8gZGUgUiBNYXJrZG93biBmdWVyYSB1bmEgZ3JhbiBmdW5jacOzbiBjb24gc3VzIGFyZ3VtZW50b3MhCgpQYXJhIGdlbmVyYXIgdW4gcmVwb3J0ZSBwYXJhbWV0cml6YWRvIGhheSBxdWUgYWdyZWdhciB1biBlbGVtZW50byBsbGFtYWRvIGBwYXJhbXNgIGFsIGVuY2FiZXphZG8gY29uIGxhIGxpc3RhIGRlIHBhcsOhbWV0cm9zIHkgc3VzIHZhbG9yZXMgcG9yIGRlZmF1bHQuCgpgYGB5YW1sCnBhcmFtczoKICBwYWlzOiBBcmdlbnRpbmEKYGBgCgpMdWVnbywgZW4gZWwgY8OzZGlnbyBkZSBSIHZhcyBhIHRlbmVyIGFjY2VzbyBhIHVuYSB2YXJpYWJsZSBsbGFtYWRhIGBwYXJhbXNgIHF1ZSBlcyB1bmEgbGlzdGEgcXVlIGNvbnRpZW5lIGxvcyBwYXLDoW1ldHJvcyB5IHN1IHZhbG9yLiBQYXJhIGFjY2VkZXIgYWwgdmFsb3IgZGUgY2FkYSBwYXLDoW1ldHJvcyBzZSB1c2EgZWwgb3BlcmFkb3IgYCRgIGRlIGxhIHNpZ3VpZW50ZSBtYW5lcmE6CgpgYGB7cn0KcGFyYW1zJHBhaXMKYGBgCkRlIGVzdGEgbWFuZXJhLCBlbCBjw7NkaWdvIG9yaWdpbmFsIHNlIHB1ZWRlIG1vZGlmaWNhciBwYXJhIHVzYXIgZWwgdmFsb3IgZGVsIHBhw61zIGFsbWFjZW5hZG8gZW4gYHBhcmFtcyRwYWlzYAoKYGBge3IsIGV2YWwgPSBGQUxTRX0KbGlicmFyeShyZWFkcikKbGlicmFyeShkcGx5cikKbGlicmFyeShnZ3Bsb3QyKQoKcGFpc2VzIDwtIHJlYWRfY3N2KCJkYXRvcy9wYWlzZXMuY3N2IikKCnBhaXNlcyAlPiUgCiAgZmlsdGVyKHBhaXMgPT0gcGFyYW1zJHBhaXMpICU+JSAKICBnZ3Bsb3QoYWVzKGFuaW8sIGVzcGVyYW56YV9kZV92aWRhKSkgKwogIGdlb21fbGluZSgpCmBgYAoKClkgYWhvcmEgZWwgbWlzbW8gY8OzZGlnbyBwdWVkZSBmdW5jaW9uYXIgcGFyYSBkaXN0aW50b3MgcGHDrXNlcy4gUGFyYSBjcmVhciByZXBvcnRlcyBkaXN0aW50b3MgcGFyYSBjYWRhIHBhw61zIHPDs2xvIGhheSBxdWUgbW9kaWZpY2FyIGVsIHZhbG9yIGRlbCBwYXLDoW1ldHJvIGVuIGVsIGVuY2FiZXphZG86CgoKYGBgeWFtbApwYXJhbXM6CiAgcGFpczogVXJ1Z3VheQpgYGAKCgo6Ojogey5hbGVydCAuYWxlcnQtaW5mb30KKipEZXNhZsOtbyoqCgpBZ3JlZ8OhIGFsIG1lbm9zIHVuIHBhcsOhbWV0cm8gYWwgcmVwb3J0ZSBxdWUgdmVuw61zIGFybWFuZG8uIAo6OjoKCgojIyBDb250cm9sIGRlIGNodW5rcwoKU2kgdGUgYWNvcmTDoXMsIGVuIGxhIHNlY2Npw7NuIGRlIFtyZXBvcnRlcyBJXSgxMC1yZXBvcnRlcy1JLmh0bWwpIHRlIGRpamltb3MgcXVlIHVuIGNodW5rIHRpZW5lIHVuYSBwaW50YSBjb21vIGVzdGE6CgogICAgYHIgY2h1bmtge3Igbm9tYnJlLWRlbC1jaHVua30KICAgIAogICAgYHIgY2h1bmtgCiAgICAKClBvbmVybGUgbm9tYnJlIGFsIGNodW5rIG5vIGVzIG9ibGlnYXRvcmlvIHBlcm8gZXN0w6EgYnVlbm8gcGFyYSB0ZW5lciB1bmEgaWRlYSBkZSBxdcOpIGhhY2UgY2FkYSB1bm8sIGxvIGN1YWwgc2UgdnVlbHZlIG3DoXMgaW1wb3J0YW50ZSBhIG1lZGlkYSBxdWUgdW4gcmVwb3J0ZSBzZSB2dWVsdmUgbcOhcyBsYXJnbyB5IGNvbXBsZWpvLiBQZXJvIGxvIHF1ZSBubyBkaWppbW9zIGVzIHF1ZSBhZGVtw6FzIGRlbCBub21icmUsIGVudHJlIGxhcyBsbGF2ZSBzZSBwdWVkZW4gcG9uZXIgdW4gbW9udMOzbiBkZSBvcGNpb25lcyBxdWUgY2FtYmlhbiBlbCBjb21wb3J0YW1pZW50byB5IGxhIGFwYXJpZW5jaWEgZGVsIHJlc3VsdGFkbyBkZWwgY2h1bmsuIAoKUGFyYSBjYW1iaWFyIGxhcyBvcGNpb25lcyBkZSB1biBjaHVuaywgbG8gw7puaWNvIHF1ZSBoYXkgcXVlIGhhY2VyIGVzIGxpc3RhcmxhcyBkZW50cm8gZGUgbG9zIGNvcmNoZXRlcy4gUG9yIGVqZW1wbG86CgoKICAgIGByIGNodW5rYHtyIG5vbWJyZS1kZWwtY2h1bmssIGVjaG8gPSBGQUxTRSwgbWVzc2FnZSA9IEZBTFNFfQogICAgCiAgICBgciBjaHVua2AKICAgIAoKCkhheSB1bmEgc2VyaWUgZGUgb3BjaW9uZXMgcGFydGljdWxhcm1lbnRlIGltcG9ydGFudGUgZXMgbGEgcXVlIGNvbnRyb2xhIHNpIGVsIGPDs2RpZ28gc2UgZWplY3V0YSB5IHNpIGVsIHJlc3VsdGFkbyBkZWwgY8OzZGlnbyB2YSBhIHF1ZWRhciBlbiBlbCByZXBvcnRlIG8gbm86CgoKKiBgZXZhbCA9IEZBTFNFYCBldml0YSBxdWUgc2UgY29ycmEgZWwgY8OzZGlnbyBkZWwgY2h1bmssIGRlIG1hbmVyYSBxdWUgdGFtcG9jbyB2YSBhIG1vc3RyYXIgcmVzdWx0YWRvcy4gRXMgw7p0aWwgcGFyYSBtb3N0cmFyIGPDs2RpZ29zIGRlIGVqZW1wbG8gc2kgZXN0w6FzIGVzY3JpYmllbmRvLCBwb3IgZWplbXBsbyB1biBkb2N1bWVudG8gcGFyYSBlbnNlw7FhciBSLgoKCiogYGVjaG8gPSBGQUxTRWAgY29ycmUgZWwgY8OzZGlnbyBkZWwgY2h1bmsgeSBtdWVzdHJhIGxvcyByZXN1bHRhZG9zLCBwZXJvIG9jdWx0YSBlbCBjw7NkaWdvIGVuIGVsIHJlcG9ydGUuIEVzdG8gZXMgw7p0aWwgcGFyYSBlc2NyaWJpciByZXBvcnRlcyBwYXJhIHBlcnNvbmFzIHF1ZSBubyBuZWNlc2l0YW4gdmVyIGVsIGPDs2RpZ28gZGUgUiBxdWUgZ2VuZXLDsyBlbCBncsOhZmljbyBvIHRhYmxhLiAKCiogYGluY2x1ZGUgPSBGQUxTRWAgY29ycmUgZWwgY8OzZGlnbyBwZXJvIG9jdWx0YSB0YW50byBlbCBjw7NkaWdvIGNvbW8gbG9zIHJlc3VsdGFkb3MuIEVzIMO6dGlsIHBhcmEgdXNhciBlbiBjaHVua3MgZGUgY29uZmlndXJhY2nDs24gZ2VuZXJhbCBkb25kZSBjYXJnYXMgbGFzIGxpYnJlcsOtYXMuIAoKClNpIGVzdMOhcyBlc2NyaWJpZW5kbyB1biBpbmZvcm1lIGVuIGVsIHF1ZSBubyBxdWVyw6lzIHF1ZSBzZSBtdWVzdHJlIG5pbmfDum4gY8OzZGlnbywgYWdyZWdhcmxlIGBlY2hvID0gRkFMU0VgIGEgY2FkYSBjaHVuayBudWV2byBzZSB2dWVsdmUgdGVkaW9zby4gTGEgc29sdWNpw7NuIGVzIGNhbWJpYXIgbGEgb3BjacOzbiBkZSBmb3JtYSBnbG9iYWwgZGUgbWFuZXJhIHF1ZSBhcGxpcXVlIGEgdG9kb3MgbG9zIGNodW5rcy4gRXN0byBzZSBoYWNlIG1lZGlhbnRlIGxhIGZ1bmNpw7NuIGBrbml0cjo6b3B0c19jaHVuayRzZXQoKWAsIHF1ZSBzZXRlYSBsYXMgb3BjaW9uZXMgZ2xvYmFsZXMgZGUgbG9zIGNodW5rcyBxdWUgbGUgc2lndWVuLiBTaSBxdWXFlWVzIHF1ZSB0b2RvcyBsb3MgY2h1bmtzIHRlbmdhbiBgZWNobyA9IFRSVUVgIGNyZWFyw61hcyB1biBjaHVuayBhc8OtOgoKCiAgICBgciBjaHVua2B7ciBzZXR1cCwgaW5jbHVkZSA9IEZBTFNFfQogICAga25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQogICAgYHIgY2h1bmtgCiAgICAKR2VuZXJhbG1lbnRlIHRpZW5lIHNlbnRpZG8gcG9uZXIgZXN0byBlbiBlbCBwcmltZXIgY2h1bmsgZGUgdW4gZG9jdW1lbnRvLCBxdWUgY29tbyBzdWVsZSBzZXIgY3Vlc3Rpb25lcyBkZSBjb25maWd1cmFjacOzbiBkZWwgcmVwb3J0ZSwgdGFtYmnDqW4gY29udmllbmUgcG9uZXJsZSBgaW5jbHVkZSA9IEZBTFNFYC4KCkhhYnLDoXMgdmlzdG8gcXVlIGEgdmVjZSBhbGd1bmFzIGZ1bmNpb25lcyBlc2N1cGVuIG1lbnNhamVzIHNvYnJlIGxvIHF1ZSBoYWNlbi4gUG9yIGVqZW1wbG8sIGN1YW5kbyBgcmVhZF9jc3ZgIGxlZSB1biBhcmNoaXZvIGRlc2NyaWJlIGVsIHRpcG8gZGUgZGF0byBkZSBjYWRhIGNvbHVtbmE6CgpgYGB7cn0KcGFpc2VzIDwtIHJlYWRfY3N2KCJkYXRvcy9wYWlzZXMuY3N2IikKYGBgCgpFc3RvIGVzIMO6dGlsIGN1YW5kbyB1bm8gZXN0w6EgaGFjaWVuZG8gdHJhYmFqbyBpbnRlcmFjdGl2byBwZXJvIGVuIGdlbmVyYWwgbm8gcXVpZXJlIHF1ZSBxdWVkZSBlbiBlbCByZXBvcnRlLiBQYXJhIHF1ZSBubyBtdWVzdHJlIGVzdG9zIG1lbnNhamVzIGJhc3RhIGNvbiBwb25lciBsYSBvcGNpw7NuIGBtZXNzYWdlID0gRkFMU0VgCgogICAgYHIgY2h1bmtge3IgbWVzc2FnZSA9IEZBTFNFfQogICAgcGFpc2VzIDwtIHJlYWRfY3N2KCJkYXRvcy9wYWlzZXMuY3N2IikKICAgIGByIGNodW5rYAogICAgCkVuIGdlbmVyYWwgbm8gcGFzYSBuYWRhIHNpIGlnbm9yw6FzIGxvcyBtZW5zYWplcy4gU29uIGN1ZXN0aW9uZXMgZGlhZ27Ds3N0aWNhcyBleHRyYSBxdWUgc2lydmVuIHBhcmEgcXVlIHZvcywgY29tbyBodW1hbm8sIHRlIGVudGVyZXMgZGUgbG8gcXVlIGhpem8gdW5hIGZ1bmNpw7NuLiBEaXN0aW50byBzb24gbGFzIGFkdmVydGVuY2lhcywgbyAid2FybmlnbnMiLiBVbmEgYWR2ZXJ0ZW5jaWEgdGUgZXN0w6EgZGljaWVuZG8gcXVlIGhheSBhbGdvICJyYXJvIiBlbiBlbCBjw7NkaWdvIHF1ZSBwdWVkZSBzaWduaWZpY2FyIHF1ZSBoYXkgYWxnbyBtYWwuIE5vIGxsZWdhIGFsIG5pdmVsIGRlIGVycm9yLCBxdWUgZXMgYWxnbyBxdWUgbGl0ZXJhbG1lbnRlICJubyBjb21wdXRhIi4gUG9yIGVqZW1wbG8sIGBzcXJ0YCB0aXJhIHVuYSBhZHZlcnRlbmNpYSBjdWFuZG8gcmVjaWJlIG7Dum1lcm9zIG5lZ2F0aXZvcy4KCmBgYHtyfQppIDwtIHNxcnQoLTEpCmBgYAoKU2kgdW4gY2h1bmsgdGlyYSB1bmEgYWR2ZXJ0ZW5jaWEgcXVlIGVzIGVzcGVyYWJsZSBwZXJvIG5vIHF1ZXLDqXMgcXVlIGFwYXJlemNhIGVuIGVsIHJlcG90ZSwgcG9kw6lzIG9jdWx0YXJsYXMgY29uIGxhIG9wY2nDs24gYHdhcm5pbmcgPSBGQUxTRWAuCgogICAgYHIgY2h1bmtge3Igd2FybmluZyA9IEZBTFNFfQogICAgaSA8LSBzcXJ0KC0xKQogICAgYHIgY2h1bmtgCiAgICAKCkZpbmFsbWVudGUsIHVuYSBvcGNpw7NuIHRhbiBwb2Rlcm9zYSBjb21vIHBlbGlncm9zYSBlcyBgY2FjaGUgPSBUUlVFYC4gTG8gcXVlIGhhY2UgZXMgcXVlIGVuIHZleiBkZSBjb3JyZXIgZWwgY8OzZGlnbyBkZSB1biBjaHVuayBjYWRhIHZleiBxdWUgKmtuaXRlw6FzKiBlbCBkb2N1bWVudG8sIGd1YXJkYSBlbCByZXN1bHRhZG8gZGVsIGNodW5rIGVuIGVsIGRpc2NvIHBhcmEgcmV1dGlsaXphciBsYSBwcsOzeGltYSB2ZXogcXVlIGNyZWVzIGVsIHJlcG9ydGUuIEVzdG8gZXMgbXV5IGPDs21vIHNpIHVuIGNodW5rIHNlIHVuIGPDs2RpZ28gcXVlIHRhcmRhIG11Y2hvIGVuIGNvcnJlci4gUG9yIGVqZW1wbG8gZWwgc2lndWllbnRlIGNodW5rIHZhIGEgdGFyZGFyIDEwIG1pbnV0b3MgZW4gY29ycmVyIGxhIHByaW1lcmEgdmV6IHF1ZSBrbml0ZWVzIGVsIHJlcG9ydGUsIHBlcm8gbHVlZ28gdmEgYSBzZXIgbXVjaG8gbcOhcyByw6FwaWRvOiAKCgogICAgYHIgY2h1bmtge3IgY2FjaGUgPSBGQUxTRX0KICAgIGRhdG9zIDwtIGZ1bmNpb25fcXVlX3RhcmRhXzEwX21pbnV0b3MoeCkKICAgIGByIGNodW5rYAoKCntrbml0cn0gZXMgYmFzdGFudGUgaW50ZWxpZ2VudGUgeSB2YSBhIGludmFsaWRhciBsYSBjYWNoZSBzaSBjYW1iaWEgZWwgY8OzZGlnbyBkZWwgY2h1bmsuIFBlcm8sIMK/cXXDqSBwYXNhIHNpIGNhbWJpw6FzIGFsZ28gZGVsIGPDs2RpZ28gcHJldmlvIHF1ZSBjYW1iaWEgZWwgdmFsb3IgZGUgYHhgIG8gaW5jbHVzbyBlbCBmdW5jaW9uYW1pZW50byBkZSBgZnVuY3Rpb25fcXVlX3RhcmdhXzEwX21pbnV0b3NgPyB7a25pdHJ9IG5vIHNlIGRhIGN1ZW50YSB5IHZhIGEgdXNhciBsYSBjYWNoZSwgcmVzdWx0YW5kbyBxdWUgYGRhdG9zYCB2YSBhIHRlbmVyIHVuIHZhbG9yIGluY29ycmVjdG8uIEhheSBmb3JtYXMgZGUgZGVjaXJsZSBhIHtrbml0cn0gZGUgcXXDqSBkZXBlbmRlIGNhZGEgY2h1bmsgeSBhc8OtIG9idGVuZXIgdW5hIGNhY2hlIG3DoXMgImludGVsaWdlbnRlIiBwZXJvIGVzIGFsZ28gcXVlIHNlIHZ1ZWx2ZSBjb21wbGljYWRvIG11eSByw6FwaWRvLiAKCkVsIHJlc3VtZW4gZXMgdXNhciBsYSBjYWNoZSBzw7NsbyBjdWFuZG8gZXMgaW1wcmVzY2luZGlibGUuCgo6Ojogey5hbGVydCAuYWxlcnQtaW5mb30KKipEZXNhZsOtbyoqCgpHdWFyZMOhIGVsIGPDs2dpZG8gZGUgZXN0YSB1IG90cmEgc2VjY2nDs24geWVuZG8gYSBDw7NkaWdvIOKGkiBEZXNjYXJnYXIgUm1kIGFycmliYSBkZSB0b2RvIGEgbGEgZGVyZWNoYS4gTWlyw6EgbG9zIGNodW5rcyB5IGxhcyBvcGNpb25lcyBxdWUgZXN0w6FuIHB1ZXN0YXMuIMK/UG9yIHF1w6kgdXNhbW9zIGNhZGEgb3BjacOzbiBlbiBjYWRhIGNodW5rPwoKOjo6</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("10-reportes-II.Rmd");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

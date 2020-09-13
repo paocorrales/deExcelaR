@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Apariencia de gráficos</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/flatly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<script src="site_libs/navigation-1.1/sourceembed.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+#rmd-source-code {
+  display: none;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">de Excel a R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="hoja-de-ruta.html">Hoja de ruta</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Temas
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01-introduccion.html">Introducción</a>
+    </li>
+    <li>
+      <a href="02-proyectos.html">Proyectos</a>
+    </li>
+    <li>
+      <a href="03-reportes-I.html">Reportes I</a>
+    </li>
+    <li>
+      <a href="04-lectura-datos.html">Lectura de datos</a>
+    </li>
+    <li>
+      <a href="05-dplyr-I.html">Manipulación de datos I</a>
+    </li>
+    <li>
+      <a href="06-graficos-I.html">Gráficos I</a>
+    </li>
+    <li>
+      <a href="07-graficos-II.html">Gráficos II</a>
+    </li>
+    <li>
+      <a href="08-dplyr-tidyr-II.html">Manipulación de datos II</a>
+    </li>
+    <li>
+      <a href="09-funciones.html">Funciones</a>
+    </li>
+    <li>
+      <a href="10-reportes-II.html">Reportes II</a>
+    </li>
+    <li>
+      <a href="11-tablas.html">Estilo de tablas</a>
+    </li>
+    <li>
+      <a href="12-ggplot-III.html">Gráficos para publicar</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Desafíos
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="desafio-1.html">Leer datos</a>
+    </li>
+    <li>
+      <a href="desafio-2.html">Analizar datos</a>
+    </li>
+    <li>
+      <a href="desafio-3.html">Graficar datos</a>
+    </li>
+    <li>
+      <a href="desafio-4.html">Generar un informe</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+<div class="btn-group pull-right">
+<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu" style="min-width: 50px;">
+<li><a id="rmd-download-source" href="#">Download Rmd</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Apariencia de gráficos</h1>
+
+</div>
+
+
+<div id="escalas" class="section level2">
+<h2>Escalas</h2>
+<p><a href="06-graficos-I.html">Previamente</a> comentamos que el <em>mapeo</em> de una variable en un elemento geométrico, por ejemplo cuando le asignamos distintos colores a los puntos que representan cada continente, usa una <strong>escala</strong> para definir, en este caso, que color le corresponde a cada elemento.</p>
+<p>También cambiamos la apariencia del relleno (o <code>fill</code>) de barras y la forma de los puntos (o <code>shape</code>). Para esto, {ggplot2} siempre usa una escala que podemos modificar de acuerdo a nuestro gusto y teniendo en cuenta cómo queremos comunicar nuestros resultados.</p>
+<p>Por supuesto, modificar una escala implica sumar una nueva capa al gráfico sumando una nueva función. Todas las funciones de escala comienzan con <code>scale</code> (de escala en inglés), el típo de apariencia que queremos modificar (<code>color</code>, <code>fill</code>, <code>shape</code>, etc) y en muchos casos un nombre o una característica de esa escala.</p>
+<p>Para mostrar como funciona, vamos a utilizar la base de datos de paises y con suerte al final de este documento tendremos un gráfico listo para publicar.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">paises &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>)</a></code></pre></div>
+<pre><code>## Parsed with column specification:
+## cols(
+##   pais = col_character(),
+##   continente = col_character(),
+##   anio = col_double(),
+##   esperanza_de_vida = col_double(),
+##   poblacion = col_double(),
+##   pib_per_capita = col_double()
+## )</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(pib_per_capita, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
+<p><img src="12-ggplot-III_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<div id="escala-de-colores-y-otras" class="section level3">
+<h3>Escala de colores y otras</h3>
+<p>Lo primero que podemos hacer es cambiar el color de los puntos de a cuerdo al continente.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(pib_per_capita, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente))</a></code></pre></div>
+<p><img src="12-ggplot-III_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<p>Pero esta escala de colores que usa {ggplot2} por defecto no es de las mejores, de hecho las personas que tienen daltonísmo muy posiblemente no logren diferenciar todos los puntos. Una escala o paleta de colores muy usada es <a href="https://cran.r-project.org/web/packages/viridis/vignettes/intro-to-viridis.html"><strong>viridis</strong></a> que fue creada justamente para resolver este y otros problemas. También existe otra gran familia de paletas de colores llamada <a href="https://colorbrewer2.org/"><strong>ColorBrewer</strong></a>.</p>
+<p>Vamos a probar la paleta “Dark2” de ColorBrewer, esta paleta es <em>qualitativa</em> y es justo lo que necesitamos para identificar elementos en categorías como los continentes. Cómo estamos modificando el <em>color</em>, la función a usar será <code>scale_color_brewer()</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(pib_per_capita, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">type =</span> <span class="st">&quot;qual&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>)</a></code></pre></div>
+<p><img src="12-ggplot-III_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Nuestro gráfico va quedando mejor y podemos aprovechar la capacidad de {ggplot2} de <em>mapear</em> variables a los elementos del gráfico y mostrar la población de cada país.</p>
+<div class="alert alert-info">
+<p><strong>Desafío</strong></p>
+<p>A modo de prueba, cambia la paleta de colores actual por la de Viridis. Para eso tenés que usar <code>scale_color_viridis_d()</code>. La “d” del final viene de <em>discrete</em> y se usa para variables discretas o categorías, mientrs que si los datos son continuos, se usa “c”.</p>
+</div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(pib_per_capita, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">size =</span> poblacion)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">type =</span> <span class="st">&quot;qual&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>)</a></code></pre></div>
+<p><img src="12-ggplot-III_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>Esto nos da más información, pero al mismo tiempo vemos que los puntos se superponen. Vamos a arreglar eso agregando transparencia y de paso modificar el tamaño de los puntos con la escala correspondiente <code>scale_size()</code> y sacar la legenda con <code>guide = NULL</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(pib_per_capita, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">size =</span> poblacion), <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">type =</span> <span class="st">&quot;qual&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-6" data-line-number="6"><span class="st">  </span><span class="kw">scale_size_area</span>(<span class="dt">max_size =</span> <span class="dv">15</span>, <span class="dt">guide =</span> <span class="ot">NULL</span>)</a></code></pre></div>
+<p><img src="12-ggplot-III_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+</div>
+<div id="escalas-de-ejes" class="section level3">
+<h3>Escalas de ejes</h3>
+<p>Tal vez notaste que el comportamiento entre la esperanza de vida y el PBI no es lineal, de hecho el PBI varía mucho mientras que la esperanza de vida va apenas entre 40 y 80 y algo. Eso puede esta indicando que el PBI tiene un comportamiento <em>logarítmico</em> y si bien podríamos transformar los datos antes de hacer el gráfico, también podemos elegir una escala logarítmica para el eje del gráfico correspondiente.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(pib_per_capita, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">size =</span> poblacion), <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">type =</span> <span class="st">&quot;qual&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-6" data-line-number="6"><span class="st">  </span><span class="kw">scale_size_area</span>(<span class="dt">max_size =</span> <span class="dv">15</span>, <span class="dt">guide =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-7" data-line-number="7"><span class="st">  </span><span class="kw">scale_x_log10</span>()</a></code></pre></div>
+<p><img src="12-ggplot-III_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>En este caso las escalas que modifican los ejes justamente comienzan con <code>scala_x_</code> o <code>scale_y_</code> según sea el caso. Y por supuesto hay una variedad importante de scalas con muchas opciones.</p>
+</div>
+</div>
+<div id="elementos-de-texto" class="section level2">
+<h2>Elementos de texto</h2>
+<p>Ya sumamos 3 escalas, pero el gráfico ya se ve muy bien. ¿Cómo hacemos si queremos identificar paises individuales? Por ahora es difícil, pero podríamos agregar etiquetas de texto con el nombre de cada país al lado de cada punto usando <code>geom_text()</code>, y en este caso la apariencia está dada por <code>label</code> o etiqueta:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(pib_per_capita, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">size =</span> poblacion), <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">type =</span> <span class="st">&quot;qual&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-6" data-line-number="6"><span class="st">  </span><span class="kw">scale_size_area</span>(<span class="dt">max_size =</span> <span class="dv">15</span>, <span class="dt">guide =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-7" data-line-number="7"><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> pais)) </a></code></pre></div>
+<p><img src="12-ggplot-III_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+<p>Pero nos olvidamos que tenemos casi 200 paises, es razonable agregarle etiquetas a todos. Pero podríamos querer resaltar algunos, tal vez los de un continente en particular o los que cumplen con la condición de tener las mayores poblaciones del mundo. Para eso vamos a generarnos una nueva tabla con los paises que queremos resaltar y de paso usarla dentro de <code>geom_text()</code>.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">mucha_poblacion &lt;-<span class="st"> </span>paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(poblacion <span class="op">&gt;</span><span class="st"> </span><span class="dv">1000000000</span>) <span class="co"># Paises con más de un billón de habitantes!</span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(pib_per_capita, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">size =</span> poblacion), <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-9" data-line-number="9"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">type =</span> <span class="st">&quot;qual&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-10" data-line-number="10"><span class="st">  </span><span class="kw">scale_size_area</span>(<span class="dt">max_size =</span> <span class="dv">15</span>, <span class="dt">guide =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-11" data-line-number="11"><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-12" data-line-number="12"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> pais), </a>
+<a class="sourceLine" id="cb10-13" data-line-number="13">            <span class="dt">data =</span> mucha_poblacion)  <span class="co"># Esta capa usa la tabla mucha_población!</span></a></code></pre></div>
+<p><img src="12-ggplot-III_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<div class="alert alert-success">
+<p>Del código anterior surge algo muy importante: es posible generar capas en un gráfico usando una data.frame <em>distinto</em> al que usamos para graficar las capas anteriores. Esto es útil principalmente para definir etiquetas o resaltar determinadas observaciones.</p>
+<p>Y el truco está en que ambos data.frames tienen las variables <code>pib_per_capita</code> y <code>esperanza_de_vida</code> y entonces {ggplot2} puede identificar en que parte del gráfico (en que valores de x y en que valores de y) colocar cada elemento.</p>
+</div>
+<p>Veamos ahora una (de varias) maneras agregar o modificar elementos de texto en el gráfico. Vamos a usar una nueva función (y una nueva capa!), <code>labs()</code>:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(pib_per_capita, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">size =</span> poblacion), <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">type =</span> <span class="st">&quot;qual&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="st">  </span><span class="kw">scale_size_area</span>(<span class="dt">max_size =</span> <span class="dv">15</span>, <span class="dt">guide =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> pais), <span class="dt">data =</span> mucha_poblacion) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-9" data-line-number="9"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Paises del mundo&quot;</span>,</a>
+<a class="sourceLine" id="cb11-10" data-line-number="10">       <span class="dt">subtitle =</span> <span class="st">&quot;Año 2007&quot;</span>,</a>
+<a class="sourceLine" id="cb11-11" data-line-number="11">       <span class="dt">caption =</span> <span class="st">&quot;El tamaño de cada circulo representa la población.&quot;</span>,</a>
+<a class="sourceLine" id="cb11-12" data-line-number="12">       <span class="dt">x =</span> <span class="st">&quot;PBI per capita&quot;</span>,</a>
+<a class="sourceLine" id="cb11-13" data-line-number="13">       <span class="dt">y =</span> <span class="st">&quot;Esperanza de vida&quot;</span>,</a>
+<a class="sourceLine" id="cb11-14" data-line-number="14">       <span class="dt">color =</span> <span class="st">&quot;&quot;</span>)</a></code></pre></div>
+<p><img src="12-ggplot-III_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Agregamos un título, un subtítulo, el epígrafe de la figura (<em>caption</em>) para las aclaraciones y cambiamos el nombre de los ejes para que se vean mejor. Pero ademas eliminamos el nombre de la leyenda porque era un poco redundante.</p>
+</div>
+<div id="temas" class="section level2">
+<h2>Temas</h2>
+<p>Nos queda una última cosa por hacer, cambiar la apariencia global del gráfico. {ggplot2} tiene muchos <em>temas</em> disponibles y para todos los gustos. Pero además hay otros paquetes que extienden las posibilidades, por ejemplo <a href="https://github.com/jrnold/ggthemes">{ggthemes}</a>.</p>
+<p>Por defecto {ggplot2} usa <code>theme_grey()</code>, probemos <code>theme_light()</code>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(pib_per_capita, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">size =</span> poblacion), <span class="dt">alpha =</span> <span class="fl">0.5</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">scale_color_brewer</span>(<span class="dt">type =</span> <span class="st">&quot;qual&quot;</span>, <span class="dt">palette =</span> <span class="st">&quot;Dark2&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="st">  </span><span class="kw">scale_size_area</span>(<span class="dt">max_size =</span> <span class="dv">15</span>, <span class="dt">guide =</span> <span class="ot">NULL</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="st">  </span><span class="kw">scale_x_log10</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"><span class="st">  </span><span class="kw">geom_text</span>(<span class="kw">aes</span>(<span class="dt">label =</span> pais), <span class="dt">data =</span> mucha_poblacion) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Paises del mundo&quot;</span>,</a>
+<a class="sourceLine" id="cb12-10" data-line-number="10">       <span class="dt">subtitle =</span> <span class="st">&quot;Año 2007&quot;</span>,</a>
+<a class="sourceLine" id="cb12-11" data-line-number="11">       <span class="dt">caption =</span> <span class="st">&quot;El tamaño de cada circulo representa la población.&quot;</span>,</a>
+<a class="sourceLine" id="cb12-12" data-line-number="12">       <span class="dt">x =</span> <span class="st">&quot;PBI per capita&quot;</span>,</a>
+<a class="sourceLine" id="cb12-13" data-line-number="13">       <span class="dt">y =</span> <span class="st">&quot;Esperanza de vida&quot;</span>,</a>
+<a class="sourceLine" id="cb12-14" data-line-number="14">       <span class="dt">color =</span> <span class="st">&quot;&quot;</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-15" data-line-number="15"><span class="st">  </span><span class="kw">theme_light</span>()</a></code></pre></div>
+<p><img src="12-ggplot-III_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<div class="alert alert-info">
+<p>Ahora es tu turno. Elegí un <a href="https://es.r4ds.hadley.nz/images/visualization-themes.png" class="alert-link">tema que te guste</a> y probalo. Además, si se te ocurre algún título mejor modificalo!</p>
+</div>
+<div class="alert alert-success">
+<p>Junto con las funciones <code>theme_...()</code>, hay una función llamada <code>theme()</code> que permite cambiar la apariencia de cualquier elemento del gráfico. Tiene casi infinitas opciones y si algún momento te desvelas intentando cambiar esa línea o ese borde, seguro que <code>theme()</code> tiene alguna opción par ahacer eso.</p>
+</div>
+</div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiQXBhcmllbmNpYSBkZSBncsOhZmljb3MiCm91dHB1dDogCiAgaHRtbF9kb2N1bWVudDoKICAgIGNvZGVfZG93bmxvYWQ6IHRydWUKICAgIHRvYzogdHJ1ZQogICAgdG9jX2Zsb2F0OiB0cnVlCiAgICBoaWdobGlnaHQ6IHRhbmdvCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkKbGlicmFyeShnZ3Bsb3QyKQpsaWJyYXJ5KGRwbHlyKQpgYGAKCiMjIEVzY2FsYXMKCltQcmV2aWFtZW50ZV0oMDYtZ3JhZmljb3MtSS5odG1sKSBjb21lbnRhbW9zIHF1ZSBlbCAqbWFwZW8qIGRlIHVuYSB2YXJpYWJsZSBlbiB1biBlbGVtZW50byBnZW9tw6l0cmljbywgcG9yIGVqZW1wbG8gY3VhbmRvIGxlIGFzaWduYW1vcyBkaXN0aW50b3MgY29sb3JlcyBhIGxvcyBwdW50b3MgcXVlIHJlcHJlc2VudGFuIGNhZGEgY29udGluZW50ZSwgdXNhIHVuYSAqKmVzY2FsYSoqIHBhcmEgZGVmaW5pciwgZW4gZXN0ZSBjYXNvLCBxdWUgY29sb3IgbGUgY29ycmVzcG9uZGUgYSBjYWRhIGVsZW1lbnRvLiAKClRhbWJpw6luIGNhbWJpYW1vcyBsYSBhcGFyaWVuY2lhIGRlbCByZWxsZW5vIChvIGBmaWxsYCkgZGUgYmFycmFzIHkgbGEgZm9ybWEgZGUgbG9zIHB1bnRvcyAobyBgc2hhcGVgKS4gUGFyYSBlc3RvLCB7Z2dwbG90Mn0gc2llbXByZSB1c2EgdW5hIGVzY2FsYSBxdWUgcG9kZW1vcyBtb2RpZmljYXIgZGUgYWN1ZXJkbyBhIG51ZXN0cm8gZ3VzdG8geSB0ZW5pZW5kbyBlbiBjdWVudGEgY8OzbW8gcXVlcmVtb3MgY29tdW5pY2FyIG51ZXN0cm9zIHJlc3VsdGFkb3MuIAoKUG9yIHN1cHVlc3RvLCBtb2RpZmljYXIgdW5hIGVzY2FsYSBpbXBsaWNhIHN1bWFyIHVuYSBudWV2YSBjYXBhIGFsIGdyw6FmaWNvIHN1bWFuZG8gdW5hIG51ZXZhIGZ1bmNpw7NuLiBUb2RhcyBsYXMgZnVuY2lvbmVzIGRlIGVzY2FsYSBjb21pZW56YW4gY29uIGBzY2FsZWAgKGRlIGVzY2FsYSBlbiBpbmdsw6lzKSwgZWwgdMOtcG8gZGUgYXBhcmllbmNpYSBxdWUgcXVlcmVtb3MgbW9kaWZpY2FyIChgY29sb3JgLCBgZmlsbGAsIGBzaGFwZWAsIGV0YykgeSBlbiBtdWNob3MgY2Fzb3MgdW4gbm9tYnJlIG8gdW5hIGNhcmFjdGVyw61zdGljYSBkZSBlc2EgZXNjYWxhLiAKClBhcmEgbW9zdHJhciBjb21vIGZ1bmNpb25hLCB2YW1vcyBhIHV0aWxpemFyIGxhIGJhc2UgZGUgZGF0b3MgZGUgcGFpc2VzIHkgY29uIHN1ZXJ0ZSBhbCBmaW5hbCBkZSBlc3RlIGRvY3VtZW50byB0ZW5kcmVtb3MgdW4gZ3LDoWZpY28gbGlzdG8gcGFyYSBwdWJsaWNhci4KCmBgYHtyfQpwYWlzZXMgPC0gcmVhZHI6OnJlYWRfY3N2KCJkYXRvcy9wYWlzZXMuY3N2IikKCnBhaXNlcyAlPiUgCiAgZmlsdGVyKGFuaW8gPT0gMjAwNykgJT4lIAogIGdncGxvdChhZXMocGliX3Blcl9jYXBpdGEsIGVzcGVyYW56YV9kZV92aWRhKSkgKwogIGdlb21fcG9pbnQoKQoKYGBgCgojIyMgRXNjYWxhIGRlIGNvbG9yZXMgeSBvdHJhcwoKTG8gcHJpbWVybyBxdWUgcG9kZW1vcyBoYWNlciBlcyBjYW1iaWFyIGVsIGNvbG9yIGRlIGxvcyBwdW50b3MgZGUgYSBjdWVyZG8gYWwgY29udGluZW50ZS4KCmBgYHtyfQpwYWlzZXMgJT4lIAogIGZpbHRlcihhbmlvID09IDIwMDcpICU+JSAKICBnZ3Bsb3QoYWVzKHBpYl9wZXJfY2FwaXRhLCBlc3BlcmFuemFfZGVfdmlkYSkpICsKICBnZW9tX3BvaW50KGFlcyhjb2xvciA9IGNvbnRpbmVudGUpKQpgYGAKClBlcm8gZXN0YSBlc2NhbGEgZGUgY29sb3JlcyBxdWUgdXNhIHtnZ3Bsb3QyfSBwb3IgZGVmZWN0byBubyBlcyBkZSBsYXMgbWVqb3JlcywgZGUgaGVjaG8gbGFzIHBlcnNvbmFzIHF1ZSB0aWVuZW4gZGFsdG9uw61zbW8gbXV5IHBvc2libGVtZW50ZSBubyBsb2dyZW4gZGlmZXJlbmNpYXIgdG9kb3MgbG9zIHB1bnRvcy4gVW5hIGVzY2FsYSBvIHBhbGV0YSBkZSBjb2xvcmVzIG11eSB1c2FkYSBlcyBbKip2aXJpZGlzKipdKGh0dHBzOi8vY3Jhbi5yLXByb2plY3Qub3JnL3dlYi9wYWNrYWdlcy92aXJpZGlzL3ZpZ25ldHRlcy9pbnRyby10by12aXJpZGlzLmh0bWwpIHF1ZSBmdWUgY3JlYWRhIGp1c3RhbWVudGUgcGFyYSByZXNvbHZlciBlc3RlIHkgb3Ryb3MgcHJvYmxlbWFzLiBUYW1iacOpbiBleGlzdGUgb3RyYSBncmFuIGZhbWlsaWEgZGUgcGFsZXRhcyBkZSBjb2xvcmVzIGxsYW1hZGEgWyoqQ29sb3JCcmV3ZXIqKl0oaHR0cHM6Ly9jb2xvcmJyZXdlcjIub3JnLykuCgpWYW1vcyBhIHByb2JhciBsYSBwYWxldGEgIkRhcmsyIiBkZSBDb2xvckJyZXdlciwgZXN0YSBwYWxldGEgZXMgKnF1YWxpdGF0aXZhKiB5IGVzIGp1c3RvIGxvIHF1ZSBuZWNlc2l0YW1vcyBwYXJhIGlkZW50aWZpY2FyIGVsZW1lbnRvcyBlbiBjYXRlZ29yw61hcyBjb21vIGxvcyBjb250aW5lbnRlcy4gQ8OzbW8gZXN0YW1vcyBtb2RpZmljYW5kbyBlbCAqY29sb3IqLCBsYSBmdW5jacOzbiBhIHVzYXIgc2Vyw6EgYHNjYWxlX2NvbG9yX2JyZXdlcigpYDoKCmBgYHtyfQpwYWlzZXMgJT4lIAogIGZpbHRlcihhbmlvID09IDIwMDcpICU+JSAKICBnZ3Bsb3QoYWVzKHBpYl9wZXJfY2FwaXRhLCBlc3BlcmFuemFfZGVfdmlkYSkpICsKICBnZW9tX3BvaW50KGFlcyhjb2xvciA9IGNvbnRpbmVudGUpKSArCiAgc2NhbGVfY29sb3JfYnJld2VyKHR5cGUgPSAicXVhbCIsIHBhbGV0dGUgPSAiRGFyazIiKQpgYGAKCk51ZXN0cm8gZ3LDoWZpY28gdmEgcXVlZGFuZG8gbWVqb3IgeSBwb2RlbW9zIGFwcm92ZWNoYXIgbGEgY2FwYWNpZGFkIGRlIHtnZ3Bsb3QyfSBkZSAqbWFwZWFyKiB2YXJpYWJsZXMgYSBsb3MgZWxlbWVudG9zIGRlbCBncsOhZmljbyB5IG1vc3RyYXIgbGEgcG9ibGFjacOzbiBkZSBjYWRhIHBhw61zLgoKOjo6IHsuYWxlcnQgLmFsZXJ0LWluZm99CioqRGVzYWbDrW8qKgoKQSBtb2RvIGRlIHBydWViYSwgY2FtYmlhIGxhIHBhbGV0YSBkZSBjb2xvcmVzIGFjdHVhbCBwb3IgbGEgZGUgVmlyaWRpcy4gUGFyYSBlc28gdGVuw6lzIHF1ZSB1c2FyIGBzY2FsZV9jb2xvcl92aXJpZGlzX2QoKWAuIExhICJkIiBkZWwgZmluYWwgdmllbmUgZGUgKmRpc2NyZXRlKiB5IHNlIHVzYSBwYXJhIHZhcmlhYmxlcyBkaXNjcmV0YXMgbyBjYXRlZ29yw61hcywgbWllbnRycyBxdWUgc2kgbG9zIGRhdG9zIHNvbiBjb250aW51b3MsIHNlIHVzYSAiYyIuCjo6OgoKYGBge3J9CnBhaXNlcyAlPiUgCiAgZmlsdGVyKGFuaW8gPT0gMjAwNykgJT4lIAogIGdncGxvdChhZXMocGliX3Blcl9jYXBpdGEsIGVzcGVyYW56YV9kZV92aWRhKSkgKwogIGdlb21fcG9pbnQoYWVzKGNvbG9yID0gY29udGluZW50ZSwgc2l6ZSA9IHBvYmxhY2lvbikpICsKICBzY2FsZV9jb2xvcl9icmV3ZXIodHlwZSA9ICJxdWFsIiwgcGFsZXR0ZSA9ICJEYXJrMiIpCmBgYAoKRXN0byBub3MgZGEgbcOhcyBpbmZvcm1hY2nDs24sIHBlcm8gYWwgbWlzbW8gdGllbXBvIHZlbW9zIHF1ZSBsb3MgcHVudG9zIHNlIHN1cGVycG9uZW4uIFZhbW9zIGEgYXJyZWdsYXIgZXNvIGFncmVnYW5kbyB0cmFuc3BhcmVuY2lhIHkgZGUgcGFzbyBtb2RpZmljYXIgZWwgdGFtYcOxbyBkZSBsb3MgcHVudG9zIGNvbiBsYSBlc2NhbGEgY29ycmVzcG9uZGllbnRlIGBzY2FsZV9zaXplKClgIHkgc2FjYXIgbGEgbGVnZW5kYSBjb24gYGd1aWRlID0gTlVMTGAuCgpgYGB7cn0KcGFpc2VzICU+JSAKICBmaWx0ZXIoYW5pbyA9PSAyMDA3KSAlPiUgCiAgZ2dwbG90KGFlcyhwaWJfcGVyX2NhcGl0YSwgZXNwZXJhbnphX2RlX3ZpZGEpKSArCiAgZ2VvbV9wb2ludChhZXMoY29sb3IgPSBjb250aW5lbnRlLCBzaXplID0gcG9ibGFjaW9uKSwgYWxwaGEgPSAwLjUpICsKICBzY2FsZV9jb2xvcl9icmV3ZXIodHlwZSA9ICJxdWFsIiwgcGFsZXR0ZSA9ICJEYXJrMiIpICsKICBzY2FsZV9zaXplX2FyZWEobWF4X3NpemUgPSAxNSwgZ3VpZGUgPSBOVUxMKQpgYGAKCiMjIyBFc2NhbGFzIGRlIGVqZXMKClRhbCB2ZXogbm90YXN0ZSBxdWUgZWwgY29tcG9ydGFtaWVudG8gZW50cmUgbGEgZXNwZXJhbnphIGRlIHZpZGEgeSBlbCBQQkkgbm8gZXMgbGluZWFsLCBkZSBoZWNobyBlbCBQQkkgdmFyw61hIG11Y2hvIG1pZW50cmFzIHF1ZSBsYSBlc3BlcmFuemEgZGUgdmlkYSB2YSBhcGVuYXMgZW50cmUgNDAgeSA4MCB5IGFsZ28uIEVzbyBwdWVkZSBlc3RhIGluZGljYW5kbyBxdWUgZWwgUEJJIHRpZW5lIHVuIGNvbXBvcnRhbWllbnRvICpsb2dhcsOtdG1pY28qIHkgc2kgYmllbiBwb2Ryw61hbW9zIHRyYW5zZm9ybWFyIGxvcyBkYXRvcyBhbnRlcyBkZSBoYWNlciBlbCBncsOhZmljbywgdGFtYmnDqW4gcG9kZW1vcyBlbGVnaXIgdW5hIGVzY2FsYSBsb2dhcsOtdG1pY2EgcGFyYSBlbCBlamUgZGVsIGdyw6FmaWNvIGNvcnJlc3BvbmRpZW50ZS4gCgpgYGB7cn0KcGFpc2VzICU+JSAKICBmaWx0ZXIoYW5pbyA9PSAyMDA3KSAlPiUgCiAgZ2dwbG90KGFlcyhwaWJfcGVyX2NhcGl0YSwgZXNwZXJhbnphX2RlX3ZpZGEpKSArCiAgZ2VvbV9wb2ludChhZXMoY29sb3IgPSBjb250aW5lbnRlLCBzaXplID0gcG9ibGFjaW9uKSwgYWxwaGEgPSAwLjUpICsKICBzY2FsZV9jb2xvcl9icmV3ZXIodHlwZSA9ICJxdWFsIiwgcGFsZXR0ZSA9ICJEYXJrMiIpICsKICBzY2FsZV9zaXplX2FyZWEobWF4X3NpemUgPSAxNSwgZ3VpZGUgPSBOVUxMKSArCiAgc2NhbGVfeF9sb2cxMCgpCmBgYAoKRW4gZXN0ZSBjYXNvIGxhcyBlc2NhbGFzIHF1ZSBtb2RpZmljYW4gbG9zIGVqZXMganVzdGFtZW50ZSBjb21pZW56YW4gY29uIGBzY2FsYV94X2AgbyBgc2NhbGVfeV9gIHNlZ8O6biBzZWEgZWwgY2Fzby4gWSBwb3Igc3VwdWVzdG8gaGF5IHVuYSB2YXJpZWRhZCBpbXBvcnRhbnRlIGRlIHNjYWxhcyBjb24gbXVjaGFzIG9wY2lvbmVzLiAKCiMjIEVsZW1lbnRvcyBkZSB0ZXh0bwoKWWEgc3VtYW1vcyAzIGVzY2FsYXMsIHBlcm8gZWwgZ3LDoWZpY28geWEgc2UgdmUgbXV5IGJpZW4uIMK/Q8OzbW8gaGFjZW1vcyBzaSBxdWVyZW1vcyBpZGVudGlmaWNhciBwYWlzZXMgaW5kaXZpZHVhbGVzPyBQb3IgYWhvcmEgZXMgZGlmw61jaWwsIHBlcm8gcG9kcsOtYW1vcyBhZ3JlZ2FyIGV0aXF1ZXRhcyBkZSB0ZXh0byBjb24gZWwgbm9tYnJlIGRlIGNhZGEgcGHDrXMgYWwgbGFkbyBkZSBjYWRhIHB1bnRvIHVzYW5kbyBgZ2VvbV90ZXh0KClgLCB5IGVuIGVzdGUgY2FzbyBsYSBhcGFyaWVuY2lhIGVzdMOhIGRhZGEgcG9yIGBsYWJlbGAgbyBldGlxdWV0YToKCmBgYHtyfQpwYWlzZXMgJT4lIAogIGZpbHRlcihhbmlvID09IDIwMDcpICU+JSAKICBnZ3Bsb3QoYWVzKHBpYl9wZXJfY2FwaXRhLCBlc3BlcmFuemFfZGVfdmlkYSkpICsKICBnZW9tX3BvaW50KGFlcyhjb2xvciA9IGNvbnRpbmVudGUsIHNpemUgPSBwb2JsYWNpb24pLCBhbHBoYSA9IDAuNSkgKwogIHNjYWxlX2NvbG9yX2JyZXdlcih0eXBlID0gInF1YWwiLCBwYWxldHRlID0gIkRhcmsyIikgKwogIHNjYWxlX3NpemVfYXJlYShtYXhfc2l6ZSA9IDE1LCBndWlkZSA9IE5VTEwpICsKICBzY2FsZV94X2xvZzEwKCkgKwogIGdlb21fdGV4dChhZXMobGFiZWwgPSBwYWlzKSkgCmBgYAoKUGVybyBub3Mgb2x2aWRhbW9zIHF1ZSB0ZW5lbW9zIGNhc2kgMjAwIHBhaXNlcywgZXMgcmF6b25hYmxlIGFncmVnYXJsZSBldGlxdWV0YXMgYSB0b2Rvcy4gUGVybyBwb2Ryw61hbW9zIHF1ZXJlciByZXNhbHRhciBhbGd1bm9zLCB0YWwgdmV6IGxvcyBkZSB1biBjb250aW5lbnRlIGVuIHBhcnRpY3VsYXIgbyBsb3MgcXVlIGN1bXBsZW4gY29uIGxhIGNvbmRpY2nDs24gZGUgdGVuZXIgbGFzIG1heW9yZXMgcG9ibGFjaW9uZXMgZGVsIG11bmRvLiBQYXJhIGVzbyB2YW1vcyBhIGdlbmVyYXJub3MgdW5hIG51ZXZhIHRhYmxhIGNvbiBsb3MgcGFpc2VzIHF1ZSBxdWVyZW1vcyByZXNhbHRhciB5IGRlIHBhc28gdXNhcmxhIGRlbnRybyBkZSBgZ2VvbV90ZXh0KClgLgoKYGBge3J9Cm11Y2hhX3BvYmxhY2lvbiA8LSBwYWlzZXMgJT4lIAogIGZpbHRlcihhbmlvID09IDIwMDcpICU+JSAKICBmaWx0ZXIocG9ibGFjaW9uID4gMTAwMDAwMDAwMCkgIyBQYWlzZXMgY29uIG3DoXMgZGUgdW4gYmlsbMOzbiBkZSBoYWJpdGFudGVzIQoKcGFpc2VzICU+JSAKICBmaWx0ZXIoYW5pbyA9PSAyMDA3KSAlPiUgCiAgZ2dwbG90KGFlcyhwaWJfcGVyX2NhcGl0YSwgZXNwZXJhbnphX2RlX3ZpZGEpKSArCiAgZ2VvbV9wb2ludChhZXMoY29sb3IgPSBjb250aW5lbnRlLCBzaXplID0gcG9ibGFjaW9uKSwgYWxwaGEgPSAwLjUpICsKICBzY2FsZV9jb2xvcl9icmV3ZXIodHlwZSA9ICJxdWFsIiwgcGFsZXR0ZSA9ICJEYXJrMiIpICsKICBzY2FsZV9zaXplX2FyZWEobWF4X3NpemUgPSAxNSwgZ3VpZGUgPSBOVUxMKSArCiAgc2NhbGVfeF9sb2cxMCgpICsKICBnZW9tX3RleHQoYWVzKGxhYmVsID0gcGFpcyksIAogICAgICAgICAgICBkYXRhID0gbXVjaGFfcG9ibGFjaW9uKSAgIyBFc3RhIGNhcGEgdXNhIGxhIHRhYmxhIG11Y2hhX3BvYmxhY2nDs24hCmBgYAoKOjo6IHsuYWxlcnQgLmFsZXJ0LXN1Y2Nlc3N9CgpEZWwgY8OzZGlnbyBhbnRlcmlvciBzdXJnZSBhbGdvIG11eSBpbXBvcnRhbnRlOiBlcyBwb3NpYmxlIGdlbmVyYXIgY2FwYXMgZW4gdW4gZ3LDoWZpY28gdXNhbmRvIHVuYSBkYXRhLmZyYW1lICpkaXN0aW50byogYWwgcXVlIHVzYW1vcyBwYXJhIGdyYWZpY2FyIGxhcyBjYXBhcyBhbnRlcmlvcmVzLiBFc3RvIGVzIMO6dGlsIHByaW5jaXBhbG1lbnRlIHBhcmEgZGVmaW5pciBldGlxdWV0YXMgbyByZXNhbHRhciBkZXRlcm1pbmFkYXMgb2JzZXJ2YWNpb25lcy4gCgpZIGVsIHRydWNvIGVzdMOhIGVuIHF1ZSBhbWJvcyBkYXRhLmZyYW1lcyB0aWVuZW4gbGFzIHZhcmlhYmxlcyBgcGliX3Blcl9jYXBpdGFgIHkgYGVzcGVyYW56YV9kZV92aWRhYCB5IGVudG9uY2VzIHtnZ3Bsb3QyfSBwdWVkZSBpZGVudGlmaWNhciBlbiBxdWUgcGFydGUgZGVsIGdyw6FmaWNvIChlbiBxdWUgdmFsb3JlcyBkZSB4IHkgZW4gcXVlIHZhbG9yZXMgZGUgeSkgY29sb2NhciBjYWRhIGVsZW1lbnRvLgo6OjoKClZlYW1vcyBhaG9yYSB1bmEgKGRlIHZhcmlhcykgbWFuZXJhcyBhZ3JlZ2FyIG8gbW9kaWZpY2FyIGVsZW1lbnRvcyBkZSB0ZXh0byBlbiBlbCBncsOhZmljby4gVmFtb3MgYSB1c2FyIHVuYSBudWV2YSBmdW5jacOzbiAoeSB1bmEgbnVldmEgY2FwYSEpLCBgbGFicygpYDoKCmBgYHtyfQpwYWlzZXMgJT4lIAogIGZpbHRlcihhbmlvID09IDIwMDcpICU+JSAKICBnZ3Bsb3QoYWVzKHBpYl9wZXJfY2FwaXRhLCBlc3BlcmFuemFfZGVfdmlkYSkpICsKICBnZW9tX3BvaW50KGFlcyhjb2xvciA9IGNvbnRpbmVudGUsIHNpemUgPSBwb2JsYWNpb24pLCBhbHBoYSA9IDAuNSkgKwogIHNjYWxlX2NvbG9yX2JyZXdlcih0eXBlID0gInF1YWwiLCBwYWxldHRlID0gIkRhcmsyIikgKwogIHNjYWxlX3NpemVfYXJlYShtYXhfc2l6ZSA9IDE1LCBndWlkZSA9IE5VTEwpICsKICBzY2FsZV94X2xvZzEwKCkgKwogIGdlb21fdGV4dChhZXMobGFiZWwgPSBwYWlzKSwgZGF0YSA9IG11Y2hhX3BvYmxhY2lvbikgKwogIGxhYnModGl0bGUgPSAiUGFpc2VzIGRlbCBtdW5kbyIsCiAgICAgICBzdWJ0aXRsZSA9ICJBw7FvIDIwMDciLAogICAgICAgY2FwdGlvbiA9ICJFbCB0YW1hw7FvIGRlIGNhZGEgY2lyY3VsbyByZXByZXNlbnRhIGxhIHBvYmxhY2nDs24uIiwKICAgICAgIHggPSAiUEJJIHBlciBjYXBpdGEiLAogICAgICAgeSA9ICJFc3BlcmFuemEgZGUgdmlkYSIsCiAgICAgICBjb2xvciA9ICIiKQpgYGAKCkFncmVnYW1vcyB1biB0w610dWxvLCB1biBzdWJ0w610dWxvLCBlbCBlcMOtZ3JhZmUgZGUgbGEgZmlndXJhICgqY2FwdGlvbiopIHBhcmEgbGFzIGFjbGFyYWNpb25lcyB5IGNhbWJpYW1vcyBlbCBub21icmUgZGUgbG9zIGVqZXMgcGFyYSBxdWUgc2UgdmVhbiBtZWpvci4gUGVybyBhZGVtYXMgZWxpbWluYW1vcyBlbCBub21icmUgZGUgbGEgbGV5ZW5kYSBwb3JxdWUgZXJhIHVuIHBvY28gcmVkdW5kYW50ZS4gCgojIyBUZW1hcwoKTm9zIHF1ZWRhIHVuYSDDumx0aW1hIGNvc2EgcG9yIGhhY2VyLCBjYW1iaWFyIGxhIGFwYXJpZW5jaWEgZ2xvYmFsIGRlbCBncsOhZmljby4ge2dncGxvdDJ9IHRpZW5lIG11Y2hvcyAqdGVtYXMqIGRpc3BvbmlibGVzIHkgcGFyYSB0b2RvcyBsb3MgZ3VzdG9zLiBQZXJvIGFkZW3DoXMgaGF5IG90cm9zIHBhcXVldGVzIHF1ZSBleHRpZW5kZW4gbGFzIHBvc2liaWxpZGFkZXMsIHBvciBlamVtcGxvIFt7Z2d0aGVtZXN9XShodHRwczovL2dpdGh1Yi5jb20vanJub2xkL2dndGhlbWVzKS4KClBvciBkZWZlY3RvIHtnZ3Bsb3QyfSB1c2EgYHRoZW1lX2dyZXkoKWAsIHByb2JlbW9zIGB0aGVtZV9saWdodCgpYDoKCmBgYHtyfQpwYWlzZXMgJT4lIAogIGZpbHRlcihhbmlvID09IDIwMDcpICU+JSAKICBnZ3Bsb3QoYWVzKHBpYl9wZXJfY2FwaXRhLCBlc3BlcmFuemFfZGVfdmlkYSkpICsKICBnZW9tX3BvaW50KGFlcyhjb2xvciA9IGNvbnRpbmVudGUsIHNpemUgPSBwb2JsYWNpb24pLCBhbHBoYSA9IDAuNSkgKwogIHNjYWxlX2NvbG9yX2JyZXdlcih0eXBlID0gInF1YWwiLCBwYWxldHRlID0gIkRhcmsyIikgKwogIHNjYWxlX3NpemVfYXJlYShtYXhfc2l6ZSA9IDE1LCBndWlkZSA9IE5VTEwpICsKICBzY2FsZV94X2xvZzEwKCkgKwogIGdlb21fdGV4dChhZXMobGFiZWwgPSBwYWlzKSwgZGF0YSA9IG11Y2hhX3BvYmxhY2lvbikgKwogIGxhYnModGl0bGUgPSAiUGFpc2VzIGRlbCBtdW5kbyIsCiAgICAgICBzdWJ0aXRsZSA9ICJBw7FvIDIwMDciLAogICAgICAgY2FwdGlvbiA9ICJFbCB0YW1hw7FvIGRlIGNhZGEgY2lyY3VsbyByZXByZXNlbnRhIGxhIHBvYmxhY2nDs24uIiwKICAgICAgIHggPSAiUEJJIHBlciBjYXBpdGEiLAogICAgICAgeSA9ICJFc3BlcmFuemEgZGUgdmlkYSIsCiAgICAgICBjb2xvciA9ICIiKSArCiAgdGhlbWVfbGlnaHQoKQpgYGAKCjo6OiB7LmFsZXJ0IC5hbGVydC1pbmZvfQoKQWhvcmEgZXMgdHUgdHVybm8uIEVsZWfDrSB1biBbdGVtYSBxdWUgdGUgZ3VzdGVdKGh0dHBzOi8vZXMucjRkcy5oYWRsZXkubnovaW1hZ2VzL3Zpc3VhbGl6YXRpb24tdGhlbWVzLnBuZyl7LmFsZXJ0LWxpbmt9IHkgcHJvYmFsby4gQWRlbcOhcywgc2kgc2UgdGUgb2N1cnJlIGFsZ8O6biB0w610dWxvIG1lam9yIG1vZGlmaWNhbG8hIAo6OjoKCjo6OiB7LmFsZXJ0IC5hbGVydC1zdWNjZXNzfQoKSnVudG8gY29uIGxhcyBmdW5jaW9uZXMgYHRoZW1lXy4uLigpYCwgaGF5IHVuYSBmdW5jacOzbiBsbGFtYWRhIGB0aGVtZSgpYCBxdWUgcGVybWl0ZSBjYW1iaWFyIGxhIGFwYXJpZW5jaWEgZGUgY3VhbHF1aWVyIGVsZW1lbnRvIGRlbCBncsOhZmljby4gVGllbmUgY2FzaSBpbmZpbml0YXMgb3BjaW9uZXMgeSBzaSBhbGfDum4gbW9tZW50byB0ZSBkZXN2ZWxhcyBpbnRlbnRhbmRvIGNhbWJpYXIgZXNhIGzDrW5lYSBvIGVzZSBib3JkZSwgc2VndXJvIHF1ZSBgdGhlbWUoKWAgdGllbmUgYWxndW5hIG9wY2nDs24gcGFyIGFoYWNlciBlc28uCgo6OjoK</div>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeSourceEmbed("12-ggplot-III.Rmd");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

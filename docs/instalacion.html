@@ -11,7 +11,7 @@
 
 
 
-<title>Desafío 3: Graficar los datos</title>
+<title>Cómo instalar R y RStudio</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,6 +19,9 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
@@ -248,6 +251,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -255,6 +321,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -352,29 +428,61 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Desafío 3: Graficar los datos</h1>
+<h1 class="title toc-ignore">Cómo instalar R y RStudio</h1>
 
 </div>
 
 
-<p>Ahora que ya leiste y te familiarizaste con los datos que elegiste para trabajar, el objetivo de este desafío es generar gráficos que te permitan profundizar en el análisis.</p>
-<div id="abrí-tu-proyecto" class="section level3">
-<h3>1. Abrí tu proyecto</h3>
-<p>Abrí tu proyecto desde el explorador de archivos (haciendo doble click en el archivo .Rproj) o desde a interfaz de RStudio. Trabajá sobre el mismo Rmd, que ya va tomando forma. Corré el código para cargar esa base de datos en memoria y no te olvides de los paquetes necesarios!</p>
+<div id="instalar-r" class="section level2">
+<h2>Instalar R:</h2>
+<div id="ubuntukubuntuxubuntulubuntu-etc" class="section level3">
+<h3>Ubuntu/Kubuntu/Xubuntu/Lubuntu, etc…</h3>
+<p>Ejecutá (es todo un comando)</p>
+<p><code>sudo echo &quot;deb http://cran.rstudio.com/bin/linux/ubuntu $(lsb_release -cs)/&quot; | sudo tee -a /etc/apt/sources.list</code></p>
+<p>Ahora</p>
+<p><code>sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9</code></p>
+<p>Finalmente, actualizá las fuentes de los repositorios e instalá R con:</p>
+<p><code>sudo apt update</code> <code>sudo apt install -y r-base r-base-dev</code></p>
+<p>Si todo salió bien, tenés que tener instalado R en tu máquina y podés ejecutarlo con el comando R en la consola.</p>
 </div>
-<div id="generá-un-gráfico" class="section level3">
-<h3>2. Generá un gráfico</h3>
-<p>Generá uno o más gráficos que muestre la relación entre 2 variables. Podés usar líneas, puntos, mapear el color a una variable distinta o aplicar cualquier cosa que hayamos visto en <a href="06-graficos-I.html">Graficos I</a> o <a href="07-graficos-II.html">Graficos II</a> para representar tus datos y ayudarte en el análisis.</p>
-<p>En el texto, asegurate de describir los gráficos (que variable está representada en cada coordenada y asepcto gráfico) y de interpretarlos.</p>
+<div id="otras-distribuciones-basadas-en-ubuntu" class="section level3">
+<h3>Otras distribuciones basadas en Ubuntu</h3>
+<p>Primero tenés que saber el nombre de la versión de Ubuntu está basada y luego ejecutar:</p>
+<p><code>sudo echo “deb http://cran.rstudio.com/bin/linux/debian NOMBRE/” | sudo tee -a /etc/apt/sources.list</code></p>
+<p>Reemplazando <code>NOMBRE</code> por el nombre de la versión y siguiendo los pasos 2 y 3.</p>
 </div>
-<div id="resumen-de-datos" class="section level3">
-<h3>3. Resumen de datos</h3>
-<p>Ahora probá hacer un gráfico usando paneles.</p>
-<p>Podés graficar los datos tanto como se te ocurra, la idea es que te familiarices con ggplot al mismo tiempo que profundizas en el análisis de datos que estás utilizando. Siempre es una buena idea desribir tu interpretación de los gráficos junto al <em>chunk</em> correspondiente.</p>
+<div id="otras-distribuciones-no-basadas-en-ubuntu" class="section level3">
+<h3>Otras distribuciones no basadas en Ubuntu</h3>
+<p>Si tenés Debian, podés seguir los mismos pasos que antes pero ejecutar</p>
+<p><code>sudo echo “deb http://cran.rstudio.com/bin/linux/debian CODENAME-cran34/” | sudo tee -a /etc/apt/sources.list</code> en el paso 2.</p>
+</div>
+<div id="windows" class="section level3">
+<h3>Windows</h3>
+<p>Entrá a <a href="https://cran.r-project.org/bin/windows/base/">https://cran.r-project.org/bin/windows/base/</a> y bajate el instalador haciendo click en el link grandote que dice “Download R 4.0.0 for Windows”. Una vez que se bajó, hacé doble click en el archivo y seguí las instrucciones del instalador.</p>
+</div>
+</div>
+<div id="instalar-rstudio" class="section level2">
+<h2>Instalar RStudio</h2>
+<p>Ir a <a href="https://www.rstudio.com/products/rstudio/download/#download">https://www.rstudio.com/products/rstudio/download/#download</a> y abajo de todo está el listado de instaladores para cada plafatorma.</p>
+<div id="ubuntu-o-derivados" class="section level3">
+<h3>Ubuntu o derivados</h3>
+<p>Si tenés instalado una interfaz gráfica para instalar archivos .deb, ejecutando el archivo que descargaste ya vas a poder instalar RStudio. Si no, abrí una terminal en el directorio donde bajaste el archivo y ejecutá</p>
+<p><code>sudo dpkg -i ARCHIVO</code></p>
+<p>Reemplazando <code>ARCHIVO</code> por el nombre del archivo instalador.</p>
+<p>Es posible que salte algún error por falta de alguna dependencia, en ese caso usá</p>
+<p><code>sudo apt-get -f install</code></p>
+<p>Y debería estar arreglado.</p>
+</div>
+<div id="windows-1" class="section level3">
+<h3>Windows</h3>
+<p>Como siempre, doble click en el archivo y seguir los pasos de instalación.</p>
+</div>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -407,6 +515,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

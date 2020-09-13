@@ -25,25 +25,98 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
-<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
 
 <style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { background-color: #f8f8f8; }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ef2929; } /* Alert */
+code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #c4a000; } /* Attribute */
+code span.bn { color: #0000cf; } /* BaseN */
+code span.cf { color: #204a87; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4e9a06; } /* Char */
+code span.cn { color: #000000; } /* Constant */
+code span.co { color: #8f5902; font-style: italic; } /* Comment */
+code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #8f5902; font-weight: bold; font-style: italic; } /* Documentation */
+code span.dt { color: #204a87; } /* DataType */
+code span.dv { color: #0000cf; } /* DecVal */
+code span.er { color: #a40000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #0000cf; } /* Float */
+code span.fu { color: #000000; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #8f5902; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #204a87; font-weight: bold; } /* Keyword */
+code span.op { color: #ce5c00; font-weight: bold; } /* Operator */
+code span.ot { color: #8f5902; } /* Other */
+code span.pp { color: #8f5902; font-style: italic; } /* Preprocessor */
+code span.sc { color: #000000; } /* SpecialChar */
+code span.ss { color: #4e9a06; } /* SpecialString */
+code span.st { color: #4e9a06; } /* String */
+code span.va { color: #000000; } /* Variable */
+code span.vs { color: #4e9a06; } /* VerbatimString */
+code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
 <style type="text/css">
   pre:not([class]) {
     background-color: white;
   }
 </style>
-<script type="text/javascript">
-if (window.hljs) {
-  hljs.configure({languages: []});
-  hljs.initHighlightingOnLoad();
-  if (document.readyState && document.readyState === "complete") {
-    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
-  }
-}
-</script>
-
 
 
 <style type="text/css">
@@ -449,11 +522,11 @@ div.tocify {
 
 
 <p>Hasta ahora, y asumiendo que recorriste los episodios anteriores, visualizamos los datos tal cual vienen en la base de datos o con ayuda de {dplyr} para transformarlos. Pero como adelantamos con <code>geom_smooth()</code>, hay ciertas transformaciones comunes que se pueden hacer usando {ggplot2}.</p>
-<p>De paso vamos a usar datos incluidos en el paquete <code>datos</code> (muchos paquetes traen bases de datos para probar cosas, ¡este en particular son todas bases de datos en español!) que podés descargar como siempre con <code>install.packages("datos")</code>. Los datos <code>diamantes</code> contiene información sobre ~ 54000 diamantes, incluido el <code>precio</code>, el <code>quilate</code>, el <code>color</code>, la <code>claridad</code> y el <code>corte</code> de cada uno.</p>
-<pre class="r"><code>library(ggplot2)
-library(dplyr)
-library(datos)
-str(diamantes)</code></pre>
+<p>De paso vamos a usar datos incluidos en el paquete <code>datos</code> (muchos paquetes traen bases de datos para probar cosas, ¡este en particular son todas bases de datos en español!) que podés descargar como siempre con <code>install.packages(&quot;datos&quot;)</code>. Los datos <code>diamantes</code> contiene información sobre ~ 54000 diamantes, incluido el <code>precio</code>, el <code>quilate</code>, el <code>color</code>, la <code>claridad</code> y el <code>corte</code> de cada uno.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(datos)</a>
+<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">str</span>(diamantes)</a></code></pre></div>
 <pre><code>## tibble [53,940 × 10] (S3: tbl_df/tbl/data.frame)
 ##  $ precio     : int [1:53940] 326 326 327 334 335 336 336 337 337 338 ...
 ##  $ quilate    : num [1:53940] 0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...
@@ -468,13 +541,13 @@ str(diamantes)</code></pre>
 <div id="gráficos-de-frecuencias" class="section level2">
 <h2>Gráficos de frecuencias</h2>
 <p>Este es un gráfico de barras construido usando la función <code>geom_bar()</code>. En el eje x muestra el <code>corte</code> de los diamantes y en el eje y la cantidad (<em>count</em> en inglés) de diamantes en cada categoría. Pero <code>diamantes</code> no tiene una variable que se llame <code>count</code> y tampoco la generamos nosotros. ¡Es calculada internamente por {ggplot2}!</p>
-<pre class="r"><code>ggplot(data = diamantes, aes(x = corte)) +
-  geom_bar()</code></pre>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamantes, <span class="kw">aes</span>(<span class="dt">x =</span> corte)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>Cómo el gráfico de barras, también podemos graficar histogramas con <code>geom_histogram()</code> y polígonos de frecuencia con <code>geom_density()</code> para visualizar la cantidad de observaciones que caen en cada categoría (si la variable es discreta como el caso del corte de los diamantes) o rango de valores (para variables continuas).</p>
 <p>Un ejemplo de variable continua es el <code>precio</code> de los diamantes, veamos como se ve un histograma y de paso le cambiamos el color a las barras, pero ojo, solo al borde.</p>
-<pre class="r"><code>ggplot(diamantes, aes(precio)) +
-  geom_histogram(color = &quot;darkorange&quot;)</code></pre>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(precio)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;darkorange&quot;</span>)</a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <div class="alert alert-info">
@@ -485,8 +558,8 @@ str(diamantes)</code></pre>
 <p>También podés revisar la documentación.</p>
 </div>
 <p>Además de contar la cantidad de elementos, {ggplot2} puede calcular muchas otras transformaciones sobre los datos. Por ejemplo si quisiéramos el porcentaje o la proporción que le corresponde a cada categoría de <code>corte</code> respecto del total podemos hacerlo <em>mapeando</em> esa transformación <code>prop</code> al eje y con la función <code>stat()</code>.</p>
-<pre class="r"><code>ggplot(data = diamantes, aes(x = corte)) +
-  geom_bar(aes(y = stat(prop), group = 1))</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamantes, <span class="kw">aes</span>(<span class="dt">x =</span> corte)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">y =</span> <span class="kw">stat</span>(prop), <span class="dt">group =</span> <span class="dv">1</span>))</a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Fijate que la variable <code>prop</code> no es una columna de <code>diamantes</code> sino que es el nombre de una variable computada por <code>geom_bar()</code>, por eso hay que rodearla de la función <code>stat()</code>. El nombre de las variables computadas por cada geoms está en su documentación (abajo de todo, antes de los ejemplos).</p>
 <p>Ahora podríamos decir que el 40% de los diamantes en la base de datos tienen un corte <em>ideal</em>. Además de la función <code>stat()</code> agregamos <code>group = 1</code> y esto no fue sin querer. Probá correr el gráfico sin ese argumento.</p>
@@ -494,36 +567,36 @@ str(diamantes)</code></pre>
 <div id="posición" class="section level3">
 <h3>Posición</h3>
 <p>Ya vimos que la estética del <code>color</code> sólo modifica el borde de las barras, si quisieras modificar el relleno necesitamos cambiar el <code>fill</code> y al igual que antes podemos <em>mapear</em> una variable a esta estética.</p>
-<pre class="r"><code>ggplot(data = diamantes) +
-  geom_bar(aes(x = corte, fill = claridad))</code></pre>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamantes) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> corte, <span class="dt">fill =</span> claridad))</a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Al <em>mapear</em> una variable distinta, la claridad de los diamantes, podemmos visualizar información extra. Este “apilamiento” de las barras es la opción de posición por defecto <code>position = &quot;stack&quot;</code>, pero podrías usar una de las otras tres opciones: <code>&quot;identity&quot;</code>, <code>&quot;dodge&quot;</code> o <code>&quot;fill&quot;</code>.</p>
 <ul>
 <li><code>position = &quot;identity&quot;</code> colocará cada barra comenzando en cero quedando todas superpuestas. Para ver esa superposición, debemos hacer que las barras sean ligeramente transparentes configurando el <code>alpha</code> a un valor pequeño.</li>
 </ul>
-<pre class="r"><code>ggplot(diamantes) +
-  geom_bar(aes(x = corte, fill = claridad), alpha = 0.2, position = &quot;identity&quot;)</code></pre>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> corte, <span class="dt">fill =</span> claridad), <span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>)</a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <ul>
 <li><code>position = &quot;fill&quot;</code> apila las barras al igual que <code>position = &quot;stack&quot;</code>, pero transforma los datos para que cada conjunto de barras apiladas tenga la misma altura. Esto hace que sea más fácil comparar proporciones entre grupos.</li>
 </ul>
-<pre class="r"><code>ggplot(diamantes) +
-  geom_bar(aes(x = corte, fill = claridad), position = &quot;fill&quot;)</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> corte, <span class="dt">fill =</span> claridad), <span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <ul>
 <li><code>position = &quot;dodge&quot;</code> coloca las barras una al lado de la otra. Esto hace que sea más fácil comparar valores individuales.</li>
 </ul>
-<pre class="r"><code>ggplot(diamantes) +
-  geom_bar(aes(x = corte, fill = claridad), position = &quot;dodge&quot;)</code></pre>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> corte, <span class="dt">fill =</span> claridad), <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 </div>
 <div id="gráficos-de-líneas-suavizas" class="section level2">
 <h2>Gráficos de líneas suavizas</h2>
 <p>Cómo vimos antes, los gráficos de líneas suavizadas (smoothers) ajustan un modelo a los datos y luego grafican las predicciones del modelo. Sin entrar en muchos detalles, se puede aplicar distintos modelos y la elección del mismo dependerá de los datos.</p>
-<pre class="r"><code>ggplot(diamantes, aes(quilate, precio)) +
-  geom_point() +
-  geom_smooth()</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>()</a></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
@@ -531,8 +604,8 @@ str(diamantes)</code></pre>
 <h2>Gráficos de caja</h2>
 <p>Los diagramas de caja, mejor conocidos como boxplots calculan un resumen robusto de la distribución y luego muestran una caja con formato especial.</p>
 <p>La línea central de la caja corresponde a la <strong>mediana</strong> (el valor que toma el dato central) y los extremos de la caja son los <strong>cuartiles 1 y 3</strong>, definiendo así el <strong>rango intercuartil</strong> (IQR). Los extremos están definidos como el valor observado que no esté más lejos de <strong>1.5*IQR</strong> de la mediana y los puntos son los las observaciones que se escapan de ese rango, que pueden ser considerados <strong>outliners</strong> o <strong>valores extremos</strong>.</p>
-<pre class="r"><code>ggplot(diamantes, aes(claridad, precio)) +
-  geom_boxplot()</code></pre>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(claridad, precio)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Los boxplot dan muchísima información sobre los datos pero al mismo tiempo <em>esconden</em> la cantidad de observaciones que se usaron para generarlos y en particular cual es la frecuencia a lo largo del eje y. Por esta razón también existen <code>geom_violin()</code> y <code>geom_jitter()</code>.</p>
 <div class="alert alert-info">
@@ -542,11 +615,11 @@ str(diamantes)</code></pre>
 <li>¿Qué ventajas y desventajas encuentran respecto de <code>geom_boxplot()</code>?</li>
 </ol>
 </div>
-<pre class="r"><code>ggplot(diamantes, aes(claridad, precio)) +
-  geom_violin() </code></pre>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(claridad, precio)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_violin</span>() </a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<pre class="r"><code>ggplot(diamantes, aes(claridad, precio)) +
-  geom_jitter()</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(claridad, precio)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_jitter</span>()</a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <div class="alert alert-success">
 <p>Cuando nuestra base de datos es muy grande corremos el riesgo de generar de que los elementos del gráfico estén tan juntos que se solapen y no se vean. Esto se conoce como <strong>overplotting</strong>. La base de datos <code>diamantes</code> tiene 53940 observaciones y al graficar un punto por cada una, aún si están separados por la claridad, quedan superpuestos.</p>
@@ -556,25 +629,25 @@ str(diamantes)</code></pre>
 <div id="graficando-en-múltiples-paneles" class="section level2">
 <h2>Graficando en múltiples paneles</h2>
 <p>Vimos que es posible graficar más de dos variables en un gráfico <em>mapeando</em> una variable al <code>color</code> o por ejemplo el tipo de línea o <code>linetype</code></p>
-<pre class="r"><code>ggplot(diamantes, aes(quilate, precio)) +
-  geom_point(aes(color = color))</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color))</a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>En este caso no solo visualizamos la relación entre el precio y el quilate del diamante, también podemos ver que rol juega el color. También podríamos haber intentando resolver el problema generando un gráfico por cada color filtrando las observaciones correspondientes.</p>
-<pre class="r"><code>diamantes %&gt;% 
-  filter(color == &quot;D&quot;) %&gt;% 
-  ggplot(aes(quilate, precio)) +
-  geom_point(aes(color = color))</code></pre>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">diamantes <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(color <span class="op">==</span><span class="st"> &quot;D&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color))</a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Pero sería muchísimo trabajo si tenemos que hacer esto para cada una de las 7 categorías de color. La buena noticia es que {ggplot2} tiene un par de funciones justo para resolver este problema:</p>
-<pre class="r"><code>ggplot(diamantes, aes(quilate, precio)) +
-  geom_point(aes(color = color)) +
-  facet_wrap(~color)</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>color)</a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>Esta nueva capa con <code>facet_wrap()</code> divide al gráfico inicial en 7 paneles o <em>facets</em>, uno por cada color. Esta función requiere saber que variable será la responsable de separar los paneles y para eso se usa la <strong>notación de funciones</strong> de R: <code>~color</code>. Esto se lee como generar paneles <em>“en función del color”</em>.</p>
 <p>¿Y si quisieramos generar paneles a partir de 2 variables? Para eso existe <code>facet_grid()</code>. En este gráfico generamos paneles viendo la <em>“relación entre el corte y el color”</em> y por ejemplo en el primer panel arriba a la izquierda podremos observar los diamantes que son al mismo tiempo de color D y corte Regular. En este caso <em>mapear</em> la variable color al color de los diamantes no parece ser encesario ya que cada columna ya nos permite identificar eso, sin embargo en algunos casos ayuda a leer el gráfico más rápido.</p>
-<pre class="r"><code>ggplot(diamantes, aes(quilate, precio)) +
-  geom_point(aes(color = color)) +
-  facet_grid(corte~color)</code></pre>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_grid</span>(corte<span class="op">~</span>color)</a></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <div class="alert alert-info">
 <p><strong>Tercer desafío</strong></p>
@@ -583,7 +656,7 @@ str(diamantes)</code></pre>
 </div>
 </div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiVmlzdWFsaXphY2nDs24gZGUgZGF0b3MgY29uIHtnZ3Bsb3QyfSBJSSIKb3V0cHV0OiAKICBodG1sX2RvY3VtZW50OgogICAgY29kZV9kb3dubG9hZDogdHJ1ZQogICAgdG9jOiB0cnVlCiAgICB0b2NfZmxvYXQ6IHRydWUKLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQpgYGAKCkhhc3RhIGFob3JhLCB5IGFzdW1pZW5kbyBxdWUgcmVjb3JyaXN0ZSBsb3MgZXBpc29kaW9zIGFudGVyaW9yZXMsIHZpc3VhbGl6YW1vcyBsb3MgZGF0b3MgdGFsIGN1YWwgdmllbmVuIGVuIGxhIGJhc2UgZGUgZGF0b3MgbyBjb24gYXl1ZGEgZGUge2RwbHlyfSBwYXJhIHRyYW5zZm9ybWFybG9zLiBQZXJvIGNvbW8gYWRlbGFudGFtb3MgY29uIGBnZW9tX3Ntb290aCgpYCwgaGF5IGNpZXJ0YXMgdHJhbnNmb3JtYWNpb25lcyBjb211bmVzIHF1ZSBzZSBwdWVkZW4gaGFjZXIgdXNhbmRvIHtnZ3Bsb3QyfS4KCkRlIHBhc28gdmFtb3MgYSB1c2FyIGRhdG9zIGluY2x1aWRvcyBlbiBlbCBwYXF1ZXRlIGBkYXRvc2AgKG11Y2hvcyBwYXF1ZXRlcyB0cmFlbiBiYXNlcyBkZSBkYXRvcyBwYXJhIHByb2JhciBjb3NhcywgwqFlc3RlIGVuIHBhcnRpY3VsYXIgc29uIHRvZGFzIGJhc2VzIGRlIGRhdG9zIGVuIGVzcGHDsW9sISkgcXVlIHBvZMOpcyBkZXNjYXJnYXIgY29tbyBzaWVtcHJlIGNvbiBgaW5zdGFsbC5wYWNrYWdlcygiZGF0b3MiKWAuIExvcyBkYXRvcyBgZGlhbWFudGVzYCBjb250aWVuZSBpbmZvcm1hY2nDs24gc29icmUgfiA1NDAwMCBkaWFtYW50ZXMsIGluY2x1aWRvIGVsIGBwcmVjaW9gLCBlbCBgcXVpbGF0ZWAsIGVsIGBjb2xvcmAsIGxhIGBjbGFyaWRhZGAgeSBlbCBgY29ydGVgIGRlIGNhZGEgdW5vLgoKYGBge3IgbWVzc2FnZT1GQUxTRX0KbGlicmFyeShnZ3Bsb3QyKQpsaWJyYXJ5KGRwbHlyKQpsaWJyYXJ5KGRhdG9zKQpzdHIoZGlhbWFudGVzKQpgYGAKCiMjIEdyw6FmaWNvcyBkZSBmcmVjdWVuY2lhcwoKRXN0ZSBlcyB1biBncsOhZmljbyBkZSBiYXJyYXMgY29uc3RydWlkbyB1c2FuZG8gbGEgZnVuY2nDs24gYGdlb21fYmFyKClgLiBFbiBlbCBlamUgeCBtdWVzdHJhIGVsIGBjb3J0ZWAgZGUgbG9zIGRpYW1hbnRlcyB5IGVuIGVsIGVqZSB5IGxhIGNhbnRpZGFkICgqY291bnQqIGVuIGluZ2zDqXMpIGRlIGRpYW1hbnRlcyBlbiBjYWRhIGNhdGVnb3LDrWEuIFBlcm8gYGRpYW1hbnRlc2Agbm8gdGllbmUgdW5hIHZhcmlhYmxlIHF1ZSBzZSBsbGFtZSBgY291bnRgIHkgdGFtcG9jbyBsYSBnZW5lcmFtb3Mgbm9zb3Ryb3MuIMKhRXMgY2FsY3VsYWRhIGludGVybmFtZW50ZSBwb3Ige2dncGxvdDJ9IQoKYGBge3J9CmdncGxvdChkYXRhID0gZGlhbWFudGVzLCBhZXMoeCA9IGNvcnRlKSkgKwogIGdlb21fYmFyKCkKYGBgCgpDw7NtbyBlbCBncsOhZmljbyBkZSBiYXJyYXMsIHRhbWJpw6luIHBvZGVtb3MgZ3JhZmljYXIgaGlzdG9ncmFtYXMgY29uIGBnZW9tX2hpc3RvZ3JhbSgpYCB5IHBvbMOtZ29ub3MgZGUgZnJlY3VlbmNpYSBjb24gYGdlb21fZGVuc2l0eSgpYCBwYXJhIHZpc3VhbGl6YXIgbGEgY2FudGlkYWQgZGUgb2JzZXJ2YWNpb25lcyBxdWUgY2FlbiBlbiBjYWRhIGNhdGVnb3LDrWEgKHNpIGxhIHZhcmlhYmxlIGVzIGRpc2NyZXRhIGNvbW8gZWwgY2FzbyBkZWwgY29ydGUgZGUgbG9zIGRpYW1hbnRlcykgbyByYW5nbyBkZSB2YWxvcmVzIChwYXJhIHZhcmlhYmxlcyBjb250aW51YXMpLiAKClVuIGVqZW1wbG8gZGUgdmFyaWFibGUgY29udGludWEgZXMgZWwgYHByZWNpb2AgZGUgbG9zIGRpYW1hbnRlcywgdmVhbW9zIGNvbW8gc2UgdmUgdW4gaGlzdG9ncmFtYSB5IGRlIHBhc28gbGUgY2FtYmlhbW9zIGVsIGNvbG9yIGEgbGFzIGJhcnJhcywgcGVybyBvam8sIHNvbG8gYWwgYm9yZGUuCgpgYGB7cn0KZ2dwbG90KGRpYW1hbnRlcywgYWVzKHByZWNpbykpICsKICBnZW9tX2hpc3RvZ3JhbShjb2xvciA9ICJkYXJrb3JhbmdlIikKYGBgCgo6Ojogey5hbGVydCAuYWxlcnQtaW5mb30KKipQcmltZXIgZGVzYWbDrW8qKgoKwr9Ob3Rhc3RlIGVsIG1lbnNhamUgcXVlIGRldnVlbHZlIGVsIGdyw6FmaWNvPyAKCmBgc3RhdF9iaW4oKWAgdXNpbmcgYGJpbnMgPSAzMGAuIFBpY2sgYmV0dGVyIHZhbHVlIHdpdGggYGJpbndpZHRoYC5gCgpFc3RhIGdlb21ldHLDrWEgdGllbmUgZG9zIGFyZ3VtZW50b3MgaW1wb3J0YW50ZXMgYGJpbnNgIHkgYGJpbndpZHRoYC4gQ2FtYmnDoSBlbCB2YWxvciBkZSBhbGd1bm8gZGUgbG9zIGRvcyBhcmd1bWVudG9zIHkgdm9sdsOpIGEgZ2VuZXJhciBlbCBncsOhZmljbywgwr9xdWUgcm9sIGp1ZWdhbiBsb3MgYXJndW1lbnRvcz8KClRhbWJpw6luIHBvZMOpcyByZXZpc2FyIGxhIGRvY3VtZW50YWNpw7NuLgo6OjoKCkFkZW3DoXMgZGUgY29udGFyIGxhIGNhbnRpZGFkIGRlIGVsZW1lbnRvcywge2dncGxvdDJ9IHB1ZWRlIGNhbGN1bGFyIG11Y2hhcyBvdHJhcyB0cmFuc2Zvcm1hY2lvbmVzIHNvYnJlIGxvcyBkYXRvcy4gUG9yIGVqZW1wbG8gc2kgcXVpc2nDqXJhbW9zIGVsIHBvcmNlbnRhamUgbyBsYSBwcm9wb3JjacOzbiBxdWUgbGUgY29ycmVzcG9uZGUgYSBjYWRhIGNhdGVnb3LDrWEgZGUgYGNvcnRlYCByZXNwZWN0byBkZWwgdG90YWwgcG9kZW1vcyBoYWNlcmxvICptYXBlYW5kbyogZXNhIHRyYW5zZm9ybWFjacOzbiBgcHJvcGAgYWwgZWplIHkgY29uIGxhIGZ1bmNpw7NuIGBzdGF0KClgLgoKYGBge3J9CmdncGxvdChkYXRhID0gZGlhbWFudGVzLCBhZXMoeCA9IGNvcnRlKSkgKwogIGdlb21fYmFyKGFlcyh5ID0gc3RhdChwcm9wKSwgZ3JvdXAgPSAxKSkKYGBgCgpGaWphdGUgcXVlIGxhIHZhcmlhYmxlIGBwcm9wYCBubyBlcyB1bmEgY29sdW1uYSBkZSBgZGlhbWFudGVzYCBzaW5vIHF1ZSBlcyBlbCBub21icmUgZGUgdW5hIHZhcmlhYmxlIGNvbXB1dGFkYSBwb3IgYGdlb21fYmFyKClgLCBwb3IgZXNvIGhheSBxdWUgcm9kZWFybGEgZGUgbGEgZnVuY2nDs24gYHN0YXQoKWAuIEVsIG5vbWJyZSBkZSBsYXMgdmFyaWFibGVzIGNvbXB1dGFkYXMgcG9yIGNhZGEgZ2VvbXMgZXN0w6EgZW4gc3UgZG9jdW1lbnRhY2nDs24gKGFiYWpvIGRlIHRvZG8sIGFudGVzIGRlIGxvcyBlamVtcGxvcykuCgpBaG9yYSBwb2Ryw61hbW9zIGRlY2lyIHF1ZSBlbCA0MCUgZGUgbG9zIGRpYW1hbnRlcyBlbiBsYSBiYXNlIGRlIGRhdG9zIHRpZW5lbiB1biBjb3J0ZSAqaWRlYWwqLiBBZGVtw6FzIGRlIGxhIGZ1bmNpw7NuICBgc3RhdCgpYCBhZ3JlZ2Ftb3MgYGdyb3VwID0gMWAgeSBlc3RvIG5vIGZ1ZSBzaW4gcXVlcmVyLiBQcm9iw6EgY29ycmVyIGVsIGdyw6FmaWNvIHNpbiBlc2UgYXJndW1lbnRvLgoKQWwgaW5jbHVpciBgZ3JvdXAgPSAxYCwge2dncGxvdDJ9IGp1bnRhIHRvZGFzIGxhcyBvYnNlcnZhY2lvbmVzIGVuIHVuIMO6bmljbyBncnVwbyAoY29uIGVsIHZhbG9yIGAxYCkgeSBjYWxjdWxhIGxhIHByb3BvcmNpw7NuIG8gZWwgcG9yY2VudGFqZSBxdWUgcmVwcmVzZW50YSBjYWRhIGNvcnRlIHJlc3BlY3RvIGRlbCB0b3RhbCBkZSBkaWFtYW50ZXMuIFNpIG5vIGluY2x1aW1vcyBlc28sIHtnZ3Bsb3QyfSBhc3VtaXLDoSBxdWUgY2FkYSBjYXRlZ29yw61hIGRlIGNvcnRlIGVzIHVuIGdydXBvIGluZGVwZW5kaWVudGUgeSBlbCBjw6FsY3VsbyBkZWwgcG9yY2VudGFqZSB0YW1iacOpbiBsbyBoYXLDoSBwb3Igc2VwYXJhZG8uIAoKCiMjIyBQb3NpY2nDs24KCllhIHZpbW9zIHF1ZSBsYSBlc3TDqXRpY2EgZGVsIGBjb2xvcmAgc8OzbG8gbW9kaWZpY2EgZWwgYm9yZGUgZGUgbGFzIGJhcnJhcywgc2kgcXVpc2llcmFzIG1vZGlmaWNhciBlbCByZWxsZW5vIG5lY2VzaXRhbW9zIGNhbWJpYXIgZWwgYGZpbGxgIHkgYWwgaWd1YWwgcXVlIGFudGVzIHBvZGVtb3MgKm1hcGVhciogdW5hIHZhcmlhYmxlIGEgZXN0YSBlc3TDqXRpY2EuCgpgYGB7cn0KZ2dwbG90KGRhdGEgPSBkaWFtYW50ZXMpICsKICBnZW9tX2JhcihhZXMoeCA9IGNvcnRlLCBmaWxsID0gY2xhcmlkYWQpKQpgYGAKCkFsICptYXBlYXIqIHVuYSB2YXJpYWJsZSBkaXN0aW50YSwgbGEgY2xhcmlkYWQgZGUgbG9zIGRpYW1hbnRlcywgcG9kZW1tb3MgdmlzdWFsaXphciBpbmZvcm1hY2nDs24gZXh0cmEuIEVzdGUgImFwaWxhbWllbnRvIiBkZSBsYXMgYmFycmFzIGVzIGxhIG9wY2nDs24gZGUgcG9zaWNpw7NuIHBvciBkZWZlY3RvIGBwb3NpdGlvbiA9ICJzdGFjayJgLCBwZXJvIHBvZHLDrWFzIHVzYXIgdW5hIGRlIGxhcyBvdHJhcyB0cmVzIG9wY2lvbmVzOiBgImlkZW50aXR5ImAsIGAiZG9kZ2UiYCBvIGAiZmlsbCJgLgoKKiBgcG9zaXRpb24gPSAiaWRlbnRpdHkiYCBjb2xvY2Fyw6EgY2FkYSBiYXJyYSBjb21lbnphbmRvIGVuIGNlcm8gcXVlZGFuZG8gdG9kYXMgc3VwZXJwdWVzdGFzLiBQYXJhIHZlciBlc2Egc3VwZXJwb3NpY2nDs24sIGRlYmVtb3MgaGFjZXIgcXVlIGxhcyBiYXJyYXMgc2VhbiBsaWdlcmFtZW50ZSB0cmFuc3BhcmVudGVzIGNvbmZpZ3VyYW5kbyBlbCBgYWxwaGFgIGEgdW4gdmFsb3IgcGVxdWXDsW8uCgpgYGB7cn0KZ2dwbG90KGRpYW1hbnRlcykgKwogIGdlb21fYmFyKGFlcyh4ID0gY29ydGUsIGZpbGwgPSBjbGFyaWRhZCksIGFscGhhID0gMC4yLCBwb3NpdGlvbiA9ICJpZGVudGl0eSIpCmBgYAoKKiBgcG9zaXRpb24gPSAiZmlsbCJgIGFwaWxhIGxhcyBiYXJyYXMgYWwgaWd1YWwgcXVlIGBwb3NpdGlvbiA9ICJzdGFjayJgLCBwZXJvIHRyYW5zZm9ybWEgbG9zIGRhdG9zIHBhcmEgcXVlIGNhZGEgY29uanVudG8gZGUgYmFycmFzIGFwaWxhZGFzIHRlbmdhIGxhIG1pc21hIGFsdHVyYS4gRXN0byBoYWNlIHF1ZSBzZWEgbcOhcyBmw6FjaWwgY29tcGFyYXIgcHJvcG9yY2lvbmVzIGVudHJlIGdydXBvcy4KCmBgYHtyfQpnZ3Bsb3QoZGlhbWFudGVzKSArCiAgZ2VvbV9iYXIoYWVzKHggPSBjb3J0ZSwgZmlsbCA9IGNsYXJpZGFkKSwgcG9zaXRpb24gPSAiZmlsbCIpCmBgYAoKKiBgcG9zaXRpb24gPSAiZG9kZ2UiYCBjb2xvY2EgbGFzIGJhcnJhcyB1bmEgYWwgbGFkbyBkZSBsYSBvdHJhLiBFc3RvIGhhY2UgcXVlIHNlYSBtw6FzIGbDoWNpbCBjb21wYXJhciB2YWxvcmVzIGluZGl2aWR1YWxlcy4KCmBgYHtyfQpnZ3Bsb3QoZGlhbWFudGVzKSArCiAgZ2VvbV9iYXIoYWVzKHggPSBjb3J0ZSwgZmlsbCA9IGNsYXJpZGFkKSwgcG9zaXRpb24gPSAiZG9kZ2UiKQpgYGAKCiMjIEdyw6FmaWNvcyBkZSBsw61uZWFzIHN1YXZpemFzCgpDw7NtbyB2aW1vcyBhbnRlcywgbG9zIGdyw6FmaWNvcyBkZSBsw61uZWFzIHN1YXZpemFkYXMgKHNtb290aGVycykgYWp1c3RhbiB1biBtb2RlbG8gYSBsb3MgZGF0b3MgeSBsdWVnbyBncmFmaWNhbiBsYXMgcHJlZGljY2lvbmVzIGRlbCBtb2RlbG8uIFNpbiBlbnRyYXIgZW4gbXVjaG9zIGRldGFsbGVzLCBzZSBwdWVkZSBhcGxpY2FyIGRpc3RpbnRvcyBtb2RlbG9zIHkgbGEgZWxlY2Npw7NuIGRlbCBtaXNtbyBkZXBlbmRlcsOhIGRlIGxvcyBkYXRvcy4gCgpgYGB7cn0KZ2dwbG90KGRpYW1hbnRlcywgYWVzKHF1aWxhdGUsIHByZWNpbykpICsKICBnZW9tX3BvaW50KCkgKwogIGdlb21fc21vb3RoKCkKYGBgCgojIyBHcsOhZmljb3MgZGUgY2FqYQoKTG9zIGRpYWdyYW1hcyBkZSBjYWphLCBtZWpvciBjb25vY2lkb3MgY29tbyBib3hwbG90cyBjYWxjdWxhbiB1biByZXN1bWVuIHJvYnVzdG8gZGUgbGEgZGlzdHJpYnVjacOzbiB5IGx1ZWdvIG11ZXN0cmFuIHVuYSBjYWphIGNvbiBmb3JtYXRvIGVzcGVjaWFsLiAKCkxhIGzDrW5lYSBjZW50cmFsIGRlIGxhIGNhamEgY29ycmVzcG9uZGUgYSBsYSAqKm1lZGlhbmEqKiAoZWwgdmFsb3IgcXVlIHRvbWEgZWwgZGF0byBjZW50cmFsKSB5IGxvcyBleHRyZW1vcyBkZSBsYSBjYWphIHNvbiBsb3MgKipjdWFydGlsZXMgMSB5IDMqKiwgZGVmaW5pZW5kbyBhc8OtIGVsICoqcmFuZ28gaW50ZXJjdWFydGlsKiogKElRUikuIExvcyBleHRyZW1vcyBlc3TDoW4gZGVmaW5pZG9zIGNvbW8gZWwgdmFsb3Igb2JzZXJ2YWRvIHF1ZSBubyBlc3TDqSBtw6FzIGxlam9zIGRlICoqMS41XCpJUVIqKiBkZSBsYSBtZWRpYW5hIHkgbG9zIHB1bnRvcyBzb24gbG9zIGxhcyBvYnNlcnZhY2lvbmVzIHF1ZSBzZSBlc2NhcGFuIGRlIGVzZSByYW5nbywgcXVlIHB1ZWRlbiBzZXIgY29uc2lkZXJhZG9zICoqb3V0bGluZXJzKiogbyAqKnZhbG9yZXMgZXh0cmVtb3MqKi4KCmBgYHtyfQpnZ3Bsb3QoZGlhbWFudGVzLCBhZXMoY2xhcmlkYWQsIHByZWNpbykpICsKICBnZW9tX2JveHBsb3QoKQpgYGAKCkxvcyBib3hwbG90IGRhbiBtdWNow61zaW1hIGluZm9ybWFjacOzbiBzb2JyZSBsb3MgZGF0b3MgcGVybyBhbCBtaXNtbyB0aWVtcG8gKmVzY29uZGVuKiBsYSBjYW50aWRhZCBkZSBvYnNlcnZhY2lvbmVzIHF1ZSBzZSB1c2Fyb24gcGFyYSBnZW5lcmFybG9zIHkgZW4gcGFydGljdWxhciBjdWFsIGVzIGxhIGZyZWN1ZW5jaWEgYSBsbyBsYXJnbyBkZWwgZWplIHkuIFBvciBlc3RhIHJhesOzbiB0YW1iacOpbiBleGlzdGVuIGBnZW9tX3Zpb2xpbigpYCB5IGBnZW9tX2ppdHRlcigpYC4KCjo6OiB7LmFsZXJ0IC5hbGVydC1pbmZvfQoqKlNlZ3VuZG8gZGVzYWbDrW8qKgoKMS4gVm9sdsOpIGEgZ3JhZmljYXIgbGEgZGlzdHJpYnVjacOzbiBkZWwgcHJlY2lvIHBhcmEgY2FkYSB0aXBvIGRlIGNsYXJpZGFkIHBlcm8gYWhvcmEgdXNhbmRvIGBnZW9tX3Zpb2xpbigpYCB5IGBnZW9tX2ppdHRlcigpYC4KMi4gwr9RdcOpIHZlbnRhamFzIHkgZGVzdmVudGFqYXMgZW5jdWVudHJhbiByZXNwZWN0byBkZSBgZ2VvbV9ib3hwbG90KClgPwo6OjoKCmBgYHtyfQpnZ3Bsb3QoZGlhbWFudGVzLCBhZXMoY2xhcmlkYWQsIHByZWNpbykpICsKICBnZW9tX3Zpb2xpbigpIApgYGAKCmBgYHtyfQpnZ3Bsb3QoZGlhbWFudGVzLCBhZXMoY2xhcmlkYWQsIHByZWNpbykpICsKICBnZW9tX2ppdHRlcigpCmBgYAoKOjo6IHsuYWxlcnQgLmFsZXJ0LXN1Y2Nlc3N9CkN1YW5kbyBudWVzdHJhIGJhc2UgZGUgZGF0b3MgZXMgbXV5IGdyYW5kZSBjb3JyZW1vcyBlbCByaWVzZ28gZGUgZ2VuZXJhciBkZSBxdWUgbG9zIGVsZW1lbnRvcyBkZWwgZ3LDoWZpY28gZXN0w6luIHRhbiBqdW50b3MgcXVlIHNlIHNvbGFwZW4geSBubyBzZSB2ZWFuLiBFc3RvIHNlIGNvbm9jZSBjb21vICoqb3ZlcnBsb3R0aW5nKiouIExhIGJhc2UgZGUgZGF0b3MgYGRpYW1hbnRlc2AgdGllbmUgNTM5NDAgb2JzZXJ2YWNpb25lcyB5IGFsIGdyYWZpY2FyIHVuIHB1bnRvIHBvciBjYWRhIHVuYSwgYcO6biBzaSBlc3TDoW4gc2VwYXJhZG9zIHBvciBsYSBjbGFyaWRhZCwgcXVlZGFuIHN1cGVycHVlc3Rvcy4gCgpQYXJhIHJlc29sdmVyIGVzdGUgcHJvYmxlbWEgc2Ugc3VlbGUgbW9kaWZpY2FyIGxhIGVzdMOpdGljYSBkZSBsb3MgZWxlbWVudG9zLCBjYW1iaWFuZG8gZWwgdGFtYcOxbyBvICBgc2l6ZWAgcGFyYSBxdWUgb2N1cGVuIG1lbm9zIGx1Z2FyIHkgc2UgdmVhbiBtZWpvciwgY2FtYmlhbmRvIGxhIGZvcm1hICBvIGBzaGFwZWAgcG9yIGFsZ3VuYSBxdWUgbm8gdGVuZ2EgcmVsbGVubyB5IHBlcm1pdGEgdmVyIGxvcyBlbGVtZW5vcyBxdWUgaGF5IGF0csOhcyBvIG1vZGlmaWNhbmRvIGxhIHRyYW5zcGFyZW5jaWEgbyBgYWxwaGFgIHBvciBsYSBtaXNtYSByYXrDs24uIEVuIGJhc2VzIGRlIGRhdG9zIHRhbiBncmFuZGVzIGNvbW8gbGEgZGUgZGlhbWFudGVzLCBtdWNoYXMgdmVjZXMgaGF5IHF1ZSB1dGlsaXphciB2YXJpb3MgZGUgZXN0b3MgcmVjdXJzb3MuIAo6OjoKCiMjIEdyYWZpY2FuZG8gZW4gbcO6bHRpcGxlcyBwYW5lbGVzCgpWaW1vcyBxdWUgZXMgcG9zaWJsZSBncmFmaWNhciBtw6FzIGRlIGRvcyB2YXJpYWJsZXMgZW4gdW4gZ3LDoWZpY28gKm1hcGVhbmRvKiB1bmEgdmFyaWFibGUgYWwgYGNvbG9yYCBvIHBvciBlamVtcGxvIGVsIHRpcG8gZGUgbMOtbmVhIG8gYGxpbmV0eXBlYAoKYGBge3J9CmdncGxvdChkaWFtYW50ZXMsIGFlcyhxdWlsYXRlLCBwcmVjaW8pKSArCiAgZ2VvbV9wb2ludChhZXMoY29sb3IgPSBjb2xvcikpCmBgYAoKRW4gZXN0ZSBjYXNvIG5vIHNvbG8gdmlzdWFsaXphbW9zIGxhIHJlbGFjacOzbiBlbnRyZSBlbCBwcmVjaW8geSBlbCBxdWlsYXRlIGRlbCBkaWFtYW50ZSwgdGFtYmnDqW4gcG9kZW1vcyB2ZXIgcXVlIHJvbCBqdWVnYSBlbCBjb2xvci4gVGFtYmnDqW4gcG9kcsOtYW1vcyBoYWJlciBpbnRlbnRhbmRvIHJlc29sdmVyIGVsIHByb2JsZW1hIGdlbmVyYW5kbyB1biBncsOhZmljbyBwb3IgY2FkYSBjb2xvciBmaWx0cmFuZG8gbGFzIG9ic2VydmFjaW9uZXMgY29ycmVzcG9uZGllbnRlcy4KCmBgYHtyfQpkaWFtYW50ZXMgJT4lIAogIGZpbHRlcihjb2xvciA9PSAiRCIpICU+JSAKICBnZ3Bsb3QoYWVzKHF1aWxhdGUsIHByZWNpbykpICsKICBnZW9tX3BvaW50KGFlcyhjb2xvciA9IGNvbG9yKSkKCmBgYAoKUGVybyBzZXLDrWEgbXVjaMOtc2ltbyB0cmFiYWpvIHNpIHRlbmVtb3MgcXVlIGhhY2VyIGVzdG8gcGFyYSBjYWRhIHVuYSBkZSBsYXMgNyBjYXRlZ29yw61hcyBkZSBjb2xvci4gTGEgYnVlbmEgbm90aWNpYSBlcyBxdWUge2dncGxvdDJ9IHRpZW5lIHVuIHBhciBkZSBmdW5jaW9uZXMganVzdG8gcGFyYSByZXNvbHZlciBlc3RlIHByb2JsZW1hOgoKYGBge3J9CmdncGxvdChkaWFtYW50ZXMsIGFlcyhxdWlsYXRlLCBwcmVjaW8pKSArCiAgZ2VvbV9wb2ludChhZXMoY29sb3IgPSBjb2xvcikpICsKICBmYWNldF93cmFwKH5jb2xvcikKYGBgCgpFc3RhIG51ZXZhIGNhcGEgY29uIGBmYWNldF93cmFwKClgIGRpdmlkZSBhbCBncsOhZmljbyBpbmljaWFsIGVuIDcgcGFuZWxlcyBvICpmYWNldHMqLCB1bm8gcG9yIGNhZGEgY29sb3IuIEVzdGEgZnVuY2nDs24gcmVxdWllcmUgc2FiZXIgcXVlIHZhcmlhYmxlIHNlcsOhIGxhIHJlc3BvbnNhYmxlIGRlIHNlcGFyYXIgbG9zIHBhbmVsZXMgeSBwYXJhIGVzbyBzZSB1c2EgbGEgKipub3RhY2nDs24gZGUgZnVuY2lvbmVzKiogZGUgUjogYH5jb2xvcmAuIEVzdG8gc2UgbGVlIGNvbW8gZ2VuZXJhciBwYW5lbGVzICoiZW4gZnVuY2nDs24gZGVsIGNvbG9yIiouCgrCv1kgc2kgcXVpc2llcmFtb3MgZ2VuZXJhciBwYW5lbGVzIGEgcGFydGlyIGRlIDIgdmFyaWFibGVzPyBQYXJhIGVzbyBleGlzdGUgYGZhY2V0X2dyaWQoKWAuIEVuIGVzdGUgZ3LDoWZpY28gZ2VuZXJhbW9zIHBhbmVsZXMgdmllbmRvIGxhICoicmVsYWNpw7NuIGVudHJlIGVsIGNvcnRlIHkgZWwgY29sb3IiKiB5IHBvciBlamVtcGxvIGVuIGVsIHByaW1lciBwYW5lbCBhcnJpYmEgYSBsYSBpenF1aWVyZGEgcG9kcmVtb3Mgb2JzZXJ2YXIgbG9zIGRpYW1hbnRlcyBxdWUgc29uIGFsIG1pc21vIHRpZW1wbyBkZSBjb2xvciBEIHkgY29ydGUgUmVndWxhci4gRW4gZXN0ZSBjYXNvICptYXBlYXIqIGxhIHZhcmlhYmxlIGNvbG9yIGFsIGNvbG9yIGRlIGxvcyBkaWFtYW50ZXMgbm8gcGFyZWNlIHNlciBlbmNlc2FyaW8geWEgcXVlIGNhZGEgY29sdW1uYSB5YSBub3MgcGVybWl0ZSBpZGVudGlmaWNhciBlc28sIHNpbiBlbWJhcmdvIGVuIGFsZ3Vub3MgY2Fzb3MgYXl1ZGEgYSBsZWVyIGVsIGdyw6FmaWNvIG3DoXMgcsOhcGlkby4gCgpgYGB7cn0KZ2dwbG90KGRpYW1hbnRlcywgYWVzKHF1aWxhdGUsIHByZWNpbykpICsKICBnZW9tX3BvaW50KGFlcyhjb2xvciA9IGNvbG9yKSkgKwogIGZhY2V0X2dyaWQoY29ydGV+Y29sb3IpCmBgYAoKOjo6IHsuYWxlcnQgLmFsZXJ0LWluZm99CioqVGVyY2VyIGRlc2Fmw61vKioKCkdlbmVyw6EgYm94cGxvdHMgcGFyYSBhbmFsaXphciBjb21vIHNlIGNvbXBvcnRhIGVsIGBwcmVjaW9gIHNlZ8O6biBsYSBgY2xhcmlkYWRgIHBhcmEgY2FkYSB0aXBvIGRlIGBjb3J0ZWAgY29tbyBzZSB2ZSBhY8OhLgoKYGBge3IgZWNobz1GQUxTRX0KZ2dwbG90KGRpYW1hbnRlcywgYWVzKGNsYXJpZGFkLCBwcmVjaW8sIGZpbGwgPSBjbGFyaWRhZCkpICsKICBnZW9tX2JveHBsb3QoKSArCiAgZmFjZXRfd3JhcCh+Y29ydGUpCmBgYAo6OjoKCgoKCg==</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiVmlzdWFsaXphY2nDs24gZGUgZGF0b3MgY29uIHtnZ3Bsb3QyfSBJSSIKb3V0cHV0OiAKICBodG1sX2RvY3VtZW50OgogICAgY29kZV9kb3dubG9hZDogdHJ1ZQogICAgdG9jOiB0cnVlCiAgICB0b2NfZmxvYXQ6IHRydWUKICAgIGhpZ2hsaWdodDogdGFuZ28KLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQpgYGAKCkhhc3RhIGFob3JhLCB5IGFzdW1pZW5kbyBxdWUgcmVjb3JyaXN0ZSBsb3MgZXBpc29kaW9zIGFudGVyaW9yZXMsIHZpc3VhbGl6YW1vcyBsb3MgZGF0b3MgdGFsIGN1YWwgdmllbmVuIGVuIGxhIGJhc2UgZGUgZGF0b3MgbyBjb24gYXl1ZGEgZGUge2RwbHlyfSBwYXJhIHRyYW5zZm9ybWFybG9zLiBQZXJvIGNvbW8gYWRlbGFudGFtb3MgY29uIGBnZW9tX3Ntb290aCgpYCwgaGF5IGNpZXJ0YXMgdHJhbnNmb3JtYWNpb25lcyBjb211bmVzIHF1ZSBzZSBwdWVkZW4gaGFjZXIgdXNhbmRvIHtnZ3Bsb3QyfS4KCkRlIHBhc28gdmFtb3MgYSB1c2FyIGRhdG9zIGluY2x1aWRvcyBlbiBlbCBwYXF1ZXRlIGBkYXRvc2AgKG11Y2hvcyBwYXF1ZXRlcyB0cmFlbiBiYXNlcyBkZSBkYXRvcyBwYXJhIHByb2JhciBjb3NhcywgwqFlc3RlIGVuIHBhcnRpY3VsYXIgc29uIHRvZGFzIGJhc2VzIGRlIGRhdG9zIGVuIGVzcGHDsW9sISkgcXVlIHBvZMOpcyBkZXNjYXJnYXIgY29tbyBzaWVtcHJlIGNvbiBgaW5zdGFsbC5wYWNrYWdlcygiZGF0b3MiKWAuIExvcyBkYXRvcyBgZGlhbWFudGVzYCBjb250aWVuZSBpbmZvcm1hY2nDs24gc29icmUgfiA1NDAwMCBkaWFtYW50ZXMsIGluY2x1aWRvIGVsIGBwcmVjaW9gLCBlbCBgcXVpbGF0ZWAsIGVsIGBjb2xvcmAsIGxhIGBjbGFyaWRhZGAgeSBlbCBgY29ydGVgIGRlIGNhZGEgdW5vLgoKYGBge3IgbWVzc2FnZT1GQUxTRX0KbGlicmFyeShnZ3Bsb3QyKQpsaWJyYXJ5KGRwbHlyKQpsaWJyYXJ5KGRhdG9zKQpzdHIoZGlhbWFudGVzKQpgYGAKCiMjIEdyw6FmaWNvcyBkZSBmcmVjdWVuY2lhcwoKRXN0ZSBlcyB1biBncsOhZmljbyBkZSBiYXJyYXMgY29uc3RydWlkbyB1c2FuZG8gbGEgZnVuY2nDs24gYGdlb21fYmFyKClgLiBFbiBlbCBlamUgeCBtdWVzdHJhIGVsIGBjb3J0ZWAgZGUgbG9zIGRpYW1hbnRlcyB5IGVuIGVsIGVqZSB5IGxhIGNhbnRpZGFkICgqY291bnQqIGVuIGluZ2zDqXMpIGRlIGRpYW1hbnRlcyBlbiBjYWRhIGNhdGVnb3LDrWEuIFBlcm8gYGRpYW1hbnRlc2Agbm8gdGllbmUgdW5hIHZhcmlhYmxlIHF1ZSBzZSBsbGFtZSBgY291bnRgIHkgdGFtcG9jbyBsYSBnZW5lcmFtb3Mgbm9zb3Ryb3MuIMKhRXMgY2FsY3VsYWRhIGludGVybmFtZW50ZSBwb3Ige2dncGxvdDJ9IQoKYGBge3J9CmdncGxvdChkYXRhID0gZGlhbWFudGVzLCBhZXMoeCA9IGNvcnRlKSkgKwogIGdlb21fYmFyKCkKYGBgCgpDw7NtbyBlbCBncsOhZmljbyBkZSBiYXJyYXMsIHRhbWJpw6luIHBvZGVtb3MgZ3JhZmljYXIgaGlzdG9ncmFtYXMgY29uIGBnZW9tX2hpc3RvZ3JhbSgpYCB5IHBvbMOtZ29ub3MgZGUgZnJlY3VlbmNpYSBjb24gYGdlb21fZGVuc2l0eSgpYCBwYXJhIHZpc3VhbGl6YXIgbGEgY2FudGlkYWQgZGUgb2JzZXJ2YWNpb25lcyBxdWUgY2FlbiBlbiBjYWRhIGNhdGVnb3LDrWEgKHNpIGxhIHZhcmlhYmxlIGVzIGRpc2NyZXRhIGNvbW8gZWwgY2FzbyBkZWwgY29ydGUgZGUgbG9zIGRpYW1hbnRlcykgbyByYW5nbyBkZSB2YWxvcmVzIChwYXJhIHZhcmlhYmxlcyBjb250aW51YXMpLiAKClVuIGVqZW1wbG8gZGUgdmFyaWFibGUgY29udGludWEgZXMgZWwgYHByZWNpb2AgZGUgbG9zIGRpYW1hbnRlcywgdmVhbW9zIGNvbW8gc2UgdmUgdW4gaGlzdG9ncmFtYSB5IGRlIHBhc28gbGUgY2FtYmlhbW9zIGVsIGNvbG9yIGEgbGFzIGJhcnJhcywgcGVybyBvam8sIHNvbG8gYWwgYm9yZGUuCgpgYGB7cn0KZ2dwbG90KGRpYW1hbnRlcywgYWVzKHByZWNpbykpICsKICBnZW9tX2hpc3RvZ3JhbShjb2xvciA9ICJkYXJrb3JhbmdlIikKYGBgCgo6Ojogey5hbGVydCAuYWxlcnQtaW5mb30KKipQcmltZXIgZGVzYWbDrW8qKgoKwr9Ob3Rhc3RlIGVsIG1lbnNhamUgcXVlIGRldnVlbHZlIGVsIGdyw6FmaWNvPyAKCmBgc3RhdF9iaW4oKWAgdXNpbmcgYGJpbnMgPSAzMGAuIFBpY2sgYmV0dGVyIHZhbHVlIHdpdGggYGJpbndpZHRoYC5gCgpFc3RhIGdlb21ldHLDrWEgdGllbmUgZG9zIGFyZ3VtZW50b3MgaW1wb3J0YW50ZXMgYGJpbnNgIHkgYGJpbndpZHRoYC4gQ2FtYmnDoSBlbCB2YWxvciBkZSBhbGd1bm8gZGUgbG9zIGRvcyBhcmd1bWVudG9zIHkgdm9sdsOpIGEgZ2VuZXJhciBlbCBncsOhZmljbywgwr9xdWUgcm9sIGp1ZWdhbiBsb3MgYXJndW1lbnRvcz8KClRhbWJpw6luIHBvZMOpcyByZXZpc2FyIGxhIGRvY3VtZW50YWNpw7NuLgo6OjoKCkFkZW3DoXMgZGUgY29udGFyIGxhIGNhbnRpZGFkIGRlIGVsZW1lbnRvcywge2dncGxvdDJ9IHB1ZWRlIGNhbGN1bGFyIG11Y2hhcyBvdHJhcyB0cmFuc2Zvcm1hY2lvbmVzIHNvYnJlIGxvcyBkYXRvcy4gUG9yIGVqZW1wbG8gc2kgcXVpc2nDqXJhbW9zIGVsIHBvcmNlbnRhamUgbyBsYSBwcm9wb3JjacOzbiBxdWUgbGUgY29ycmVzcG9uZGUgYSBjYWRhIGNhdGVnb3LDrWEgZGUgYGNvcnRlYCByZXNwZWN0byBkZWwgdG90YWwgcG9kZW1vcyBoYWNlcmxvICptYXBlYW5kbyogZXNhIHRyYW5zZm9ybWFjacOzbiBgcHJvcGAgYWwgZWplIHkgY29uIGxhIGZ1bmNpw7NuIGBzdGF0KClgLgoKYGBge3J9CmdncGxvdChkYXRhID0gZGlhbWFudGVzLCBhZXMoeCA9IGNvcnRlKSkgKwogIGdlb21fYmFyKGFlcyh5ID0gc3RhdChwcm9wKSwgZ3JvdXAgPSAxKSkKYGBgCgpGaWphdGUgcXVlIGxhIHZhcmlhYmxlIGBwcm9wYCBubyBlcyB1bmEgY29sdW1uYSBkZSBgZGlhbWFudGVzYCBzaW5vIHF1ZSBlcyBlbCBub21icmUgZGUgdW5hIHZhcmlhYmxlIGNvbXB1dGFkYSBwb3IgYGdlb21fYmFyKClgLCBwb3IgZXNvIGhheSBxdWUgcm9kZWFybGEgZGUgbGEgZnVuY2nDs24gYHN0YXQoKWAuIEVsIG5vbWJyZSBkZSBsYXMgdmFyaWFibGVzIGNvbXB1dGFkYXMgcG9yIGNhZGEgZ2VvbXMgZXN0w6EgZW4gc3UgZG9jdW1lbnRhY2nDs24gKGFiYWpvIGRlIHRvZG8sIGFudGVzIGRlIGxvcyBlamVtcGxvcykuCgpBaG9yYSBwb2Ryw61hbW9zIGRlY2lyIHF1ZSBlbCA0MCUgZGUgbG9zIGRpYW1hbnRlcyBlbiBsYSBiYXNlIGRlIGRhdG9zIHRpZW5lbiB1biBjb3J0ZSAqaWRlYWwqLiBBZGVtw6FzIGRlIGxhIGZ1bmNpw7NuICBgc3RhdCgpYCBhZ3JlZ2Ftb3MgYGdyb3VwID0gMWAgeSBlc3RvIG5vIGZ1ZSBzaW4gcXVlcmVyLiBQcm9iw6EgY29ycmVyIGVsIGdyw6FmaWNvIHNpbiBlc2UgYXJndW1lbnRvLgoKQWwgaW5jbHVpciBgZ3JvdXAgPSAxYCwge2dncGxvdDJ9IGp1bnRhIHRvZGFzIGxhcyBvYnNlcnZhY2lvbmVzIGVuIHVuIMO6bmljbyBncnVwbyAoY29uIGVsIHZhbG9yIGAxYCkgeSBjYWxjdWxhIGxhIHByb3BvcmNpw7NuIG8gZWwgcG9yY2VudGFqZSBxdWUgcmVwcmVzZW50YSBjYWRhIGNvcnRlIHJlc3BlY3RvIGRlbCB0b3RhbCBkZSBkaWFtYW50ZXMuIFNpIG5vIGluY2x1aW1vcyBlc28sIHtnZ3Bsb3QyfSBhc3VtaXLDoSBxdWUgY2FkYSBjYXRlZ29yw61hIGRlIGNvcnRlIGVzIHVuIGdydXBvIGluZGVwZW5kaWVudGUgeSBlbCBjw6FsY3VsbyBkZWwgcG9yY2VudGFqZSB0YW1iacOpbiBsbyBoYXLDoSBwb3Igc2VwYXJhZG8uIAoKCiMjIyBQb3NpY2nDs24KCllhIHZpbW9zIHF1ZSBsYSBlc3TDqXRpY2EgZGVsIGBjb2xvcmAgc8OzbG8gbW9kaWZpY2EgZWwgYm9yZGUgZGUgbGFzIGJhcnJhcywgc2kgcXVpc2llcmFzIG1vZGlmaWNhciBlbCByZWxsZW5vIG5lY2VzaXRhbW9zIGNhbWJpYXIgZWwgYGZpbGxgIHkgYWwgaWd1YWwgcXVlIGFudGVzIHBvZGVtb3MgKm1hcGVhciogdW5hIHZhcmlhYmxlIGEgZXN0YSBlc3TDqXRpY2EuCgpgYGB7cn0KZ2dwbG90KGRhdGEgPSBkaWFtYW50ZXMpICsKICBnZW9tX2JhcihhZXMoeCA9IGNvcnRlLCBmaWxsID0gY2xhcmlkYWQpKQpgYGAKCkFsICptYXBlYXIqIHVuYSB2YXJpYWJsZSBkaXN0aW50YSwgbGEgY2xhcmlkYWQgZGUgbG9zIGRpYW1hbnRlcywgcG9kZW1tb3MgdmlzdWFsaXphciBpbmZvcm1hY2nDs24gZXh0cmEuIEVzdGUgImFwaWxhbWllbnRvIiBkZSBsYXMgYmFycmFzIGVzIGxhIG9wY2nDs24gZGUgcG9zaWNpw7NuIHBvciBkZWZlY3RvIGBwb3NpdGlvbiA9ICJzdGFjayJgLCBwZXJvIHBvZHLDrWFzIHVzYXIgdW5hIGRlIGxhcyBvdHJhcyB0cmVzIG9wY2lvbmVzOiBgImlkZW50aXR5ImAsIGAiZG9kZ2UiYCBvIGAiZmlsbCJgLgoKKiBgcG9zaXRpb24gPSAiaWRlbnRpdHkiYCBjb2xvY2Fyw6EgY2FkYSBiYXJyYSBjb21lbnphbmRvIGVuIGNlcm8gcXVlZGFuZG8gdG9kYXMgc3VwZXJwdWVzdGFzLiBQYXJhIHZlciBlc2Egc3VwZXJwb3NpY2nDs24sIGRlYmVtb3MgaGFjZXIgcXVlIGxhcyBiYXJyYXMgc2VhbiBsaWdlcmFtZW50ZSB0cmFuc3BhcmVudGVzIGNvbmZpZ3VyYW5kbyBlbCBgYWxwaGFgIGEgdW4gdmFsb3IgcGVxdWXDsW8uCgpgYGB7cn0KZ2dwbG90KGRpYW1hbnRlcykgKwogIGdlb21fYmFyKGFlcyh4ID0gY29ydGUsIGZpbGwgPSBjbGFyaWRhZCksIGFscGhhID0gMC4yLCBwb3NpdGlvbiA9ICJpZGVudGl0eSIpCmBgYAoKKiBgcG9zaXRpb24gPSAiZmlsbCJgIGFwaWxhIGxhcyBiYXJyYXMgYWwgaWd1YWwgcXVlIGBwb3NpdGlvbiA9ICJzdGFjayJgLCBwZXJvIHRyYW5zZm9ybWEgbG9zIGRhdG9zIHBhcmEgcXVlIGNhZGEgY29uanVudG8gZGUgYmFycmFzIGFwaWxhZGFzIHRlbmdhIGxhIG1pc21hIGFsdHVyYS4gRXN0byBoYWNlIHF1ZSBzZWEgbcOhcyBmw6FjaWwgY29tcGFyYXIgcHJvcG9yY2lvbmVzIGVudHJlIGdydXBvcy4KCmBgYHtyfQpnZ3Bsb3QoZGlhbWFudGVzKSArCiAgZ2VvbV9iYXIoYWVzKHggPSBjb3J0ZSwgZmlsbCA9IGNsYXJpZGFkKSwgcG9zaXRpb24gPSAiZmlsbCIpCmBgYAoKKiBgcG9zaXRpb24gPSAiZG9kZ2UiYCBjb2xvY2EgbGFzIGJhcnJhcyB1bmEgYWwgbGFkbyBkZSBsYSBvdHJhLiBFc3RvIGhhY2UgcXVlIHNlYSBtw6FzIGbDoWNpbCBjb21wYXJhciB2YWxvcmVzIGluZGl2aWR1YWxlcy4KCmBgYHtyfQpnZ3Bsb3QoZGlhbWFudGVzKSArCiAgZ2VvbV9iYXIoYWVzKHggPSBjb3J0ZSwgZmlsbCA9IGNsYXJpZGFkKSwgcG9zaXRpb24gPSAiZG9kZ2UiKQpgYGAKCiMjIEdyw6FmaWNvcyBkZSBsw61uZWFzIHN1YXZpemFzCgpDw7NtbyB2aW1vcyBhbnRlcywgbG9zIGdyw6FmaWNvcyBkZSBsw61uZWFzIHN1YXZpemFkYXMgKHNtb290aGVycykgYWp1c3RhbiB1biBtb2RlbG8gYSBsb3MgZGF0b3MgeSBsdWVnbyBncmFmaWNhbiBsYXMgcHJlZGljY2lvbmVzIGRlbCBtb2RlbG8uIFNpbiBlbnRyYXIgZW4gbXVjaG9zIGRldGFsbGVzLCBzZSBwdWVkZSBhcGxpY2FyIGRpc3RpbnRvcyBtb2RlbG9zIHkgbGEgZWxlY2Npw7NuIGRlbCBtaXNtbyBkZXBlbmRlcsOhIGRlIGxvcyBkYXRvcy4gCgpgYGB7cn0KZ2dwbG90KGRpYW1hbnRlcywgYWVzKHF1aWxhdGUsIHByZWNpbykpICsKICBnZW9tX3BvaW50KCkgKwogIGdlb21fc21vb3RoKCkKYGBgCgojIyBHcsOhZmljb3MgZGUgY2FqYQoKTG9zIGRpYWdyYW1hcyBkZSBjYWphLCBtZWpvciBjb25vY2lkb3MgY29tbyBib3hwbG90cyBjYWxjdWxhbiB1biByZXN1bWVuIHJvYnVzdG8gZGUgbGEgZGlzdHJpYnVjacOzbiB5IGx1ZWdvIG11ZXN0cmFuIHVuYSBjYWphIGNvbiBmb3JtYXRvIGVzcGVjaWFsLiAKCkxhIGzDrW5lYSBjZW50cmFsIGRlIGxhIGNhamEgY29ycmVzcG9uZGUgYSBsYSAqKm1lZGlhbmEqKiAoZWwgdmFsb3IgcXVlIHRvbWEgZWwgZGF0byBjZW50cmFsKSB5IGxvcyBleHRyZW1vcyBkZSBsYSBjYWphIHNvbiBsb3MgKipjdWFydGlsZXMgMSB5IDMqKiwgZGVmaW5pZW5kbyBhc8OtIGVsICoqcmFuZ28gaW50ZXJjdWFydGlsKiogKElRUikuIExvcyBleHRyZW1vcyBlc3TDoW4gZGVmaW5pZG9zIGNvbW8gZWwgdmFsb3Igb2JzZXJ2YWRvIHF1ZSBubyBlc3TDqSBtw6FzIGxlam9zIGRlICoqMS41XCpJUVIqKiBkZSBsYSBtZWRpYW5hIHkgbG9zIHB1bnRvcyBzb24gbG9zIGxhcyBvYnNlcnZhY2lvbmVzIHF1ZSBzZSBlc2NhcGFuIGRlIGVzZSByYW5nbywgcXVlIHB1ZWRlbiBzZXIgY29uc2lkZXJhZG9zICoqb3V0bGluZXJzKiogbyAqKnZhbG9yZXMgZXh0cmVtb3MqKi4KCmBgYHtyfQpnZ3Bsb3QoZGlhbWFudGVzLCBhZXMoY2xhcmlkYWQsIHByZWNpbykpICsKICBnZW9tX2JveHBsb3QoKQpgYGAKCkxvcyBib3hwbG90IGRhbiBtdWNow61zaW1hIGluZm9ybWFjacOzbiBzb2JyZSBsb3MgZGF0b3MgcGVybyBhbCBtaXNtbyB0aWVtcG8gKmVzY29uZGVuKiBsYSBjYW50aWRhZCBkZSBvYnNlcnZhY2lvbmVzIHF1ZSBzZSB1c2Fyb24gcGFyYSBnZW5lcmFybG9zIHkgZW4gcGFydGljdWxhciBjdWFsIGVzIGxhIGZyZWN1ZW5jaWEgYSBsbyBsYXJnbyBkZWwgZWplIHkuIFBvciBlc3RhIHJhesOzbiB0YW1iacOpbiBleGlzdGVuIGBnZW9tX3Zpb2xpbigpYCB5IGBnZW9tX2ppdHRlcigpYC4KCjo6OiB7LmFsZXJ0IC5hbGVydC1pbmZvfQoqKlNlZ3VuZG8gZGVzYWbDrW8qKgoKMS4gVm9sdsOpIGEgZ3JhZmljYXIgbGEgZGlzdHJpYnVjacOzbiBkZWwgcHJlY2lvIHBhcmEgY2FkYSB0aXBvIGRlIGNsYXJpZGFkIHBlcm8gYWhvcmEgdXNhbmRvIGBnZW9tX3Zpb2xpbigpYCB5IGBnZW9tX2ppdHRlcigpYC4KMi4gwr9RdcOpIHZlbnRhamFzIHkgZGVzdmVudGFqYXMgZW5jdWVudHJhbiByZXNwZWN0byBkZSBgZ2VvbV9ib3hwbG90KClgPwo6OjoKCmBgYHtyfQpnZ3Bsb3QoZGlhbWFudGVzLCBhZXMoY2xhcmlkYWQsIHByZWNpbykpICsKICBnZW9tX3Zpb2xpbigpIApgYGAKCmBgYHtyfQpnZ3Bsb3QoZGlhbWFudGVzLCBhZXMoY2xhcmlkYWQsIHByZWNpbykpICsKICBnZW9tX2ppdHRlcigpCmBgYAoKOjo6IHsuYWxlcnQgLmFsZXJ0LXN1Y2Nlc3N9CkN1YW5kbyBudWVzdHJhIGJhc2UgZGUgZGF0b3MgZXMgbXV5IGdyYW5kZSBjb3JyZW1vcyBlbCByaWVzZ28gZGUgZ2VuZXJhciBkZSBxdWUgbG9zIGVsZW1lbnRvcyBkZWwgZ3LDoWZpY28gZXN0w6luIHRhbiBqdW50b3MgcXVlIHNlIHNvbGFwZW4geSBubyBzZSB2ZWFuLiBFc3RvIHNlIGNvbm9jZSBjb21vICoqb3ZlcnBsb3R0aW5nKiouIExhIGJhc2UgZGUgZGF0b3MgYGRpYW1hbnRlc2AgdGllbmUgNTM5NDAgb2JzZXJ2YWNpb25lcyB5IGFsIGdyYWZpY2FyIHVuIHB1bnRvIHBvciBjYWRhIHVuYSwgYcO6biBzaSBlc3TDoW4gc2VwYXJhZG9zIHBvciBsYSBjbGFyaWRhZCwgcXVlZGFuIHN1cGVycHVlc3Rvcy4gCgpQYXJhIHJlc29sdmVyIGVzdGUgcHJvYmxlbWEgc2Ugc3VlbGUgbW9kaWZpY2FyIGxhIGVzdMOpdGljYSBkZSBsb3MgZWxlbWVudG9zLCBjYW1iaWFuZG8gZWwgdGFtYcOxbyBvICBgc2l6ZWAgcGFyYSBxdWUgb2N1cGVuIG1lbm9zIGx1Z2FyIHkgc2UgdmVhbiBtZWpvciwgY2FtYmlhbmRvIGxhIGZvcm1hICBvIGBzaGFwZWAgcG9yIGFsZ3VuYSBxdWUgbm8gdGVuZ2EgcmVsbGVubyB5IHBlcm1pdGEgdmVyIGxvcyBlbGVtZW5vcyBxdWUgaGF5IGF0csOhcyBvIG1vZGlmaWNhbmRvIGxhIHRyYW5zcGFyZW5jaWEgbyBgYWxwaGFgIHBvciBsYSBtaXNtYSByYXrDs24uIEVuIGJhc2VzIGRlIGRhdG9zIHRhbiBncmFuZGVzIGNvbW8gbGEgZGUgZGlhbWFudGVzLCBtdWNoYXMgdmVjZXMgaGF5IHF1ZSB1dGlsaXphciB2YXJpb3MgZGUgZXN0b3MgcmVjdXJzb3MuIAo6OjoKCiMjIEdyYWZpY2FuZG8gZW4gbcO6bHRpcGxlcyBwYW5lbGVzCgpWaW1vcyBxdWUgZXMgcG9zaWJsZSBncmFmaWNhciBtw6FzIGRlIGRvcyB2YXJpYWJsZXMgZW4gdW4gZ3LDoWZpY28gKm1hcGVhbmRvKiB1bmEgdmFyaWFibGUgYWwgYGNvbG9yYCBvIHBvciBlamVtcGxvIGVsIHRpcG8gZGUgbMOtbmVhIG8gYGxpbmV0eXBlYAoKYGBge3J9CmdncGxvdChkaWFtYW50ZXMsIGFlcyhxdWlsYXRlLCBwcmVjaW8pKSArCiAgZ2VvbV9wb2ludChhZXMoY29sb3IgPSBjb2xvcikpCmBgYAoKRW4gZXN0ZSBjYXNvIG5vIHNvbG8gdmlzdWFsaXphbW9zIGxhIHJlbGFjacOzbiBlbnRyZSBlbCBwcmVjaW8geSBlbCBxdWlsYXRlIGRlbCBkaWFtYW50ZSwgdGFtYmnDqW4gcG9kZW1vcyB2ZXIgcXVlIHJvbCBqdWVnYSBlbCBjb2xvci4gVGFtYmnDqW4gcG9kcsOtYW1vcyBoYWJlciBpbnRlbnRhbmRvIHJlc29sdmVyIGVsIHByb2JsZW1hIGdlbmVyYW5kbyB1biBncsOhZmljbyBwb3IgY2FkYSBjb2xvciBmaWx0cmFuZG8gbGFzIG9ic2VydmFjaW9uZXMgY29ycmVzcG9uZGllbnRlcy4KCmBgYHtyfQpkaWFtYW50ZXMgJT4lIAogIGZpbHRlcihjb2xvciA9PSAiRCIpICU+JSAKICBnZ3Bsb3QoYWVzKHF1aWxhdGUsIHByZWNpbykpICsKICBnZW9tX3BvaW50KGFlcyhjb2xvciA9IGNvbG9yKSkKCmBgYAoKUGVybyBzZXLDrWEgbXVjaMOtc2ltbyB0cmFiYWpvIHNpIHRlbmVtb3MgcXVlIGhhY2VyIGVzdG8gcGFyYSBjYWRhIHVuYSBkZSBsYXMgNyBjYXRlZ29yw61hcyBkZSBjb2xvci4gTGEgYnVlbmEgbm90aWNpYSBlcyBxdWUge2dncGxvdDJ9IHRpZW5lIHVuIHBhciBkZSBmdW5jaW9uZXMganVzdG8gcGFyYSByZXNvbHZlciBlc3RlIHByb2JsZW1hOgoKYGBge3J9CmdncGxvdChkaWFtYW50ZXMsIGFlcyhxdWlsYXRlLCBwcmVjaW8pKSArCiAgZ2VvbV9wb2ludChhZXMoY29sb3IgPSBjb2xvcikpICsKICBmYWNldF93cmFwKH5jb2xvcikKYGBgCgpFc3RhIG51ZXZhIGNhcGEgY29uIGBmYWNldF93cmFwKClgIGRpdmlkZSBhbCBncsOhZmljbyBpbmljaWFsIGVuIDcgcGFuZWxlcyBvICpmYWNldHMqLCB1bm8gcG9yIGNhZGEgY29sb3IuIEVzdGEgZnVuY2nDs24gcmVxdWllcmUgc2FiZXIgcXVlIHZhcmlhYmxlIHNlcsOhIGxhIHJlc3BvbnNhYmxlIGRlIHNlcGFyYXIgbG9zIHBhbmVsZXMgeSBwYXJhIGVzbyBzZSB1c2EgbGEgKipub3RhY2nDs24gZGUgZnVuY2lvbmVzKiogZGUgUjogYH5jb2xvcmAuIEVzdG8gc2UgbGVlIGNvbW8gZ2VuZXJhciBwYW5lbGVzICoiZW4gZnVuY2nDs24gZGVsIGNvbG9yIiouCgrCv1kgc2kgcXVpc2llcmFtb3MgZ2VuZXJhciBwYW5lbGVzIGEgcGFydGlyIGRlIDIgdmFyaWFibGVzPyBQYXJhIGVzbyBleGlzdGUgYGZhY2V0X2dyaWQoKWAuIEVuIGVzdGUgZ3LDoWZpY28gZ2VuZXJhbW9zIHBhbmVsZXMgdmllbmRvIGxhICoicmVsYWNpw7NuIGVudHJlIGVsIGNvcnRlIHkgZWwgY29sb3IiKiB5IHBvciBlamVtcGxvIGVuIGVsIHByaW1lciBwYW5lbCBhcnJpYmEgYSBsYSBpenF1aWVyZGEgcG9kcmVtb3Mgb2JzZXJ2YXIgbG9zIGRpYW1hbnRlcyBxdWUgc29uIGFsIG1pc21vIHRpZW1wbyBkZSBjb2xvciBEIHkgY29ydGUgUmVndWxhci4gRW4gZXN0ZSBjYXNvICptYXBlYXIqIGxhIHZhcmlhYmxlIGNvbG9yIGFsIGNvbG9yIGRlIGxvcyBkaWFtYW50ZXMgbm8gcGFyZWNlIHNlciBlbmNlc2FyaW8geWEgcXVlIGNhZGEgY29sdW1uYSB5YSBub3MgcGVybWl0ZSBpZGVudGlmaWNhciBlc28sIHNpbiBlbWJhcmdvIGVuIGFsZ3Vub3MgY2Fzb3MgYXl1ZGEgYSBsZWVyIGVsIGdyw6FmaWNvIG3DoXMgcsOhcGlkby4gCgpgYGB7cn0KZ2dwbG90KGRpYW1hbnRlcywgYWVzKHF1aWxhdGUsIHByZWNpbykpICsKICBnZW9tX3BvaW50KGFlcyhjb2xvciA9IGNvbG9yKSkgKwogIGZhY2V0X2dyaWQoY29ydGV+Y29sb3IpCmBgYAoKOjo6IHsuYWxlcnQgLmFsZXJ0LWluZm99CioqVGVyY2VyIGRlc2Fmw61vKioKCkdlbmVyw6EgYm94cGxvdHMgcGFyYSBhbmFsaXphciBjb21vIHNlIGNvbXBvcnRhIGVsIGBwcmVjaW9gIHNlZ8O6biBsYSBgY2xhcmlkYWRgIHBhcmEgY2FkYSB0aXBvIGRlIGBjb3J0ZWAgY29tbyBzZSB2ZSBhY8OhLgoKYGBge3IgZWNobz1GQUxTRX0KZ2dwbG90KGRpYW1hbnRlcywgYWVzKGNsYXJpZGFkLCBwcmVjaW8sIGZpbGwgPSBjbGFyaWRhZCkpICsKICBnZW9tX2JveHBsb3QoKSArCiAgZmFjZXRfd3JhcCh+Y29ydGUpCmBgYAo6OjoKCgoKCg==</div>
 
 
 </div>
