@@ -25,14 +25,13 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
-<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-code.sourceCode > span { display: inline-block; line-height: 1.25; }
-code.sourceCode > span { color: inherit; text-decoration: inherit; }
-code.sourceCode > span:empty { height: 1.2em; }
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -42,16 +41,14 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
-pre.numberSource code
-  { counter-reset: source-line 0; }
-pre.numberSource code > span
-  { position: relative; left: -4em; counter-increment: source-line; }
-pre.numberSource code > span > a:first-child::before
-  { content: counter(source-line);
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; display: inline-block;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -60,9 +57,9 @@ pre.numberSource code > span > a:first-child::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {   }
+  {  }
 @media screen {
-code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+a.sourceLine::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -455,7 +452,7 @@ div.tocify {
       <a href="04-lectura-datos.html">Lectura de datos</a>
     </li>
     <li>
-      <a href="05-dplyr-I.html">Maninupulación de datos I</a>
+      <a href="05-dplyr-I.html">Manipulación de datos I</a>
     </li>
     <li>
       <a href="06-graficos-I.html">Gráficos I</a>
@@ -465,6 +462,18 @@ div.tocify {
     </li>
     <li>
       <a href="08-dplyr-tidyr-II.html">Manipulación de datos II</a>
+    </li>
+    <li>
+      <a href="09-funciones.html">Funciones</a>
+    </li>
+    <li>
+      <a href="10-reportes-II.html">Reportes II</a>
+    </li>
+    <li>
+      <a href="11-tablas.html">Estilo de tablas</a>
+    </li>
+    <li>
+      <a href="12-ggplot-III.html">Gráficos para publicar</a>
     </li>
   </ul>
 </li>
@@ -480,6 +489,12 @@ div.tocify {
     </li>
     <li>
       <a href="desafio-2.html">Analizar datos</a>
+    </li>
+    <li>
+      <a href="desafio-3.html">Graficar datos</a>
+    </li>
+    <li>
+      <a href="desafio-4.html">Generar un informe</a>
     </li>
   </ul>
 </li>
@@ -511,9 +526,9 @@ div.tocify {
 <div id="primera-capa-el-área-del-gráfico" class="section level3">
 <h3>Primera capa: el área del gráfico</h3>
 <p>Cómo siempre será necesario cargar los paquetes que vamos a usar y ya que estamos los datos con los que venimos trabajando:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(readr)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(ggplot2)</span>
-<span id="cb1-3"><a href="#cb1-3"></a>paises &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">paises &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   pais = col_character(),
@@ -526,14 +541,14 @@ div.tocify {
 <p>La función principal de ggplot2 es justamente <code>ggplot()</code> que nos permite <em>iniciar</em> el gráfico y además definir las características <em>globales</em>. El primer argumento de esta función serán los datos que queremos visualizar, siempre en un data.frame. En este caso usamos <code>paises</code>.</p>
 <p>El segundo argumento se llama mapping justamente porque <em>mapea</em> o <em>dibuja</em> los ejes del gráfico y <strong>siempre</strong> va acompañado de la función <code>aes()</code>. La función <code>aes()</code> recibe las propiedades estésticas del gráfico (o <em>aesthetic</em> en inglés) a partir de las variables (o columnas) del data.frame estamos usando. En este caso le indicamos que en el eje <strong>x</strong> querremos graficar la variable <code>pib_per_capita</code> y en eje <strong>y</strong> la variable <code>esperanza_de_vida</code>.</p>
 <p>Pero esta sola función no es suficiente, solo genera la primera capa: el área del gráfico.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> pib_per_capita, <span class="dt">y =</span> esperanza_de_vida))</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> pib_per_capita, <span class="dt">y =</span> esperanza_de_vida))</a></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 </div>
 <div id="segunda-capa-geometrías" class="section level3">
 <h3>Segunda capa: geometrías</h3>
 <p>Necesitamos agregar una nueva capa a nuestro gráfico, los elementos geométricos o <em>geoms</em> que representaran los datos. Para esto <em>sumamos</em> una función geom, por ejemplo si queremos representar los datos con puntos usaremos <code>geom_point()</code></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> pib_per_capita, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> pib_per_capita, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <p>¡Nuestro primer gráfico!</p>
 <div class="alert alert-info">
@@ -542,15 +557,15 @@ div.tocify {
 <p>¿Te parece útil este gráfico?</p>
 </div>
 <p>Este gráfico tiene muchísima información porque tiene un punto por cada país para cada año para visualizar la esperanza de vida. Pero por ahora no podemos identificar esos paises, necesitamos agregar información al gráfico.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> anio, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> anio, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 </div>
 <div id="mapear-variables-a-elementos" class="section level3">
 <h3>Mapear variables a elementos</h3>
 <p>Una posible solución sería utilizar otras variables de nuestros datos, por ejemplo <code>continente</code> y <em>mapear</em> el color de los puntos de a cuerdo al continente que pertenecen.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> anio, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente))</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> anio, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente))</a></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 <p>Ahh, ahora está un poco mejor. Por ejemplo ya podemos ver que muchos paises de Europa (los puntos celestes) tienen en promedio mayor esperanza de vida a lo largo de los años que muchos paises de África (los puntos rojos). Aún no podemos identificar los paises individualmente pero podemos sacar algo más de información de nuestros datos.</p>
 <p>Algo muy importante a tener en cuenta: <strong>los puntos toman un color de acuerdo a una variable de los datos</strong>, y para que ggplot2 identifique esa variable (en este caso <code>continente</code>) es necesario incluirla dentro de una función <code>aes()</code>.</p>
@@ -558,12 +573,12 @@ div.tocify {
 <div id="otras-geometrías" class="section level3">
 <h3>Otras geometrías</h3>
 <p>Este gráfico posiblemente no sea muy adecuado si queremos visualizar la <em>evolución</em> de una variable a lo largo del tiempo, necesitamos cambiar la geometría a lineas usando <code>geom_line()</code></p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> anio, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> anio, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente))</a></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <p>Por suerte las funciones <code>geom_*()</code> tienen más o menos nombres amigables. Pero el gráfico sigue teniendo problemas, al parecer dibujó una línea por continente (o algo así). Si estuvieramos dibujando este gráfico con lapiz y papel muy posiblemente hubieramos identificado los puntos que corresponden a cada país y los hubieramos “unido con líneas”, necesitamos que ggplot2 haga esto. ¿Cómo le indicamos que puntos corresponde a cada pais? Necesitamos que los <em>agrupe</em> por la variablel <code>pais</code> (¡qué bueno que tenemos toda esa información en nuestra base de datos!).</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> anio, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">group =</span> pais))</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> paises, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> anio, <span class="dt">y =</span> esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">group =</span> pais))</a></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <p>Usamos el argumento <code>group =</code> y de nuevo, lo incluimos dentro de la función <code>aes()</code> para indicarle a ggplot2 que busque la variable <code>pais</code> dentro del data.frame que estamos usando.</p>
 <p>Y ahora si, conseguimos el gráfico que estamos buscando.</p>
@@ -577,9 +592,9 @@ div.tocify {
 </ol>
 </div>
 <p>Acá surge una característica importante de las capas: pueden tener apariencia independiente si solo <em>mapeamos</em> el color en la capa de las líneas y no en la capa de los puntos. Al mismo tiempo, si quisieramos que todas las capas tenga la misma apariencia podemos incluir el argumento <code>color =</code>en la función global <code>ggpplot()</code> o repetirlo en cada capa.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">ggplot</span>(paises, <span class="kw">aes</span>(anio, esperanza_de_vida)) <span class="op">+</span></span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">group =</span> pais)) <span class="op">+</span></span>
-<span id="cb9-3"><a href="#cb9-3"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">ggplot</span>(paises, <span class="kw">aes</span>(anio, esperanza_de_vida)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente, <span class="dt">group =</span> pais)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <div class="alert alert-success">
 <p>Si te preguntabas a donde fueron a parar el <code>data =</code>, el <code>mapping =</code> y los nombres de los argumentos adentro de la función <code>aes()</code>, <code>x =</code> e <code>y =</code>, resulta que estamos aprovechando que tanto ggplot2 como nosotros ahora sabemos en que orden recibe la información cada función. Siempre el primer elemento que le <em>pasemos</em> o indiquemos a la función <code>ggplot()</code> será el data.frame.</p>
@@ -597,7 +612,7 @@ div.tocify {
 <div class="alert alert-success">
 <p><strong>Modificar elementos utilizando un valor único</strong></p>
 <p>Es posible que en algún momento necesites cambiar la apariencia de los elementos o geometrías independientemente de las variables de tu data.frame. Por ejemplo podrías querere que todos los puntos sean de un único color: rojos. En este caso `geom_point(aes(color = “red”)) -ojo que los colores van en inglés- no va a funcionar, de hecho ggplot2 intentará encontrar una variable “red” dentro del data.frame sin exito.</p>
-<p>Ahora que no nos interesa <em>mapear</em> el color a una variable, podemos mover ese argumento <strong>afuera</strong> de la función <code>aes()</code>: <code>geom_point(color = "red")</code>.</p>
+<p>Ahora que no nos interesa <em>mapear</em> el color a una variable, podemos mover ese argumento <strong>afuera</strong> de la función <code>aes()</code>: <code>geom_point(color = &quot;red&quot;)</code>.</p>
 </div>
 </div>
 <div id="relación-entre-variables" class="section level3">
@@ -605,23 +620,23 @@ div.tocify {
 <p>Muchas veces no es suficiente con mirar un gráfico para identificar la relación entre las variables y entonces calculamos una tendencia o ajustamos los datos a una función (por ejemplo a una recta). Por supuesto ggplot2 tiene una geometría para sumar esta capa a los gráficos.</p>
 <p>También es posible que necesitemos manipular los datos antes de poder hacer un gráfico. A veces esa mannipulación será compleja y entonces para no repetir el cálculo muchas veces, guardaremos los datos modificados en una nueva variable. Pero también podemos <em>encadenar</em> la manipulación de los datos y el gráfico resultante.</p>
 <p>Por ejemplo, calculemos la esperanza de vida media por continente y para cada año usando <a href="05-dplyr-I.html"><code>dplyr</code></a> y luego grafiquemos la <code>esperanza_de_vida_media</code> a los largo de los <code>anios</code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">library</span>(dplyr)</span>
-<span id="cb10-2"><a href="#cb10-2"></a></span>
-<span id="cb10-3"><a href="#cb10-3"></a>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb10-4"><a href="#cb10-4"></a><span class="st">  </span><span class="kw">group_by</span>(continente, anio) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb10-5"><a href="#cb10-5"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">esperanza_de_vida_media =</span> <span class="kw">mean</span>(esperanza_de_vida)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb10-6"><a href="#cb10-6"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, esperanza_de_vida_media)) <span class="op">+</span><span class="st">  </span><span class="co"># Acá se acaban los %&gt;% y comienzan los &quot;+&quot;</span></span>
-<span id="cb10-7"><a href="#cb10-7"></a><span class="st">  </span><span class="kw">geom_point</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">  </span><span class="kw">group_by</span>(continente, anio) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-5" data-line-number="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">esperanza_de_vida_media =</span> <span class="kw">mean</span>(esperanza_de_vida)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, esperanza_de_vida_media)) <span class="op">+</span><span class="st">  </span><span class="co"># Acá se acaban los %&gt;% y comienzan los &quot;+&quot;</span></a>
+<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="st">  </span><span class="kw">geom_point</span>()</a></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;continente&#39; (override with `.groups` argument)</code></pre>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Esto es posible gracias al operador <code>%&gt;%</code> que le <em>pasa</em> el resutado de <code>summarise()</code> a la función <code>ggplot()</code>. Y este resultado no es ni más ni menos que el data.frame que necesitamos para hacer nuestro gráfico. Es importante notar que una vez que comenzamos el gráfico ya <strong>no</strong> se puede usar el operador <code>%&gt;%</code> y las capas del gráfico se <em>suman</em> como siempre con <code>+</code>.</p>
 <p>Este gráfico entonces parece mostrar que la esperanza de vida fue aumentado a lo largo de los años pero sería interesante ver esa relación más explicitamente agregando una nueva capa con <code>geom_smooth()</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb12-2"><a href="#cb12-2"></a><span class="st">  </span><span class="kw">group_by</span>(continente, anio) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb12-3"><a href="#cb12-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">esperanza_de_vida_media =</span> <span class="kw">mean</span>(esperanza_de_vida)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb12-4"><a href="#cb12-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, esperanza_de_vida_media)) <span class="op">+</span><span class="st">  </span></span>
-<span id="cb12-5"><a href="#cb12-5"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
-<span id="cb12-6"><a href="#cb12-6"></a><span class="st">  </span><span class="kw">geom_smooth</span>()</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(continente, anio) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">esperanza_de_vida_media =</span> <span class="kw">mean</span>(esperanza_de_vida)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, esperanza_de_vida_media)) <span class="op">+</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_smooth</span>()</a></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;continente&#39; (override with `.groups` argument)</code></pre>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
@@ -630,12 +645,12 @@ div.tocify {
 <div class="alert alert-info">
 <p><strong>Tercer desafío</strong></p>
 <p>Modificá el siguiente código para obtener el gráfico que se muestra más abajo.</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb15-2"><a href="#cb15-2"></a><span class="st">  </span><span class="kw">group_by</span>(continente, _____) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb15-3"><a href="#cb15-3"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">esperanza_de_vida_media =</span> <span class="kw">mean</span>(esperanza_de_vida)) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb15-4"><a href="#cb15-4"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, ________________)) <span class="op">+</span><span class="st">  </span></span>
-<span id="cb15-5"><a href="#cb15-5"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente), <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></span>
-<span id="cb15-6"><a href="#cb15-6"></a><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">color =</span> continente) </span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">paises <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">group_by</span>(continente, _____) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">esperanza_de_vida_media =</span> <span class="kw">mean</span>(esperanza_de_vida)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-4" data-line-number="4"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(anio, ________________)) <span class="op">+</span><span class="st">  </span></a>
+<a class="sourceLine" id="cb15-5" data-line-number="5"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> continente), <span class="dt">size =</span> <span class="dv">3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">color =</span> continente) </a></code></pre></div>
 <pre><code>## `summarise()` regrouping output by &#39;continente&#39; (override with `.groups` argument)</code></pre>
 <pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
 <p><img src="06-graficos-I_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>

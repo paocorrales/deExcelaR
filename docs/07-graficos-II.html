@@ -378,7 +378,7 @@ div.tocify {
       <a href="04-lectura-datos.html">Lectura de datos</a>
     </li>
     <li>
-      <a href="05-dplyr-I.html">Maninupulación de datos I</a>
+      <a href="05-dplyr-I.html">Manipulación de datos I</a>
     </li>
     <li>
       <a href="06-graficos-I.html">Gráficos I</a>
@@ -388,6 +388,18 @@ div.tocify {
     </li>
     <li>
       <a href="08-dplyr-tidyr-II.html">Manipulación de datos II</a>
+    </li>
+    <li>
+      <a href="09-funciones.html">Funciones</a>
+    </li>
+    <li>
+      <a href="10-reportes-II.html">Reportes II</a>
+    </li>
+    <li>
+      <a href="11-tablas.html">Estilo de tablas</a>
+    </li>
+    <li>
+      <a href="12-ggplot-III.html">Gráficos para publicar</a>
     </li>
   </ul>
 </li>
@@ -403,6 +415,12 @@ div.tocify {
     </li>
     <li>
       <a href="desafio-2.html">Analizar datos</a>
+    </li>
+    <li>
+      <a href="desafio-3.html">Graficar datos</a>
+    </li>
+    <li>
+      <a href="desafio-4.html">Generar un informe</a>
     </li>
   </ul>
 </li>
@@ -431,7 +449,7 @@ div.tocify {
 
 
 <p>Hasta ahora y asumiendo que recorriste los episodios anteriores, visualizamos los datos tal cual vienen en la base de datos o con ayuda de <code>dplyr</code> para transformarlos. Vamos ver como <em>transformar</em> los datos usando ggplot2.</p>
-<p>De paso vamos a usar datos incluidos en el paquete <code>datos</code> (muchos paquetes traen bases de datos para probar cosas, este en particular son todas bases de datos en español!) que podés descargar como siempres con <code>install.packages("datos")</code>. Los datos <code>diamantes</code> contiene información sobre ~ 54000 diamantes, incluido el <code>precio</code>, el <code>quilate</code>, el <code>color</code>, la <code>claridad</code> y el <code>corte</code> de cada uno.</p>
+<p>De paso vamos a usar datos incluidos en el paquete <code>datos</code> (muchos paquetes traen bases de datos para probar cosas, este en particular son todas bases de datos en español!) que podés descargar como siempres con <code>install.packages(&quot;datos&quot;)</code>. Los datos <code>diamantes</code> contiene información sobre ~ 54000 diamantes, incluido el <code>precio</code>, el <code>quilate</code>, el <code>color</code>, la <code>claridad</code> y el <code>corte</code> de cada uno.</p>
 <pre class="r"><code>library(ggplot2)
 library(dplyr)
 library(datos)
@@ -478,21 +496,21 @@ str(diamantes)</code></pre>
 <pre class="r"><code>ggplot(data = diamantes) +
   geom_bar(aes(x = corte, fill = claridad))</code></pre>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>Al <em>mapear</em> una variable distinta, la claridad de los diamantes, podemmos visualizar información extra. Este “apilamiento” de las barras es la opción de posición por defecto <code>position = "stack"</code>, pero podrías usar una de las otras tres opciones: <code>"identity"</code>, <code>"dodge"</code> o <code>"fill"</code>.</p>
+<p>Al <em>mapear</em> una variable distinta, la claridad de los diamantes, podemmos visualizar información extra. Este “apilamiento” de las barras es la opción de posición por defecto <code>position = &quot;stack&quot;</code>, pero podrías usar una de las otras tres opciones: <code>&quot;identity&quot;</code>, <code>&quot;dodge&quot;</code> o <code>&quot;fill&quot;</code>.</p>
 <ul>
-<li><code>position = "identity"</code> colocará cada barra comenzando en cero quedando todas superpuestas. Para ver esa superposición, debemos hacer que las barras sean ligeramente transparentes configurando el <code>alpha</code> a un valor pequeño.</li>
+<li><code>position = &quot;identity&quot;</code> colocará cada barra comenzando en cero quedando todas superpuestas. Para ver esa superposición, debemos hacer que las barras sean ligeramente transparentes configurando el <code>alpha</code> a un valor pequeño.</li>
 </ul>
 <pre class="r"><code>ggplot(diamantes) +
   geom_bar(aes(x = corte, fill = claridad), alpha = 0.2, position = &quot;identity&quot;)</code></pre>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <ul>
-<li><code>position = "fill"</code> apila las barras al igual que <code>position = "stack"</code>, pero transforma los datos para que cada conjunto de barras apiladas tenga la misma altura. Esto hace que sea más fácil comparar proporciones entre grupos.</li>
+<li><code>position = &quot;fill&quot;</code> apila las barras al igual que <code>position = &quot;stack&quot;</code>, pero transforma los datos para que cada conjunto de barras apiladas tenga la misma altura. Esto hace que sea más fácil comparar proporciones entre grupos.</li>
 </ul>
 <pre class="r"><code>ggplot(diamantes) +
   geom_bar(aes(x = corte, fill = claridad), position = &quot;fill&quot;)</code></pre>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <ul>
-<li><code>position = "dodge"</code> coloca las barras una al lado de la otra. Esto hace que sea más fácil comparar valores individuales.</li>
+<li><code>position = &quot;dodge&quot;</code> coloca las barras una al lado de la otra. Esto hace que sea más fácil comparar valores individuales.</li>
 </ul>
 <pre class="r"><code>ggplot(diamantes) +
   geom_bar(aes(x = corte, fill = claridad), position = &quot;dodge&quot;)</code></pre>
