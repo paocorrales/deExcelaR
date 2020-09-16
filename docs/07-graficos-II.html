@@ -25,13 +25,14 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -41,14 +42,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -57,9 +60,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -522,11 +525,11 @@ div.tocify {
 
 
 <p>Hasta ahora, y asumiendo que recorriste los episodios anteriores, visualizamos los datos tal cual vienen en la base de datos o con ayuda de {dplyr} para transformarlos. Pero como adelantamos con <code>geom_smooth()</code>, hay ciertas transformaciones comunes que se pueden hacer usando {ggplot2}.</p>
-<p>De paso vamos a usar datos incluidos en el paquete <code>datos</code> (muchos paquetes traen bases de datos para probar cosas, ¡este en particular son todas bases de datos en español!) que podés descargar como siempre con <code>install.packages(&quot;datos&quot;)</code>. Los datos <code>diamantes</code> contiene información sobre ~ 54000 diamantes, incluido el <code>precio</code>, el <code>quilate</code>, el <code>color</code>, la <code>claridad</code> y el <code>corte</code> de cada uno.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(datos)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw">str</span>(diamantes)</a></code></pre></div>
+<p>De paso vamos a usar datos incluidos en el paquete <code>datos</code> (muchos paquetes traen bases de datos para probar cosas, ¡este en particular son todas bases de datos en español!) que podés descargar como siempre con <code>install.packages("datos")</code>. Los datos <code>diamantes</code> contiene información sobre ~ 54000 diamantes, incluido el <code>precio</code>, el <code>quilate</code>, el <code>color</code>, la <code>claridad</code> y el <code>corte</code> de cada uno.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">library</span>(datos)</span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="kw">str</span>(diamantes)</span></code></pre></div>
 <pre><code>## tibble [53,940 × 10] (S3: tbl_df/tbl/data.frame)
 ##  $ precio     : int [1:53940] 326 326 327 334 335 336 336 337 337 338 ...
 ##  $ quilate    : num [1:53940] 0.23 0.21 0.23 0.29 0.31 0.24 0.24 0.26 0.22 0.23 ...
@@ -541,13 +544,13 @@ div.tocify {
 <div id="gráficos-de-frecuencias" class="section level2">
 <h2>Gráficos de frecuencias</h2>
 <p>Este es un gráfico de barras construido usando la función <code>geom_bar()</code>. En el eje x muestra el <code>corte</code> de los diamantes y en el eje y la cantidad (<em>count</em> en inglés) de diamantes en cada categoría. Pero <code>diamantes</code> no tiene una variable que se llame <code>count</code> y tampoco la generamos nosotros. ¡Es calculada internamente por {ggplot2}!</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamantes, <span class="kw">aes</span>(<span class="dt">x =</span> corte)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> diamantes, <span class="kw">aes</span>(<span class="dt">x =</span> corte)) <span class="op">+</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="st">  </span><span class="kw">geom_bar</span>()</span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
 <p>Cómo el gráfico de barras, también podemos graficar histogramas con <code>geom_histogram()</code> y polígonos de frecuencia con <code>geom_density()</code> para visualizar la cantidad de observaciones que caen en cada categoría (si la variable es discreta como el caso del corte de los diamantes) o rango de valores (para variables continuas).</p>
 <p>Un ejemplo de variable continua es el <code>precio</code> de los diamantes, veamos como se ve un histograma y de paso le cambiamos el color a las barras, pero ojo, solo al borde.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(precio)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;darkorange&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(precio)) <span class="op">+</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="dt">color =</span> <span class="st">&quot;darkorange&quot;</span>)</span></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
 <div class="alert alert-info">
@@ -558,8 +561,8 @@ div.tocify {
 <p>También podés revisar la documentación.</p>
 </div>
 <p>Además de contar la cantidad de elementos, {ggplot2} puede calcular muchas otras transformaciones sobre los datos. Por ejemplo si quisiéramos el porcentaje o la proporción que le corresponde a cada categoría de <code>corte</code> respecto del total podemos hacerlo <em>mapeando</em> esa transformación <code>prop</code> al eje y con la función <code>stat()</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamantes, <span class="kw">aes</span>(<span class="dt">x =</span> corte)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">y =</span> <span class="kw">stat</span>(prop), <span class="dt">group =</span> <span class="dv">1</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> diamantes, <span class="kw">aes</span>(<span class="dt">x =</span> corte)) <span class="op">+</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">y =</span> <span class="kw">stat</span>(prop), <span class="dt">group =</span> <span class="dv">1</span>))</span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
 <p>Fijate que la variable <code>prop</code> no es una columna de <code>diamantes</code> sino que es el nombre de una variable computada por <code>geom_bar()</code>, por eso hay que rodearla de la función <code>stat()</code>. El nombre de las variables computadas por cada geoms está en su documentación (abajo de todo, antes de los ejemplos).</p>
 <p>Ahora podríamos decir que el 40% de los diamantes en la base de datos tienen un corte <em>ideal</em>. Además de la función <code>stat()</code> agregamos <code>group = 1</code> y esto no fue sin querer. Probá correr el gráfico sin ese argumento.</p>
@@ -567,36 +570,36 @@ div.tocify {
 <div id="posición" class="section level3">
 <h3>Posición</h3>
 <p>Ya vimos que la estética del <code>color</code> sólo modifica el borde de las barras, si quisieras modificar el relleno necesitamos cambiar el <code>fill</code> y al igual que antes podemos <em>mapear</em> una variable a esta estética.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">ggplot</span>(<span class="dt">data =</span> diamantes) <span class="op">+</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> corte, <span class="dt">fill =</span> claridad))</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">ggplot</span>(<span class="dt">data =</span> diamantes) <span class="op">+</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> corte, <span class="dt">fill =</span> claridad))</span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
-<p>Al <em>mapear</em> una variable distinta, la claridad de los diamantes, podemmos visualizar información extra. Este “apilamiento” de las barras es la opción de posición por defecto <code>position = &quot;stack&quot;</code>, pero podrías usar una de las otras tres opciones: <code>&quot;identity&quot;</code>, <code>&quot;dodge&quot;</code> o <code>&quot;fill&quot;</code>.</p>
+<p>Al <em>mapear</em> una variable distinta, la claridad de los diamantes, podemmos visualizar información extra. Este “apilamiento” de las barras es la opción de posición por defecto <code>position = "stack"</code>, pero podrías usar una de las otras tres opciones: <code>"identity"</code>, <code>"dodge"</code> o <code>"fill"</code>.</p>
 <ul>
-<li><code>position = &quot;identity&quot;</code> colocará cada barra comenzando en cero quedando todas superpuestas. Para ver esa superposición, debemos hacer que las barras sean ligeramente transparentes configurando el <code>alpha</code> a un valor pequeño.</li>
+<li><code>position = "identity"</code> colocará cada barra comenzando en cero quedando todas superpuestas. Para ver esa superposición, debemos hacer que las barras sean ligeramente transparentes configurando el <code>alpha</code> a un valor pequeño.</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes) <span class="op">+</span></a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> corte, <span class="dt">fill =</span> claridad), <span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">ggplot</span>(diamantes) <span class="op">+</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> corte, <span class="dt">fill =</span> claridad), <span class="dt">alpha =</span> <span class="fl">0.2</span>, <span class="dt">position =</span> <span class="st">&quot;identity&quot;</span>)</span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
 <ul>
-<li><code>position = &quot;fill&quot;</code> apila las barras al igual que <code>position = &quot;stack&quot;</code>, pero transforma los datos para que cada conjunto de barras apiladas tenga la misma altura. Esto hace que sea más fácil comparar proporciones entre grupos.</li>
+<li><code>position = "fill"</code> apila las barras al igual que <code>position = "stack"</code>, pero transforma los datos para que cada conjunto de barras apiladas tenga la misma altura. Esto hace que sea más fácil comparar proporciones entre grupos.</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> corte, <span class="dt">fill =</span> claridad), <span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw">ggplot</span>(diamantes) <span class="op">+</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> corte, <span class="dt">fill =</span> claridad), <span class="dt">position =</span> <span class="st">&quot;fill&quot;</span>)</span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
 <ul>
-<li><code>position = &quot;dodge&quot;</code> coloca las barras una al lado de la otra. Esto hace que sea más fácil comparar valores individuales.</li>
+<li><code>position = "dodge"</code> coloca las barras una al lado de la otra. Esto hace que sea más fácil comparar valores individuales.</li>
 </ul>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes) <span class="op">+</span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> corte, <span class="dt">fill =</span> claridad), <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">ggplot</span>(diamantes) <span class="op">+</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> corte, <span class="dt">fill =</span> claridad), <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 </div>
 </div>
 <div id="gráficos-de-líneas-suavizas" class="section level2">
 <h2>Gráficos de líneas suavizas</h2>
 <p>Cómo vimos antes, los gráficos de líneas suavizadas (smoothers) ajustan un modelo a los datos y luego grafican las predicciones del modelo. Sin entrar en muchos detalles, se puede aplicar distintos modelos y la elección del mismo dependerá de los datos.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">geom_smooth</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="st">  </span><span class="kw">geom_smooth</span>()</span></code></pre></div>
 <pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>
@@ -604,8 +607,8 @@ div.tocify {
 <h2>Gráficos de caja</h2>
 <p>Los diagramas de caja, mejor conocidos como boxplots calculan un resumen robusto de la distribución y luego muestran una caja con formato especial.</p>
 <p>La línea central de la caja corresponde a la <strong>mediana</strong> (el valor que toma el dato central) y los extremos de la caja son los <strong>cuartiles 1 y 3</strong>, definiendo así el <strong>rango intercuartil</strong> (IQR). Los extremos están definidos como el valor observado que no esté más lejos de <strong>1.5*IQR</strong> de la mediana y los puntos son los las observaciones que se escapan de ese rango, que pueden ser considerados <strong>outliners</strong> o <strong>valores extremos</strong>.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(claridad, precio)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_boxplot</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(claridad, precio)) <span class="op">+</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="st">  </span><span class="kw">geom_boxplot</span>()</span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>Los boxplot dan muchísima información sobre los datos pero al mismo tiempo <em>esconden</em> la cantidad de observaciones que se usaron para generarlos y en particular cual es la frecuencia a lo largo del eje y. Por esta razón también existen <code>geom_violin()</code> y <code>geom_jitter()</code>.</p>
 <div class="alert alert-info">
@@ -615,11 +618,11 @@ div.tocify {
 <li>¿Qué ventajas y desventajas encuentran respecto de <code>geom_boxplot()</code>?</li>
 </ol>
 </div>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(claridad, precio)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_violin</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(claridad, precio)) <span class="op">+</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="st">  </span><span class="kw">geom_violin</span>() </span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(claridad, precio)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_jitter</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(claridad, precio)) <span class="op">+</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="st">  </span><span class="kw">geom_jitter</span>()</span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
 <div class="alert alert-success">
 <p>Cuando nuestra base de datos es muy grande corremos el riesgo de generar de que los elementos del gráfico estén tan juntos que se solapen y no se vean. Esto se conoce como <strong>overplotting</strong>. La base de datos <code>diamantes</code> tiene 53940 observaciones y al graficar un punto por cada una, aún si están separados por la claridad, quedan superpuestos.</p>
@@ -629,25 +632,25 @@ div.tocify {
 <div id="graficando-en-múltiples-paneles" class="section level2">
 <h2>Graficando en múltiples paneles</h2>
 <p>Vimos que es posible graficar más de dos variables en un gráfico <em>mapeando</em> una variable al <code>color</code> o por ejemplo el tipo de línea o <code>linetype</code></p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb16-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color))</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></span>
+<span id="cb16-2"><a href="#cb16-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color))</span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
 <p>En este caso no solo visualizamos la relación entre el precio y el quilate del diamante, también podemos ver que rol juega el color. También podríamos haber intentando resolver el problema generando un gráfico por cada color filtrando las observaciones correspondientes.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">diamantes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(color <span class="op">==</span><span class="st"> &quot;D&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color))</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>diamantes <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="st">  </span><span class="kw">filter</span>(color <span class="op">==</span><span class="st"> &quot;D&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="st">  </span><span class="kw">ggplot</span>(<span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color))</span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 <p>Pero sería muchísimo trabajo si tenemos que hacer esto para cada una de las 7 categorías de color. La buena noticia es que {ggplot2} tiene un par de funciones justo para resolver este problema:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>color)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color)) <span class="op">+</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>color)</span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
 <p>Esta nueva capa con <code>facet_wrap()</code> divide al gráfico inicial en 7 paneles o <em>facets</em>, uno por cada color. Esta función requiere saber que variable será la responsable de separar los paneles y para eso se usa la <strong>notación de funciones</strong> de R: <code>~color</code>. Esto se lee como generar paneles <em>“en función del color”</em>.</p>
 <p>¿Y si quisieramos generar paneles a partir de 2 variables? Para eso existe <code>facet_grid()</code>. En este gráfico generamos paneles viendo la <em>“relación entre el corte y el color”</em> y por ejemplo en el primer panel arriba a la izquierda podremos observar los diamantes que son al mismo tiempo de color D y corte Regular. En este caso <em>mapear</em> la variable color al color de los diamantes no parece ser encesario ya que cada columna ya nos permite identificar eso, sin embargo en algunos casos ayuda a leer el gráfico más rápido.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">  </span><span class="kw">facet_grid</span>(corte<span class="op">~</span>color)</a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">ggplot</span>(diamantes, <span class="kw">aes</span>(quilate, precio)) <span class="op">+</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">color =</span> color)) <span class="op">+</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="st">  </span><span class="kw">facet_grid</span>(corte<span class="op">~</span>color)</span></code></pre></div>
 <p><img src="07-graficos-II_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
 <div class="alert alert-info">
 <p><strong>Tercer desafío</strong></p>

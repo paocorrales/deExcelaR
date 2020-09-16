@@ -25,13 +25,14 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -41,14 +42,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -57,9 +60,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -542,15 +545,15 @@ div.tocify {
 <p>En las tablas de ejemplo cada país tiene el un valor observado de “casos” para cada año. ¿Cómo agregarías una nueva variable con información sobre “precios”? Dibujá un esquema en papel y lápiz en formato ancho y uno en formato largo. ¿En qué formato es más “natural” esa extensión?</p>
 </div>
 <p>En esta sección vas a usar el paquete {tidyr} para manipular datos. Si no lo tenés instalado, instalalo con el comando:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;tidyr&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;tidyr&quot;</span>)</span></code></pre></div>
 <p>(como siempre, recordá que esto hay que hacerlo una única vez)</p>
 <p>Y luego cargá {tidyr} y {dplyr} (que usaste en <a href="05-dplyr-I.html">una sección anterior</a>) con:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(tidyr)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">library</span>(dplyr)</span></code></pre></div>
 <div id="de-ancho-a-largo-con-pivot_longer" class="section level2">
 <h2>De ancho a largo con <code>pivot_longer()</code></h2>
 <p>En secciones anteriores usaste una versión de los datos de <a href="https://www.gapminder.org/">gapminder</a>. Ahora vas a leer los datos en su formato original:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">paises_ancho &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises_ancho.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>paises_ancho &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises_ancho.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_double(),
@@ -558,7 +561,7 @@ div.tocify {
 ##   pais = col_character()
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">paises_ancho</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>paises_ancho</span></code></pre></div>
 <pre><code>## # A tibble: 142 x 38
 ##    continente pais  pib_per_capita_… pib_per_capita_… pib_per_capita_…
 ##    &lt;chr&gt;      &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
@@ -592,14 +595,14 @@ div.tocify {
 </div>
 <p>Esta tabla, increíblemente ancha, es muy difícil de manejar. Por ejemplo, es imposible hacer una serie de tiempo de una variable, o calcular el promedio por variable y país; ni hablar de calcular una regresión lineal.</p>
 <p>Para convertirlo en una tabla más larga, se usa <code>pivot_longer()</code> (“longer” es “más largo” en inglés):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">paises_largo &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(paises_ancho,</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">                             <span class="dt">cols =</span> <span class="kw">c</span>(<span class="kw">starts_with</span>(<span class="st">&#39;pob&#39;</span>), </a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">                                      <span class="kw">starts_with</span>(<span class="st">&#39;esperanza&#39;</span>), </a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">                                      <span class="kw">starts_with</span>(<span class="st">&#39;pib_per&#39;</span>)),</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">                             <span class="dt">names_to =</span> <span class="st">&quot;variable_anio&quot;</span>, </a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">                             <span class="dt">values_to =</span> <span class="st">&quot;valor&quot;</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">paises_largo</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>paises_largo &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(paises_ancho,</span>
+<span id="cb8-2"><a href="#cb8-2"></a>                             <span class="dt">cols =</span> <span class="kw">c</span>(<span class="kw">starts_with</span>(<span class="st">&#39;pob&#39;</span>), </span>
+<span id="cb8-3"><a href="#cb8-3"></a>                                      <span class="kw">starts_with</span>(<span class="st">&#39;esperanza&#39;</span>), </span>
+<span id="cb8-4"><a href="#cb8-4"></a>                                      <span class="kw">starts_with</span>(<span class="st">&#39;pib_per&#39;</span>)),</span>
+<span id="cb8-5"><a href="#cb8-5"></a>                             <span class="dt">names_to =</span> <span class="st">&quot;variable_anio&quot;</span>, </span>
+<span id="cb8-6"><a href="#cb8-6"></a>                             <span class="dt">values_to =</span> <span class="st">&quot;valor&quot;</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>paises_largo</span></code></pre></div>
 <pre><code>## # A tibble: 5,112 x 4
 ##    continente pais    variable_anio     valor
 ##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;             &lt;dbl&gt;
@@ -614,21 +617,21 @@ div.tocify {
 ##  9 Africa     Algeria poblacion_1992 26298373
 ## 10 Africa     Algeria poblacion_1997 29072015
 ## # … with 5,102 more rows</code></pre>
-<p>El primer argumento de<code>pivot_longer()</code> es la tabla que va a modificar: <code>paises_ancho</code>. El segundo argumento se llama <code>cols</code> y es un vector con las columnas que tienen los valores a “alargar”. Podría ser un vector escrito a mano (algo como <code>c(&quot;pib_per_capita_1952&quot;, &quot;pib_per_capita_1957&quot;...)</code>) pero con más de 30 columnas, escribir todo eso sería tedioso y probablemente estaría lleno de erorres. Por eso {tidyr} provee funciones de ayuda para seleccionar columnas en base a patrones. El código de arriba usa <code>starts_with()</code> que, como su nombre en inglés lo indica, selecciona las columnas que <em>empiezan con</em> una determinada cadena de caracteres. El vector <code>c(starts_with('pob'), starts_with('esperanza'), starts_with('pib_per'))</code> le dice a <code>pivot_longer()</code> que seleccione las columnas que empieza con “pob”, las que empiezan con “esperanza” y las que empiezan con “pib_per”.</p>
+<p>El primer argumento de<code>pivot_longer()</code> es la tabla que va a modificar: <code>paises_ancho</code>. El segundo argumento se llama <code>cols</code> y es un vector con las columnas que tienen los valores a “alargar”. Podría ser un vector escrito a mano (algo como <code>c("pib_per_capita_1952", "pib_per_capita_1957"...)</code>) pero con más de 30 columnas, escribir todo eso sería tedioso y probablemente estaría lleno de erorres. Por eso {tidyr} provee funciones de ayuda para seleccionar columnas en base a patrones. El código de arriba usa <code>starts_with()</code> que, como su nombre en inglés lo indica, selecciona las columnas que <em>empiezan con</em> una determinada cadena de caracteres. El vector <code>c(starts_with('pob'), starts_with('esperanza'), starts_with('pib_per'))</code> le dice a <code>pivot_longer()</code> que seleccione las columnas que empieza con “pob”, las que empiezan con “esperanza” y las que empiezan con “pib_per”.</p>
 <div class="alert alert-success">
 <p>Estas funciones accesorias para seleccionar muchas funciones se llaman “tidyselect”. Si querés leer más detalles de las distintas formas que podés seleccionar variables leé la documentación usando <code>?tidyselect::language</code>.</p>
 </div>
 <p>El tercer y cuarto argumento son los nombres de las columnas de “nombre” y de “valor” que va a tener la nueva tabla. Como la nueva columna de identificación tiene los datos de la variable y el año a medir, “variable_anio” es un buen nombre. Y la columna de valor va a tener… bueno, el valor.</p>
 <p>Tomate un momento para visualizar lo que acaba de pasar. La tabla ancha tenía un montón de columnas con distintos datos. Ahora estos datos están uno arriba de otro en la columna “valor”, pero para identificar el nombre de la columna de la cual vinieron, se agrega la columna “variable_anio”.</p>
 <div class="figure">
-<img src="img/ancho-a-largo.png" alt="Proceso de largo a ancho" />
+<img src="img/ancho-a-largo.png" alt="" />
 <p class="caption">Proceso de largo a ancho</p>
 </div>
 <p>La columna <code>variable_anio</code> todavía no es muy útil porque contiene 2 datos, la variable (población, expectativa de vida o PBI per cápita) y el año. Sería mejor separar esta información en dos columnas llamadas “variable” y “anio”. Para eso está la función <code>separate()</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">separate</span>(paises_largo, </a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">         <span class="dt">col =</span> variable_anio, </a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">         <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;anio&quot;</span>), </a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">         <span class="dt">sep =</span> <span class="dv">-4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">separate</span>(paises_largo, </span>
+<span id="cb10-2"><a href="#cb10-2"></a>         <span class="dt">col =</span> variable_anio, </span>
+<span id="cb10-3"><a href="#cb10-3"></a>         <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;anio&quot;</span>), </span>
+<span id="cb10-4"><a href="#cb10-4"></a>         <span class="dt">sep =</span> <span class="dv">-4</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 5,112 x 5
 ##    continente pais    variable   anio     valor
 ##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;    &lt;dbl&gt;
@@ -643,13 +646,13 @@ div.tocify {
 ##  9 Africa     Algeria poblacion_ 1992  26298373
 ## 10 Africa     Algeria poblacion_ 1997  29072015
 ## # … with 5,102 more rows</code></pre>
-<p>El primer argumento, como siempre, es la tabla a procesar. El segundo, <code>col</code>, es la columna a separar en dos (o más) columnas nuevas. El tercero, <code>into</code> es el nombre de las nuevas columnas que <code>separate()</code> va a crear. El último argumento es <code>sep</code> que define cómo realizar la separación. Por defecto, <code>sep</code> es una <a href="https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular">expresión regular</a> que captura cualquier caracter no alfanumérico. En el caso de <code>variable_anio</code> no sirve, porque para valores como <code>&quot;esperanza_de_vida_1952&quot;</code>, separaría en <code>&quot;esperanza&quot;</code>, <code>&quot;de&quot;</code>, <code>&quot;vida&quot;</code> y <code>&quot;1952&quot;</code>. Como el año tiene siempre 4 caracteres, una solución simple es usar <code>sep = -4</code>, que significa que la separacion es 4 caracteres contando desde el final.</p>
-<p>Habrás notado un problema. El texto en la columnas <code>variable</code> toavía tiene un &quot;_&quot; al final. Podrías usar <code>mutate()</code> y un poco de funciones de manipulación de caracteres para quitarlo, pero hay una forma un poco más simple y es separando la columna <code>variable_anio</code> en tres, incluyendo una columna con el guión:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">paises_largo &lt;-<span class="st"> </span><span class="kw">separate</span>(paises_largo, </a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">         <span class="dt">col =</span> variable_anio, </a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">         <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;guion&quot;</span>, <span class="st">&quot;anio&quot;</span>), </a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">         <span class="dt">sep =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">-4</span>))</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">paises_largo</a></code></pre></div>
+<p>El primer argumento, como siempre, es la tabla a procesar. El segundo, <code>col</code>, es la columna a separar en dos (o más) columnas nuevas. El tercero, <code>into</code> es el nombre de las nuevas columnas que <code>separate()</code> va a crear. El último argumento es <code>sep</code> que define cómo realizar la separación. Por defecto, <code>sep</code> es una <a href="https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular">expresión regular</a> que captura cualquier caracter no alfanumérico. En el caso de <code>variable_anio</code> no sirve, porque para valores como <code>"esperanza_de_vida_1952"</code>, separaría en <code>"esperanza"</code>, <code>"de"</code>, <code>"vida"</code> y <code>"1952"</code>. Como el año tiene siempre 4 caracteres, una solución simple es usar <code>sep = -4</code>, que significa que la separacion es 4 caracteres contando desde el final.</p>
+<p>Habrás notado un problema. El texto en la columnas <code>variable</code> toavía tiene un "_" al final. Podrías usar <code>mutate()</code> y un poco de funciones de manipulación de caracteres para quitarlo, pero hay una forma un poco más simple y es separando la columna <code>variable_anio</code> en tres, incluyendo una columna con el guión:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>paises_largo &lt;-<span class="st"> </span><span class="kw">separate</span>(paises_largo, </span>
+<span id="cb12-2"><a href="#cb12-2"></a>         <span class="dt">col =</span> variable_anio, </span>
+<span id="cb12-3"><a href="#cb12-3"></a>         <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;guion&quot;</span>, <span class="st">&quot;anio&quot;</span>), </span>
+<span id="cb12-4"><a href="#cb12-4"></a>         <span class="dt">sep =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">-4</span>))</span>
+<span id="cb12-5"><a href="#cb12-5"></a>paises_largo</span></code></pre></div>
 <pre><code>## # A tibble: 5,112 x 6
 ##    continente pais    variable  guion anio     valor
 ##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;
@@ -665,10 +668,10 @@ div.tocify {
 ## 10 Africa     Algeria poblacion _     1997  29072015
 ## # … with 5,102 more rows</code></pre>
 <p>Y ya casi. Hay que eliminar la columna <code>guion</code>, que no sirve para nada. Pero fijate que debajo de la columna <code>anio</code> dice <code>&lt;chr&gt;</code>; eso significa que el tipo de la columna es caracter, pero los años son números. Usando <code>mutate()</code> podés eliminar la columna <code>guion</code> asignándole el valor <code>NULL</code> (nulo) y coercer (recordá <a href="04-lectura-datos.html#Vectores">esta sección</a>) la columna <code>anio</code> a entero usando <code>as.integer()</code>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">paises_largo &lt;-<span class="st"> </span><span class="kw">mutate</span>(paises_largo, </a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">                       <span class="dt">guion =</span> <span class="ot">NULL</span>,</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">                       <span class="dt">anio =</span> <span class="kw">as.integer</span>(anio))</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4">paises_largo</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>paises_largo &lt;-<span class="st"> </span><span class="kw">mutate</span>(paises_largo, </span>
+<span id="cb14-2"><a href="#cb14-2"></a>                       <span class="dt">guion =</span> <span class="ot">NULL</span>,</span>
+<span id="cb14-3"><a href="#cb14-3"></a>                       <span class="dt">anio =</span> <span class="kw">as.integer</span>(anio))</span>
+<span id="cb14-4"><a href="#cb14-4"></a>paises_largo</span></code></pre></div>
 <pre><code>## # A tibble: 5,112 x 5
 ##    continente pais    variable   anio    valor
 ##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;    &lt;dbl&gt;
@@ -692,8 +695,8 @@ div.tocify {
 <h2>De largo a ancho con <code>pivot_wider()</code></h2>
 <p>Ahora la variable <code>paises_largo</code> está en el formato más largo posible. Tiene 5 columnas, de las cuales sólo una es la columnas con valores. Pero con los datos así no podrías hacer un gráfico de puntos que muestre la relación entre el PBI per cápita y la expectativa de vida como en la <a href="06-graficos-I.html#Segunda_capa:_geometrías">sección de gráficos</a>. Fijate que los valores de la columna <code>valor</code> no tienen todos las mismas unidades, por lo que operar con ese vector podría dar resultados sin sentido. Muchas veces es conveniente y natural tener los datos en un formato intermedio en donde hay múltiples columnas con los valores de distintas variables observadas.</p>
 <p>Pasa “ensanchar” una tabla está la función <code>pivot_wider()</code> (“wider” es “más ancha” en inglés) y el código para conseguir este formato intermedio es:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">paises_medio &lt;-<span class="st"> </span><span class="kw">pivot_wider</span>(paises_largo, <span class="dt">names_from =</span> variable, <span class="dt">values_from =</span> valor)</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">paises_medio</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>paises_medio &lt;-<span class="st"> </span><span class="kw">pivot_wider</span>(paises_largo, <span class="dt">names_from =</span> variable, <span class="dt">values_from =</span> valor)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>paises_medio</span></code></pre></div>
 <pre><code>## # A tibble: 1,704 x 6
 ##    continente pais     anio poblacion esperanza_de_vida pib_per_capita
 ##    &lt;chr&gt;      &lt;chr&gt;   &lt;int&gt;     &lt;dbl&gt;             &lt;dbl&gt;          &lt;dbl&gt;
@@ -708,12 +711,12 @@ div.tocify {
 ##  9 Africa     Algeria  1992  26298373              67.7          5023.
 ## 10 Africa     Algeria  1997  29072015              69.2          4797.
 ## # … with 1,694 more rows</code></pre>
-<p>Nuevamente el primer argumento es la tabla original. El segundo, <code>names_from</code> es la columna cuyos valores únicos van a convertirse en nuevas columnas. La columna <code>variable</code> tiene los valores <code>&quot;población&quot;</code>, <code>&quot;esperanza_de_vida&quot;</code> y <code>&quot;pib_per_capita&quot;</code> y entonces la tabla nueva tendrá tres columnas con esos nombres. El tercer argumento, <code>values_from</code>, es la columna de la cual sacar los valores.</p>
+<p>Nuevamente el primer argumento es la tabla original. El segundo, <code>names_from</code> es la columna cuyos valores únicos van a convertirse en nuevas columnas. La columna <code>variable</code> tiene los valores <code>"población"</code>, <code>"esperanza_de_vida"</code> y <code>"pib_per_capita"</code> y entonces la tabla nueva tendrá tres columnas con esos nombres. El tercer argumento, <code>values_from</code>, es la columna de la cual sacar los valores.</p>
 <p>Para volver al formato más ancho, basta con agregar más columnas en el argumento <code>names_from</code>:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">pivot_wider</span>(paises_largo, </a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">            <span class="dt">names_from =</span> <span class="kw">c</span>(variable, anio), </a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">            <span class="dt">names_sep =</span> <span class="st">&quot;_&quot;</span>,</a>
-<a class="sourceLine" id="cb18-4" data-line-number="4">            <span class="dt">values_from =</span> valor)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">pivot_wider</span>(paises_largo, </span>
+<span id="cb18-2"><a href="#cb18-2"></a>            <span class="dt">names_from =</span> <span class="kw">c</span>(variable, anio), </span>
+<span id="cb18-3"><a href="#cb18-3"></a>            <span class="dt">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb18-4"><a href="#cb18-4"></a>            <span class="dt">values_from =</span> valor)</span></code></pre></div>
 <pre><code>## # A tibble: 142 x 38
 ##    continente pais  poblacion_1952 poblacion_1957 poblacion_1962 poblacion_1967
 ##    &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
@@ -765,11 +768,11 @@ div.tocify {
 </ul>
 <p><img src="img/join_family.png" /></p>
 <p>Ahora vamos a seguir trabajando con las base de datos de <code>paises</code> pero nos vamos a quedar solo con las observaciones del 2007 y de paso unirlo a una nueva base de datos <code>co2</code> que contiene información de la emisión de dióxido de carbono de cada pais para ese mismo año.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">paises_<span class="dv">2007</span> &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) </a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4">co2_<span class="dv">2007</span> &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/co2_2007.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb20-5" data-line-number="5">co2_<span class="dv">2007</span></a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>paises_<span class="dv">2007</span> &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) </span>
+<span id="cb20-3"><a href="#cb20-3"></a></span>
+<span id="cb20-4"><a href="#cb20-4"></a>co2_<span class="dv">2007</span> &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/co2_2007.csv&quot;</span>)</span>
+<span id="cb20-5"><a href="#cb20-5"></a>co2_<span class="dv">2007</span></span></code></pre></div>
 <pre><code>## # A tibble: 218 x 3
 ##    codigo_iso emision_co2 pais                  
 ##    &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;                 
@@ -791,8 +794,8 @@ div.tocify {
 <li>qué variable o variables (se puede usar más de una!) usar para identificar coincidencias: el argumento <code>by</code>.</li>
 </ul>
 <p>Unamos <code>paises_2007</code> y <code>co2_2007</code> primero con <code>full_join()</code>:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">paises_co2_<span class="dv">2007</span> &lt;-<span class="st"> </span><span class="kw">full_join</span>(paises_<span class="dv">2007</span>, co2_<span class="dv">2007</span>, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>)</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">paises_co2_<span class="dv">2007</span></a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>paises_co2_<span class="dv">2007</span> &lt;-<span class="st"> </span><span class="kw">full_join</span>(paises_<span class="dv">2007</span>, co2_<span class="dv">2007</span>, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>)</span>
+<span id="cb22-2"><a href="#cb22-2"></a>paises_co2_<span class="dv">2007</span></span></code></pre></div>
 <pre><code>## # A tibble: 241 x 8
 ##    pais  continente  anio esperanza_de_vi… poblacion pib_per_capita codigo_iso
 ##    &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;     
@@ -814,8 +817,8 @@ div.tocify {
 </ul>
 <p>Esta es la opción más segura si no sabemos si todas las observaciones de una tabla están presente en a otra.</p>
 <p>Si solo nos interesa conservar las filas de la tabla <em>de la izquierda</em>, en este caso <code>paises_2007</code> entonces:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">paises_co2_<span class="dv">2007</span> &lt;-<span class="st"> </span><span class="kw">left_join</span>(paises_<span class="dv">2007</span>, co2_<span class="dv">2007</span>, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>)</a>
-<a class="sourceLine" id="cb24-2" data-line-number="2">paises_co2_<span class="dv">2007</span></a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>paises_co2_<span class="dv">2007</span> &lt;-<span class="st"> </span><span class="kw">left_join</span>(paises_<span class="dv">2007</span>, co2_<span class="dv">2007</span>, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>)</span>
+<span id="cb24-2"><a href="#cb24-2"></a>paises_co2_<span class="dv">2007</span></span></code></pre></div>
 <pre><code>## # A tibble: 142 x 8
 ##    pais  continente  anio esperanza_de_vi… poblacion pib_per_capita codigo_iso
 ##    &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;     
@@ -832,8 +835,8 @@ div.tocify {
 ## # … with 132 more rows, and 1 more variable: emision_co2 &lt;dbl&gt;</code></pre>
 <p>Ahora esperamos que la tabla resultante tenga la misma cantidad de filas que <code>paises_2007</code> y efectivamente eso ocurre. Pero al mismo tiempo varios paises en esa tabla no encontraron coincidencia en <code>co2_2007</code> y por esa razón, la columna nueva columna <code>emisiones_co2</code> tiene <code>NA</code>.</p>
 <p>Finalmente, si quiseramos quedarnos solo con las observaciones que están presentes en ambas tablas usamos <code>inner_join()</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">paises_co2_<span class="dv">2007</span> &lt;-<span class="st"> </span><span class="kw">inner_join</span>(paises_<span class="dv">2007</span>, co2_<span class="dv">2007</span>, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>)</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">paises_co2_<span class="dv">2007</span></a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>paises_co2_<span class="dv">2007</span> &lt;-<span class="st"> </span><span class="kw">inner_join</span>(paises_<span class="dv">2007</span>, co2_<span class="dv">2007</span>, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>)</span>
+<span id="cb26-2"><a href="#cb26-2"></a>paises_co2_<span class="dv">2007</span></span></code></pre></div>
 <pre><code>## # A tibble: 119 x 8
 ##    pais  continente  anio esperanza_de_vi… poblacion pib_per_capita codigo_iso
 ##    &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;     
