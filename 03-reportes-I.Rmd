@@ -199,7 +199,7 @@ Ctrl+Shift+Enter
 
 Usando el archivo con el que venís trabajando insertá un nuevo chunk y:
 
-1. Cargá la librería `readr`.
+1. Cargá el paquete {readr}.
 2. Creá una variable que se llame `variable-prueba` y asignale un valor.
 3. Mostrá ese valor.
 4. Volvé a *knitear* el archivo para ver el resultado

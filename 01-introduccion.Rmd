@@ -141,6 +141,11 @@ library(readr)
 le decís a R que cargue las funciones que vienen en el paquete readr para usarlas.
 
 
+::: {.alert .alert-info}
+**Desafío**: Instalá el paquete {readr} con el comando `install.packages("readr")`
+:::
+
+
 ::: {.alert .alert-success}
 **Nota**: Si cerrás y volveś a abrir R, vas a tener que usar `library(readr)` nuevamente para acceder a la funcionalidad del paquete readr
 :::
