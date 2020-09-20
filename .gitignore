@@ -2,3 +2,9 @@
 .Rhistory
 .RData
 .Ruserdata
+
+datos/existencias-bovinas.xlsx
+
+datos/existencias_bovinas_long.xlsx
+
+datos/existencias_bovinas_wide.xlsx
