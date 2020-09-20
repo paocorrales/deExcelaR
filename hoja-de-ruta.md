@@ -12,7 +12,7 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
 
 #### Contenidos
 
-- [¿Por qué R?](01-introducion.html)
+- [¿Por qué R?](01-introduccion.html)
   - Mapa para navegar RStudio. 
   - Definir variables. 
   - Ejecutar funciones.
