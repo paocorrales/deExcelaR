@@ -4,7 +4,7 @@ output:
   html_document:
     code_download: true
     toc: true
-    toc_float: true
+    toc_float: false
     highlight: tango   
 ---
 
