@@ -6,7 +6,7 @@ output:
     toc_float: true
 ---
 
-La organización de los contenidos asume que se darán en 4 encuentros de 3 horas, pero podría ser disinto. Hay cierta interrelación entre los temas y asumimos que si vas directo a Visualización de datos, ya sabés como leerlos en R.
+La organización de los contenidos asume que se darán en 4 encuentros de 3 horas, pero podría ser distinto. Hay cierta interrelación entre los temas y asumimos que si vas directo a Visualización de datos, ya sabés como leerlos en R.
 
 ### Primer encuentro
 

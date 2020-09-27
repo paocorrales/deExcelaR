@@ -22,7 +22,7 @@ Buscá algún set de datos que hayas usado para algo o quieras usar. Puede ser e
 
 ### 3. Lee los datos en R 
 
-Creá un archivo de RMarkdown (por las dudas, [esta es la sección asociada](03-reportes-I.html)). Además de un título informativo, describí los datos con tus palabras. ¿Cuál es la fuente? ¿Qué variables incluyen? Armá un *chunk* para leer los datos (podés revisar [esta sección](04-lectura-datos.html) y mostralos. ¿Cuántas obervaciones tiene? ¿Qué tipo de datos tiene cada columna?  
+Creá un archivo de RMarkdown (por las dudas, [esta es la sección asociada](03-reportes-I.html)). Además de un título informativo, describí los datos con tus palabras. ¿Cuál es la fuente? ¿Qué variables incluyen? Armá un *chunk* para leer los datos (podés revisar [esta sección](04-lectura-datos.html) y mostralos. ¿Cuántas observaciones tiene? ¿Qué tipo de datos tiene cada columna?  
 
 
 

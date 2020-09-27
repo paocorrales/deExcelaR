@@ -34,7 +34,7 @@ library(knitr)
 kable(paises_seleccion)
 ```
 
-La mayoría de las veces, el nombre de las columnas que queremos mostrar no va a ser igual que el nombre de las columnas en R. En la tabla `paises`, los nombres están en minúscula, sin epacios y sin "caracteres especiales" como "ñ" o "í". Esto es útil para comunicarse con R, pero no está bueno para comunicados a seres humanos. El argumento `col.names` permite especificar el nombre de las columnas para mostrar:
+La mayoría de las veces, el nombre de las columnas que queremos mostrar no va a ser igual que el nombre de las columnas en R. En la tabla `paises`, los nombres están en minúscula, sin espacios y sin "caracteres especiales" como "ñ" o "í". Esto es útil para comunicarse con R, pero no está bueno para comunicados a seres humanos. El argumento `col.names` permite especificar el nombre de las columnas para mostrar:
 
 ```{r}
 kable(paises_seleccion, 
@@ -49,7 +49,7 @@ kable(paises_seleccion,
       format.args = list(decimal.mark = ",", big.mark = "."))
 ```
 
-Uff... pero ponerle el punto de miles a los años queda raro. La solucíon es convertir la columna `anio` en caracter. De esta manera, no se ve afectada por el formato numérico. 
+Uff... pero ponerle el punto de miles a los años queda raro. La solución es convertir la columna `anio` en caracter. De esta manera, no se ve afectada por el formato numérico. 
 
 ```{r}
 paises_seleccion %>% 
@@ -88,7 +88,7 @@ paises_tabla %>%
 
 El primer argumento es el número de la columna que queremos agrupar. En este caso, la columna `pais` es la primera. El segundo argumento es la alineación vertical. Por defecto, `collapse_rows` pone las etiquetas en el centro, pero la convención más general es ponerlas arriba. 
 
-¿Qué es esa `kable_styling()`? {kableExtra} permite cambiar el estilo de las tablas muy fácilmente. `kable_styling` es el estilo por defecto, que es igual al que produce `kable`, pero tiene muchos otros. Si viste tablas hechas en LaTeX, quizás est estilo te resulte familiar:
+¿Qué es esa `kable_styling()`? {kableExtra} permite cambiar el estilo de las tablas muy fácilmente. `kable_styling` es el estilo por defecto, que es igual al que produce `kable`, pero tiene muchos otros. Si viste tablas hechas en LaTeX, quizás este estilo te resulte familiar:
 
 ```{r}
 paises_tabla %>% 
@@ -166,3 +166,9 @@ paises_tabla %>%
 
 
 Esto es sólo una mínima parte de lo que se puede hacer con el paquete {kableExtra}. Para ejemplos mucho más detallados, te recomendamos leer [la viñeta completa](https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html)
+
+
+<div class="btn-group" role="group" aria-label="Navegación">
+  <a href= "10-reportes-II.html" class = "btn btn-primary">Anterior</a>
+  <a href= "12-ggplot-III.html" class = "btn btn-primary">Siguiente</a>
+</div>

@@ -20,9 +20,9 @@ library(dplyr)
 
 También cambiamos la apariencia del relleno (o `fill`) de barras y la forma de los puntos (o `shape`). Para esto, {ggplot2} siempre usa una escala que podemos modificar de acuerdo a nuestro gusto y teniendo en cuenta cómo queremos comunicar nuestros resultados. 
 
-Por supuesto, modificar una escala implica sumar una nueva capa al gráfico sumando una nueva función. Todas las funciones de escala comienzan con `scale` (de escala en inglés), el típo de apariencia que queremos modificar (`color`, `fill`, `shape`, etc) y en muchos casos un nombre o una característica de esa escala. 
+Por supuesto, modificar una escala implica sumar una nueva capa al gráfico sumando una nueva función. Todas las funciones de escala comienzan con `scale` (de escala en inglés), el tipo de apariencia que queremos modificar (`color`, `fill`, `shape`, etc) y en muchos casos un nombre o una característica de esa escala. 
 
-Para mostrar como funciona, vamos a utilizar la base de datos de paises y con suerte al final de este documento tendremos un gráfico listo para publicar.
+Para mostrar como funciona, vamos a utilizar la base de datos de países y con suerte al final de este documento tendremos un gráfico listo para publicar.
 
 ```{r}
 paises <- readr::read_csv("datos/paises.csv")
@@ -62,7 +62,7 @@ Nuestro gráfico va quedando mejor y podemos aprovechar la capacidad de {ggplot2
 ::: {.alert .alert-info}
 **Desafío**
 
-A modo de prueba, cambia la paleta de colores actual por la de Viridis. Para eso tenés que usar `scale_color_viridis_d()`. La "d" del final viene de *discrete* y se usa para variables discretas o categorías, mientrs que si los datos son continuos, se usa "c".
+A modo de prueba, cambia la paleta de colores actual por la de Viridis. Para eso tenés que usar `scale_color_viridis_d()`. La "d" del final viene de *discrete* y se usa para variables discretas o categorías, mientas que si los datos son continuos, se usa "c".
 :::
 
 ```{r}
@@ -98,11 +98,11 @@ paises %>%
   scale_x_log10()
 ```
 
-En este caso las escalas que modifican los ejes justamente comienzan con `scala_x_` o `scale_y_` según sea el caso. Y por supuesto hay una variedad importante de scalas con muchas opciones. 
+En este caso las escalas que modifican los ejes justamente comienzan con `scala_x_` o `scale_y_` según sea el caso. Y por supuesto hay una variedad importante de escalas con muchas opciones. 
 
 ## Elementos de texto
 
-Ya sumamos 3 escalas, pero el gráfico ya se ve muy bien. ¿Cómo hacemos si queremos identificar paises individuales? Por ahora es difícil, pero podríamos agregar etiquetas de texto con el nombre de cada país al lado de cada punto usando `geom_text()`, y en este caso la apariencia está dada por `label` o etiqueta:
+Ya sumamos 3 escalas, pero el gráfico ya se ve muy bien. ¿Cómo hacemos si queremos identificar países individuales? Por ahora es difícil, pero podríamos agregar etiquetas de texto con el nombre de cada país al lado de cada punto usando `geom_text()`, y en este caso la apariencia está dada por `label` o etiqueta:
 
 ```{r}
 paises %>% 
@@ -115,12 +115,12 @@ paises %>%
   geom_text(aes(label = pais)) 
 ```
 
-Pero nos olvidamos que tenemos casi 200 paises, es razonable agregarle etiquetas a todos. Pero podríamos querer resaltar algunos, tal vez los de un continente en particular o los que cumplen con la condición de tener las mayores poblaciones del mundo. Para eso vamos a generarnos una nueva tabla con los paises que queremos resaltar y de paso usarla dentro de `geom_text()`.
+Pero nos olvidamos que tenemos casi 200 países, es razonable agregarle etiquetas a todos. Pero podríamos querer resaltar algunos, tal vez los de un continente en particular o los que cumplen con la condición de tener las mayores poblaciones del mundo. Para eso vamos a generarnos una nueva tabla con los países que queremos resaltar y de paso usarla dentro de `geom_text()`.
 
 ```{r}
 mucha_poblacion <- paises %>% 
   filter(anio == 2007) %>% 
-  filter(poblacion > 1000000000) # Paises con más de un billón de habitantes!
+  filter(poblacion > 1000000000) # Países con más de un billón de habitantes!
 
 paises %>% 
   filter(anio == 2007) %>% 
@@ -192,6 +192,12 @@ Ahora es tu turno. Elegí un [tema que te guste](https://es.r4ds.hadley.nz/image
 
 ::: {.alert .alert-success}
 
-Junto con las funciones `theme_...()`, hay una función llamada `theme()` que permite cambiar la apariencia de cualquier elemento del gráfico. Tiene casi infinitas opciones y si algún momento te desvelas intentando cambiar esa línea o ese borde, seguro que `theme()` tiene alguna opción par ahacer eso.
+Junto con las funciones `theme_...()`, hay una función llamada `theme()` que permite cambiar la apariencia de cualquier elemento del gráfico. Tiene casi infinitas opciones y si algún momento te desvelas intentando cambiar esa línea o ese borde, seguro que `theme()` tiene alguna opción para hacer eso.
 
 :::
+
+
+<div class="btn-group" role="group" aria-label="Navegación">
+  <a href= "11-tablas.html" class = "btn btn-primary">Anterior</a>
+  <a href= "hoja-de-ruta.html" class = "btn btn-primary">Hoja de ruta</a>
+</div>

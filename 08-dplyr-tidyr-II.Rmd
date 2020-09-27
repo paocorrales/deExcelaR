@@ -31,7 +31,7 @@ Una tabla en formato largo va a tener una cierta cantidad de columnas que cumple
 
 En una tabla ancha, cada observación única se identifica a partir de la intersección de filas y columnas. En el ejemplo, los países están en las filas y los años en las columnas. 
 
-En general, el formato ancho es más compacto y legible por humanos mientras que el largo es más fácil de manejar con la computadora. Si te fijás en las tablas de arriba, es más fácil comparar los valores entre paises y entre años en la tabla ancha. Pero el nombre de las columnas ("1999", "2000") en realidad ¡son datos! Además este formato se empieza a complicar en cuanto hay más de dos identificadores. 
+En general, el formato ancho es más compacto y legible por humanos mientras que el largo es más fácil de manejar con la computadora. Si te fijás en las tablas de arriba, es más fácil comparar los valores entre países y entre años en la tabla ancha. Pero el nombre de las columnas ("1999", "2000") en realidad ¡son datos! Además este formato se empieza a complicar en cuanto hay más de dos identificadores. 
 
 Un mismo set de datos puede ser representado de forma completamente "larga", completamente "ancha" o --lo que es más común-- en un formato intermedio pero no existe una forma "correcta" de organizar los datos; cada una tiene sus ventajas y desventajas. Por esto es que es muy normal que durante un análisis los datos vayan y vuelvan entre distintos formatos dependiendo de los métodos estadísticos que se le aplican. Entonces, aprender a transformar datos anchos en largos y viceversa es un habilidad muy útil. 
 
@@ -89,7 +89,7 @@ paises_largo <- pivot_longer(paises_ancho,
 paises_largo
 ```
 
-El primer argumento de`pivot_longer()` es la tabla que va a modificar: `paises_ancho`. El segundo argumento se llama `cols` y es un vector con las columnas que tienen los valores a "alargar". Podría ser un vector escrito a mano (algo como `c("pib_per_capita_1952", "pib_per_capita_1957"...)`) pero con más de 30 columnas, escribir todo eso sería tedioso y probablemente estaría lleno de erorres. Por eso {tidyr} provee funciones de ayuda para seleccionar columnas en base a patrones. El código de arriba usa `starts_with()` que, como su nombre en inglés lo indica, selecciona las columnas que *empiezan con* una determinada cadena de caracteres. El vector `c(starts_with('pob'), starts_with('esperanza'), starts_with('pib_per'))` le dice a `pivot_longer()` que seleccione las columnas que empieza con "pob", las que empiezan con "esperanza" y las que empiezan con "pib_per". 
+El primer argumento de`pivot_longer()` es la tabla que va a modificar: `paises_ancho`. El segundo argumento se llama `cols` y es un vector con las columnas que tienen los valores a "alargar". Podría ser un vector escrito a mano (algo como `c("pib_per_capita_1952", "pib_per_capita_1957"...)`) pero con más de 30 columnas, escribir todo eso sería tedioso y probablemente estaría lleno de errores. Por eso {tidyr} provee funciones de ayuda para seleccionar columnas en base a patrones. El código de arriba usa `starts_with()` que, como su nombre en inglés lo indica, selecciona las columnas que *empiezan con* una determinada cadena de caracteres. El vector `c(starts_with('pob'), starts_with('esperanza'), starts_with('pib_per'))` le dice a `pivot_longer()` que seleccione las columnas que empieza con "pob", las que empiezan con "esperanza" y las que empiezan con "pib_per". 
 
 ::: {.alert .alert-success}
 
@@ -113,9 +113,9 @@ separate(paises_largo,
          sep = -4)
 ```
 
-El primer argumento, como siempre, es la tabla a procesar. El segundo, `col`, es la columna a separar en dos (o más) columnas nuevas. El tercero, `into` es el nombre de las nuevas columnas que `separate()` va a crear. El último argumento es `sep` que define cómo realizar la separación. Por defecto, `sep` es una [expresión regular](https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular) que captura cualquier caracter no alfanumérico. En el caso de `variable_anio` no sirve, porque para valores como `"esperanza_de_vida_1952"`, separaría en `"esperanza"`, `"de"`, `"vida"` y `"1952"`. Como el año tiene siempre 4 caracteres, una solución simple es usar `sep = -4`, que significa que la separacion es 4 caracteres contando desde el final. 
+El primer argumento, como siempre, es la tabla a procesar. El segundo, `col`, es la columna a separar en dos (o más) columnas nuevas. El tercero, `into` es el nombre de las nuevas columnas que `separate()` va a crear. El último argumento es `sep` que define cómo realizar la separación. Por defecto, `sep` es una [expresión regular](https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular) que captura cualquier caracter no alfanumérico. En el caso de `variable_anio` no sirve, porque para valores como `"esperanza_de_vida_1952"`, separaría en `"esperanza"`, `"de"`, `"vida"` y `"1952"`. Como el año tiene siempre 4 caracteres, una solución simple es usar `sep = -4`, que significa que la separación es 4 caracteres contando desde el final. 
 
-Habrás notado un problema. El texto en la columnas `variable` toavía tiene un "_" al final. Podrías usar `mutate()` y un poco de funciones de manipulación de caracteres para quitarlo, pero hay una forma un poco más simple y es separando la columna `variable_anio` en tres, incluyendo una columna con el guión:
+Habrás notado un problema. El texto en la columnas `variable` todavía tiene un "_" al final. Podrías usar `mutate()` y un poco de funciones de manipulación de caracteres para quitarlo, pero hay una forma un poco más simple y es separando la columna `variable_anio` en tres, incluyendo una columna con el guión:
 
 ```{r}
 paises_largo <- separate(paises_largo, 
@@ -165,11 +165,11 @@ pivot_wider(paises_largo,
             values_from = valor)
 ```
 
-En esta llamada también está el argumento `names_sep`, que detemrina el caracter que se usa para crear el nombre de las nuevas columnas. 
+En esta llamada también está el argumento `names_sep`, que determina el caracter que se usa para crear el nombre de las nuevas columnas. 
 
 
 ::: {.alert  .alert-info}
-**Desafio**
+**Desafío**
 
 * Creá una nueva tabla, llamada `paises_superduper_ancho` que tenga una columna para cada variable, anio y país. (Consejo: la tabla final tiene que tener 5 filas).
 
@@ -196,7 +196,7 @@ Asumiendo que querés unir dos data.frames o tablas `x` e `y` que tienen en com�
 
 ![](img/join_family.png)
 
-Ahora vamos a seguir trabajando con las base de datos de `paises` pero nos vamos a quedar solo con las observaciones del 2007 y de paso unirlo a una nueva base de datos `co2` que contiene información de la emisión de dióxido de carbono de cada pais para ese mismo año. 
+Ahora vamos a seguir trabajando con las base de datos de `paises` pero nos vamos a quedar solo con las observaciones del 2007 y de paso unirlo a una nueva base de datos `co2` que contiene información de la emisión de dióxido de carbono de cada país para ese mismo año. 
 
 ```{r, message=FALSE}
 paises_2007 <- readr::read_csv("datos/paises.csv") %>% 
@@ -206,7 +206,7 @@ co2_2007 <- readr::read_csv("datos/co2_2007.csv")
 co2_2007
 ```
 
-Esta nueva tabla tiene 3 columnas: `codigo_iso` tiene el código ISO de 3 letreas de (abreviaturas que se usan internacionalmente), `emision_co2` tiene las emisiones anuales per cápita de CO2 en toneladas, `pais` tiene el nombre del país. Esta última columna también está presente en la tabla `paises_2007` y es la que va a servir como variable llave para unir las dos tablas. 
+Esta nueva tabla tiene 3 columnas: `codigo_iso` tiene el código ISO de 3 letras de (abreviaturas que se usan internacionalmente), `emision_co2` tiene las emisiones anuales per cápita de CO2 en toneladas, `pais` tiene el nombre del país. Esta última columna también está presente en la tabla `paises_2007` y es la que va a servir como variable llave para unir las dos tablas. 
 
 Para unir las dos tablas, cualquier función *join* requiere cierta información:
 
@@ -223,7 +223,7 @@ paises_co2_2007
 Si miramos de cerca la tabla unida veremos un par de cosas:
 
 * Todas las columnas de `paises_2007` y de `co2_2007` están presentes.
-* Todas las observaciones están presentes, aún los paises que están presentes en `co2_2007` pero no en `paises_2007` y viceversa. En esos casos ahora tenemos `NA`. Esto genera una tabla con 241 filas.
+* Todas las observaciones están presentes, aún los países que están presentes en `co2_2007` pero no en `paises_2007` y viceversa. En esos casos ahora tenemos `NA`. Esto genera una tabla con 241 filas.
 
 Esta es la opción más segura si no sabemos si todas las observaciones de una tabla están presente en a otra. 
 
@@ -234,10 +234,10 @@ paises_co2_2007 <- left_join(paises_2007, co2_2007, by = "pais")
 paises_co2_2007
 ```
 
-Ahora esperamos que la tabla resultante tenga la misma cantidad de filas que `paises_2007` y efectivamente eso ocurre. Pero al mismo tiempo varios paises en esa tabla no encontraron coincidencia en `co2_2007` y por esa razón, la columna nueva columna `emisiones_co2` tiene `NA`. 
+Ahora esperamos que la tabla resultante tenga la misma cantidad de filas que `paises_2007` y efectivamente eso ocurre. Pero al mismo tiempo varios países en esa tabla no encontraron coincidencia en `co2_2007` y por esa razón, la columna nueva columna `emisiones_co2` tiene `NA`. 
 
 
-Finalmente, si quiseramos quedarnos solo con las observaciones que están presentes en ambas tablas usamos `inner_join()`.
+Finalmente, si quisiéramos quedarnos solo con las observaciones que están presentes en ambas tablas usamos `inner_join()`.
 
 ```{r}
 paises_co2_2007 <- inner_join(paises_2007, co2_2007, by = "pais")
@@ -247,11 +247,16 @@ paises_co2_2007
 En este caso, perdemos las filas de `co2_2007` que no encontraron coincidencia en `paises_2007` y viceversa y la tabla resultante tiene aún menos filas (119).
 
 ::: {.alert  .alert-info}
-**Desafio**
+**Desafío**
 
-Estuvimos trabajando con una parte de la base de datos de emisiones. Pero también está disponible `co2_completo.csv` que contiene las emisiones para distintos años. El objetivo es que unas `paises` y `co2` teniendo en cuenta tanto el pais como el año. Para eso:
+Estuvimos trabajando con una parte de la base de datos de emisiones. Pero también está disponible `co2_completo.csv` que contiene las emisiones para distintos años. El objetivo es que unas `paises` y `co2` teniendo en cuenta tanto el país como el año. Para eso:
 
 1. Lee la base de datos `co2_completo.csv` en una nueva variable que se llame `co2`.
 2. Revisá el nombre de las variables en esta base de datos, ¿se llaman igual que las variables en `paises`?
 3. Uní las dos tablas usando `full_join()`, tené en cuenta que ahora usamos dos variables llave `pais` y `anio`. Buscá en la documentación cómo indicarle eso a la función `full_join()`.  
 :::
+
+<div class="btn-group" role="group" aria-label="Navegación">
+  <a href= "07-graficos-II.html" class = "btn btn-primary">Anterior</a>
+  <a href= "09-funciones.html" class = "btn btn-primary">Siguiente</a>
+</div>

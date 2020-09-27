@@ -97,7 +97,7 @@ La mayoría de los análisis consisten en varios pasos (en el primer desafío us
 
 El operador 'pipe' (`%>%`) agarra el resultado de una función y se lo pasa a la siguiente. Esto permite escribir el código como una cadena de funciones que van operando sobre el resultado de la anterior.
 
-Las dos operaciones anteriores (seleccionar tres columnas y luego filtar las filas correspondientes a Argentina) se pueden escribir uno después del otro y sin asignar los resultados intermedios a nuevas variables de esta forma:
+Las dos operaciones anteriores (seleccionar tres columnas y luego filtrar las filas correspondientes a Argentina) se pueden escribir uno después del otro y sin asignar los resultados intermedios a nuevas variables de esta forma:
 
 ```{r}
 paises %>% 
@@ -120,7 +120,7 @@ En RStudio podés escribir `%>%` usando el atajo de teclado Ctr + Shift + M. ¡P
 ::: {.alert .alert-info}
 **Desafío:**
 
-Completá esta cadena para producir una tabla que contenga los valores de expectativa de vida, pais y año únicamente para los países africanos. 
+Completá esta cadena para producir una tabla que contenga los valores de expectativa de vida, país y año únicamente para los países africanos. 
 
 ```{r, eval = FALSE}
 paises %>% 
@@ -134,7 +134,7 @@ paises %>%
 
 Si querés calcular la expectativa de vida media para cada continente, tenés que usar el combo `group_by() %>% summarise()`. Es decir, primero agrupar la tabla según la columna continente y luego calcular un promedio para cada grupo.
 
-Para agrupar la tabla paises según el continente usamos el siguiente código:
+Para agrupar la tabla países según el continente usamos el siguiente código:
 
 ```{r}
 paises %>% 
@@ -238,3 +238,7 @@ paises %>%
 
 
 
+<div class="btn-group" role="group" aria-label="Navegación">
+  <a href= "04-lectura-datos.html" class = "btn btn-primary">Anterior</a>
+  <a href= "06-graficos-I.html" class = "btn btn-primary">Siguiente</a>
+</div>

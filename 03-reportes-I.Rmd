@@ -26,7 +26,7 @@ Para crear un nuevo archivo de R Markdown usá el menú desplegable de RStudio:
 File → New File → R Markdown
 :::
 
-Y se abrirá un menú donde podés agregar el título y tu nombre. Por ahora vamos a usar el formato html como salida, charlaremos de las distintas posibilidades que ofrece más adelane. 
+Y se abrirá un menú donde podés agregar el título y tu nombre. Por ahora vamos a usar el formato html como salida, charlaremos de las distintas posibilidades que ofrece más adelante. 
 
 ![](img/nuevo-rmd.png)
 
@@ -54,7 +54,7 @@ Cualquier archivo de este tipo tiene 3 partes principales:
 
 -  El encabezado o *yaml* que determina que pinta tendrá el archivo de salida, por ejemplo en formato html. También se puede incluir información sobre el autor, la fecha, si queremos o no una tabla de contenidos y muchas cosas más. 
 - El texto o textos ya que puede estar a lo largo de todo el documento. Para darle formato a los títulos o por ejemplo resaltar parte del texto usando negrita se usa `Markdown`, un *lenguaje* que a diferencia de html es legible aún si no está compilado o en su versión final. 
-- El código en bloques o `chuncks`. Dentro de un chunk el código de R puede ejecutarse al igual que en un script normal y cualquier comentario o expliación debe tener al principio un `#` para que R lo interprete correctamente. 
+- El código en bloques o `chuncks`. Dentro de un chunk el código de R puede ejecutarse al igual que en un script normal y cualquier comentario o explicación debe tener al principio un `#` para que R lo interprete correctamente. 
 
 ![](img/rmd-ejemplo-secciones.png)
 
@@ -78,7 +78,7 @@ Es muy importante que no modifiques esto ya que de otra forma al hacer `knit` da
 
 ### Markdown
 
-Markdown permite escribir una página web al igual que html pero de manera simple de leer. Si nuestro archivo de salida es un html, luego el paquete `knitr` se encargará de reemplazar las marcas de markdown por el código de html correspondiene. Pero como digimos más arriba también será posible generar otro tipo de archivos de salida. 
+Markdown permite escribir una página web al igual que html pero de manera simple de leer. Si nuestro archivo de salida es un html, luego el paquete `knitr` se encargará de reemplazar las marcas de markdown por el código de html correspondiente. Pero como dijimos más arriba también será posible generar otro tipo de archivos de salida. 
 
 Por ejemplo podrás resaltar con **negrita** usando dos asteriscos así: `**negrita**` o *italizada* con un asterisco de cada lado: `*italics*`.
 
@@ -138,7 +138,7 @@ Podés agregar un link a una página externa: `[text to show](http://the-web-pag
 
 Podés incluir una imagen: `![pie de figura](http://url/for/file)`
 
-Y tambień podés agregar ecuaciones en LaTeX en la misma línea (esto:`$E = mc^2$` se ve así: $E = mc^2$) o en una línea propia. Esto:
+Y también podés agregar ecuaciones en LaTeX en la misma línea (esto:`$E = mc^2$` se ve así: $E = mc^2$) o en una línea propia. Esto:
 
 ```
 $$
@@ -204,3 +204,22 @@ Usando el archivo con el que venís trabajando insertá un nuevo chunk y:
 3. Mostrá ese valor.
 4. Volvé a *knitear* el archivo para ver el resultado
 :::
+
+### Texto en línea
+
+Finalmente es posible que te encuentres mencionando resultados en el texto, por ejemplo algo así como "la media de temperatura mínima para el mes de marzo fue de 18 grados". Y también es posible que ese valor cambie si utilizas una base de datos distinta o si luego generas un informe pero para un mes siguiente. Las chances de de que te olvides de actualizar ese "18" son super altas, por eso RMarkdown también tiene la posibilidad de incorporar texto en línea. 
+
+Imaginemos que tenés una variables `temperatura` a la cual le asignamos el valor "18":
+
+```{r}
+temperatura <- 18
+```
+
+Para mencionarla en el texto entonces tenemos que poner el nombre de esa variable entre dos acentos graves y avisar que se trata de código de R des esta manera `` ``r "r"` temperatura` ``. Entonces si en algún momento cambia el valor de la variable, la próxima vez que *knites* el documento se actualizará en el texto. 
+
+
+
+<div class="btn-group" role="group" aria-label="Navegación">
+  <a href= "02-proyectos.html" class = "btn btn-primary">Anterior</a>
+  <a href= "04-lectura-datos.html" class = "btn btn-primary">Siguiente</a>
+</div>

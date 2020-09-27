@@ -78,7 +78,7 @@ output:
 ---
 ```
 
-Conviene mirar eso con un poco de detenimeinto porque requiere "traducir" código de R --cual los argumentos de una función se fijan entre paréntesis y con `=`-- en código de yaml --donde los argumentos de la función son una lista cuyos elementos se definen con `:`. 
+Conviene mirar eso con un poco de detenimiento porque requiere "traducir" código de R --cual los argumentos de una función se fijan entre paréntesis y con `=`-- en código de yaml --donde los argumentos de la función son una lista cuyos elementos se definen con `:`. 
 
 En R lo que vemos como `html_document(toc = TRUE)` se traduce a yaml como
 
@@ -89,7 +89,7 @@ html_document:
 
 Si vas a la ayuda de `pdf_document` vas a ver que también tiene un argumento llamado `toc`. Algunos argumentos son compartidos, lo cual hace que se aún más fácil generar un mismo reporte en muchos formatos haciendo muy pocos cambios. 
 
-Una forma rápida de hacer tus informes más vistosos es cambiarle el tema visual. `html_document` permite elegir entre una serie de temeas usando el argumento `theme`. Por ejemplo, poniendo esto en el encabezado, generás un documetno HTML con un fondo oscuro
+Una forma rápida de hacer tus informes más vistosos es cambiarle el tema visual. `html_document` permite elegir entre una serie de temas usando el argumento `theme`. Por ejemplo, poniendo esto en el encabezado, generás un documento HTML con un fondo oscuro
 
 
 ```yaml
@@ -241,13 +241,13 @@ Esto es útil cuando uno está haciendo trabajo interactivo pero en general no q
     paises <- read_csv("datos/paises.csv")
     `r chunk`
     
-En general no pasa nada si ignorás los mensajes. Son cuestiones diagnósticas extra que sirven para que vos, como humano, te enteres de lo que hizo una función. Distinto son las advertencias, o "warnigns". Una advertencia te está diciendo que hay algo "raro" en el código que puede significar que hay algo mal. No llega al nivel de error, que es algo que literalmente "no computa". Por ejemplo, `sqrt` tira una advertencia cuando recibe números negativos.
+En general no pasa nada si ignorás los mensajes. Son cuestiones diagnósticas extra que sirven para que vos, como humano, te enteres de lo que hizo una función. Distinto son las advertencias, o "warnings". Una advertencia te está diciendo que hay algo "raro" en el código que puede significar que hay algo mal. No llega al nivel de error, que es algo que literalmente "no computa". Por ejemplo, `sqrt` tira una advertencia cuando recibe números negativos.
 
 ```{r}
 i <- sqrt(-1)
 ```
 
-Si un chunk tira una advertencia que es esperable pero no querés que aparezca en el repote, podés ocultarlas con la opción `warning = FALSE`.
+Si un chunk tira una advertencia que es esperable pero no querés que aparezca en el reporte, podés ocultarlas con la opción `warning = FALSE`.
 
     `r chunk`{r warning = FALSE}
     i <- sqrt(-1)
@@ -272,3 +272,8 @@ El resumen es usar la cache sólo cuando es imprescindible.
 Guardá el cógido de esta u otra sección yendo a Código → Descargar Rmd arriba de todo a la derecha. Mirá los chunks y las opciones que están puestas. ¿Por qué usamos cada opción en cada chunk?
 
 :::
+
+<div class="btn-group" role="group" aria-label="Navegación">
+  <a href= "09-funciones.html" class = "btn btn-primary">Anterior</a>
+  <a href= "11-tablas.html" class = "btn btn-primary">Siguiente</a>
+</div>
