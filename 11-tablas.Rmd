@@ -169,6 +169,6 @@ Esto es sólo una mínima parte de lo que se puede hacer con el paquete {kableEx
 
 
 <div class="btn-group" role="group" aria-label="Navegación">
-  <a href= "10-reportes-II.html" class = "btn btn-primary">Anterior</a>
-  <a href= "12-ggplot-III.html" class = "btn btn-primary">Siguiente</a>
+  <a href= "12-ggplot-III.html" class = "btn btn-primary">Anterior</a>
+  <a href= "10-reportes-II.html" class = "btn btn-primary">Siguiente</a>
 </div>

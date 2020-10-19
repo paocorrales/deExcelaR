@@ -198,6 +198,6 @@ Junto con las funciones `theme_...()`, hay una función llamada `theme()` que pe
 
 
 <div class="btn-group" role="group" aria-label="Navegación">
-  <a href= "11-tablas.html" class = "btn btn-primary">Anterior</a>
-  <a href= "hoja-de-ruta.html" class = "btn btn-primary">Hoja de ruta</a>
+  <a href= "09-funciones.html" class = "btn btn-primary">Anterior</a>
+  <a href= "11-tablas.html" class = "btn btn-primary">Siguiente</a>
 </div>

@@ -274,6 +274,6 @@ Guardá el cógido de esta u otra sección yendo a Código → Descargar Rmd arr
 :::
 
 <div class="btn-group" role="group" aria-label="Navegación">
-  <a href= "09-funciones.html" class = "btn btn-primary">Anterior</a>
-  <a href= "11-tablas.html" class = "btn btn-primary">Siguiente</a>
+  <a href= "11-tablas.html" class = "btn btn-primary">Anterior</a>
+  <a href= "hoja-de-ruta.html" class = "btn btn-primary">Hoja de ruta</a>
 </div>
