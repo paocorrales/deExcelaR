@@ -75,16 +75,17 @@ La organización de los contenidos asume que se darán en 4 encuentros de 3 hora
 
 #### Contenidos
 
-- [Generación de informes con {RMarkdown}](10-reportes-II.html)
-    - Uso de distintos formatos de salida.
-    - Parametrización de reportes.
-    - Apariencia y temas
-- [Apariencia de tablas](11-tablas.html)
-    - {kable} y {kableExtra}
 - [Apariencia de gráficos para publicar](12-ggplot-III.html)
     - Escalas de colores
     - Temas
     - Definir etiquetas y títulos
+- [Apariencia de tablas](11-tablas.html)
+    - {kable} y {kableExtra}
+- [Generación de informes con {RMarkdown}](10-reportes-II.html)
+    - Uso de distintos formatos de salida.
+    - Parametrización de reportes.
+    - Apariencia y temas
+
 
 *Desafío: [generar un informe que incluya gráficos, texto y un análisis descriptivo.](desafío-4.html)*
 
