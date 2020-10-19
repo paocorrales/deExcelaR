@@ -19,21 +19,19 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 <script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -43,14 +41,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -59,9 +59,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -334,69 +334,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -404,16 +341,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -522,15 +449,21 @@ div.tocify {
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#tablas-simples-con-kable">Tablas simples con <code>kable</code></a></li>
+<li><a href="#supertablas-con-kableextra">Supertablas con {kableExtra}</a></li>
+</ul>
+</div>
 
 <p>Por defecto, la forma en que R Markdown muestra tablas es bastante feo porque muestra lo que verías si corrieras el código en la consola.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">paises &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">paises_seleccion &lt;-<span class="st"> </span>paises <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="st">  </span><span class="kw">filter</span>(pais <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Argentina&quot;</span>, <span class="st">&quot;Uruguay&quot;</span>, <span class="st">&quot;Chile&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">2007</span>, <span class="dv">2002</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6"><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>continente)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">paises_seleccion</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2"></a>paises &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a>paises_seleccion &lt;-<span class="st"> </span>paises <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-4"><a href="#cb1-4"></a><span class="st">  </span><span class="kw">filter</span>(pais <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Argentina&quot;</span>, <span class="st">&quot;Uruguay&quot;</span>, <span class="st">&quot;Chile&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">2007</span>, <span class="dv">2002</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb1-6"><a href="#cb1-6"></a><span class="st">  </span><span class="kw">select</span>(<span class="op">-</span>continente)</span>
+<span id="cb1-7"><a href="#cb1-7"></a>paises_seleccion</span></code></pre></div>
 <pre><code>## # A tibble: 6 x 5
 ##   pais       anio esperanza_de_vida poblacion pib_per_capita
 ##   &lt;chr&gt;     &lt;dbl&gt;             &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt;
@@ -543,8 +476,8 @@ div.tocify {
 <div id="tablas-simples-con-kable" class="section level2">
 <h2>Tablas simples con <code>kable</code></h2>
 <p>Existen varios paquetes para mostrar tablas lindas pero una forma simple y sin vueltas es usando la función <code>kable</code> del paquete {knitr}. Sólo usando esta función ya devuelve una tabla más que razonable:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(knitr)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw">kable</span>(paises_seleccion)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">library</span>(knitr)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">kable</span>(paises_seleccion)</span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -600,9 +533,9 @@ div.tocify {
 </tr>
 </tbody>
 </table>
-<p>La mayoría de las veces, el nombre de las columnas que queremos mostrar no va a ser igual que el nombre de las columnas en R. En la tabla <code>paises</code>, los nombres están en minúscula, sin epacios y sin “caracteres especiales” como “ñ” o “í”. Esto es útil para comunicarse con R, pero no está bueno para comunicados a seres humanos. El argumento <code>col.names</code> permite especificar el nombre de las columnas para mostrar:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">kable</span>(paises_seleccion, </a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">      <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;País&quot;</span>, <span class="st">&quot;Año&quot;</span>, <span class="st">&quot;Esperanza de vida&quot;</span>, <span class="st">&quot;Población&quot;, &quot;</span>PBI per cápita<span class="st">&quot;))</span></a></code></pre></div>
+<p>La mayoría de las veces, el nombre de las columnas que queremos mostrar no va a ser igual que el nombre de las columnas en R. En la tabla <code>paises</code>, los nombres están en minúscula, sin espacios y sin “caracteres especiales” como “ñ” o “í”. Esto es útil para comunicarse con R, pero no está bueno para comunicados a seres humanos. El argumento <code>col.names</code> permite especificar el nombre de las columnas para mostrar:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">kable</span>(paises_seleccion, </span>
+<span id="cb4-2"><a href="#cb4-2"></a>      <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;País&quot;</span>, <span class="st">&quot;Año&quot;</span>, <span class="st">&quot;Esperanza de vida&quot;</span>, <span class="st">&quot;Población&quot;, &quot;</span>PBI per cápita<span class="st">&quot;))</span></span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -659,9 +592,9 @@ div.tocify {
 </tbody>
 </table>
 <p>En Español, en general usamos la coma para separar los decimales y el punto como separador de miles. Para eso, hay que modificar el argumento <code>format.args</code> de esta manera:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">kable</span>(paises_seleccion, </a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">      <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;País&quot;</span>, <span class="st">&quot;Año&quot;</span>, <span class="st">&quot;Esperanza de vida&quot;</span>, <span class="st">&quot;Población&quot;, &quot;</span>PBI per cápita<span class="st">&quot;),</span></a>
-<a class="sourceLine" id="cb5-3" data-line-number="3"><span class="st">      format.args = list(decimal.mark = &quot;</span>,<span class="st">&quot;, big.mark = &quot;</span>.<span class="st">&quot;))</span></a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">kable</span>(paises_seleccion, </span>
+<span id="cb5-2"><a href="#cb5-2"></a>      <span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;País&quot;</span>, <span class="st">&quot;Año&quot;</span>, <span class="st">&quot;Esperanza de vida&quot;</span>, <span class="st">&quot;Población&quot;, &quot;</span>PBI per cápita<span class="st">&quot;),</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="st">      format.args = list(decimal.mark = &quot;</span>,<span class="st">&quot;, big.mark = &quot;</span>.<span class="st">&quot;))</span></span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -717,11 +650,11 @@ div.tocify {
 </tr>
 </tbody>
 </table>
-<p>Uff… pero ponerle el punto de miles a los años queda raro. La solucíon es convertir la columna <code>anio</code> en caracter. De esta manera, no se ve afectada por el formato numérico.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">paises_seleccion <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">anio =</span> <span class="kw">as.character</span>(anio)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;País&quot;</span>, <span class="st">&quot;Año&quot;</span>, <span class="st">&quot;Esperanza de vida&quot;</span>, <span class="st">&quot;Población&quot;, &quot;</span>PBI per cápita<span class="st">&quot;),</span></a>
-<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="st">        format.args = list(decimal.mark = &quot;</span>,<span class="st">&quot;, big.mark = &quot;</span>.<span class="st">&quot;))</span></a></code></pre></div>
+<p>Uff… pero ponerle el punto de miles a los años queda raro. La solución es convertir la columna <code>anio</code> en caracter. De esta manera, no se ve afectada por el formato numérico.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>paises_seleccion <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">anio =</span> <span class="kw">as.character</span>(anio)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;País&quot;</span>, <span class="st">&quot;Año&quot;</span>, <span class="st">&quot;Esperanza de vida&quot;</span>, <span class="st">&quot;Población&quot;, &quot;</span>PBI per cápita<span class="st">&quot;),</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="st">        format.args = list(decimal.mark = &quot;</span>,<span class="st">&quot;, big.mark = &quot;</span>.<span class="st">&quot;))</span></span></code></pre></div>
 <table>
 <thead>
 <tr class="header">
@@ -782,20 +715,20 @@ div.tocify {
 <div id="supertablas-con-kableextra" class="section level2">
 <h2>Supertablas con {kableExtra}</h2>
 <p>El paquete {kableExtra}, como su nombre lo indica, nació para extender el poder de la función <code>kable</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">library</span>(kableExtra)  <span class="co"># instalar con install.packages(&quot;kableExtra&quot;)</span></a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">library</span>(kableExtra)  <span class="co"># instalar con install.packages(&quot;kableExtra&quot;)</span></span></code></pre></div>
 <pre><code>## 
 ## Attaching package: &#39;kableExtra&#39;</code></pre>
 <pre><code>## The following object is masked from &#39;package:dplyr&#39;:
 ## 
 ##     group_rows</code></pre>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">paises_tabla &lt;-<span class="st"> </span>paises_seleccion <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">anio =</span> <span class="kw">as.character</span>(anio)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="st">  </span><span class="kw">kable</span>(<span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;País&quot;</span>, <span class="st">&quot;Año&quot;</span>, <span class="st">&quot;Esperanza de vida&quot;</span>, <span class="st">&quot;Población&quot;, &quot;</span>PBI per cápita<span class="st">&quot;),</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"><span class="st">        format.args = list(decimal.mark = &quot;</span>,<span class="st">&quot;, big.mark = &quot;</span>.<span class="st">&quot;))</span></a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>paises_tabla &lt;-<span class="st"> </span>paises_seleccion <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">anio =</span> <span class="kw">as.character</span>(anio)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="st">  </span><span class="kw">kable</span>(<span class="dt">col.names =</span> <span class="kw">c</span>(<span class="st">&quot;País&quot;</span>, <span class="st">&quot;Año&quot;</span>, <span class="st">&quot;Esperanza de vida&quot;</span>, <span class="st">&quot;Población&quot;, &quot;</span>PBI per cápita<span class="st">&quot;),</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="st">        format.args = list(decimal.mark = &quot;</span>,<span class="st">&quot;, big.mark = &quot;</span>.<span class="st">&quot;))</span></span></code></pre></div>
 <p>La primera columna de la tabla de arriba es un tanto redundante. Sería mejor agrupar las filas según el país. Esto se consigue con la función <code>collapse_rows</code>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="st">  </span><span class="kw">kable_styling</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a>paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="st">  </span><span class="kw">kable_styling</span>() </span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -913,10 +846,10 @@ Uruguay
 </tbody>
 </table>
 <p>El primer argumento es el número de la columna que queremos agrupar. En este caso, la columna <code>pais</code> es la primera. El segundo argumento es la alineación vertical. Por defecto, <code>collapse_rows</code> pone las etiquetas en el centro, pero la convención más general es ponerlas arriba.</p>
-<p>¿Qué es esa <code>kable_styling()</code>? {kableExtra} permite cambiar el estilo de las tablas muy fácilmente. <code>kable_styling</code> es el estilo por defecto, que es igual al que produce <code>kable</code>, pero tiene muchos otros. Si viste tablas hechas en LaTeX, quizás est estilo te resulte familiar:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="st">  </span><span class="kw">kable_classic_2</span>()</a></code></pre></div>
+<p>¿Qué es esa <code>kable_styling()</code>? {kableExtra} permite cambiar el estilo de las tablas muy fácilmente. <code>kable_styling</code> es el estilo por defecto, que es igual al que produce <code>kable</code>, pero tiene muchos otros. Si viste tablas hechas en LaTeX, quizás este estilo te resulte familiar:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="st">  </span><span class="kw">kable_classic_2</span>()</span></code></pre></div>
 <table class=" lightable-classic-2" style='font-family: "Arial Narrow", "Source Sans Pro", sans-serif; margin-left: auto; margin-right: auto;'>
 <thead>
 <tr>
@@ -1034,10 +967,10 @@ Uruguay
 </tbody>
 </table>
 <p>La función <code>column_spec</code> permite cambiar los parámetros gráficos de una o más columnas. En este caso cambiamos la primera columna (<code>column = 1</code>) para que las palabras aparezcan italizadas (<code>italic = TRUE</code>):</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="st">  </span><span class="kw">column_spec</span>(<span class="dt">column =</span> <span class="dv">1</span>, <span class="dt">italic =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"><span class="st">  </span><span class="kw">kable_styling</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1"></a>paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="st">  </span><span class="kw">column_spec</span>(<span class="dt">column =</span> <span class="dv">1</span>, <span class="dt">italic =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="st">  </span><span class="kw">kable_styling</span>() </span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1155,10 +1088,10 @@ Uruguay
 </tbody>
 </table>
 <p>Lo notable de <code>column_spec</code> es que en sus argumentos se pueden poner vectores de manera de generar formato condicional. Para resaltar con negrita únicamente el país “Argentina”:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="st">  </span><span class="kw">column_spec</span>(<span class="dt">column =</span> <span class="dv">1</span>, <span class="dt">bold =</span> (paises_seleccion<span class="op">$</span>pais <span class="op">==</span><span class="st"> &quot;Argentina&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-3" data-line-number="3"><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb14-4" data-line-number="4"><span class="st">  </span><span class="kw">kable_styling</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="st">  </span><span class="kw">column_spec</span>(<span class="dt">column =</span> <span class="dv">1</span>, <span class="dt">bold =</span> (paises_seleccion<span class="op">$</span>pais <span class="op">==</span><span class="st"> &quot;Argentina&quot;</span>)) <span class="op">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="st">  </span><span class="kw">kable_styling</span>() </span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1275,15 +1208,15 @@ Uruguay
 </tr>
 </tbody>
 </table>
-<p>Conviene detenerse para mirar un poco con detalle el código. La llamada a <code>column_spec</code> está cambiando el formato de la columna 1. En particular, va a determinar si el texto es en negrita (bold) o no. Y la forma para determinarlo es el vector <code>paises$pais == &quot;Argentina&quot;</code>. ¿Qué es ese vector?</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">paises_seleccion<span class="op">$</span>pais <span class="op">==</span><span class="st"> &quot;Argentina&quot;</span></a></code></pre></div>
+<p>Conviene detenerse para mirar un poco con detalle el código. La llamada a <code>column_spec</code> está cambiando el formato de la columna 1. En particular, va a determinar si el texto es en negrita (bold) o no. Y la forma para determinarlo es el vector <code>paises$pais == "Argentina"</code>. ¿Qué es ese vector?</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>paises_seleccion<span class="op">$</span>pais <span class="op">==</span><span class="st"> &quot;Argentina&quot;</span></span></code></pre></div>
 <pre><code>## [1]  TRUE  TRUE FALSE FALSE FALSE FALSE</code></pre>
-<p>Por lo tanto, <code>column_spec(column = 1, bold = (paises$pais == &quot;Argentina&quot;))</code> va a hacer que las dos primera filas de la columna uno estén en negrita, y las demás no. Luego, <code>collapse_rows</code> colapsa las filas según el país y entonces esas dos primeras filas se transforman en una.</p>
+<p>Por lo tanto, <code>column_spec(column = 1, bold = (paises$pais == "Argentina"))</code> va a hacer que las dos primera filas de la columna uno estén en negrita, y las demás no. Luego, <code>collapse_rows</code> colapsa las filas según el país y entonces esas dos primeras filas se transforman en una.</p>
 <p>Esto da un montón de flexibilidad en el estilo del texto. Por ejemplo, se puede hacer que el color del texto cambie según el valor usando <code>column_spec</code> y <code>spec_color</code>.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">column_spec</span>(<span class="dv">3</span>, <span class="dt">color =</span> <span class="kw">spec_color</span>(paises_seleccion<span class="op">$</span>esperanza_de_vida)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">kable_styling</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="st">  </span><span class="kw">column_spec</span>(<span class="dv">3</span>, <span class="dt">color =</span> <span class="kw">spec_color</span>(paises_seleccion<span class="op">$</span>esperanza_de_vida)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="st">  </span><span class="kw">kable_styling</span>() </span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1401,14 +1334,14 @@ Uruguay
 </tbody>
 </table>
 <p>La función nueva, <code>spec_color</code> genera colores a partir de un vector. Podés ver cómo funciona en esta linea:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">spec_color</span>(paises_seleccion<span class="op">$</span>esperanza_de_vida)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">spec_color</span>(paises_seleccion<span class="op">$</span>esperanza_de_vida)</span></code></pre></div>
 <pre><code>## [1] &quot;#440154FF&quot; &quot;#3D4D8AFF&quot; &quot;#90D743FF&quot; &quot;#FDE725FF&quot; &quot;#3D4D8AFF&quot; &quot;#228D8DFF&quot;</code></pre>
 <p>Esos números son representaciones en hexadecimal de los colores que ves en la tabla. Podés pasarle cualquier serie de colores, no sólo la creada con <code>spec_color</code>.</p>
 <p>Así como se puede cambiar el estilo de las columnas con <code>column_spec</code>, se puede cambiar el estilo de las filas con <code>row_spec</code>. Por ejemplo, se puede resaltar cada 2 líneas con este código:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">  </span><span class="kw">row_spec</span>(<span class="dt">row =</span> <span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">nrow</span>(paises_seleccion), <span class="dt">by =</span> <span class="dv">2</span>), <span class="dt">background =</span> <span class="st">&quot;azure&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4"><span class="st">  </span><span class="kw">kable_styling</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="st">  </span><span class="kw">row_spec</span>(<span class="dt">row =</span> <span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">nrow</span>(paises_seleccion), <span class="dt">by =</span> <span class="dv">2</span>), <span class="dt">background =</span> <span class="st">&quot;azure&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span></span>
+<span id="cb20-4"><a href="#cb20-4"></a><span class="st">  </span><span class="kw">kable_styling</span>() </span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1526,13 +1459,13 @@ Uruguay
 </tbody>
 </table>
 <p><code>row_spec</code> está cambiando el fondo (background) al color “azure” (que es ese celestito) a las filas indicadas por <code>seq(2, nrow(paises_seleccion), by = 2)</code>. ¿Qué es eso? <code>seq</code> genera una secuencia (de <strong>seq</strong>uence) de números empezando en 2, terminando en la cantidad de filas de <code>paises_seleccion</code> y saltando de a dos. En resumen:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1"><span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">nrow</span>(paises_seleccion), <span class="dt">by =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">seq</span>(<span class="dv">2</span>, <span class="kw">nrow</span>(paises_seleccion), <span class="dt">by =</span> <span class="dv">2</span>)</span></code></pre></div>
 <pre><code>## [1] 2 4 6</code></pre>
 <p>Como caso especial, se puede usar <code>row = 0</code> en <code>row_spec</code> para cambiar el formato del encabezado.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="st">  </span><span class="kw">row_spec</span>(<span class="dt">row =</span> <span class="dv">0</span>, <span class="dt">underline =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="st">  </span><span class="kw">kable_styling</span>() </a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1"></a>paises_tabla <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb23-2"><a href="#cb23-2"></a><span class="st">  </span><span class="kw">row_spec</span>(<span class="dt">row =</span> <span class="dv">0</span>, <span class="dt">underline =</span> <span class="ot">TRUE</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="st">  </span><span class="kw">collapse_rows</span>(<span class="dt">columns =</span> <span class="dv">1</span>, <span class="dt">valign =</span> <span class="st">&quot;top&quot;</span>)  <span class="op">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4"></a><span class="st">  </span><span class="kw">kable_styling</span>() </span></code></pre></div>
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <thead>
 <tr>
@@ -1650,13 +1583,14 @@ Uruguay
 </tbody>
 </table>
 <p>Esto es sólo una mínima parte de lo que se puede hacer con el paquete {kableExtra}. Para ejemplos mucho más detallados, te recomendamos leer <a href="https://cran.r-project.org/web/packages/kableExtra/vignettes/awesome_table_in_html.html">la viñeta completa</a></p>
-</div>
-
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiVGFibGFzIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCiAgICB0b2M6IHRydWUKICAgIHRvY19mbG9hdDogdHJ1ZQogICAgaGlnaGxpZ2h0OiB0YW5nbwotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUpCmBgYAoKClBvciBkZWZlY3RvLCBsYSBmb3JtYSBlbiBxdWUgUiBNYXJrZG93biBtdWVzdHJhIHRhYmxhcyBlcyBiYXN0YW50ZSBmZW8gcG9ycXVlIG11ZXN0cmEgbG8gcXVlIHZlcsOtYXMgc2kgY29ycmllcmFzIGVsIGPDs2RpZ28gZW4gbGEgY29uc29sYS4gCgpgYGB7ciwgbWVzc2FnZT1GQUxTRX0KbGlicmFyeShkcGx5cikKcGFpc2VzIDwtIHJlYWRyOjpyZWFkX2NzdigiZGF0b3MvcGFpc2VzLmNzdiIpCnBhaXNlc19zZWxlY2Npb24gPC0gcGFpc2VzICU+JSAKICBmaWx0ZXIocGFpcyAlaW4lIGMoIkFyZ2VudGluYSIsICJVcnVndWF5IiwgIkNoaWxlIikpICU+JSAKICBmaWx0ZXIoYW5pbyAlaW4lIGMoMjAwNywgMjAwMikpICU+JQogIHNlbGVjdCgtY29udGluZW50ZSkKcGFpc2VzX3NlbGVjY2lvbgpgYGAKCiMjIFRhYmxhcyBzaW1wbGVzIGNvbiBga2FibGVgCgpFeGlzdGVuIHZhcmlvcyBwYXF1ZXRlcyBwYXJhIG1vc3RyYXIgdGFibGFzIGxpbmRhcyBwZXJvIHVuYSBmb3JtYSBzaW1wbGUgeSBzaW4gdnVlbHRhcyBlcyB1c2FuZG8gbGEgZnVuY2nDs24gYGthYmxlYCBkZWwgcGFxdWV0ZSB7a25pdHJ9LiBTw7NsbyB1c2FuZG8gZXN0YSBmdW5jacOzbiB5YSBkZXZ1ZWx2ZSB1bmEgdGFibGEgbcOhcyBxdWUgcmF6b25hYmxlOgoKYGBge3J9CmxpYnJhcnkoa25pdHIpCmthYmxlKHBhaXNlc19zZWxlY2Npb24pCmBgYAoKTGEgbWF5b3LDrWEgZGUgbGFzIHZlY2VzLCBlbCBub21icmUgZGUgbGFzIGNvbHVtbmFzIHF1ZSBxdWVyZW1vcyBtb3N0cmFyIG5vIHZhIGEgc2VyIGlndWFsIHF1ZSBlbCBub21icmUgZGUgbGFzIGNvbHVtbmFzIGVuIFIuIEVuIGxhIHRhYmxhIGBwYWlzZXNgLCBsb3Mgbm9tYnJlcyBlc3TDoW4gZW4gbWluw7pzY3VsYSwgc2luIGVwYWNpb3MgeSBzaW4gImNhcmFjdGVyZXMgZXNwZWNpYWxlcyIgY29tbyAiw7EiIG8gIsOtIi4gRXN0byBlcyDDunRpbCBwYXJhIGNvbXVuaWNhcnNlIGNvbiBSLCBwZXJvIG5vIGVzdMOhIGJ1ZW5vIHBhcmEgY29tdW5pY2Fkb3MgYSBzZXJlcyBodW1hbm9zLiBFbCBhcmd1bWVudG8gYGNvbC5uYW1lc2AgcGVybWl0ZSBlc3BlY2lmaWNhciBlbCBub21icmUgZGUgbGFzIGNvbHVtbmFzIHBhcmEgbW9zdHJhcjoKCmBgYHtyfQprYWJsZShwYWlzZXNfc2VsZWNjaW9uLCAKICAgICAgY29sLm5hbWVzID0gYygiUGHDrXMiLCAiQcOxbyIsICJFc3BlcmFuemEgZGUgdmlkYSIsICJQb2JsYWNpw7NuIiwgIlBCSSBwZXIgY8OhcGl0YSIpKQpgYGAKCkVuIEVzcGHDsW9sLCBlbiBnZW5lcmFsIHVzYW1vcyBsYSBjb21hIHBhcmEgc2VwYXJhciBsb3MgZGVjaW1hbGVzIHkgZWwgcHVudG8gY29tbyBzZXBhcmFkb3IgZGUgbWlsZXMuIFBhcmEgZXNvLCBoYXkgcXVlIG1vZGlmaWNhciBlbCBhcmd1bWVudG8gYGZvcm1hdC5hcmdzYCBkZSBlc3RhIG1hbmVyYToKCmBgYHtyfQprYWJsZShwYWlzZXNfc2VsZWNjaW9uLCAKICAgICAgY29sLm5hbWVzID0gYygiUGHDrXMiLCAiQcOxbyIsICJFc3BlcmFuemEgZGUgdmlkYSIsICJQb2JsYWNpw7NuIiwgIlBCSSBwZXIgY8OhcGl0YSIpLAogICAgICBmb3JtYXQuYXJncyA9IGxpc3QoZGVjaW1hbC5tYXJrID0gIiwiLCBiaWcubWFyayA9ICIuIikpCmBgYAoKVWZmLi4uIHBlcm8gcG9uZXJsZSBlbCBwdW50byBkZSBtaWxlcyBhIGxvcyBhw7FvcyBxdWVkYSByYXJvLiBMYSBzb2x1Y8Otb24gZXMgY29udmVydGlyIGxhIGNvbHVtbmEgYGFuaW9gIGVuIGNhcmFjdGVyLiBEZSBlc3RhIG1hbmVyYSwgbm8gc2UgdmUgYWZlY3RhZGEgcG9yIGVsIGZvcm1hdG8gbnVtw6lyaWNvLiAKCmBgYHtyfQpwYWlzZXNfc2VsZWNjaW9uICU+JSAKICBtdXRhdGUoYW5pbyA9IGFzLmNoYXJhY3RlcihhbmlvKSkgJT4lIAogIGthYmxlKGNvbC5uYW1lcyA9IGMoIlBhw61zIiwgIkHDsW8iLCAiRXNwZXJhbnphIGRlIHZpZGEiLCAiUG9ibGFjacOzbiIsICJQQkkgcGVyIGPDoXBpdGEiKSwKICAgICAgICBmb3JtYXQuYXJncyA9IGxpc3QoZGVjaW1hbC5tYXJrID0gIiwiLCBiaWcubWFyayA9ICIuIikpCmBgYAoKaGFjZXIgYGthYmxlYCwgcXVlIGVzIHVuYSBmdW5jacOzbiBkaXNlw7FhZGEgcGFyYSBzZXIgc2ltcGxlIHkgaGFjZXIgcG9jYXMgY29zYXMuIFBhcmEgaGFjZXIgY29zYXMgdW4gcG9jbyBtYXMgY29tcGxpY2FkYXMgZXN0w6EgZWwgcGFxdWV0ZSB7a2FibGVFeHRyYX0uIAoKIyMgU3VwZXJ0YWJsYXMgY29uIHtrYWJsZUV4dHJhfQoKRWwgcGFxdWV0ZSB7a2FibGVFeHRyYX0sIGNvbW8gc3Ugbm9tYnJlIGxvIGluZGljYSwgbmFjacOzIHBhcmEgZXh0ZW5kZXIgZWwgcG9kZXIgZGUgbGEgZnVuY2nDs24gYGthYmxlYC4gCgoKYGBge3J9CmxpYnJhcnkoa2FibGVFeHRyYSkgICMgaW5zdGFsYXIgY29uIGluc3RhbGwucGFja2FnZXMoImthYmxlRXh0cmEiKQpgYGAKCmBgYHtyfQpwYWlzZXNfdGFibGEgPC0gcGFpc2VzX3NlbGVjY2lvbiAlPiUgCiAgbXV0YXRlKGFuaW8gPSBhcy5jaGFyYWN0ZXIoYW5pbykpICU+JSAKICBrYWJsZShjb2wubmFtZXMgPSBjKCJQYcOtcyIsICJBw7FvIiwgIkVzcGVyYW56YSBkZSB2aWRhIiwgIlBvYmxhY2nDs24iLCAiUEJJIHBlciBjw6FwaXRhIiksCiAgICAgICAgZm9ybWF0LmFyZ3MgPSBsaXN0KGRlY2ltYWwubWFyayA9ICIsIiwgYmlnLm1hcmsgPSAiLiIpKQpgYGAKCkxhIHByaW1lcmEgY29sdW1uYSBkZSBsYSB0YWJsYSBkZSBhcnJpYmEgZXMgdW4gdGFudG8gcmVkdW5kYW50ZS4gU2Vyw61hIG1lam9yIGFncnVwYXIgbGFzIGZpbGFzIHNlZ8O6biBlbCBwYcOtcy4gRXN0byBzZSBjb25zaWd1ZSBjb24gbGEgZnVuY2nDs24gYGNvbGxhcHNlX3Jvd3NgOgoKCmBgYHtyfQpwYWlzZXNfdGFibGEgJT4lIAogIGNvbGxhcHNlX3Jvd3MoY29sdW1ucyA9IDEsIHZhbGlnbiA9ICJ0b3AiKSAgJT4lIAogIGthYmxlX3N0eWxpbmcoKSAKYGBgCgoKRWwgcHJpbWVyIGFyZ3VtZW50byBlcyBlbCBuw7ptZXJvIGRlIGxhIGNvbHVtbmEgcXVlIHF1ZXJlbW9zIGFncnVwYXIuIEVuIGVzdGUgY2FzbywgbGEgY29sdW1uYSBgcGFpc2AgZXMgbGEgcHJpbWVyYS4gRWwgc2VndW5kbyBhcmd1bWVudG8gZXMgbGEgYWxpbmVhY2nDs24gdmVydGljYWwuIFBvciBkZWZlY3RvLCBgY29sbGFwc2Vfcm93c2AgcG9uZSBsYXMgZXRpcXVldGFzIGVuIGVsIGNlbnRybywgcGVybyBsYSBjb252ZW5jacOzbiBtw6FzIGdlbmVyYWwgZXMgcG9uZXJsYXMgYXJyaWJhLiAKCsK/UXXDqSBlcyBlc2EgYGthYmxlX3N0eWxpbmcoKWA/IHtrYWJsZUV4dHJhfSBwZXJtaXRlIGNhbWJpYXIgZWwgZXN0aWxvIGRlIGxhcyB0YWJsYXMgbXV5IGbDoWNpbG1lbnRlLiBga2FibGVfc3R5bGluZ2AgZXMgZWwgZXN0aWxvIHBvciBkZWZlY3RvLCBxdWUgZXMgaWd1YWwgYWwgcXVlIHByb2R1Y2UgYGthYmxlYCwgcGVybyB0aWVuZSBtdWNob3Mgb3Ryb3MuIFNpIHZpc3RlIHRhYmxhcyBoZWNoYXMgZW4gTGFUZVgsIHF1aXrDoXMgZXN0IGVzdGlsbyB0ZSByZXN1bHRlIGZhbWlsaWFyOgoKYGBge3J9CnBhaXNlc190YWJsYSAlPiUgCiAgY29sbGFwc2Vfcm93cyhjb2x1bW5zID0gMSwgdmFsaWduID0gInRvcCIpICAlPiUgCiAga2FibGVfY2xhc3NpY18yKCkKYGBgCgpMYSBmdW5jacOzbiBgY29sdW1uX3NwZWNgIHBlcm1pdGUgY2FtYmlhciBsb3MgcGFyw6FtZXRyb3MgZ3LDoWZpY29zIGRlIHVuYSBvIG3DoXMgY29sdW1uYXMuIEVuIGVzdGUgY2FzbyBjYW1iaWFtb3MgbGEgcHJpbWVyYSBjb2x1bW5hIChgY29sdW1uID0gMWApIHBhcmEgcXVlIGxhcyBwYWxhYnJhcyBhcGFyZXpjYW4gaXRhbGl6YWRhcyAoYGl0YWxpYyA9IFRSVUVgKToKCmBgYHtyfQpwYWlzZXNfdGFibGEgJT4lIAogIGNvbHVtbl9zcGVjKGNvbHVtbiA9IDEsIGl0YWxpYyA9IFRSVUUpICU+JQogIGNvbGxhcHNlX3Jvd3MoY29sdW1ucyA9IDEsIHZhbGlnbiA9ICJ0b3AiKSAgJT4lCiAga2FibGVfc3R5bGluZygpIApgYGAKCkxvIG5vdGFibGUgZGUgYGNvbHVtbl9zcGVjYCBlcyBxdWUgZW4gc3VzIGFyZ3VtZW50b3Mgc2UgcHVlZGVuIHBvbmVyIHZlY3RvcmVzIGRlIG1hbmVyYSBkZSBnZW5lcmFyIGZvcm1hdG8gY29uZGljaW9uYWwuIFBhcmEgcmVzYWx0YXIgY29uIG5lZ3JpdGEgw7puaWNhbWVudGUgZWwgcGHDrXMgIkFyZ2VudGluYSI6CgpgYGB7cn0KcGFpc2VzX3RhYmxhICU+JSAKICBjb2x1bW5fc3BlYyhjb2x1bW4gPSAxLCBib2xkID0gKHBhaXNlc19zZWxlY2Npb24kcGFpcyA9PSAiQXJnZW50aW5hIikpICU+JQogIGNvbGxhcHNlX3Jvd3MoY29sdW1ucyA9IDEsIHZhbGlnbiA9ICJ0b3AiKSAgJT4lCiAga2FibGVfc3R5bGluZygpIApgYGAKCkNvbnZpZW5lIGRldGVuZXJzZSBwYXJhIG1pcmFyIHVuIHBvY28gY29uIGRldGFsbGUgZWwgY8OzZGlnby4gTGEgbGxhbWFkYSBhIGBjb2x1bW5fc3BlY2AgZXN0w6EgY2FtYmlhbmRvIGVsIGZvcm1hdG8gZGUgbGEgY29sdW1uYSAxLiBFbiBwYXJ0aWN1bGFyLCB2YSBhIGRldGVybWluYXIgc2kgZWwgdGV4dG8gZXMgZW4gbmVncml0YSAoYm9sZCkgbyBuby4gWSBsYSBmb3JtYSBwYXJhIGRldGVybWluYXJsbyBlcyBlbCB2ZWN0b3IgYHBhaXNlcyRwYWlzID09ICJBcmdlbnRpbmEiYC4gwr9RdcOpIGVzIGVzZSB2ZWN0b3I/CgoKYGBge3J9CnBhaXNlc19zZWxlY2Npb24kcGFpcyA9PSAiQXJnZW50aW5hIgpgYGAKClBvciBsbyB0YW50bywgYGNvbHVtbl9zcGVjKGNvbHVtbiA9IDEsIGJvbGQgPSAocGFpc2VzJHBhaXMgPT0gIkFyZ2VudGluYSIpKWAgdmEgYSBoYWNlciBxdWUgbGFzIGRvcyBwcmltZXJhIGZpbGFzIGRlIGxhIGNvbHVtbmEgdW5vIGVzdMOpbiBlbiBuZWdyaXRhLCB5IGxhcyBkZW3DoXMgbm8uIEx1ZWdvLCBgY29sbGFwc2Vfcm93c2AgY29sYXBzYSBsYXMgZmlsYXMgc2Vnw7puIGVsIHBhw61zIHkgZW50b25jZXMgZXNhcyBkb3MgcHJpbWVyYXMgZmlsYXMgc2UgdHJhbnNmb3JtYW4gZW4gdW5hLiAKCkVzdG8gZGEgdW4gbW9udMOzbiBkZSBmbGV4aWJpbGlkYWQgZW4gZWwgZXN0aWxvIGRlbCB0ZXh0by4gUG9yIGVqZW1wbG8sIHNlIHB1ZWRlIGhhY2VyIHF1ZSBlbCBjb2xvciBkZWwgdGV4dG8gY2FtYmllIHNlZ8O6biBlbCB2YWxvciB1c2FuZG8gYGNvbHVtbl9zcGVjYCB5IGBzcGVjX2NvbG9yYC4KCmBgYHtyfQpwYWlzZXNfdGFibGEgJT4lIAogIGNvbHVtbl9zcGVjKDMsIGNvbG9yID0gc3BlY19jb2xvcihwYWlzZXNfc2VsZWNjaW9uJGVzcGVyYW56YV9kZV92aWRhKSkgJT4lIAogIGNvbGxhcHNlX3Jvd3MoY29sdW1ucyA9IDEsIHZhbGlnbiA9ICJ0b3AiKSAgJT4lCiAga2FibGVfc3R5bGluZygpIApgYGAKCkxhIGZ1bmNpw7NuIG51ZXZhLCBgc3BlY19jb2xvcmAgZ2VuZXJhIGNvbG9yZXMgYSBwYXJ0aXIgZGUgdW4gdmVjdG9yLiBQb2TDqXMgdmVyIGPDs21vIGZ1bmNpb25hIGVuIGVzdGEgbGluZWE6CgpgYGB7cn0Kc3BlY19jb2xvcihwYWlzZXNfc2VsZWNjaW9uJGVzcGVyYW56YV9kZV92aWRhKQpgYGAKCkVzb3MgbsO6bWVyb3Mgc29uIHJlcHJlc2VudGFjaW9uZXMgZW4gaGV4YWRlY2ltYWwgZGUgbG9zIGNvbG9yZXMgcXVlIHZlcyBlbiBsYSB0YWJsYS4gUG9kw6lzIHBhc2FybGUgY3VhbHF1aWVyIHNlcmllIGRlIGNvbG9yZXMsIG5vIHPDs2xvIGxhIGNyZWFkYSBjb24gYHNwZWNfY29sb3JgLiAKCkFzw60gY29tbyBzZSBwdWVkZSBjYW1iaWFyIGVsIGVzdGlsbyBkZSBsYXMgY29sdW1uYXMgY29uIGBjb2x1bW5fc3BlY2AsIHNlIHB1ZWRlIGNhbWJpYXIgZWwgZXN0aWxvIGRlIGxhcyBmaWxhcyBjb24gYHJvd19zcGVjYC4gUG9yIGVqZW1wbG8sIHNlIHB1ZWRlIHJlc2FsdGFyIGNhZGEgMiBsw61uZWFzIGNvbiBlc3RlIGPDs2RpZ286CgpgYGB7cn0KcGFpc2VzX3RhYmxhICU+JSAKICByb3dfc3BlYyhyb3cgPSBzZXEoMiwgbnJvdyhwYWlzZXNfc2VsZWNjaW9uKSwgYnkgPSAyKSwgYmFja2dyb3VuZCA9ICJhenVyZSIpICU+JSAKICBjb2xsYXBzZV9yb3dzKGNvbHVtbnMgPSAxLCB2YWxpZ24gPSAidG9wIikgICU+JQogIGthYmxlX3N0eWxpbmcoKSAKYGBgCgpgcm93X3NwZWNgIGVzdMOhIGNhbWJpYW5kbyBlbCBmb25kbyAoYmFja2dyb3VuZCkgYWwgY29sb3IgImF6dXJlIiAocXVlIGVzIGVzZSBjZWxlc3RpdG8pIGEgbGFzIGZpbGFzIGluZGljYWRhcyBwb3IgYHNlcSgyLCBucm93KHBhaXNlc19zZWxlY2Npb24pLCBieSA9IDIpYC4gwr9RdcOpIGVzIGVzbz8gYHNlcWAgZ2VuZXJhIHVuYSBzZWN1ZW5jaWEgKGRlICoqc2VxKip1ZW5jZSkgZGUgbsO6bWVyb3MgZW1wZXphbmRvIGVuIDIsIHRlcm1pbmFuZG8gZW4gbGEgY2FudGlkYWQgZGUgZmlsYXMgZGUgYHBhaXNlc19zZWxlY2Npb25gIHkgc2FsdGFuZG8gZGUgYSBkb3MuIEVuIHJlc3VtZW46CgpgYGB7cn0Kc2VxKDIsIG5yb3cocGFpc2VzX3NlbGVjY2lvbiksIGJ5ID0gMikKYGBgCgpDb21vIGNhc28gZXNwZWNpYWwsIHNlIHB1ZWRlIHVzYXIgYHJvdyA9IDBgIGVuIGByb3dfc3BlY2AgcGFyYSBjYW1iaWFyIGVsIGZvcm1hdG8gZGVsIGVuY2FiZXphZG8uCgpgYGB7cn0KcGFpc2VzX3RhYmxhICU+JSAKICByb3dfc3BlYyhyb3cgPSAwLCB1bmRlcmxpbmUgPSBUUlVFKSAlPiUgCiAgY29sbGFwc2Vfcm93cyhjb2x1bW5zID0gMSwgdmFsaWduID0gInRvcCIpICAlPiUKICBrYWJsZV9zdHlsaW5nKCkgCmBgYAoKCkVzdG8gZXMgc8OzbG8gdW5hIG3DrW5pbWEgcGFydGUgZGUgbG8gcXVlIHNlIHB1ZWRlIGhhY2VyIGNvbiBlbCBwYXF1ZXRlIHtrYWJsZUV4dHJhfS4gUGFyYSBlamVtcGxvcyBtdWNobyBtw6FzIGRldGFsbGFkb3MsIHRlIHJlY29tZW5kYW1vcyBsZWVyIFtsYSB2acOxZXRhIGNvbXBsZXRhXShodHRwczovL2NyYW4uci1wcm9qZWN0Lm9yZy93ZWIvcGFja2FnZXMva2FibGVFeHRyYS92aWduZXR0ZXMvYXdlc29tZV90YWJsZV9pbl9odG1sLmh0bWwp</div>
-
-
+<div class="btn-group" role="group" aria-label="Navegación">
+<p><a href= "10-reportes-II.html" class = "btn btn-primary">Anterior</a> <a href= "12-ggplot-III.html" class = "btn btn-primary">Siguiente</a></p>
 </div>
 </div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiVGFibGFzIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCiAgICB0b2M6IHRydWUKICAgIHRvY19mbG9hdDogZmFsc2UKICAgIGhpZ2hsaWdodDogdGFuZ28KLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQpgYGAKCgpQb3IgZGVmZWN0bywgbGEgZm9ybWEgZW4gcXVlIFIgTWFya2Rvd24gbXVlc3RyYSB0YWJsYXMgZXMgYmFzdGFudGUgZmVvIHBvcnF1ZSBtdWVzdHJhIGxvIHF1ZSB2ZXLDrWFzIHNpIGNvcnJpZXJhcyBlbCBjw7NkaWdvIGVuIGxhIGNvbnNvbGEuIAoKYGBge3IsIG1lc3NhZ2U9RkFMU0V9CmxpYnJhcnkoZHBseXIpCnBhaXNlcyA8LSByZWFkcjo6cmVhZF9jc3YoImRhdG9zL3BhaXNlcy5jc3YiKQpwYWlzZXNfc2VsZWNjaW9uIDwtIHBhaXNlcyAlPiUgCiAgZmlsdGVyKHBhaXMgJWluJSBjKCJBcmdlbnRpbmEiLCAiVXJ1Z3VheSIsICJDaGlsZSIpKSAlPiUgCiAgZmlsdGVyKGFuaW8gJWluJSBjKDIwMDcsIDIwMDIpKSAlPiUKICBzZWxlY3QoLWNvbnRpbmVudGUpCnBhaXNlc19zZWxlY2Npb24KYGBgCgojIyBUYWJsYXMgc2ltcGxlcyBjb24gYGthYmxlYAoKRXhpc3RlbiB2YXJpb3MgcGFxdWV0ZXMgcGFyYSBtb3N0cmFyIHRhYmxhcyBsaW5kYXMgcGVybyB1bmEgZm9ybWEgc2ltcGxlIHkgc2luIHZ1ZWx0YXMgZXMgdXNhbmRvIGxhIGZ1bmNpw7NuIGBrYWJsZWAgZGVsIHBhcXVldGUge2tuaXRyfS4gU8OzbG8gdXNhbmRvIGVzdGEgZnVuY2nDs24geWEgZGV2dWVsdmUgdW5hIHRhYmxhIG3DoXMgcXVlIHJhem9uYWJsZToKCmBgYHtyfQpsaWJyYXJ5KGtuaXRyKQprYWJsZShwYWlzZXNfc2VsZWNjaW9uKQpgYGAKCkxhIG1heW9yw61hIGRlIGxhcyB2ZWNlcywgZWwgbm9tYnJlIGRlIGxhcyBjb2x1bW5hcyBxdWUgcXVlcmVtb3MgbW9zdHJhciBubyB2YSBhIHNlciBpZ3VhbCBxdWUgZWwgbm9tYnJlIGRlIGxhcyBjb2x1bW5hcyBlbiBSLiBFbiBsYSB0YWJsYSBgcGFpc2VzYCwgbG9zIG5vbWJyZXMgZXN0w6FuIGVuIG1pbsO6c2N1bGEsIHNpbiBlc3BhY2lvcyB5IHNpbiAiY2FyYWN0ZXJlcyBlc3BlY2lhbGVzIiBjb21vICLDsSIgbyAiw60iLiBFc3RvIGVzIMO6dGlsIHBhcmEgY29tdW5pY2Fyc2UgY29uIFIsIHBlcm8gbm8gZXN0w6EgYnVlbm8gcGFyYSBjb211bmljYWRvcyBhIHNlcmVzIGh1bWFub3MuIEVsIGFyZ3VtZW50byBgY29sLm5hbWVzYCBwZXJtaXRlIGVzcGVjaWZpY2FyIGVsIG5vbWJyZSBkZSBsYXMgY29sdW1uYXMgcGFyYSBtb3N0cmFyOgoKYGBge3J9CmthYmxlKHBhaXNlc19zZWxlY2Npb24sIAogICAgICBjb2wubmFtZXMgPSBjKCJQYcOtcyIsICJBw7FvIiwgIkVzcGVyYW56YSBkZSB2aWRhIiwgIlBvYmxhY2nDs24iLCAiUEJJIHBlciBjw6FwaXRhIikpCmBgYAoKRW4gRXNwYcOxb2wsIGVuIGdlbmVyYWwgdXNhbW9zIGxhIGNvbWEgcGFyYSBzZXBhcmFyIGxvcyBkZWNpbWFsZXMgeSBlbCBwdW50byBjb21vIHNlcGFyYWRvciBkZSBtaWxlcy4gUGFyYSBlc28sIGhheSBxdWUgbW9kaWZpY2FyIGVsIGFyZ3VtZW50byBgZm9ybWF0LmFyZ3NgIGRlIGVzdGEgbWFuZXJhOgoKYGBge3J9CmthYmxlKHBhaXNlc19zZWxlY2Npb24sIAogICAgICBjb2wubmFtZXMgPSBjKCJQYcOtcyIsICJBw7FvIiwgIkVzcGVyYW56YSBkZSB2aWRhIiwgIlBvYmxhY2nDs24iLCAiUEJJIHBlciBjw6FwaXRhIiksCiAgICAgIGZvcm1hdC5hcmdzID0gbGlzdChkZWNpbWFsLm1hcmsgPSAiLCIsIGJpZy5tYXJrID0gIi4iKSkKYGBgCgpVZmYuLi4gcGVybyBwb25lcmxlIGVsIHB1bnRvIGRlIG1pbGVzIGEgbG9zIGHDsW9zIHF1ZWRhIHJhcm8uIExhIHNvbHVjacOzbiBlcyBjb252ZXJ0aXIgbGEgY29sdW1uYSBgYW5pb2AgZW4gY2FyYWN0ZXIuIERlIGVzdGEgbWFuZXJhLCBubyBzZSB2ZSBhZmVjdGFkYSBwb3IgZWwgZm9ybWF0byBudW3DqXJpY28uIAoKYGBge3J9CnBhaXNlc19zZWxlY2Npb24gJT4lIAogIG11dGF0ZShhbmlvID0gYXMuY2hhcmFjdGVyKGFuaW8pKSAlPiUgCiAga2FibGUoY29sLm5hbWVzID0gYygiUGHDrXMiLCAiQcOxbyIsICJFc3BlcmFuemEgZGUgdmlkYSIsICJQb2JsYWNpw7NuIiwgIlBCSSBwZXIgY8OhcGl0YSIpLAogICAgICAgIGZvcm1hdC5hcmdzID0gbGlzdChkZWNpbWFsLm1hcmsgPSAiLCIsIGJpZy5tYXJrID0gIi4iKSkKYGBgCgpoYWNlciBga2FibGVgLCBxdWUgZXMgdW5hIGZ1bmNpw7NuIGRpc2XDsWFkYSBwYXJhIHNlciBzaW1wbGUgeSBoYWNlciBwb2NhcyBjb3Nhcy4gUGFyYSBoYWNlciBjb3NhcyB1biBwb2NvIG1hcyBjb21wbGljYWRhcyBlc3TDoSBlbCBwYXF1ZXRlIHtrYWJsZUV4dHJhfS4gCgojIyBTdXBlcnRhYmxhcyBjb24ge2thYmxlRXh0cmF9CgpFbCBwYXF1ZXRlIHtrYWJsZUV4dHJhfSwgY29tbyBzdSBub21icmUgbG8gaW5kaWNhLCBuYWNpw7MgcGFyYSBleHRlbmRlciBlbCBwb2RlciBkZSBsYSBmdW5jacOzbiBga2FibGVgLiAKCgpgYGB7cn0KbGlicmFyeShrYWJsZUV4dHJhKSAgIyBpbnN0YWxhciBjb24gaW5zdGFsbC5wYWNrYWdlcygia2FibGVFeHRyYSIpCmBgYAoKYGBge3J9CnBhaXNlc190YWJsYSA8LSBwYWlzZXNfc2VsZWNjaW9uICU+JSAKICBtdXRhdGUoYW5pbyA9IGFzLmNoYXJhY3RlcihhbmlvKSkgJT4lIAogIGthYmxlKGNvbC5uYW1lcyA9IGMoIlBhw61zIiwgIkHDsW8iLCAiRXNwZXJhbnphIGRlIHZpZGEiLCAiUG9ibGFjacOzbiIsICJQQkkgcGVyIGPDoXBpdGEiKSwKICAgICAgICBmb3JtYXQuYXJncyA9IGxpc3QoZGVjaW1hbC5tYXJrID0gIiwiLCBiaWcubWFyayA9ICIuIikpCmBgYAoKTGEgcHJpbWVyYSBjb2x1bW5hIGRlIGxhIHRhYmxhIGRlIGFycmliYSBlcyB1biB0YW50byByZWR1bmRhbnRlLiBTZXLDrWEgbWVqb3IgYWdydXBhciBsYXMgZmlsYXMgc2Vnw7puIGVsIHBhw61zLiBFc3RvIHNlIGNvbnNpZ3VlIGNvbiBsYSBmdW5jacOzbiBgY29sbGFwc2Vfcm93c2A6CgoKYGBge3J9CnBhaXNlc190YWJsYSAlPiUgCiAgY29sbGFwc2Vfcm93cyhjb2x1bW5zID0gMSwgdmFsaWduID0gInRvcCIpICAlPiUgCiAga2FibGVfc3R5bGluZygpIApgYGAKCgpFbCBwcmltZXIgYXJndW1lbnRvIGVzIGVsIG7Dum1lcm8gZGUgbGEgY29sdW1uYSBxdWUgcXVlcmVtb3MgYWdydXBhci4gRW4gZXN0ZSBjYXNvLCBsYSBjb2x1bW5hIGBwYWlzYCBlcyBsYSBwcmltZXJhLiBFbCBzZWd1bmRvIGFyZ3VtZW50byBlcyBsYSBhbGluZWFjacOzbiB2ZXJ0aWNhbC4gUG9yIGRlZmVjdG8sIGBjb2xsYXBzZV9yb3dzYCBwb25lIGxhcyBldGlxdWV0YXMgZW4gZWwgY2VudHJvLCBwZXJvIGxhIGNvbnZlbmNpw7NuIG3DoXMgZ2VuZXJhbCBlcyBwb25lcmxhcyBhcnJpYmEuIAoKwr9RdcOpIGVzIGVzYSBga2FibGVfc3R5bGluZygpYD8ge2thYmxlRXh0cmF9IHBlcm1pdGUgY2FtYmlhciBlbCBlc3RpbG8gZGUgbGFzIHRhYmxhcyBtdXkgZsOhY2lsbWVudGUuIGBrYWJsZV9zdHlsaW5nYCBlcyBlbCBlc3RpbG8gcG9yIGRlZmVjdG8sIHF1ZSBlcyBpZ3VhbCBhbCBxdWUgcHJvZHVjZSBga2FibGVgLCBwZXJvIHRpZW5lIG11Y2hvcyBvdHJvcy4gU2kgdmlzdGUgdGFibGFzIGhlY2hhcyBlbiBMYVRlWCwgcXVpesOhcyBlc3RlIGVzdGlsbyB0ZSByZXN1bHRlIGZhbWlsaWFyOgoKYGBge3J9CnBhaXNlc190YWJsYSAlPiUgCiAgY29sbGFwc2Vfcm93cyhjb2x1bW5zID0gMSwgdmFsaWduID0gInRvcCIpICAlPiUgCiAga2FibGVfY2xhc3NpY18yKCkKYGBgCgpMYSBmdW5jacOzbiBgY29sdW1uX3NwZWNgIHBlcm1pdGUgY2FtYmlhciBsb3MgcGFyw6FtZXRyb3MgZ3LDoWZpY29zIGRlIHVuYSBvIG3DoXMgY29sdW1uYXMuIEVuIGVzdGUgY2FzbyBjYW1iaWFtb3MgbGEgcHJpbWVyYSBjb2x1bW5hIChgY29sdW1uID0gMWApIHBhcmEgcXVlIGxhcyBwYWxhYnJhcyBhcGFyZXpjYW4gaXRhbGl6YWRhcyAoYGl0YWxpYyA9IFRSVUVgKToKCmBgYHtyfQpwYWlzZXNfdGFibGEgJT4lIAogIGNvbHVtbl9zcGVjKGNvbHVtbiA9IDEsIGl0YWxpYyA9IFRSVUUpICU+JQogIGNvbGxhcHNlX3Jvd3MoY29sdW1ucyA9IDEsIHZhbGlnbiA9ICJ0b3AiKSAgJT4lCiAga2FibGVfc3R5bGluZygpIApgYGAKCkxvIG5vdGFibGUgZGUgYGNvbHVtbl9zcGVjYCBlcyBxdWUgZW4gc3VzIGFyZ3VtZW50b3Mgc2UgcHVlZGVuIHBvbmVyIHZlY3RvcmVzIGRlIG1hbmVyYSBkZSBnZW5lcmFyIGZvcm1hdG8gY29uZGljaW9uYWwuIFBhcmEgcmVzYWx0YXIgY29uIG5lZ3JpdGEgw7puaWNhbWVudGUgZWwgcGHDrXMgIkFyZ2VudGluYSI6CgpgYGB7cn0KcGFpc2VzX3RhYmxhICU+JSAKICBjb2x1bW5fc3BlYyhjb2x1bW4gPSAxLCBib2xkID0gKHBhaXNlc19zZWxlY2Npb24kcGFpcyA9PSAiQXJnZW50aW5hIikpICU+JQogIGNvbGxhcHNlX3Jvd3MoY29sdW1ucyA9IDEsIHZhbGlnbiA9ICJ0b3AiKSAgJT4lCiAga2FibGVfc3R5bGluZygpIApgYGAKCkNvbnZpZW5lIGRldGVuZXJzZSBwYXJhIG1pcmFyIHVuIHBvY28gY29uIGRldGFsbGUgZWwgY8OzZGlnby4gTGEgbGxhbWFkYSBhIGBjb2x1bW5fc3BlY2AgZXN0w6EgY2FtYmlhbmRvIGVsIGZvcm1hdG8gZGUgbGEgY29sdW1uYSAxLiBFbiBwYXJ0aWN1bGFyLCB2YSBhIGRldGVybWluYXIgc2kgZWwgdGV4dG8gZXMgZW4gbmVncml0YSAoYm9sZCkgbyBuby4gWSBsYSBmb3JtYSBwYXJhIGRldGVybWluYXJsbyBlcyBlbCB2ZWN0b3IgYHBhaXNlcyRwYWlzID09ICJBcmdlbnRpbmEiYC4gwr9RdcOpIGVzIGVzZSB2ZWN0b3I/CgoKYGBge3J9CnBhaXNlc19zZWxlY2Npb24kcGFpcyA9PSAiQXJnZW50aW5hIgpgYGAKClBvciBsbyB0YW50bywgYGNvbHVtbl9zcGVjKGNvbHVtbiA9IDEsIGJvbGQgPSAocGFpc2VzJHBhaXMgPT0gIkFyZ2VudGluYSIpKWAgdmEgYSBoYWNlciBxdWUgbGFzIGRvcyBwcmltZXJhIGZpbGFzIGRlIGxhIGNvbHVtbmEgdW5vIGVzdMOpbiBlbiBuZWdyaXRhLCB5IGxhcyBkZW3DoXMgbm8uIEx1ZWdvLCBgY29sbGFwc2Vfcm93c2AgY29sYXBzYSBsYXMgZmlsYXMgc2Vnw7puIGVsIHBhw61zIHkgZW50b25jZXMgZXNhcyBkb3MgcHJpbWVyYXMgZmlsYXMgc2UgdHJhbnNmb3JtYW4gZW4gdW5hLiAKCkVzdG8gZGEgdW4gbW9udMOzbiBkZSBmbGV4aWJpbGlkYWQgZW4gZWwgZXN0aWxvIGRlbCB0ZXh0by4gUG9yIGVqZW1wbG8sIHNlIHB1ZWRlIGhhY2VyIHF1ZSBlbCBjb2xvciBkZWwgdGV4dG8gY2FtYmllIHNlZ8O6biBlbCB2YWxvciB1c2FuZG8gYGNvbHVtbl9zcGVjYCB5IGBzcGVjX2NvbG9yYC4KCmBgYHtyfQpwYWlzZXNfdGFibGEgJT4lIAogIGNvbHVtbl9zcGVjKDMsIGNvbG9yID0gc3BlY19jb2xvcihwYWlzZXNfc2VsZWNjaW9uJGVzcGVyYW56YV9kZV92aWRhKSkgJT4lIAogIGNvbGxhcHNlX3Jvd3MoY29sdW1ucyA9IDEsIHZhbGlnbiA9ICJ0b3AiKSAgJT4lCiAga2FibGVfc3R5bGluZygpIApgYGAKCkxhIGZ1bmNpw7NuIG51ZXZhLCBgc3BlY19jb2xvcmAgZ2VuZXJhIGNvbG9yZXMgYSBwYXJ0aXIgZGUgdW4gdmVjdG9yLiBQb2TDqXMgdmVyIGPDs21vIGZ1bmNpb25hIGVuIGVzdGEgbGluZWE6CgpgYGB7cn0Kc3BlY19jb2xvcihwYWlzZXNfc2VsZWNjaW9uJGVzcGVyYW56YV9kZV92aWRhKQpgYGAKCkVzb3MgbsO6bWVyb3Mgc29uIHJlcHJlc2VudGFjaW9uZXMgZW4gaGV4YWRlY2ltYWwgZGUgbG9zIGNvbG9yZXMgcXVlIHZlcyBlbiBsYSB0YWJsYS4gUG9kw6lzIHBhc2FybGUgY3VhbHF1aWVyIHNlcmllIGRlIGNvbG9yZXMsIG5vIHPDs2xvIGxhIGNyZWFkYSBjb24gYHNwZWNfY29sb3JgLiAKCkFzw60gY29tbyBzZSBwdWVkZSBjYW1iaWFyIGVsIGVzdGlsbyBkZSBsYXMgY29sdW1uYXMgY29uIGBjb2x1bW5fc3BlY2AsIHNlIHB1ZWRlIGNhbWJpYXIgZWwgZXN0aWxvIGRlIGxhcyBmaWxhcyBjb24gYHJvd19zcGVjYC4gUG9yIGVqZW1wbG8sIHNlIHB1ZWRlIHJlc2FsdGFyIGNhZGEgMiBsw61uZWFzIGNvbiBlc3RlIGPDs2RpZ286CgpgYGB7cn0KcGFpc2VzX3RhYmxhICU+JSAKICByb3dfc3BlYyhyb3cgPSBzZXEoMiwgbnJvdyhwYWlzZXNfc2VsZWNjaW9uKSwgYnkgPSAyKSwgYmFja2dyb3VuZCA9ICJhenVyZSIpICU+JSAKICBjb2xsYXBzZV9yb3dzKGNvbHVtbnMgPSAxLCB2YWxpZ24gPSAidG9wIikgICU+JQogIGthYmxlX3N0eWxpbmcoKSAKYGBgCgpgcm93X3NwZWNgIGVzdMOhIGNhbWJpYW5kbyBlbCBmb25kbyAoYmFja2dyb3VuZCkgYWwgY29sb3IgImF6dXJlIiAocXVlIGVzIGVzZSBjZWxlc3RpdG8pIGEgbGFzIGZpbGFzIGluZGljYWRhcyBwb3IgYHNlcSgyLCBucm93KHBhaXNlc19zZWxlY2Npb24pLCBieSA9IDIpYC4gwr9RdcOpIGVzIGVzbz8gYHNlcWAgZ2VuZXJhIHVuYSBzZWN1ZW5jaWEgKGRlICoqc2VxKip1ZW5jZSkgZGUgbsO6bWVyb3MgZW1wZXphbmRvIGVuIDIsIHRlcm1pbmFuZG8gZW4gbGEgY2FudGlkYWQgZGUgZmlsYXMgZGUgYHBhaXNlc19zZWxlY2Npb25gIHkgc2FsdGFuZG8gZGUgYSBkb3MuIEVuIHJlc3VtZW46CgpgYGB7cn0Kc2VxKDIsIG5yb3cocGFpc2VzX3NlbGVjY2lvbiksIGJ5ID0gMikKYGBgCgpDb21vIGNhc28gZXNwZWNpYWwsIHNlIHB1ZWRlIHVzYXIgYHJvdyA9IDBgIGVuIGByb3dfc3BlY2AgcGFyYSBjYW1iaWFyIGVsIGZvcm1hdG8gZGVsIGVuY2FiZXphZG8uCgpgYGB7cn0KcGFpc2VzX3RhYmxhICU+JSAKICByb3dfc3BlYyhyb3cgPSAwLCB1bmRlcmxpbmUgPSBUUlVFKSAlPiUgCiAgY29sbGFwc2Vfcm93cyhjb2x1bW5zID0gMSwgdmFsaWduID0gInRvcCIpICAlPiUKICBrYWJsZV9zdHlsaW5nKCkgCmBgYAoKCkVzdG8gZXMgc8OzbG8gdW5hIG3DrW5pbWEgcGFydGUgZGUgbG8gcXVlIHNlIHB1ZWRlIGhhY2VyIGNvbiBlbCBwYXF1ZXRlIHtrYWJsZUV4dHJhfS4gUGFyYSBlamVtcGxvcyBtdWNobyBtw6FzIGRldGFsbGFkb3MsIHRlIHJlY29tZW5kYW1vcyBsZWVyIFtsYSB2acOxZXRhIGNvbXBsZXRhXShodHRwczovL2NyYW4uci1wcm9qZWN0Lm9yZy93ZWIvcGFja2FnZXMva2FibGVFeHRyYS92aWduZXR0ZXMvYXdlc29tZV90YWJsZV9pbl9odG1sLmh0bWwpCgoKPGRpdiBjbGFzcz0iYnRuLWdyb3VwIiByb2xlPSJncm91cCIgYXJpYS1sYWJlbD0iTmF2ZWdhY2nDs24iPgogIDxhIGhyZWY9ICIxMC1yZXBvcnRlcy1JSS5odG1sIiBjbGFzcyA9ICJidG4gYnRuLXByaW1hcnkiPkFudGVyaW9yPC9hPgogIDxhIGhyZWY9ICIxMi1nZ3Bsb3QtSUlJLmh0bWwiIGNsYXNzID0gImJ0biBidG4tcHJpbWFyeSI+U2lndWllbnRlPC9hPgo8L2Rpdj4=</div>
+
+
 
 </div>
 
@@ -1694,32 +1628,6 @@ $(document).ready(function () {
 });
 </script>
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

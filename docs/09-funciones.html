@@ -19,19 +19,17 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -41,14 +39,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -57,9 +57,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -332,69 +332,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -402,16 +339,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -520,48 +447,55 @@ div.tocify {
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#funciones-con-condiciones">Funciones con condiciones</a></li>
+<li><a href="#aplicaciones">Aplicaciones</a></li>
+<li><a href="#documentación-y-organización">Documentación y organización</a></li>
+</ul>
+</div>
 
-<p>Si te encontrás una y otra vez copiando la misma linea de coódigo para realizar una operación entonces es hora de escribir uan función que haga esa tarea por vos. Hasta ahora estuvimos utilizando funciones que vienen con R (lo que llamamos <em>R base</em>) y funciones de librerías que están disponibles para extender las funcionalidades de R. Ahora vamos a ver como definir funciones propias.</p>
+<p>Si te encontrás una y otra vez copiando la misma linea de código para realizar una operación entonces es hora de escribir una función que haga esa tarea por vos. Hasta ahora estuvimos utilizando funciones que vienen con R (lo que llamamos <em>R base</em>) y funciones de librerías que están disponibles para extender las funcionalidades de R. Ahora vamos a ver como definir funciones propias.</p>
 <p>Esta función será un conjunto de comandos o líneas de código que podrá ser definida para usarla en el futuro, con un nombre (con suerte uno que represente la acción u operación para la cual la estamos creando), elementos de entrada y el resultado final.</p>
 <p>Vamos a definir la primera función para convertir viento en <em>nudos</em> a viento en <em>metros por segundo</em> que vamos a llamar <code>nudos_a_ms()</code>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">nudos_a_ms &lt;-<span class="st"> </span><span class="cf">function</span>(viento) {</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">  ms &lt;-<span class="st"> </span>viento <span class="op">*</span><span class="st"> </span><span class="fl">0.5144</span></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">  <span class="kw">return</span>(ms)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">}</a></code></pre></div>
-<p><code>function</code> define nuestra función <code>nudos_a_ms()</code> y al correr esas lineas de código se generará un nuevo elemento en nuestro ambiente, la función está lista para ser usada. Pero antes de probarla revisemos la <em>reseta</em> para definir una función.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a>nudos_a_ms &lt;-<span class="st"> </span><span class="cf">function</span>(viento) {</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  ms &lt;-<span class="st"> </span>viento <span class="op">*</span><span class="st"> </span><span class="fl">0.5144</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a>  <span class="kw">return</span>(ms)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>}</span></code></pre></div>
+<p><code>function</code> define nuestra función <code>nudos_a_ms()</code> y al correr esas lineas de código se generará un nuevo elemento en nuestro ambiente, la función está lista para ser usada. Pero antes de probarla revisemos la <em>receta</em> para definir una función.</p>
 <p>Ya vimos que necesitamos declarar que esto es una función con <code>function()</code>, luego le sigue el <em>cuerpo</em> de la función, las líneas de código que se ejecutarán, y que van entre llaves <code>{}</code>. Usualmente <em>indentamos</em> el código para que se lea mejor, al igual que pasa cuando escribimos el código para generar un gráfico. Pero estos espacios antes del comienzo de cada renglón no son necesarios para que el código funcione.</p>
 <p>La función puede recibir uno o más elementos de entrada: los argumentos. En este caso solo recibe un argumento al que llamamos <code>viento</code>. Al final usamos la función <code>return()</code>, que <em>devolverá</em> un valor o elemento que resulte de los cálculos previos.</p>
 <p>Ahora probemos calcular cuantos metros por segundos son 15 nudos usando la función.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">nudos_a_ms</span>(<span class="dt">viento =</span> <span class="dv">15</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">nudos_a_ms</span>(<span class="dt">viento =</span> <span class="dv">15</span>)</span></code></pre></div>
 <pre><code>## [1] 7.716</code></pre>
 <p>El elemento de entrada en este caso es un número (15) y nos devolvió también un número. Pero podríamos tener un vector de números que corresponden a la velocidad del viento en nudos y que necesitamos convertir a metros por segundos. ¿Cuál crees que será el resultado?</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">viento_de_ayer &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>viento_de_ayer &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">5</span>, <span class="dv">15</span>, <span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">10</span>)</span></code></pre></div>
 <p>Ahora el elemento de entrada es un vector de números y por lo tanto, la función nos devolverá otro vector aplicando la operación <code>viento * 0.5144</code> a cada elemento del vector.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">nudos_a_ms</span>(<span class="dt">viento =</span> viento_de_ayer)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">nudos_a_ms</span>(<span class="dt">viento =</span> viento_de_ayer)</span></code></pre></div>
 <pre><code>## [1] 0.0000 2.5720 7.7160 1.0288 2.5720 5.1440</code></pre>
 <div class="alert alert-info">
 <p><strong>Desafío</strong></p>
-<p>Escrbí una nueva función que se llame <code>ms_a_nudos()</code> que tome el viento en metros por segundos y lo convierta a nudos. Pista: ahora tenés que multiplicar por 1.944.</p>
+<p>Escribí una nueva función que se llame <code>ms_a_nudos()</code> que tome el viento en metros por segundos y lo convierta a nudos. Pista: ahora tenés que multiplicar por 1.944.</p>
 </div>
 <div id="funciones-con-condiciones" class="section level2">
 <h2>Funciones con condiciones</h2>
-<p>Ahora que ya tenemos un par de funciones escritas, es importante asegurarnos de que funcionen de la manera en la que queremos. En este caso esperamos que dado un valor <em>numérico</em> nos devuelva otro valor <em>númérico</em>. ¿Qué pasaría si recibe un caracter?</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">nudos_a_ms</span>(<span class="dt">viento =</span> <span class="st">&quot;fuerte&quot;</span>)</a></code></pre></div>
+<p>Ahora que ya tenemos un par de funciones escritas, es importante asegurarnos de que funcionen de la manera en la que queremos. En este caso esperamos que dado un valor <em>numérico</em> nos devuelva otro valor <em>numérico</em>. ¿Qué pasaría si recibe un caracter?</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">nudos_a_ms</span>(<span class="dt">viento =</span> <span class="st">&quot;fuerte&quot;</span>)</span></code></pre></div>
 <pre><code>## Error in viento * 0.5144: non-numeric argument to binary operator</code></pre>
 <p>Por supuesto, nos da error, aunque uno no muy claro. También podríamos querer que la función primero revise si el o los elementos de entrada cumplen con determinadas condiciones, por ejemplo que sea un valor numérico.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">nudos_a_ms &lt;-<span class="st"> </span><span class="cf">function</span>(viento) {</a>
-<a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(viento))  <span class="co"># ¿Es de tipo numérico?</span></a>
-<a class="sourceLine" id="cb9-3" data-line-number="3">  </a>
-<a class="sourceLine" id="cb9-4" data-line-number="4">  ms &lt;-<span class="st"> </span>viento <span class="op">*</span><span class="st"> </span><span class="fl">0.5144</span></a>
-<a class="sourceLine" id="cb9-5" data-line-number="5">  <span class="kw">return</span>(ms)</a>
-<a class="sourceLine" id="cb9-6" data-line-number="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>nudos_a_ms &lt;-<span class="st"> </span><span class="cf">function</span>(viento) {</span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(viento))  <span class="co"># ¿Es de tipo numérico?</span></span>
+<span id="cb9-3"><a href="#cb9-3"></a>  </span>
+<span id="cb9-4"><a href="#cb9-4"></a>  ms &lt;-<span class="st"> </span>viento <span class="op">*</span><span class="st"> </span><span class="fl">0.5144</span></span>
+<span id="cb9-5"><a href="#cb9-5"></a>  <span class="kw">return</span>(ms)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>}</span></code></pre></div>
 <p>Ahora si el valor de entrada es “15”, la función falla.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">nudos_a_ms</span>(<span class="dt">viento =</span> <span class="st">&quot;15&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">nudos_a_ms</span>(<span class="dt">viento =</span> <span class="st">&quot;15&quot;</span>)</span></code></pre></div>
 <pre><code>## Error in nudos_a_ms(viento = &quot;15&quot;): is.numeric(viento) is not TRUE</code></pre>
 <p>El error es un poquito más informativo, pero podrías ser mejor! Lo bueno es que podríamos incluir más de una condición, por ejemplo que el valor de entrada <code>viento</code> sea menor a un valor máximo.</p>
 <div class="alert alert-info">
 <p><strong>Desafío</strong></p>
-<p>A tu función <code>ms_a_nudos()</code> agregale alguna condición que debe cumplir el argumento de entrada y aejecutala nuevamente.</p>
+<p>A tu función <code>ms_a_nudos()</code> agregale alguna condición que debe cumplir el argumento de entrada y ejecutala nuevamente.</p>
 </div>
 <div class="alert alert-success">
 <p>Algo importante a tener en cuenta: cualquier variable o elemento que se crea o modifica dentro del cuento de la función <strong>solo existe mientras la función se está ejecutando</strong>. Por ejemplo la variable <code>ms</code> que creamos adentro de la función <code>nudos_a_ms()</code> solo existe adentro de esa función. Podés revisar el ambiente de R y comprobar que no hay ninguna variable llamada <code>ms</code> aún luego de ejecutar la función <code>nudos_a_ms()</code> varias veces.</p>
@@ -569,13 +503,13 @@ div.tocify {
 </div>
 <div id="aplicaciones" class="section level2">
 <h2>Aplicaciones</h2>
-<p>Hasta ahora definimos funciones que tal vez no tengan mucha aplicación, al ejecutar estas funciones tampoco guardamos el resultado en una nueva variable porque estabamos probando como funcionaban. Ahora vamos a ver como incorporar todo lo anterior a nuestro flujo de análisis.</p>
+<p>Hasta ahora definimos funciones que tal vez no tengan mucha aplicación, al ejecutar estas funciones tampoco guardamos el resultado en una nueva variable porque estábamos probando como funcionaban. Ahora vamos a ver como incorporar todo lo anterior a nuestro flujo de análisis.</p>
 <p>Vamos a seguir trabajando con <code>diamantes</code> y el objetivo final será generar una nueva columna que contenga el volumen de cada uno de los diamantes en esa base de datos. Cómo te imaginarás vamos a usar la función <code>mutate()</code> para crear esta nueva columna.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">library</span>(datos)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">diamantes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">volumen =</span> x <span class="op">*</span><span class="st"> </span>y <span class="op">*</span><span class="st"> </span>z) <span class="co"># El volumen se calcula como ancho x alto x largo asumiendo que es un cubo</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">library</span>(datos)</span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">library</span>(dplyr)</span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a>diamantes <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">volumen =</span> x <span class="op">*</span><span class="st"> </span>y <span class="op">*</span><span class="st"> </span>z) <span class="co"># El volumen se calcula como ancho x alto x largo asumiendo que es un cubo</span></span></code></pre></div>
 <pre><code>## # A tibble: 53,940 x 11
 ##    precio quilate corte color claridad profundidad tabla     x     y     z
 ##     &lt;int&gt;   &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -592,15 +526,15 @@ div.tocify {
 ## # … with 53,930 more rows, and 1 more variable: volumen &lt;dbl&gt;</code></pre>
 <p>El cálculo del volumen es bastante directo y en principio no parece ser necesario escribir una nueva función para hacer esto. Sin embargo, si vamos a hacer esto muchas veces, tal vez sea conveniente definir una función <code>volumen()</code> que haga el cálculo. Al mismo tiempo el código es mucho más claro!</p>
 <p>Definamos esta función que ahora requiere 3 argumentos:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">volumen &lt;-<span class="st"> </span><span class="cf">function</span>(ancho, alto, largo) {</a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(ancho), <span class="kw">is.numeric</span>(alto), <span class="kw">is.numeric</span>(largo))</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">  </a>
-<a class="sourceLine" id="cb14-4" data-line-number="4">  total &lt;-<span class="st"> </span>ancho <span class="op">*</span><span class="st"> </span>alto <span class="op">*</span><span class="st"> </span>largo</a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">  <span class="kw">return</span>(total)</a>
-<a class="sourceLine" id="cb14-6" data-line-number="6">}</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>volumen &lt;-<span class="st"> </span><span class="cf">function</span>(ancho, alto, largo) {</span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="kw">stopifnot</span>(<span class="kw">is.numeric</span>(ancho), <span class="kw">is.numeric</span>(alto), <span class="kw">is.numeric</span>(largo))</span>
+<span id="cb14-3"><a href="#cb14-3"></a>  </span>
+<span id="cb14-4"><a href="#cb14-4"></a>  total &lt;-<span class="st"> </span>ancho <span class="op">*</span><span class="st"> </span>alto <span class="op">*</span><span class="st"> </span>largo</span>
+<span id="cb14-5"><a href="#cb14-5"></a>  <span class="kw">return</span>(total)</span>
+<span id="cb14-6"><a href="#cb14-6"></a>}</span></code></pre></div>
 <p>Ahora con nuestra función definida podemos calcular el volumen:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">diamantes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">volumen =</span> <span class="kw">volumen</span>(x, y, z))</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a>diamantes <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">volumen =</span> <span class="kw">volumen</span>(x, y, z))</span></code></pre></div>
 <pre><code>## # A tibble: 53,940 x 11
 ##    precio quilate corte color claridad profundidad tabla     x     y     z
 ##     &lt;int&gt;   &lt;dbl&gt; &lt;ord&gt; &lt;ord&gt; &lt;ord&gt;          &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
@@ -616,30 +550,30 @@ div.tocify {
 ## 10    338   0.23  Muy … H     VS1             59.4    61  4     4.05  2.39
 ## # … with 53,930 more rows, and 1 more variable: volumen &lt;dbl&gt;</code></pre>
 <p>Y tal vez necesitemos el volumen promedio para algún tipo de corte.</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">diamantes <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">volumen =</span> <span class="kw">volumen</span>(x, y, z)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="st">  </span><span class="kw">filter</span>(corte <span class="op">==</span><span class="st"> &quot;Ideal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-4" data-line-number="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">volumen_promedio =</span> <span class="kw">mean</span>(volumen))</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a>diamantes <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb17-2"><a href="#cb17-2"></a><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">volumen =</span> <span class="kw">volumen</span>(x, y, z)) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="st">  </span><span class="kw">filter</span>(corte <span class="op">==</span><span class="st"> &quot;Ideal&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb17-4"><a href="#cb17-4"></a><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">volumen_promedio =</span> <span class="kw">mean</span>(volumen))</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   volumen_promedio
 ##              &lt;dbl&gt;
 ## 1             115.</code></pre>
-<p>Como siempre en R, hay muchas maneras de resolver cada problema. Otra posible opción sería definir una función que en un solo paso nos devuelva el volumen promedio de los diamntes de algún corte en particular.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">volumen_promedio &lt;-<span class="st"> </span><span class="cf">function</span>(datos, este_corte) {</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2">  datos <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="st">    </span><span class="kw">filter</span>(corte <span class="op">==</span><span class="st"> </span>este_corte) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb19-4" data-line-number="4"><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">volumen_promedio =</span> <span class="kw">mean</span>(x <span class="op">*</span><span class="st"> </span>y <span class="op">*</span><span class="st"> </span>z)) </a>
-<a class="sourceLine" id="cb19-5" data-line-number="5">}</a></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw">volumen_promedio</span>(diamantes, <span class="st">&quot;Ideal&quot;</span>)</a></code></pre></div>
+<p>Como siempre en R, hay muchas maneras de resolver cada problema. Otra posible opción sería definir una función que en un solo paso nos devuelva el volumen promedio de los diamantes de algún corte en particular.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1"></a>volumen_promedio &lt;-<span class="st"> </span><span class="cf">function</span>(datos, este_corte) {</span>
+<span id="cb19-2"><a href="#cb19-2"></a>  datos <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="st">    </span><span class="kw">filter</span>(corte <span class="op">==</span><span class="st"> </span>este_corte) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb19-4"><a href="#cb19-4"></a><span class="st">    </span><span class="kw">summarise</span>(<span class="dt">volumen_promedio =</span> <span class="kw">mean</span>(x <span class="op">*</span><span class="st"> </span>y <span class="op">*</span><span class="st"> </span>z)) </span>
+<span id="cb19-5"><a href="#cb19-5"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">volumen_promedio</span>(diamantes, <span class="st">&quot;Ideal&quot;</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   volumen_promedio
 ##              &lt;dbl&gt;
 ## 1             115.</code></pre>
-<p>Ahora la nueva función <code>volumen_promedio()</code> requiere 2 argumentos, el data.frame con los datos y una cadena de caracteres indicando el tipo de corte. Es posible que hayas notado que no incluimos la función <code>return()</code>, esto es porque R <em>devuelve</em> el último elemento que se generó, en este caso el resultado final de esa cadadena de comandos y que coincide con la salida que esperamos.</p>
+<p>Ahora la nueva función <code>volumen_promedio()</code> requiere 2 argumentos, el data.frame con los datos y una cadena de caracteres indicando el tipo de corte. Es posible que hayas notado que no incluimos la función <code>return()</code>, esto es porque R <em>devuelve</em> el último elemento que se generó, en este caso el resultado final de esa cadena de comandos y que coincide con la salida que esperamos.</p>
 <div class="alert alert-info">
 <p><strong>Desafío</strong></p>
 <p>Al igual que vimos en las funciones de R base o por ejemplo de tidyverse, los argumentos de las funciones definidas por nosotros, también pueden tener valores por defecto. Esto quiere decir que podríamos querer que la función <code>volumen_promedio()</code> calcule el volumen promedio para el corte “Regular” <em>a menos que</em> le indiquemos otra cosa.</p>
-<p>El valor por defecto de un argumento debe ser definido al momento de crear la función. Probá cambiar <code>corte</code> por <code>corte = &quot;Regular&quot;</code> como argumento de la función <code>volumen_promedio()</code> y ejecutala nuevamente indicando y omitiendo el tipo de corte en distintos casos.</p>
+<p>El valor por defecto de un argumento debe ser definido al momento de crear la función. Probá cambiar <code>corte</code> por <code>corte = "Regular"</code> como argumento de la función <code>volumen_promedio()</code> y ejecutala nuevamente indicando y omitiendo el tipo de corte en distintos casos.</p>
 </div>
 </div>
 <div id="documentación-y-organización" class="section level2">
@@ -654,16 +588,17 @@ div.tocify {
 <li>Generá un nuevo archivo que se llame <code>funciones_utiles.R</code>. Podés hacerlo desde el menú File → New File → R Script o con el atajo Ctrl + Shift + N</li>
 <li>Copiá las funciones <code>volumen()</code> y <code>volumen_promedio()</code> y agregá una breve descripción junto a cada una usando comentarios (la línea debe comenzar con <code>#</code>).</li>
 <li>Guardá el archivo dentro de la carpeta del proyecto.</li>
-<li>En el archivo .Rmd donde venís trabajando, agregá una línea en el primer bloque de código para cargar estas funcionesa <code>source(&quot;funciones_utiles.R&quot;)</code>.</li>
+<li>En el archivo .Rmd donde venís trabajando, agregá una línea en el primer bloque de código para cargar estas funciones <code>source("funciones_utiles.R")</code>.</li>
 </ol>
 </div>
-</div>
-
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiRnVuY2lvbmVzIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCiAgICB0b2M6IHRydWUKICAgIHRvY19mbG9hdDogdHJ1ZQogICAgaGlnaGxpZ2h0OiB0YW5nbwotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUpCmBgYAoKU2kgdGUgZW5jb250csOhcyB1bmEgeSBvdHJhIHZleiBjb3BpYW5kbyBsYSBtaXNtYSBsaW5lYSBkZSBjb8OzZGlnbyBwYXJhIHJlYWxpemFyIHVuYSBvcGVyYWNpw7NuIGVudG9uY2VzIGVzIGhvcmEgZGUgZXNjcmliaXIgdWFuIGZ1bmNpw7NuIHF1ZSBoYWdhIGVzYSB0YXJlYSBwb3Igdm9zLiBIYXN0YSBhaG9yYSBlc3R1dmltb3MgdXRpbGl6YW5kbyBmdW5jaW9uZXMgcXVlIHZpZW5lbiBjb24gUiAobG8gcXVlIGxsYW1hbW9zICpSIGJhc2UqKSB5IGZ1bmNpb25lcyBkZSBsaWJyZXLDrWFzIHF1ZSBlc3TDoW4gZGlzcG9uaWJsZXMgcGFyYSBleHRlbmRlciBsYXMgZnVuY2lvbmFsaWRhZGVzIGRlIFIuIEFob3JhIHZhbW9zIGEgdmVyIGNvbW8gZGVmaW5pciBmdW5jaW9uZXMgcHJvcGlhcy4KCkVzdGEgZnVuY2nDs24gc2Vyw6EgdW4gY29uanVudG8gZGUgY29tYW5kb3MgbyBsw61uZWFzIGRlIGPDs2RpZ28gcXVlIHBvZHLDoSBzZXIgZGVmaW5pZGEgcGFyYSB1c2FybGEgZW4gZWwgZnV0dXJvLCBjb24gdW4gbm9tYnJlIChjb24gc3VlcnRlIHVubyBxdWUgcmVwcmVzZW50ZSBsYSBhY2Npw7NuIHUgb3BlcmFjacOzbiBwYXJhIGxhIGN1YWwgbGEgZXN0YW1vcyBjcmVhbmRvKSwgZWxlbWVudG9zIGRlIGVudHJhZGEgeSBlbCByZXN1bHRhZG8gZmluYWwuIAoKVmFtb3MgYSBkZWZpbmlyIGxhIHByaW1lcmEgZnVuY2nDs24gcGFyYSBjb252ZXJ0aXIgdmllbnRvIGVuICpudWRvcyogYSB2aWVudG8gZW4gKm1ldHJvcyBwb3Igc2VndW5kbyogcXVlIHZhbW9zIGEgbGxhbWFyIGBudWRvc19hX21zKClgLiAKCmBgYHtyfQpudWRvc19hX21zIDwtIGZ1bmN0aW9uKHZpZW50bykgewogIG1zIDwtIHZpZW50byAqIDAuNTE0NAogIHJldHVybihtcykKfQpgYGAKCmBmdW5jdGlvbmAgZGVmaW5lIG51ZXN0cmEgZnVuY2nDs24gYG51ZG9zX2FfbXMoKWAgeSBhbCBjb3JyZXIgZXNhcyBsaW5lYXMgZGUgY8OzZGlnbyBzZSBnZW5lcmFyw6EgdW4gbnVldm8gZWxlbWVudG8gZW4gbnVlc3RybyBhbWJpZW50ZSwgbGEgZnVuY2nDs24gZXN0w6EgbGlzdGEgcGFyYSBzZXIgdXNhZGEuIFBlcm8gYW50ZXMgZGUgcHJvYmFybGEgcmV2aXNlbW9zIGxhICpyZXNldGEqIHBhcmEgZGVmaW5pciB1bmEgZnVuY2nDs24uIAoKWWEgdmltb3MgcXVlIG5lY2VzaXRhbW9zIGRlY2xhcmFyIHF1ZSBlc3RvIGVzIHVuYSBmdW5jacOzbiBjb24gYGZ1bmN0aW9uKClgLCBsdWVnbyBsZSBzaWd1ZSBlbCAqY3VlcnBvKiBkZSBsYSBmdW5jacOzbiwgbGFzIGzDrW5lYXMgZGUgY8OzZGlnbyBxdWUgc2UgZWplY3V0YXLDoW4sIHkgcXVlIHZhbiBlbnRyZSBsbGF2ZXMgYHt9YC4gVXN1YWxtZW50ZSAqaW5kZW50YW1vcyogZWwgY8OzZGlnbyBwYXJhIHF1ZSBzZSBsZWEgbWVqb3IsIGFsIGlndWFsIHF1ZSBwYXNhIGN1YW5kbyBlc2NyaWJpbW9zIGVsIGPDs2RpZ28gcGFyYSBnZW5lcmFyIHVuIGdyw6FmaWNvLiBQZXJvIGVzdG9zIGVzcGFjaW9zIGFudGVzIGRlbCBjb21pZW56byBkZSBjYWRhIHJlbmdsw7NuIG5vIHNvbiBuZWNlc2FyaW9zIHBhcmEgcXVlIGVsIGPDs2RpZ28gZnVuY2lvbmUuIAoKTGEgZnVuY2nDs24gcHVlZGUgcmVjaWJpciB1bm8gbyBtw6FzIGVsZW1lbnRvcyBkZSBlbnRyYWRhOiBsb3MgYXJndW1lbnRvcy4gRW4gZXN0ZSBjYXNvIHNvbG8gcmVjaWJlIHVuIGFyZ3VtZW50byBhbCBxdWUgbGxhbWFtb3MgYHZpZW50b2AuIEFsIGZpbmFsIHVzYW1vcyBsYSBmdW5jacOzbiBgcmV0dXJuKClgLCBxdWUgKmRldm9sdmVyw6EqIHVuIHZhbG9yIG8gZWxlbWVudG8gcXVlIHJlc3VsdGUgZGUgbG9zIGPDoWxjdWxvcyBwcmV2aW9zLiAKCkFob3JhIHByb2JlbW9zIGNhbGN1bGFyIGN1YW50b3MgbWV0cm9zIHBvciBzZWd1bmRvcyBzb24gMTUgbnVkb3MgdXNhbmRvIGxhIGZ1bmNpw7NuLgoKYGBge3J9Cm51ZG9zX2FfbXModmllbnRvID0gMTUpCmBgYAoKRWwgZWxlbWVudG8gZGUgZW50cmFkYSBlbiBlc3RlIGNhc28gZXMgdW4gbsO6bWVybyAoMTUpIHkgbm9zIGRldm9sdmnDsyB0YW1iacOpbiB1biBuw7ptZXJvLiBQZXJvIHBvZHLDrWFtb3MgdGVuZXIgdW4gdmVjdG9yIGRlIG7Dum1lcm9zIHF1ZSBjb3JyZXNwb25kZW4gYSBsYSB2ZWxvY2lkYWQgZGVsIHZpZW50byBlbiBudWRvcyB5IHF1ZSBuZWNlc2l0YW1vcyBjb252ZXJ0aXIgYSBtZXRyb3MgcG9yIHNlZ3VuZG9zLiDCv0N1w6FsIGNyZWVzIHF1ZSBzZXLDoSBlbCByZXN1bHRhZG8/CgpgYGB7cn0KdmllbnRvX2RlX2F5ZXIgPC0gYygwLCA1LCAxNSwgMiwgNSwgMTApCmBgYAoKQWhvcmEgZWwgZWxlbWVudG8gZGUgZW50cmFkYSBlcyB1biB2ZWN0b3IgZGUgbsO6bWVyb3MgeSBwb3IgbG8gdGFudG8sIGxhIGZ1bmNpw7NuIG5vcyBkZXZvbHZlcsOhIG90cm8gdmVjdG9yIGFwbGljYW5kbyBsYSBvcGVyYWNpw7NuIGB2aWVudG8gKiAwLjUxNDRgIGEgY2FkYSBlbGVtZW50byBkZWwgdmVjdG9yLgoKYGBge3J9Cm51ZG9zX2FfbXModmllbnRvID0gdmllbnRvX2RlX2F5ZXIpCmBgYAoKOjo6IHsuYWxlcnQgLmFsZXJ0LWluZm99CioqRGVzYWbDrW8qKgoKRXNjcmLDrSB1bmEgbnVldmEgZnVuY2nDs24gcXVlIHNlIGxsYW1lIGBtc19hX251ZG9zKClgIHF1ZSB0b21lIGVsIHZpZW50byBlbiBtZXRyb3MgcG9yIHNlZ3VuZG9zIHkgbG8gY29udmllcnRhIGEgbnVkb3MuIFBpc3RhOiBhaG9yYSB0ZW7DqXMgcXVlIG11bHRpcGxpY2FyIHBvciAxLjk0NC4KOjo6CgojIyBGdW5jaW9uZXMgY29uIGNvbmRpY2lvbmVzCgpBaG9yYSBxdWUgeWEgdGVuZW1vcyB1biBwYXIgZGUgZnVuY2lvbmVzIGVzY3JpdGFzLCBlcyBpbXBvcnRhbnRlIGFzZWd1cmFybm9zIGRlIHF1ZSBmdW5jaW9uZW4gZGUgbGEgbWFuZXJhIGVuIGxhIHF1ZSBxdWVyZW1vcy4gRW4gZXN0ZSBjYXNvIGVzcGVyYW1vcyBxdWUgZGFkbyB1biB2YWxvciAqbnVtw6lyaWNvKiBub3MgZGV2dWVsdmEgb3RybyB2YWxvciAqbsO6bcOpcmljbyouIMK/UXXDqSBwYXNhcsOtYSBzaSByZWNpYmUgdW4gY2FyYWN0ZXI/IAoKYGBge3IgZXJyb3I9VFJVRX0KbnVkb3NfYV9tcyh2aWVudG8gPSAiZnVlcnRlIikKYGBgCgpQb3Igc3VwdWVzdG8sIG5vcyBkYSBlcnJvciwgYXVucXVlIHVubyBubyBtdXkgY2xhcm8uIFRhbWJpw6luIHBvZHLDrWFtb3MgcXVlcmVyIHF1ZSBsYSBmdW5jacOzbiBwcmltZXJvIHJldmlzZSBzaSBlbCBvIGxvcyBlbGVtZW50b3MgZGUgZW50cmFkYSBjdW1wbGVuIGNvbiBkZXRlcm1pbmFkYXMgY29uZGljaW9uZXMsIHBvciBlamVtcGxvIHF1ZSBzZWEgdW4gdmFsb3IgbnVtw6lyaWNvLgoKYGBge3J9Cm51ZG9zX2FfbXMgPC0gZnVuY3Rpb24odmllbnRvKSB7CiAgc3RvcGlmbm90KGlzLm51bWVyaWModmllbnRvKSkgICMgwr9FcyBkZSB0aXBvIG51bcOpcmljbz8KICAKICBtcyA8LSB2aWVudG8gKiAwLjUxNDQKICByZXR1cm4obXMpCn0KYGBgCgpBaG9yYSBzaSBlbCB2YWxvciBkZSBlbnRyYWRhIGVzICIxNSIsIGxhIGZ1bmNpw7NuIGZhbGxhLgoKYGBge3IgZXJyb3I9VFJVRX0KbnVkb3NfYV9tcyh2aWVudG8gPSAiMTUiKQpgYGAKCkVsIGVycm9yIGVzIHVuIHBvcXVpdG8gbcOhcyBpbmZvcm1hdGl2bywgcGVybyBwb2Ryw61hcyBzZXIgbWVqb3IhIExvIGJ1ZW5vIGVzIHF1ZSBwb2Ryw61hbW9zIGluY2x1aXIgbcOhcyBkZSB1bmEgY29uZGljacOzbiwgcG9yIGVqZW1wbG8gcXVlIGVsIHZhbG9yIGRlIGVudHJhZGEgYHZpZW50b2Agc2VhIG1lbm9yIGEgdW4gdmFsb3IgbcOheGltby4KCjo6OiB7LmFsZXJ0IC5hbGVydC1pbmZvfQoqKkRlc2Fmw61vKioKCkEgdHUgZnVuY2nDs24gYG1zX2FfbnVkb3MoKWAgYWdyZWdhbGUgYWxndW5hIGNvbmRpY2nDs24gcXVlIGRlYmUgY3VtcGxpciBlbCBhcmd1bWVudG8gZGUgZW50cmFkYSB5IGFlamVjdXRhbGEgbnVldmFtZW50ZS4KOjo6CgoKOjo6IHsuYWxlcnQgLmFsZXJ0LXN1Y2Nlc3N9CgpBbGdvIGltcG9ydGFudGUgYSB0ZW5lciBlbiBjdWVudGE6IGN1YWxxdWllciB2YXJpYWJsZSBvIGVsZW1lbnRvIHF1ZSBzZSBjcmVhIG8gbW9kaWZpY2EgZGVudHJvIGRlbCBjdWVudG8gZGUgbGEgZnVuY2nDs24gKipzb2xvIGV4aXN0ZSBtaWVudHJhcyBsYSBmdW5jacOzbiBzZSBlc3TDoSBlamVjdXRhbmRvKiouIFBvciBlamVtcGxvIGxhIHZhcmlhYmxlIGBtc2AgcXVlIGNyZWFtb3MgYWRlbnRybyBkZSBsYSBmdW5jacOzbiBgbnVkb3NfYV9tcygpYCBzb2xvIGV4aXN0ZSBhZGVudHJvIGRlIGVzYSBmdW5jacOzbi4gUG9kw6lzIHJldmlzYXIgZWwgYW1iaWVudGUgZGUgUiB5IGNvbXByb2JhciBxdWUgbm8gaGF5IG5pbmd1bmEgdmFyaWFibGUgbGxhbWFkYSBgbXNgIGHDum4gbHVlZ28gZGUgZWplY3V0YXIgbGEgZnVuY2nDs24gYG51ZG9zX2FfbXMoKWAgdmFyaWFzIHZlY2VzLgo6OjoKCiMjIEFwbGljYWNpb25lcwoKSGFzdGEgYWhvcmEgZGVmaW5pbW9zIGZ1bmNpb25lcyBxdWUgdGFsIHZleiBubyB0ZW5nYW4gbXVjaGEgYXBsaWNhY2nDs24sIGFsIGVqZWN1dGFyIGVzdGFzIGZ1bmNpb25lcyB0YW1wb2NvIGd1YXJkYW1vcyBlbCByZXN1bHRhZG8gZW4gdW5hIG51ZXZhIHZhcmlhYmxlIHBvcnF1ZSBlc3RhYmFtb3MgcHJvYmFuZG8gY29tbyBmdW5jaW9uYWJhbi4gQWhvcmEgdmFtb3MgYSB2ZXIgY29tbyBpbmNvcnBvcmFyIHRvZG8gbG8gYW50ZXJpb3IgYSBudWVzdHJvIGZsdWpvIGRlIGFuw6FsaXNpcy4KClZhbW9zIGEgc2VndWlyIHRyYWJhamFuZG8gY29uIGBkaWFtYW50ZXNgIHkgZWwgb2JqZXRpdm8gZmluYWwgc2Vyw6EgZ2VuZXJhciB1bmEgbnVldmEgY29sdW1uYSBxdWUgY29udGVuZ2EgZWwgdm9sdW1lbiBkZSBjYWRhIHVubyBkZSBsb3MgZGlhbWFudGVzIGVuIGVzYSBiYXNlIGRlIGRhdG9zLiBDw7NtbyB0ZSBpbWFnaW5hcsOhcyB2YW1vcyBhIHVzYXIgbGEgZnVuY2nDs24gYG11dGF0ZSgpYCBwYXJhIGNyZWFyIGVzdGEgbnVldmEgY29sdW1uYS4gCgpgYGB7cn0KbGlicmFyeShkYXRvcykKbGlicmFyeShkcGx5cikKCmRpYW1hbnRlcyAlPiUgCiAgbXV0YXRlKHZvbHVtZW4gPSB4ICogeSAqIHopICMgRWwgdm9sdW1lbiBzZSBjYWxjdWxhIGNvbW8gYW5jaG8geCBhbHRvIHggbGFyZ28gYXN1bWllbmRvIHF1ZSBlcyB1biBjdWJvCmBgYAoKRWwgY8OhbGN1bG8gZGVsIHZvbHVtZW4gZXMgYmFzdGFudGUgZGlyZWN0byB5IGVuIHByaW5jaXBpbyBubyBwYXJlY2Ugc2VyIG5lY2VzYXJpbyBlc2NyaWJpciB1bmEgbnVldmEgZnVuY2nDs24gcGFyYSBoYWNlciBlc3RvLiBTaW4gZW1iYXJnbywgc2kgdmFtb3MgYSBoYWNlciBlc3RvIG11Y2hhcyB2ZWNlcywgdGFsIHZleiBzZWEgY29udmVuaWVudGUgZGVmaW5pciB1bmEgZnVuY2nDs24gYHZvbHVtZW4oKWAgcXVlIGhhZ2EgZWwgY8OhbGN1bG8uIEFsIG1pc21vIHRpZW1wbyBlbCBjw7NkaWdvIGVzIG11Y2hvIG3DoXMgY2xhcm8hCgpEZWZpbmFtb3MgZXN0YSBmdW5jacOzbiBxdWUgYWhvcmEgcmVxdWllcmUgMyBhcmd1bWVudG9zOgoKYGBge3J9CnZvbHVtZW4gPC0gZnVuY3Rpb24oYW5jaG8sIGFsdG8sIGxhcmdvKSB7CiAgc3RvcGlmbm90KGlzLm51bWVyaWMoYW5jaG8pLCBpcy5udW1lcmljKGFsdG8pLCBpcy5udW1lcmljKGxhcmdvKSkKICAKICB0b3RhbCA8LSBhbmNobyAqIGFsdG8gKiBsYXJnbwogIHJldHVybih0b3RhbCkKfQpgYGAKCkFob3JhIGNvbiBudWVzdHJhIGZ1bmNpw7NuIGRlZmluaWRhIHBvZGVtb3MgY2FsY3VsYXIgZWwgdm9sdW1lbjoKCmBgYHtyfQpkaWFtYW50ZXMgJT4lIAogIG11dGF0ZSh2b2x1bWVuID0gdm9sdW1lbih4LCB5LCB6KSkKYGBgCgpZIHRhbCB2ZXogbmVjZXNpdGVtb3MgZWwgdm9sdW1lbiBwcm9tZWRpbyBwYXJhIGFsZ8O6biB0aXBvIGRlIGNvcnRlLgoKYGBge3J9CmRpYW1hbnRlcyAlPiUgCiAgbXV0YXRlKHZvbHVtZW4gPSB2b2x1bWVuKHgsIHksIHopKSAlPiUgCiAgZmlsdGVyKGNvcnRlID09ICJJZGVhbCIpICU+JSAKICBzdW1tYXJpc2Uodm9sdW1lbl9wcm9tZWRpbyA9IG1lYW4odm9sdW1lbikpCmBgYAoKCkNvbW8gc2llbXByZSBlbiBSLCBoYXkgbXVjaGFzIG1hbmVyYXMgZGUgcmVzb2x2ZXIgY2FkYSBwcm9ibGVtYS4gT3RyYSBwb3NpYmxlIG9wY2nDs24gc2Vyw61hIGRlZmluaXIgdW5hIGZ1bmNpw7NuIHF1ZSBlbiB1biBzb2xvIHBhc28gbm9zIGRldnVlbHZhIGVsIHZvbHVtZW4gcHJvbWVkaW8gZGUgbG9zIGRpYW1udGVzIGRlIGFsZ8O6biBjb3J0ZSBlbiBwYXJ0aWN1bGFyLgoKYGBge3J9CnZvbHVtZW5fcHJvbWVkaW8gPC0gZnVuY3Rpb24oZGF0b3MsIGVzdGVfY29ydGUpIHsKICBkYXRvcyAlPiUgCiAgICBmaWx0ZXIoY29ydGUgPT0gZXN0ZV9jb3J0ZSkgJT4lIAogICAgc3VtbWFyaXNlKHZvbHVtZW5fcHJvbWVkaW8gPSBtZWFuKHggKiB5ICogeikpIAp9CmBgYAoKYGBge3J9CnZvbHVtZW5fcHJvbWVkaW8oZGlhbWFudGVzLCAiSWRlYWwiKQpgYGAKCkFob3JhIGxhIG51ZXZhIGZ1bmNpw7NuIGB2b2x1bWVuX3Byb21lZGlvKClgIHJlcXVpZXJlIDIgYXJndW1lbnRvcywgZWwgZGF0YS5mcmFtZSBjb24gbG9zIGRhdG9zIHkgdW5hIGNhZGVuYSBkZSBjYXJhY3RlcmVzIGluZGljYW5kbyBlbCB0aXBvIGRlIGNvcnRlLiBFcyBwb3NpYmxlIHF1ZSBoYXlhcyBub3RhZG8gcXVlIG5vIGluY2x1aW1vcyBsYSBmdW5jacOzbiBgcmV0dXJuKClgLCBlc3RvIGVzIHBvcnF1ZSBSICpkZXZ1ZWx2ZSogZWwgw7psdGltbyBlbGVtZW50byBxdWUgc2UgZ2VuZXLDsywgZW4gZXN0ZSBjYXNvIGVsIHJlc3VsdGFkbyBmaW5hbCBkZSBlc2EgY2FkYWRlbmEgZGUgY29tYW5kb3MgeSBxdWUgY29pbmNpZGUgY29uIGxhIHNhbGlkYSBxdWUgZXNwZXJhbW9zLiAKCjo6OiB7LmFsZXJ0IC5hbGVydC1pbmZvfQoqKkRlc2Fmw61vKioKCkFsIGlndWFsIHF1ZSB2aW1vcyBlbiBsYXMgZnVuY2lvbmVzIGRlIFIgYmFzZSBvIHBvciBlamVtcGxvIGRlIHRpZHl2ZXJzZSwgbG9zIGFyZ3VtZW50b3MgZGUgbGFzIGZ1bmNpb25lcyBkZWZpbmlkYXMgcG9yIG5vc290cm9zLCB0YW1iacOpbiBwdWVkZW4gdGVuZXIgdmFsb3JlcyBwb3IgZGVmZWN0by4gRXN0byBxdWllcmUgZGVjaXIgcXVlIHBvZHLDrWFtb3MgcXVlcmVyIHF1ZSBsYSBmdW5jacOzbiBgdm9sdW1lbl9wcm9tZWRpbygpYCBjYWxjdWxlIGVsIHZvbHVtZW4gcHJvbWVkaW8gcGFyYSBlbCBjb3J0ZSAiUmVndWxhciIgKmEgbWVub3MgcXVlKiBsZSBpbmRpcXVlbW9zIG90cmEgY29zYS4gCgpFbCB2YWxvciBwb3IgZGVmZWN0byBkZSB1biBhcmd1bWVudG8gZGViZSBzZXIgZGVmaW5pZG8gYWwgbW9tZW50byBkZSBjcmVhciBsYSBmdW5jacOzbi4gUHJvYsOhIGNhbWJpYXIgYGNvcnRlYCBwb3IgYGNvcnRlID0gIlJlZ3VsYXIiYCBjb21vIGFyZ3VtZW50byBkZSBsYSBmdW5jacOzbiBgdm9sdW1lbl9wcm9tZWRpbygpYCB5IGVqZWN1dGFsYSBudWV2YW1lbnRlIGluZGljYW5kbyB5IG9taXRpZW5kbyBlbCB0aXBvIGRlIGNvcnRlIGVuIGRpc3RpbnRvcyBjYXNvcy4KOjo6CgojIyBEb2N1bWVudGFjacOzbiB5IG9yZ2FuaXphY2nDs24KCk5vbWJyYXIgZnVuY2lvbmVzICh5IGN1YWxxdWllciBvdHJvIGVsZW1lbnRvKSBlcyB0b2RvIHVuIGRlc2Fmw61vLCBuZWNlc2l0YW1vcyBxdWUgc2UgaW5mb3JtYXRpdm8gcGVybyBhbCBtaXNtbyB0aWVtcG8gY29ydG8geSBzaW1wbGUgZGUgZXNjcmliaXIuIFBvciBhaG9yYSBlc3R1dmltb3MgaGFjaWVuZG8gdW4gdHJhYmFqbyBhcHJveGltYWRhbWVudGUgYWNlcHRhYmxlIHBlcm8gc2kgdm9sdmVtb3MgYSByZXZpc2FyIGVzdGFzIGZ1bmNpb25lcyBkZW50cm8gZGUgdW4gbWVzIG8gZGVudHJvIGRlIHVuIGHDsW8gdGFsIHZleiBubyByZWNvcmRlbW9zIGV4YWN0YW1lbnRlIGNvbW8gZnVuY2lvbmEgdW5hIGZ1bmNpw7NuIHF1ZSBjcmVhbW9zLiBUYWwgdmV6IGltYWdpbmVtb3MgcXVlIHZhIGEgY2FsY3VsYXIgZWwgdm9sdW1lbiwgwr9wZXJvIGxvcyBlbGVtZW50b3MgZGUgZW50cmFkYSBzZXLDoW4gdmVjdG9yZXMgbyB1biBkYXRhLmZyYW1lPyDCv1F1ZSB0aXBvIGRlIGVsZW1lbnRvIGRldnVlbHZlPwoKUG9yIGVzYSByYXrDs24gbnVuY2EgZXN0w6EgZGUgbcOhcyBkb2N1bWVudGFyIGxhIGZ1bmNpw7NuLCBlcyBkZWNpciwgZGVzY3JpYmlyIHBhcmEgcXVlIGZ1bmNpb25hLCBxdWUgZWxlbWVudG9zIHJlcXVpZXJlLCBxdWUgZXMgbG8gcXVlIGRldnVlbHZlIHkgcG9yIHF1ZSBubywgdW4gZWplbXBsby4gTm8gbmVjZXNpdGFtb3MgZ2VuZXJhciB1bmEgZG9jdW1lbnRhY2nDs24gdGFuIGRldGFsbGFkYSBjb21vIGxhIHF1ZSBlbmNvbnRyYW1vcyBlbiBsYSBheXVkYSBkZSBjYWRhIGZ1bmNpw7NuIGRlIGRwbHlyLCBwZXJvIGVzIGJ1ZW5vIHRlbmVyIGNpZXJ0byBvcmRlbi4gCgpZIGEgbWVkaWRhIHF1ZSBnYW5lbW9zIHByw6FjdGljYSB5IGV4cGVyaWVuY2lhIHByb2dyYW1hbmRvLCBlbCBhYmFuaWNvIGRlIGZ1bmNpb25lcyBwcm9waWFzIHF1ZSBzaW1wbGlmaWNhbiBlbCB0cmFiYWpvIHZhbiBhIGlyIGNyZWNpZW5kby4gWSBzaSBiaWVuIHBvZGVtb3MgY29waWFybGFzIHkgcGVnYXJsYXMgdW5hIHkgb3RyYSB2ZXogZW4gY2FkYSBhcmNoaXZvIHF1ZSB1c2Vtb3MgeSBlbiBjYWRhIGFuw6FsaXNpcyBxdWUgZ2VuZXJlbW9zLCBlc3RvIHB1ZWRlIHNlciB0cmFiYWpvc28geSBsYXMgbcO6bHRpcGxlcyBjb3BpYXMgZGUgbGEgbWlzbWEgZnVuY2nDs24gcG9uZW4gZW4gcmllc2dvIHF1ZSBudWVzdHJvIHRyYWJham8gc2VhIHJlcHJvZHVjaWJsZS4gCgpFeGlzdGUgdW5hIGFsdGVybmF0aXZhIG11Y2hvIG3DoXMgb3JkZW5hZGEsIGVzIHBvc2libGUgZ3VhcmRhciB0b2RhcyBsYXMgZnVuY2lvbmVzIGVuIHVuIMO6bmljbyBhcmNoaXZvIGRlIHRleHRvIG8gKnNjcmlwdCogZGUgUiB5IGNhcmdhciBlc2FzIGZ1bmNpb25lcyBhbCBjb21pZW56byBkZWwgYW7DoWxpc2lzIGRlIGxhIG1pc21hIG1hbmVyYSBxdWUgY2FyZ2Ftb3MgbG9zIHBhcXVldGVzLiBQZXJvIGEgZGlmZXJlbmNpYSBkZSBsb3MgcGFxdWV0ZXMgcXVlIHNlIGNhcmdhbiBjb24gYGxpYnJhcnkoKWAsIHVuICpzY3JpcHQqIHNlIGNhcmdhIGNvbiBsYSBmdW5jacOzbiBgc291cmNlKClgLgoKOjo6IHsuYWxlcnQgLmFsZXJ0LWluZm99CioqRGVzYWbDrW8qKgoKMS4gR2VuZXLDoSB1biBudWV2byBhcmNoaXZvIHF1ZSBzZSBsbGFtZSBgZnVuY2lvbmVzX3V0aWxlcy5SYC4gUG9kw6lzIGhhY2VybG8gZGVzZGUgZWwgbWVuw7ogRmlsZSDihpIgTmV3IEZpbGUg4oaSIFIgU2NyaXB0IG8gY29uIGVsIGF0YWpvIEN0cmwgKyBTaGlmdCArIE4KMi4gQ29wacOhIGxhcyBmdW5jaW9uZXMgYHZvbHVtZW4oKWAgeSBgdm9sdW1lbl9wcm9tZWRpbygpYCB5IGFncmVnw6EgdW5hIGJyZXZlIGRlc2NyaXBjacOzbiBqdW50byBhIGNhZGEgdW5hIHVzYW5kbyBjb21lbnRhcmlvcyAobGEgbMOtbmVhIGRlYmUgY29tZW56YXIgY29uIGAjYCkuCjMuIEd1YXJkw6EgZWwgYXJjaGl2byBkZW50cm8gZGUgbGEgY2FycGV0YSBkZWwgcHJveWVjdG8uIAo0LiBFbiBlbCBhcmNoaXZvIC5SbWQgZG9uZGUgdmVuw61zIHRyYWJhamFuZG8sIGFncmVnw6EgdW5hIGzDrW5lYSBlbiBlbCBwcmltZXIgYmxvcXVlIGRlIGPDs2RpZ28gcGFyYSBjYXJnYXIgZXN0YXMgZnVuY2lvbmVzYSBgc291cmNlKCJmdW5jaW9uZXNfdXRpbGVzLlIiKWAuIAoKOjo6CgoKCg==</div>
-
-
+<div class="btn-group" role="group" aria-label="Navegación">
+<p><a href= "08-dplyr-tidyr-II" class = "btn btn-primary">Anterior</a> <a href= "10-reportes-II.html" class = "btn btn-primary">Siguiente</a></p>
 </div>
 </div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiRnVuY2lvbmVzIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCiAgICB0b2M6IHRydWUKICAgIHRvY19mbG9hdDogZmFsc2UKICAgIGhpZ2hsaWdodDogdGFuZ28KLS0tCgpgYGB7ciBzZXR1cCwgaW5jbHVkZT1GQUxTRX0Ka25pdHI6Om9wdHNfY2h1bmskc2V0KGVjaG8gPSBUUlVFKQpgYGAKClNpIHRlIGVuY29udHLDoXMgdW5hIHkgb3RyYSB2ZXogY29waWFuZG8gbGEgbWlzbWEgbGluZWEgZGUgY8OzZGlnbyBwYXJhIHJlYWxpemFyIHVuYSBvcGVyYWNpw7NuIGVudG9uY2VzIGVzIGhvcmEgZGUgZXNjcmliaXIgdW5hIGZ1bmNpw7NuIHF1ZSBoYWdhIGVzYSB0YXJlYSBwb3Igdm9zLiBIYXN0YSBhaG9yYSBlc3R1dmltb3MgdXRpbGl6YW5kbyBmdW5jaW9uZXMgcXVlIHZpZW5lbiBjb24gUiAobG8gcXVlIGxsYW1hbW9zICpSIGJhc2UqKSB5IGZ1bmNpb25lcyBkZSBsaWJyZXLDrWFzIHF1ZSBlc3TDoW4gZGlzcG9uaWJsZXMgcGFyYSBleHRlbmRlciBsYXMgZnVuY2lvbmFsaWRhZGVzIGRlIFIuIEFob3JhIHZhbW9zIGEgdmVyIGNvbW8gZGVmaW5pciBmdW5jaW9uZXMgcHJvcGlhcy4KCkVzdGEgZnVuY2nDs24gc2Vyw6EgdW4gY29uanVudG8gZGUgY29tYW5kb3MgbyBsw61uZWFzIGRlIGPDs2RpZ28gcXVlIHBvZHLDoSBzZXIgZGVmaW5pZGEgcGFyYSB1c2FybGEgZW4gZWwgZnV0dXJvLCBjb24gdW4gbm9tYnJlIChjb24gc3VlcnRlIHVubyBxdWUgcmVwcmVzZW50ZSBsYSBhY2Npw7NuIHUgb3BlcmFjacOzbiBwYXJhIGxhIGN1YWwgbGEgZXN0YW1vcyBjcmVhbmRvKSwgZWxlbWVudG9zIGRlIGVudHJhZGEgeSBlbCByZXN1bHRhZG8gZmluYWwuIAoKVmFtb3MgYSBkZWZpbmlyIGxhIHByaW1lcmEgZnVuY2nDs24gcGFyYSBjb252ZXJ0aXIgdmllbnRvIGVuICpudWRvcyogYSB2aWVudG8gZW4gKm1ldHJvcyBwb3Igc2VndW5kbyogcXVlIHZhbW9zIGEgbGxhbWFyIGBudWRvc19hX21zKClgLiAKCmBgYHtyfQpudWRvc19hX21zIDwtIGZ1bmN0aW9uKHZpZW50bykgewogIG1zIDwtIHZpZW50byAqIDAuNTE0NAogIHJldHVybihtcykKfQpgYGAKCmBmdW5jdGlvbmAgZGVmaW5lIG51ZXN0cmEgZnVuY2nDs24gYG51ZG9zX2FfbXMoKWAgeSBhbCBjb3JyZXIgZXNhcyBsaW5lYXMgZGUgY8OzZGlnbyBzZSBnZW5lcmFyw6EgdW4gbnVldm8gZWxlbWVudG8gZW4gbnVlc3RybyBhbWJpZW50ZSwgbGEgZnVuY2nDs24gZXN0w6EgbGlzdGEgcGFyYSBzZXIgdXNhZGEuIFBlcm8gYW50ZXMgZGUgcHJvYmFybGEgcmV2aXNlbW9zIGxhICpyZWNldGEqIHBhcmEgZGVmaW5pciB1bmEgZnVuY2nDs24uIAoKWWEgdmltb3MgcXVlIG5lY2VzaXRhbW9zIGRlY2xhcmFyIHF1ZSBlc3RvIGVzIHVuYSBmdW5jacOzbiBjb24gYGZ1bmN0aW9uKClgLCBsdWVnbyBsZSBzaWd1ZSBlbCAqY3VlcnBvKiBkZSBsYSBmdW5jacOzbiwgbGFzIGzDrW5lYXMgZGUgY8OzZGlnbyBxdWUgc2UgZWplY3V0YXLDoW4sIHkgcXVlIHZhbiBlbnRyZSBsbGF2ZXMgYHt9YC4gVXN1YWxtZW50ZSAqaW5kZW50YW1vcyogZWwgY8OzZGlnbyBwYXJhIHF1ZSBzZSBsZWEgbWVqb3IsIGFsIGlndWFsIHF1ZSBwYXNhIGN1YW5kbyBlc2NyaWJpbW9zIGVsIGPDs2RpZ28gcGFyYSBnZW5lcmFyIHVuIGdyw6FmaWNvLiBQZXJvIGVzdG9zIGVzcGFjaW9zIGFudGVzIGRlbCBjb21pZW56byBkZSBjYWRhIHJlbmdsw7NuIG5vIHNvbiBuZWNlc2FyaW9zIHBhcmEgcXVlIGVsIGPDs2RpZ28gZnVuY2lvbmUuIAoKTGEgZnVuY2nDs24gcHVlZGUgcmVjaWJpciB1bm8gbyBtw6FzIGVsZW1lbnRvcyBkZSBlbnRyYWRhOiBsb3MgYXJndW1lbnRvcy4gRW4gZXN0ZSBjYXNvIHNvbG8gcmVjaWJlIHVuIGFyZ3VtZW50byBhbCBxdWUgbGxhbWFtb3MgYHZpZW50b2AuIEFsIGZpbmFsIHVzYW1vcyBsYSBmdW5jacOzbiBgcmV0dXJuKClgLCBxdWUgKmRldm9sdmVyw6EqIHVuIHZhbG9yIG8gZWxlbWVudG8gcXVlIHJlc3VsdGUgZGUgbG9zIGPDoWxjdWxvcyBwcmV2aW9zLiAKCkFob3JhIHByb2JlbW9zIGNhbGN1bGFyIGN1YW50b3MgbWV0cm9zIHBvciBzZWd1bmRvcyBzb24gMTUgbnVkb3MgdXNhbmRvIGxhIGZ1bmNpw7NuLgoKYGBge3J9Cm51ZG9zX2FfbXModmllbnRvID0gMTUpCmBgYAoKRWwgZWxlbWVudG8gZGUgZW50cmFkYSBlbiBlc3RlIGNhc28gZXMgdW4gbsO6bWVybyAoMTUpIHkgbm9zIGRldm9sdmnDsyB0YW1iacOpbiB1biBuw7ptZXJvLiBQZXJvIHBvZHLDrWFtb3MgdGVuZXIgdW4gdmVjdG9yIGRlIG7Dum1lcm9zIHF1ZSBjb3JyZXNwb25kZW4gYSBsYSB2ZWxvY2lkYWQgZGVsIHZpZW50byBlbiBudWRvcyB5IHF1ZSBuZWNlc2l0YW1vcyBjb252ZXJ0aXIgYSBtZXRyb3MgcG9yIHNlZ3VuZG9zLiDCv0N1w6FsIGNyZWVzIHF1ZSBzZXLDoSBlbCByZXN1bHRhZG8/CgpgYGB7cn0KdmllbnRvX2RlX2F5ZXIgPC0gYygwLCA1LCAxNSwgMiwgNSwgMTApCmBgYAoKQWhvcmEgZWwgZWxlbWVudG8gZGUgZW50cmFkYSBlcyB1biB2ZWN0b3IgZGUgbsO6bWVyb3MgeSBwb3IgbG8gdGFudG8sIGxhIGZ1bmNpw7NuIG5vcyBkZXZvbHZlcsOhIG90cm8gdmVjdG9yIGFwbGljYW5kbyBsYSBvcGVyYWNpw7NuIGB2aWVudG8gKiAwLjUxNDRgIGEgY2FkYSBlbGVtZW50byBkZWwgdmVjdG9yLgoKYGBge3J9Cm51ZG9zX2FfbXModmllbnRvID0gdmllbnRvX2RlX2F5ZXIpCmBgYAoKOjo6IHsuYWxlcnQgLmFsZXJ0LWluZm99CioqRGVzYWbDrW8qKgoKRXNjcmliw60gdW5hIG51ZXZhIGZ1bmNpw7NuIHF1ZSBzZSBsbGFtZSBgbXNfYV9udWRvcygpYCBxdWUgdG9tZSBlbCB2aWVudG8gZW4gbWV0cm9zIHBvciBzZWd1bmRvcyB5IGxvIGNvbnZpZXJ0YSBhIG51ZG9zLiBQaXN0YTogYWhvcmEgdGVuw6lzIHF1ZSBtdWx0aXBsaWNhciBwb3IgMS45NDQuCjo6OgoKIyMgRnVuY2lvbmVzIGNvbiBjb25kaWNpb25lcwoKQWhvcmEgcXVlIHlhIHRlbmVtb3MgdW4gcGFyIGRlIGZ1bmNpb25lcyBlc2NyaXRhcywgZXMgaW1wb3J0YW50ZSBhc2VndXJhcm5vcyBkZSBxdWUgZnVuY2lvbmVuIGRlIGxhIG1hbmVyYSBlbiBsYSBxdWUgcXVlcmVtb3MuIEVuIGVzdGUgY2FzbyBlc3BlcmFtb3MgcXVlIGRhZG8gdW4gdmFsb3IgKm51bcOpcmljbyogbm9zIGRldnVlbHZhIG90cm8gdmFsb3IgKm51bcOpcmljbyouIMK/UXXDqSBwYXNhcsOtYSBzaSByZWNpYmUgdW4gY2FyYWN0ZXI/IAoKYGBge3IgZXJyb3I9VFJVRX0KbnVkb3NfYV9tcyh2aWVudG8gPSAiZnVlcnRlIikKYGBgCgpQb3Igc3VwdWVzdG8sIG5vcyBkYSBlcnJvciwgYXVucXVlIHVubyBubyBtdXkgY2xhcm8uIFRhbWJpw6luIHBvZHLDrWFtb3MgcXVlcmVyIHF1ZSBsYSBmdW5jacOzbiBwcmltZXJvIHJldmlzZSBzaSBlbCBvIGxvcyBlbGVtZW50b3MgZGUgZW50cmFkYSBjdW1wbGVuIGNvbiBkZXRlcm1pbmFkYXMgY29uZGljaW9uZXMsIHBvciBlamVtcGxvIHF1ZSBzZWEgdW4gdmFsb3IgbnVtw6lyaWNvLgoKYGBge3J9Cm51ZG9zX2FfbXMgPC0gZnVuY3Rpb24odmllbnRvKSB7CiAgc3RvcGlmbm90KGlzLm51bWVyaWModmllbnRvKSkgICMgwr9FcyBkZSB0aXBvIG51bcOpcmljbz8KICAKICBtcyA8LSB2aWVudG8gKiAwLjUxNDQKICByZXR1cm4obXMpCn0KYGBgCgpBaG9yYSBzaSBlbCB2YWxvciBkZSBlbnRyYWRhIGVzICIxNSIsIGxhIGZ1bmNpw7NuIGZhbGxhLgoKYGBge3IgZXJyb3I9VFJVRX0KbnVkb3NfYV9tcyh2aWVudG8gPSAiMTUiKQpgYGAKCkVsIGVycm9yIGVzIHVuIHBvcXVpdG8gbcOhcyBpbmZvcm1hdGl2bywgcGVybyBwb2Ryw61hcyBzZXIgbWVqb3IhIExvIGJ1ZW5vIGVzIHF1ZSBwb2Ryw61hbW9zIGluY2x1aXIgbcOhcyBkZSB1bmEgY29uZGljacOzbiwgcG9yIGVqZW1wbG8gcXVlIGVsIHZhbG9yIGRlIGVudHJhZGEgYHZpZW50b2Agc2VhIG1lbm9yIGEgdW4gdmFsb3IgbcOheGltby4KCjo6OiB7LmFsZXJ0IC5hbGVydC1pbmZvfQoqKkRlc2Fmw61vKioKCkEgdHUgZnVuY2nDs24gYG1zX2FfbnVkb3MoKWAgYWdyZWdhbGUgYWxndW5hIGNvbmRpY2nDs24gcXVlIGRlYmUgY3VtcGxpciBlbCBhcmd1bWVudG8gZGUgZW50cmFkYSB5IGVqZWN1dGFsYSBudWV2YW1lbnRlLgo6OjoKCgo6Ojogey5hbGVydCAuYWxlcnQtc3VjY2Vzc30KCkFsZ28gaW1wb3J0YW50ZSBhIHRlbmVyIGVuIGN1ZW50YTogY3VhbHF1aWVyIHZhcmlhYmxlIG8gZWxlbWVudG8gcXVlIHNlIGNyZWEgbyBtb2RpZmljYSBkZW50cm8gZGVsIGN1ZW50byBkZSBsYSBmdW5jacOzbiAqKnNvbG8gZXhpc3RlIG1pZW50cmFzIGxhIGZ1bmNpw7NuIHNlIGVzdMOhIGVqZWN1dGFuZG8qKi4gUG9yIGVqZW1wbG8gbGEgdmFyaWFibGUgYG1zYCBxdWUgY3JlYW1vcyBhZGVudHJvIGRlIGxhIGZ1bmNpw7NuIGBudWRvc19hX21zKClgIHNvbG8gZXhpc3RlIGFkZW50cm8gZGUgZXNhIGZ1bmNpw7NuLiBQb2TDqXMgcmV2aXNhciBlbCBhbWJpZW50ZSBkZSBSIHkgY29tcHJvYmFyIHF1ZSBubyBoYXkgbmluZ3VuYSB2YXJpYWJsZSBsbGFtYWRhIGBtc2AgYcO6biBsdWVnbyBkZSBlamVjdXRhciBsYSBmdW5jacOzbiBgbnVkb3NfYV9tcygpYCB2YXJpYXMgdmVjZXMuCjo6OgoKIyMgQXBsaWNhY2lvbmVzCgpIYXN0YSBhaG9yYSBkZWZpbmltb3MgZnVuY2lvbmVzIHF1ZSB0YWwgdmV6IG5vIHRlbmdhbiBtdWNoYSBhcGxpY2FjacOzbiwgYWwgZWplY3V0YXIgZXN0YXMgZnVuY2lvbmVzIHRhbXBvY28gZ3VhcmRhbW9zIGVsIHJlc3VsdGFkbyBlbiB1bmEgbnVldmEgdmFyaWFibGUgcG9ycXVlIGVzdMOhYmFtb3MgcHJvYmFuZG8gY29tbyBmdW5jaW9uYWJhbi4gQWhvcmEgdmFtb3MgYSB2ZXIgY29tbyBpbmNvcnBvcmFyIHRvZG8gbG8gYW50ZXJpb3IgYSBudWVzdHJvIGZsdWpvIGRlIGFuw6FsaXNpcy4KClZhbW9zIGEgc2VndWlyIHRyYWJhamFuZG8gY29uIGBkaWFtYW50ZXNgIHkgZWwgb2JqZXRpdm8gZmluYWwgc2Vyw6EgZ2VuZXJhciB1bmEgbnVldmEgY29sdW1uYSBxdWUgY29udGVuZ2EgZWwgdm9sdW1lbiBkZSBjYWRhIHVubyBkZSBsb3MgZGlhbWFudGVzIGVuIGVzYSBiYXNlIGRlIGRhdG9zLiBDw7NtbyB0ZSBpbWFnaW5hcsOhcyB2YW1vcyBhIHVzYXIgbGEgZnVuY2nDs24gYG11dGF0ZSgpYCBwYXJhIGNyZWFyIGVzdGEgbnVldmEgY29sdW1uYS4gCgpgYGB7cn0KbGlicmFyeShkYXRvcykKbGlicmFyeShkcGx5cikKCmRpYW1hbnRlcyAlPiUgCiAgbXV0YXRlKHZvbHVtZW4gPSB4ICogeSAqIHopICMgRWwgdm9sdW1lbiBzZSBjYWxjdWxhIGNvbW8gYW5jaG8geCBhbHRvIHggbGFyZ28gYXN1bWllbmRvIHF1ZSBlcyB1biBjdWJvCmBgYAoKRWwgY8OhbGN1bG8gZGVsIHZvbHVtZW4gZXMgYmFzdGFudGUgZGlyZWN0byB5IGVuIHByaW5jaXBpbyBubyBwYXJlY2Ugc2VyIG5lY2VzYXJpbyBlc2NyaWJpciB1bmEgbnVldmEgZnVuY2nDs24gcGFyYSBoYWNlciBlc3RvLiBTaW4gZW1iYXJnbywgc2kgdmFtb3MgYSBoYWNlciBlc3RvIG11Y2hhcyB2ZWNlcywgdGFsIHZleiBzZWEgY29udmVuaWVudGUgZGVmaW5pciB1bmEgZnVuY2nDs24gYHZvbHVtZW4oKWAgcXVlIGhhZ2EgZWwgY8OhbGN1bG8uIEFsIG1pc21vIHRpZW1wbyBlbCBjw7NkaWdvIGVzIG11Y2hvIG3DoXMgY2xhcm8hCgpEZWZpbmFtb3MgZXN0YSBmdW5jacOzbiBxdWUgYWhvcmEgcmVxdWllcmUgMyBhcmd1bWVudG9zOgoKYGBge3J9CnZvbHVtZW4gPC0gZnVuY3Rpb24oYW5jaG8sIGFsdG8sIGxhcmdvKSB7CiAgc3RvcGlmbm90KGlzLm51bWVyaWMoYW5jaG8pLCBpcy5udW1lcmljKGFsdG8pLCBpcy5udW1lcmljKGxhcmdvKSkKICAKICB0b3RhbCA8LSBhbmNobyAqIGFsdG8gKiBsYXJnbwogIHJldHVybih0b3RhbCkKfQpgYGAKCkFob3JhIGNvbiBudWVzdHJhIGZ1bmNpw7NuIGRlZmluaWRhIHBvZGVtb3MgY2FsY3VsYXIgZWwgdm9sdW1lbjoKCmBgYHtyfQpkaWFtYW50ZXMgJT4lIAogIG11dGF0ZSh2b2x1bWVuID0gdm9sdW1lbih4LCB5LCB6KSkKYGBgCgpZIHRhbCB2ZXogbmVjZXNpdGVtb3MgZWwgdm9sdW1lbiBwcm9tZWRpbyBwYXJhIGFsZ8O6biB0aXBvIGRlIGNvcnRlLgoKYGBge3J9CmRpYW1hbnRlcyAlPiUgCiAgbXV0YXRlKHZvbHVtZW4gPSB2b2x1bWVuKHgsIHksIHopKSAlPiUgCiAgZmlsdGVyKGNvcnRlID09ICJJZGVhbCIpICU+JSAKICBzdW1tYXJpc2Uodm9sdW1lbl9wcm9tZWRpbyA9IG1lYW4odm9sdW1lbikpCmBgYAoKCkNvbW8gc2llbXByZSBlbiBSLCBoYXkgbXVjaGFzIG1hbmVyYXMgZGUgcmVzb2x2ZXIgY2FkYSBwcm9ibGVtYS4gT3RyYSBwb3NpYmxlIG9wY2nDs24gc2Vyw61hIGRlZmluaXIgdW5hIGZ1bmNpw7NuIHF1ZSBlbiB1biBzb2xvIHBhc28gbm9zIGRldnVlbHZhIGVsIHZvbHVtZW4gcHJvbWVkaW8gZGUgbG9zIGRpYW1hbnRlcyBkZSBhbGfDum4gY29ydGUgZW4gcGFydGljdWxhci4KCmBgYHtyfQp2b2x1bWVuX3Byb21lZGlvIDwtIGZ1bmN0aW9uKGRhdG9zLCBlc3RlX2NvcnRlKSB7CiAgZGF0b3MgJT4lIAogICAgZmlsdGVyKGNvcnRlID09IGVzdGVfY29ydGUpICU+JSAKICAgIHN1bW1hcmlzZSh2b2x1bWVuX3Byb21lZGlvID0gbWVhbih4ICogeSAqIHopKSAKfQpgYGAKCmBgYHtyfQp2b2x1bWVuX3Byb21lZGlvKGRpYW1hbnRlcywgIklkZWFsIikKYGBgCgpBaG9yYSBsYSBudWV2YSBmdW5jacOzbiBgdm9sdW1lbl9wcm9tZWRpbygpYCByZXF1aWVyZSAyIGFyZ3VtZW50b3MsIGVsIGRhdGEuZnJhbWUgY29uIGxvcyBkYXRvcyB5IHVuYSBjYWRlbmEgZGUgY2FyYWN0ZXJlcyBpbmRpY2FuZG8gZWwgdGlwbyBkZSBjb3J0ZS4gRXMgcG9zaWJsZSBxdWUgaGF5YXMgbm90YWRvIHF1ZSBubyBpbmNsdWltb3MgbGEgZnVuY2nDs24gYHJldHVybigpYCwgZXN0byBlcyBwb3JxdWUgUiAqZGV2dWVsdmUqIGVsIMO6bHRpbW8gZWxlbWVudG8gcXVlIHNlIGdlbmVyw7MsIGVuIGVzdGUgY2FzbyBlbCByZXN1bHRhZG8gZmluYWwgZGUgZXNhIGNhZGVuYSBkZSBjb21hbmRvcyB5IHF1ZSBjb2luY2lkZSBjb24gbGEgc2FsaWRhIHF1ZSBlc3BlcmFtb3MuIAoKOjo6IHsuYWxlcnQgLmFsZXJ0LWluZm99CioqRGVzYWbDrW8qKgoKQWwgaWd1YWwgcXVlIHZpbW9zIGVuIGxhcyBmdW5jaW9uZXMgZGUgUiBiYXNlIG8gcG9yIGVqZW1wbG8gZGUgdGlkeXZlcnNlLCBsb3MgYXJndW1lbnRvcyBkZSBsYXMgZnVuY2lvbmVzIGRlZmluaWRhcyBwb3Igbm9zb3Ryb3MsIHRhbWJpw6luIHB1ZWRlbiB0ZW5lciB2YWxvcmVzIHBvciBkZWZlY3RvLiBFc3RvIHF1aWVyZSBkZWNpciBxdWUgcG9kcsOtYW1vcyBxdWVyZXIgcXVlIGxhIGZ1bmNpw7NuIGB2b2x1bWVuX3Byb21lZGlvKClgIGNhbGN1bGUgZWwgdm9sdW1lbiBwcm9tZWRpbyBwYXJhIGVsIGNvcnRlICJSZWd1bGFyIiAqYSBtZW5vcyBxdWUqIGxlIGluZGlxdWVtb3Mgb3RyYSBjb3NhLiAKCkVsIHZhbG9yIHBvciBkZWZlY3RvIGRlIHVuIGFyZ3VtZW50byBkZWJlIHNlciBkZWZpbmlkbyBhbCBtb21lbnRvIGRlIGNyZWFyIGxhIGZ1bmNpw7NuLiBQcm9iw6EgY2FtYmlhciBgY29ydGVgIHBvciBgY29ydGUgPSAiUmVndWxhciJgIGNvbW8gYXJndW1lbnRvIGRlIGxhIGZ1bmNpw7NuIGB2b2x1bWVuX3Byb21lZGlvKClgIHkgZWplY3V0YWxhIG51ZXZhbWVudGUgaW5kaWNhbmRvIHkgb21pdGllbmRvIGVsIHRpcG8gZGUgY29ydGUgZW4gZGlzdGludG9zIGNhc29zLgo6OjoKCiMjIERvY3VtZW50YWNpw7NuIHkgb3JnYW5pemFjacOzbgoKTm9tYnJhciBmdW5jaW9uZXMgKHkgY3VhbHF1aWVyIG90cm8gZWxlbWVudG8pIGVzIHRvZG8gdW4gZGVzYWbDrW8sIG5lY2VzaXRhbW9zIHF1ZSBzZSBpbmZvcm1hdGl2byBwZXJvIGFsIG1pc21vIHRpZW1wbyBjb3J0byB5IHNpbXBsZSBkZSBlc2NyaWJpci4gUG9yIGFob3JhIGVzdHV2aW1vcyBoYWNpZW5kbyB1biB0cmFiYWpvIGFwcm94aW1hZGFtZW50ZSBhY2VwdGFibGUgcGVybyBzaSB2b2x2ZW1vcyBhIHJldmlzYXIgZXN0YXMgZnVuY2lvbmVzIGRlbnRybyBkZSB1biBtZXMgbyBkZW50cm8gZGUgdW4gYcOxbyB0YWwgdmV6IG5vIHJlY29yZGVtb3MgZXhhY3RhbWVudGUgY29tbyBmdW5jaW9uYSB1bmEgZnVuY2nDs24gcXVlIGNyZWFtb3MuIFRhbCB2ZXogaW1hZ2luZW1vcyBxdWUgdmEgYSBjYWxjdWxhciBlbCB2b2x1bWVuLCDCv3Blcm8gbG9zIGVsZW1lbnRvcyBkZSBlbnRyYWRhIHNlcsOhbiB2ZWN0b3JlcyBvIHVuIGRhdGEuZnJhbWU/IMK/UXVlIHRpcG8gZGUgZWxlbWVudG8gZGV2dWVsdmU/CgpQb3IgZXNhIHJhesOzbiBudW5jYSBlc3TDoSBkZSBtw6FzIGRvY3VtZW50YXIgbGEgZnVuY2nDs24sIGVzIGRlY2lyLCBkZXNjcmliaXIgcGFyYSBxdWUgZnVuY2lvbmEsIHF1ZSBlbGVtZW50b3MgcmVxdWllcmUsIHF1ZSBlcyBsbyBxdWUgZGV2dWVsdmUgeSBwb3IgcXVlIG5vLCB1biBlamVtcGxvLiBObyBuZWNlc2l0YW1vcyBnZW5lcmFyIHVuYSBkb2N1bWVudGFjacOzbiB0YW4gZGV0YWxsYWRhIGNvbW8gbGEgcXVlIGVuY29udHJhbW9zIGVuIGxhIGF5dWRhIGRlIGNhZGEgZnVuY2nDs24gZGUgZHBseXIsIHBlcm8gZXMgYnVlbm8gdGVuZXIgY2llcnRvIG9yZGVuLiAKClkgYSBtZWRpZGEgcXVlIGdhbmVtb3MgcHLDoWN0aWNhIHkgZXhwZXJpZW5jaWEgcHJvZ3JhbWFuZG8sIGVsIGFiYW5pY28gZGUgZnVuY2lvbmVzIHByb3BpYXMgcXVlIHNpbXBsaWZpY2FuIGVsIHRyYWJham8gdmFuIGEgaXIgY3JlY2llbmRvLiBZIHNpIGJpZW4gcG9kZW1vcyBjb3BpYXJsYXMgeSBwZWdhcmxhcyB1bmEgeSBvdHJhIHZleiBlbiBjYWRhIGFyY2hpdm8gcXVlIHVzZW1vcyB5IGVuIGNhZGEgYW7DoWxpc2lzIHF1ZSBnZW5lcmVtb3MsIGVzdG8gcHVlZGUgc2VyIHRyYWJham9zbyB5IGxhcyBtw7psdGlwbGVzIGNvcGlhcyBkZSBsYSBtaXNtYSBmdW5jacOzbiBwb25lbiBlbiByaWVzZ28gcXVlIG51ZXN0cm8gdHJhYmFqbyBzZWEgcmVwcm9kdWNpYmxlLiAKCkV4aXN0ZSB1bmEgYWx0ZXJuYXRpdmEgbXVjaG8gbcOhcyBvcmRlbmFkYSwgZXMgcG9zaWJsZSBndWFyZGFyIHRvZGFzIGxhcyBmdW5jaW9uZXMgZW4gdW4gw7puaWNvIGFyY2hpdm8gZGUgdGV4dG8gbyAqc2NyaXB0KiBkZSBSIHkgY2FyZ2FyIGVzYXMgZnVuY2lvbmVzIGFsIGNvbWllbnpvIGRlbCBhbsOhbGlzaXMgZGUgbGEgbWlzbWEgbWFuZXJhIHF1ZSBjYXJnYW1vcyBsb3MgcGFxdWV0ZXMuIFBlcm8gYSBkaWZlcmVuY2lhIGRlIGxvcyBwYXF1ZXRlcyBxdWUgc2UgY2FyZ2FuIGNvbiBgbGlicmFyeSgpYCwgdW4gKnNjcmlwdCogc2UgY2FyZ2EgY29uIGxhIGZ1bmNpw7NuIGBzb3VyY2UoKWAuCgo6Ojogey5hbGVydCAuYWxlcnQtaW5mb30KKipEZXNhZsOtbyoqCgoxLiBHZW5lcsOhIHVuIG51ZXZvIGFyY2hpdm8gcXVlIHNlIGxsYW1lIGBmdW5jaW9uZXNfdXRpbGVzLlJgLiBQb2TDqXMgaGFjZXJsbyBkZXNkZSBlbCBtZW7DuiBGaWxlIOKGkiBOZXcgRmlsZSDihpIgUiBTY3JpcHQgbyBjb24gZWwgYXRham8gQ3RybCArIFNoaWZ0ICsgTgoyLiBDb3Bpw6EgbGFzIGZ1bmNpb25lcyBgdm9sdW1lbigpYCB5IGB2b2x1bWVuX3Byb21lZGlvKClgIHkgYWdyZWfDoSB1bmEgYnJldmUgZGVzY3JpcGNpw7NuIGp1bnRvIGEgY2FkYSB1bmEgdXNhbmRvIGNvbWVudGFyaW9zIChsYSBsw61uZWEgZGViZSBjb21lbnphciBjb24gYCNgKS4KMy4gR3VhcmTDoSBlbCBhcmNoaXZvIGRlbnRybyBkZSBsYSBjYXJwZXRhIGRlbCBwcm95ZWN0by4gCjQuIEVuIGVsIGFyY2hpdm8gLlJtZCBkb25kZSB2ZW7DrXMgdHJhYmFqYW5kbywgYWdyZWfDoSB1bmEgbMOtbmVhIGVuIGVsIHByaW1lciBibG9xdWUgZGUgY8OzZGlnbyBwYXJhIGNhcmdhciBlc3RhcyBmdW5jaW9uZXMgYHNvdXJjZSgiZnVuY2lvbmVzX3V0aWxlcy5SIilgLiAKCjo6OgoKCgo8ZGl2IGNsYXNzPSJidG4tZ3JvdXAiIHJvbGU9Imdyb3VwIiBhcmlhLWxhYmVsPSJOYXZlZ2FjacOzbiI+CiAgPGEgaHJlZj0gIjA4LWRwbHlyLXRpZHlyLUlJIiBjbGFzcyA9ICJidG4gYnRuLXByaW1hcnkiPkFudGVyaW9yPC9hPgogIDxhIGhyZWY9ICIxMC1yZXBvcnRlcy1JSS5odG1sIiBjbGFzcyA9ICJidG4gYnRuLXByaW1hcnkiPlNpZ3VpZW50ZTwvYT4KPC9kaXY+</div>
+
+
 
 </div>
 
@@ -701,32 +636,6 @@ $(document).ready(function () {
 });
 </script>
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

@@ -4,7 +4,7 @@ output:
   html_document:
     code_download: true
     toc: true
-    toc_float: true
+    toc_float: false
     highlight: tango
 ---
 
@@ -12,7 +12,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Si te encontrás una y otra vez copiando la misma linea de coódigo para realizar una operación entonces es hora de escribir uan función que haga esa tarea por vos. Hasta ahora estuvimos utilizando funciones que vienen con R (lo que llamamos *R base*) y funciones de librerías que están disponibles para extender las funcionalidades de R. Ahora vamos a ver como definir funciones propias.
+Si te encontrás una y otra vez copiando la misma linea de código para realizar una operación entonces es hora de escribir una función que haga esa tarea por vos. Hasta ahora estuvimos utilizando funciones que vienen con R (lo que llamamos *R base*) y funciones de librerías que están disponibles para extender las funcionalidades de R. Ahora vamos a ver como definir funciones propias.
 
 Esta función será un conjunto de comandos o líneas de código que podrá ser definida para usarla en el futuro, con un nombre (con suerte uno que represente la acción u operación para la cual la estamos creando), elementos de entrada y el resultado final. 
 
@@ -25,7 +25,7 @@ nudos_a_ms <- function(viento) {
 }
 ```
 
-`function` define nuestra función `nudos_a_ms()` y al correr esas lineas de código se generará un nuevo elemento en nuestro ambiente, la función está lista para ser usada. Pero antes de probarla revisemos la *reseta* para definir una función. 
+`function` define nuestra función `nudos_a_ms()` y al correr esas lineas de código se generará un nuevo elemento en nuestro ambiente, la función está lista para ser usada. Pero antes de probarla revisemos la *receta* para definir una función. 
 
 Ya vimos que necesitamos declarar que esto es una función con `function()`, luego le sigue el *cuerpo* de la función, las líneas de código que se ejecutarán, y que van entre llaves `{}`. Usualmente *indentamos* el código para que se lea mejor, al igual que pasa cuando escribimos el código para generar un gráfico. Pero estos espacios antes del comienzo de cada renglón no son necesarios para que el código funcione. 
 
@@ -52,12 +52,12 @@ nudos_a_ms(viento = viento_de_ayer)
 ::: {.alert .alert-info}
 **Desafío**
 
-Escrbí una nueva función que se llame `ms_a_nudos()` que tome el viento en metros por segundos y lo convierta a nudos. Pista: ahora tenés que multiplicar por 1.944.
+Escribí una nueva función que se llame `ms_a_nudos()` que tome el viento en metros por segundos y lo convierta a nudos. Pista: ahora tenés que multiplicar por 1.944.
 :::
 
 ## Funciones con condiciones
 
-Ahora que ya tenemos un par de funciones escritas, es importante asegurarnos de que funcionen de la manera en la que queremos. En este caso esperamos que dado un valor *numérico* nos devuelva otro valor *númérico*. ¿Qué pasaría si recibe un caracter? 
+Ahora que ya tenemos un par de funciones escritas, es importante asegurarnos de que funcionen de la manera en la que queremos. En este caso esperamos que dado un valor *numérico* nos devuelva otro valor *numérico*. ¿Qué pasaría si recibe un caracter? 
 
 ```{r error=TRUE}
 nudos_a_ms(viento = "fuerte")
@@ -85,7 +85,7 @@ El error es un poquito más informativo, pero podrías ser mejor! Lo bueno es qu
 ::: {.alert .alert-info}
 **Desafío**
 
-A tu función `ms_a_nudos()` agregale alguna condición que debe cumplir el argumento de entrada y aejecutala nuevamente.
+A tu función `ms_a_nudos()` agregale alguna condición que debe cumplir el argumento de entrada y ejecutala nuevamente.
 :::
 
 
@@ -96,7 +96,7 @@ Algo importante a tener en cuenta: cualquier variable o elemento que se crea o m
 
 ## Aplicaciones
 
-Hasta ahora definimos funciones que tal vez no tengan mucha aplicación, al ejecutar estas funciones tampoco guardamos el resultado en una nueva variable porque estabamos probando como funcionaban. Ahora vamos a ver como incorporar todo lo anterior a nuestro flujo de análisis.
+Hasta ahora definimos funciones que tal vez no tengan mucha aplicación, al ejecutar estas funciones tampoco guardamos el resultado en una nueva variable porque estábamos probando como funcionaban. Ahora vamos a ver como incorporar todo lo anterior a nuestro flujo de análisis.
 
 Vamos a seguir trabajando con `diamantes` y el objetivo final será generar una nueva columna que contenga el volumen de cada uno de los diamantes en esa base de datos. Cómo te imaginarás vamos a usar la función `mutate()` para crear esta nueva columna. 
 
@@ -138,7 +138,7 @@ diamantes %>%
 ```
 
 
-Como siempre en R, hay muchas maneras de resolver cada problema. Otra posible opción sería definir una función que en un solo paso nos devuelva el volumen promedio de los diamntes de algún corte en particular.
+Como siempre en R, hay muchas maneras de resolver cada problema. Otra posible opción sería definir una función que en un solo paso nos devuelva el volumen promedio de los diamantes de algún corte en particular.
 
 ```{r}
 volumen_promedio <- function(datos, este_corte) {
@@ -152,7 +152,7 @@ volumen_promedio <- function(datos, este_corte) {
 volumen_promedio(diamantes, "Ideal")
 ```
 
-Ahora la nueva función `volumen_promedio()` requiere 2 argumentos, el data.frame con los datos y una cadena de caracteres indicando el tipo de corte. Es posible que hayas notado que no incluimos la función `return()`, esto es porque R *devuelve* el último elemento que se generó, en este caso el resultado final de esa cadadena de comandos y que coincide con la salida que esperamos. 
+Ahora la nueva función `volumen_promedio()` requiere 2 argumentos, el data.frame con los datos y una cadena de caracteres indicando el tipo de corte. Es posible que hayas notado que no incluimos la función `return()`, esto es porque R *devuelve* el último elemento que se generó, en este caso el resultado final de esa cadena de comandos y que coincide con la salida que esperamos. 
 
 ::: {.alert .alert-info}
 **Desafío**
@@ -178,9 +178,13 @@ Existe una alternativa mucho más ordenada, es posible guardar todas las funcion
 1. Generá un nuevo archivo que se llame `funciones_utiles.R`. Podés hacerlo desde el menú File → New File → R Script o con el atajo Ctrl + Shift + N
 2. Copiá las funciones `volumen()` y `volumen_promedio()` y agregá una breve descripción junto a cada una usando comentarios (la línea debe comenzar con `#`).
 3. Guardá el archivo dentro de la carpeta del proyecto. 
-4. En el archivo .Rmd donde venís trabajando, agregá una línea en el primer bloque de código para cargar estas funcionesa `source("funciones_utiles.R")`. 
+4. En el archivo .Rmd donde venís trabajando, agregá una línea en el primer bloque de código para cargar estas funciones `source("funciones_utiles.R")`. 
 
 :::
 
 
 
+<div class="btn-group" role="group" aria-label="Navegación">
+  <a href= "08-dplyr-tidyr-II" class = "btn btn-primary">Anterior</a>
+  <a href= "10-reportes-II.html" class = "btn btn-primary">Siguiente</a>
+</div>

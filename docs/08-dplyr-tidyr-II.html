@@ -19,19 +19,17 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
-<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <script src="site_libs/navigation-1.1/sourceembed.js"></script>
+<script src="site_libs/accessible-code-block-0.0.1/empty-anchor.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css" data-origin="pandoc">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+code.sourceCode > span { display: inline-block; line-height: 1.25; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -41,14 +39,16 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
     position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -57,9 +57,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  { background-color: #f8f8f8; }
+  {  background-color: #f8f8f8; }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ef2929; } /* Alert */
 code span.an { color: #8f5902; font-weight: bold; font-style: italic; } /* Annotation */
@@ -332,69 +332,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -402,16 +339,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row-fluid">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -520,6 +447,13 @@ div.tocify {
 
 </div>
 
+<div id="TOC">
+<ul>
+<li><a href="#de-ancho-a-largo-con-pivot_longer">De ancho a largo con <code>pivot_longer()</code></a></li>
+<li><a href="#de-largo-a-ancho-con-pivot_wider">De largo a ancho con <code>pivot_wider()</code></a></li>
+<li><a href="#uniendo-tablas">Uniendo tablas</a></li>
+</ul>
+</div>
 
 <p>En <a href="04-lectura-datos.html#Formatos_de_tablas">la última sección de lectura de datos</a> viste el concepto de datos “anchos” y “largos”.</p>
 <p>Los datos en formato “largo” o “tidy”, son aquellos en los cuales:</p>
@@ -535,22 +469,22 @@ div.tocify {
 <p><img src="img/largo-ancho.png" /></p>
 <p>Una tabla en formato largo va a tener una cierta cantidad de columnas que cumplen el rol de <em>identificadores </em> y cuya combinación identifican una única observación y una única columna con el valor de la observación. En el ejemplo de arriba, <code>pais</code> y <code>anio</code> son las columnas identificadoras y <code>casos</code> es la columna que contiene el valor de las observaciones.</p>
 <p>En una tabla ancha, cada observación única se identifica a partir de la intersección de filas y columnas. En el ejemplo, los países están en las filas y los años en las columnas.</p>
-<p>En general, el formato ancho es más compacto y legible por humanos mientras que el largo es más fácil de manejar con la computadora. Si te fijás en las tablas de arriba, es más fácil comparar los valores entre paises y entre años en la tabla ancha. Pero el nombre de las columnas (“1999”, “2000”) en realidad ¡son datos! Además este formato se empieza a complicar en cuanto hay más de dos identificadores.</p>
+<p>En general, el formato ancho es más compacto y legible por humanos mientras que el largo es más fácil de manejar con la computadora. Si te fijás en las tablas de arriba, es más fácil comparar los valores entre países y entre años en la tabla ancha. Pero el nombre de las columnas (“1999”, “2000”) en realidad ¡son datos! Además este formato se empieza a complicar en cuanto hay más de dos identificadores.</p>
 <p>Un mismo set de datos puede ser representado de forma completamente “larga”, completamente “ancha” o –lo que es más común– en un formato intermedio pero no existe una forma “correcta” de organizar los datos; cada una tiene sus ventajas y desventajas. Por esto es que es muy normal que durante un análisis los datos vayan y vuelvan entre distintos formatos dependiendo de los métodos estadísticos que se le aplican. Entonces, aprender a transformar datos anchos en largos y viceversa es un habilidad muy útil.</p>
 <div class="alert alert-info">
 <p><strong>Desafío</strong></p>
 <p>En las tablas de ejemplo cada país tiene el un valor observado de “casos” para cada año. ¿Cómo agregarías una nueva variable con información sobre “precios”? Dibujá un esquema en papel y lápiz en formato ancho y uno en formato largo. ¿En qué formato es más “natural” esa extensión?</p>
 </div>
 <p>En esta sección vas a usar el paquete {tidyr} para manipular datos. Si no lo tenés instalado, instalalo con el comando:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">install.packages</span>(<span class="st">&quot;tidyr&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">install.packages</span>(<span class="st">&quot;tidyr&quot;</span>)</span></code></pre></div>
 <p>(como siempre, recordá que esto hay que hacerlo una única vez)</p>
 <p>Y luego cargá {tidyr} y {dplyr} (que usaste en <a href="05-dplyr-I.html">una sección anterior</a>) con:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="kw">library</span>(tidyr)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">library</span>(dplyr)</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">library</span>(tidyr)</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="kw">library</span>(dplyr)</span></code></pre></div>
 <div id="de-ancho-a-largo-con-pivot_longer" class="section level2">
 <h2>De ancho a largo con <code>pivot_longer()</code></h2>
 <p>En secciones anteriores usaste una versión de los datos de <a href="https://www.gapminder.org/">gapminder</a>. Ahora vas a leer los datos en su formato original:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">paises_ancho &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises_ancho.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>paises_ancho &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises_ancho.csv&quot;</span>)</span></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_double(),
@@ -558,7 +492,7 @@ div.tocify {
 ##   pais = col_character()
 ## )</code></pre>
 <pre><code>## See spec(...) for full column specifications.</code></pre>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">paises_ancho</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>paises_ancho</span></code></pre></div>
 <pre><code>## # A tibble: 142 x 38
 ##    continente pais  pib_per_capita_… pib_per_capita_… pib_per_capita_…
 ##    &lt;chr&gt;      &lt;chr&gt;            &lt;dbl&gt;            &lt;dbl&gt;            &lt;dbl&gt;
@@ -592,14 +526,14 @@ div.tocify {
 </div>
 <p>Esta tabla, increíblemente ancha, es muy difícil de manejar. Por ejemplo, es imposible hacer una serie de tiempo de una variable, o calcular el promedio por variable y país; ni hablar de calcular una regresión lineal.</p>
 <p>Para convertirlo en una tabla más larga, se usa <code>pivot_longer()</code> (“longer” es “más largo” en inglés):</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">paises_largo &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(paises_ancho,</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2">                             <span class="dt">cols =</span> <span class="kw">c</span>(<span class="kw">starts_with</span>(<span class="st">&#39;pob&#39;</span>), </a>
-<a class="sourceLine" id="cb8-3" data-line-number="3">                                      <span class="kw">starts_with</span>(<span class="st">&#39;esperanza&#39;</span>), </a>
-<a class="sourceLine" id="cb8-4" data-line-number="4">                                      <span class="kw">starts_with</span>(<span class="st">&#39;pib_per&#39;</span>)),</a>
-<a class="sourceLine" id="cb8-5" data-line-number="5">                             <span class="dt">names_to =</span> <span class="st">&quot;variable_anio&quot;</span>, </a>
-<a class="sourceLine" id="cb8-6" data-line-number="6">                             <span class="dt">values_to =</span> <span class="st">&quot;valor&quot;</span></a>
-<a class="sourceLine" id="cb8-7" data-line-number="7">)</a>
-<a class="sourceLine" id="cb8-8" data-line-number="8">paises_largo</a></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>paises_largo &lt;-<span class="st"> </span><span class="kw">pivot_longer</span>(paises_ancho,</span>
+<span id="cb8-2"><a href="#cb8-2"></a>                             <span class="dt">cols =</span> <span class="kw">c</span>(<span class="kw">starts_with</span>(<span class="st">&#39;pob&#39;</span>), </span>
+<span id="cb8-3"><a href="#cb8-3"></a>                                      <span class="kw">starts_with</span>(<span class="st">&#39;esperanza&#39;</span>), </span>
+<span id="cb8-4"><a href="#cb8-4"></a>                                      <span class="kw">starts_with</span>(<span class="st">&#39;pib_per&#39;</span>)),</span>
+<span id="cb8-5"><a href="#cb8-5"></a>                             <span class="dt">names_to =</span> <span class="st">&quot;variable_anio&quot;</span>, </span>
+<span id="cb8-6"><a href="#cb8-6"></a>                             <span class="dt">values_to =</span> <span class="st">&quot;valor&quot;</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a>)</span>
+<span id="cb8-8"><a href="#cb8-8"></a>paises_largo</span></code></pre></div>
 <pre><code>## # A tibble: 5,112 x 4
 ##    continente pais    variable_anio     valor
 ##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;             &lt;dbl&gt;
@@ -614,21 +548,21 @@ div.tocify {
 ##  9 Africa     Algeria poblacion_1992 26298373
 ## 10 Africa     Algeria poblacion_1997 29072015
 ## # … with 5,102 more rows</code></pre>
-<p>El primer argumento de<code>pivot_longer()</code> es la tabla que va a modificar: <code>paises_ancho</code>. El segundo argumento se llama <code>cols</code> y es un vector con las columnas que tienen los valores a “alargar”. Podría ser un vector escrito a mano (algo como <code>c(&quot;pib_per_capita_1952&quot;, &quot;pib_per_capita_1957&quot;...)</code>) pero con más de 30 columnas, escribir todo eso sería tedioso y probablemente estaría lleno de erorres. Por eso {tidyr} provee funciones de ayuda para seleccionar columnas en base a patrones. El código de arriba usa <code>starts_with()</code> que, como su nombre en inglés lo indica, selecciona las columnas que <em>empiezan con</em> una determinada cadena de caracteres. El vector <code>c(starts_with('pob'), starts_with('esperanza'), starts_with('pib_per'))</code> le dice a <code>pivot_longer()</code> que seleccione las columnas que empieza con “pob”, las que empiezan con “esperanza” y las que empiezan con “pib_per”.</p>
+<p>El primer argumento de<code>pivot_longer()</code> es la tabla que va a modificar: <code>paises_ancho</code>. El segundo argumento se llama <code>cols</code> y es un vector con las columnas que tienen los valores a “alargar”. Podría ser un vector escrito a mano (algo como <code>c("pib_per_capita_1952", "pib_per_capita_1957"...)</code>) pero con más de 30 columnas, escribir todo eso sería tedioso y probablemente estaría lleno de errores. Por eso {tidyr} provee funciones de ayuda para seleccionar columnas en base a patrones. El código de arriba usa <code>starts_with()</code> que, como su nombre en inglés lo indica, selecciona las columnas que <em>empiezan con</em> una determinada cadena de caracteres. El vector <code>c(starts_with('pob'), starts_with('esperanza'), starts_with('pib_per'))</code> le dice a <code>pivot_longer()</code> que seleccione las columnas que empieza con “pob”, las que empiezan con “esperanza” y las que empiezan con “pib_per”.</p>
 <div class="alert alert-success">
 <p>Estas funciones accesorias para seleccionar muchas funciones se llaman “tidyselect”. Si querés leer más detalles de las distintas formas que podés seleccionar variables leé la documentación usando <code>?tidyselect::language</code>.</p>
 </div>
 <p>El tercer y cuarto argumento son los nombres de las columnas de “nombre” y de “valor” que va a tener la nueva tabla. Como la nueva columna de identificación tiene los datos de la variable y el año a medir, “variable_anio” es un buen nombre. Y la columna de valor va a tener… bueno, el valor.</p>
 <p>Tomate un momento para visualizar lo que acaba de pasar. La tabla ancha tenía un montón de columnas con distintos datos. Ahora estos datos están uno arriba de otro en la columna “valor”, pero para identificar el nombre de la columna de la cual vinieron, se agrega la columna “variable_anio”.</p>
 <div class="figure">
-<img src="img/ancho-a-largo.png" alt="Proceso de largo a ancho" />
+<img src="img/ancho-a-largo.png" alt="" />
 <p class="caption">Proceso de largo a ancho</p>
 </div>
 <p>La columna <code>variable_anio</code> todavía no es muy útil porque contiene 2 datos, la variable (población, expectativa de vida o PBI per cápita) y el año. Sería mejor separar esta información en dos columnas llamadas “variable” y “anio”. Para eso está la función <code>separate()</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">separate</span>(paises_largo, </a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">         <span class="dt">col =</span> variable_anio, </a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">         <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;anio&quot;</span>), </a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">         <span class="dt">sep =</span> <span class="dv">-4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw">separate</span>(paises_largo, </span>
+<span id="cb10-2"><a href="#cb10-2"></a>         <span class="dt">col =</span> variable_anio, </span>
+<span id="cb10-3"><a href="#cb10-3"></a>         <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;anio&quot;</span>), </span>
+<span id="cb10-4"><a href="#cb10-4"></a>         <span class="dt">sep =</span> <span class="dv">-4</span>)</span></code></pre></div>
 <pre><code>## # A tibble: 5,112 x 5
 ##    continente pais    variable   anio     valor
 ##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;    &lt;dbl&gt;
@@ -643,13 +577,13 @@ div.tocify {
 ##  9 Africa     Algeria poblacion_ 1992  26298373
 ## 10 Africa     Algeria poblacion_ 1997  29072015
 ## # … with 5,102 more rows</code></pre>
-<p>El primer argumento, como siempre, es la tabla a procesar. El segundo, <code>col</code>, es la columna a separar en dos (o más) columnas nuevas. El tercero, <code>into</code> es el nombre de las nuevas columnas que <code>separate()</code> va a crear. El último argumento es <code>sep</code> que define cómo realizar la separación. Por defecto, <code>sep</code> es una <a href="https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular">expresión regular</a> que captura cualquier caracter no alfanumérico. En el caso de <code>variable_anio</code> no sirve, porque para valores como <code>&quot;esperanza_de_vida_1952&quot;</code>, separaría en <code>&quot;esperanza&quot;</code>, <code>&quot;de&quot;</code>, <code>&quot;vida&quot;</code> y <code>&quot;1952&quot;</code>. Como el año tiene siempre 4 caracteres, una solución simple es usar <code>sep = -4</code>, que significa que la separacion es 4 caracteres contando desde el final.</p>
-<p>Habrás notado un problema. El texto en la columnas <code>variable</code> toavía tiene un &quot;_&quot; al final. Podrías usar <code>mutate()</code> y un poco de funciones de manipulación de caracteres para quitarlo, pero hay una forma un poco más simple y es separando la columna <code>variable_anio</code> en tres, incluyendo una columna con el guión:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">paises_largo &lt;-<span class="st"> </span><span class="kw">separate</span>(paises_largo, </a>
-<a class="sourceLine" id="cb12-2" data-line-number="2">         <span class="dt">col =</span> variable_anio, </a>
-<a class="sourceLine" id="cb12-3" data-line-number="3">         <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;guion&quot;</span>, <span class="st">&quot;anio&quot;</span>), </a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">         <span class="dt">sep =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">-4</span>))</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5">paises_largo</a></code></pre></div>
+<p>El primer argumento, como siempre, es la tabla a procesar. El segundo, <code>col</code>, es la columna a separar en dos (o más) columnas nuevas. El tercero, <code>into</code> es el nombre de las nuevas columnas que <code>separate()</code> va a crear. El último argumento es <code>sep</code> que define cómo realizar la separación. Por defecto, <code>sep</code> es una <a href="https://es.wikipedia.org/wiki/Expresi%C3%B3n_regular">expresión regular</a> que captura cualquier caracter no alfanumérico. En el caso de <code>variable_anio</code> no sirve, porque para valores como <code>"esperanza_de_vida_1952"</code>, separaría en <code>"esperanza"</code>, <code>"de"</code>, <code>"vida"</code> y <code>"1952"</code>. Como el año tiene siempre 4 caracteres, una solución simple es usar <code>sep = -4</code>, que significa que la separación es 4 caracteres contando desde el final.</p>
+<p>Habrás notado un problema. El texto en la columnas <code>variable</code> todavía tiene un "_" al final. Podrías usar <code>mutate()</code> y un poco de funciones de manipulación de caracteres para quitarlo, pero hay una forma un poco más simple y es separando la columna <code>variable_anio</code> en tres, incluyendo una columna con el guión:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a>paises_largo &lt;-<span class="st"> </span><span class="kw">separate</span>(paises_largo, </span>
+<span id="cb12-2"><a href="#cb12-2"></a>         <span class="dt">col =</span> variable_anio, </span>
+<span id="cb12-3"><a href="#cb12-3"></a>         <span class="dt">into =</span> <span class="kw">c</span>(<span class="st">&quot;variable&quot;</span>, <span class="st">&quot;guion&quot;</span>, <span class="st">&quot;anio&quot;</span>), </span>
+<span id="cb12-4"><a href="#cb12-4"></a>         <span class="dt">sep =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">5</span>, <span class="dv">-4</span>))</span>
+<span id="cb12-5"><a href="#cb12-5"></a>paises_largo</span></code></pre></div>
 <pre><code>## # A tibble: 5,112 x 6
 ##    continente pais    variable  guion anio     valor
 ##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;
@@ -665,10 +599,10 @@ div.tocify {
 ## 10 Africa     Algeria poblacion _     1997  29072015
 ## # … with 5,102 more rows</code></pre>
 <p>Y ya casi. Hay que eliminar la columna <code>guion</code>, que no sirve para nada. Pero fijate que debajo de la columna <code>anio</code> dice <code>&lt;chr&gt;</code>; eso significa que el tipo de la columna es caracter, pero los años son números. Usando <code>mutate()</code> podés eliminar la columna <code>guion</code> asignándole el valor <code>NULL</code> (nulo) y coercer (recordá <a href="04-lectura-datos.html#Vectores">esta sección</a>) la columna <code>anio</code> a entero usando <code>as.integer()</code>:</p>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">paises_largo &lt;-<span class="st"> </span><span class="kw">mutate</span>(paises_largo, </a>
-<a class="sourceLine" id="cb14-2" data-line-number="2">                       <span class="dt">guion =</span> <span class="ot">NULL</span>,</a>
-<a class="sourceLine" id="cb14-3" data-line-number="3">                       <span class="dt">anio =</span> <span class="kw">as.integer</span>(anio))</a>
-<a class="sourceLine" id="cb14-4" data-line-number="4">paises_largo</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a>paises_largo &lt;-<span class="st"> </span><span class="kw">mutate</span>(paises_largo, </span>
+<span id="cb14-2"><a href="#cb14-2"></a>                       <span class="dt">guion =</span> <span class="ot">NULL</span>,</span>
+<span id="cb14-3"><a href="#cb14-3"></a>                       <span class="dt">anio =</span> <span class="kw">as.integer</span>(anio))</span>
+<span id="cb14-4"><a href="#cb14-4"></a>paises_largo</span></code></pre></div>
 <pre><code>## # A tibble: 5,112 x 5
 ##    continente pais    variable   anio    valor
 ##    &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;     &lt;int&gt;    &lt;dbl&gt;
@@ -692,8 +626,8 @@ div.tocify {
 <h2>De largo a ancho con <code>pivot_wider()</code></h2>
 <p>Ahora la variable <code>paises_largo</code> está en el formato más largo posible. Tiene 5 columnas, de las cuales sólo una es la columnas con valores. Pero con los datos así no podrías hacer un gráfico de puntos que muestre la relación entre el PBI per cápita y la expectativa de vida como en la <a href="06-graficos-I.html#Segunda_capa:_geometrías">sección de gráficos</a>. Fijate que los valores de la columna <code>valor</code> no tienen todos las mismas unidades, por lo que operar con ese vector podría dar resultados sin sentido. Muchas veces es conveniente y natural tener los datos en un formato intermedio en donde hay múltiples columnas con los valores de distintas variables observadas.</p>
 <p>Pasa “ensanchar” una tabla está la función <code>pivot_wider()</code> (“wider” es “más ancha” en inglés) y el código para conseguir este formato intermedio es:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">paises_medio &lt;-<span class="st"> </span><span class="kw">pivot_wider</span>(paises_largo, <span class="dt">names_from =</span> variable, <span class="dt">values_from =</span> valor)</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">paises_medio</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1"></a>paises_medio &lt;-<span class="st"> </span><span class="kw">pivot_wider</span>(paises_largo, <span class="dt">names_from =</span> variable, <span class="dt">values_from =</span> valor)</span>
+<span id="cb16-2"><a href="#cb16-2"></a>paises_medio</span></code></pre></div>
 <pre><code>## # A tibble: 1,704 x 6
 ##    continente pais     anio poblacion esperanza_de_vida pib_per_capita
 ##    &lt;chr&gt;      &lt;chr&gt;   &lt;int&gt;     &lt;dbl&gt;             &lt;dbl&gt;          &lt;dbl&gt;
@@ -708,12 +642,12 @@ div.tocify {
 ##  9 Africa     Algeria  1992  26298373              67.7          5023.
 ## 10 Africa     Algeria  1997  29072015              69.2          4797.
 ## # … with 1,694 more rows</code></pre>
-<p>Nuevamente el primer argumento es la tabla original. El segundo, <code>names_from</code> es la columna cuyos valores únicos van a convertirse en nuevas columnas. La columna <code>variable</code> tiene los valores <code>&quot;población&quot;</code>, <code>&quot;esperanza_de_vida&quot;</code> y <code>&quot;pib_per_capita&quot;</code> y entonces la tabla nueva tendrá tres columnas con esos nombres. El tercer argumento, <code>values_from</code>, es la columna de la cual sacar los valores.</p>
+<p>Nuevamente el primer argumento es la tabla original. El segundo, <code>names_from</code> es la columna cuyos valores únicos van a convertirse en nuevas columnas. La columna <code>variable</code> tiene los valores <code>"población"</code>, <code>"esperanza_de_vida"</code> y <code>"pib_per_capita"</code> y entonces la tabla nueva tendrá tres columnas con esos nombres. El tercer argumento, <code>values_from</code>, es la columna de la cual sacar los valores.</p>
 <p>Para volver al formato más ancho, basta con agregar más columnas en el argumento <code>names_from</code>:</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">pivot_wider</span>(paises_largo, </a>
-<a class="sourceLine" id="cb18-2" data-line-number="2">            <span class="dt">names_from =</span> <span class="kw">c</span>(variable, anio), </a>
-<a class="sourceLine" id="cb18-3" data-line-number="3">            <span class="dt">names_sep =</span> <span class="st">&quot;_&quot;</span>,</a>
-<a class="sourceLine" id="cb18-4" data-line-number="4">            <span class="dt">values_from =</span> valor)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">pivot_wider</span>(paises_largo, </span>
+<span id="cb18-2"><a href="#cb18-2"></a>            <span class="dt">names_from =</span> <span class="kw">c</span>(variable, anio), </span>
+<span id="cb18-3"><a href="#cb18-3"></a>            <span class="dt">names_sep =</span> <span class="st">&quot;_&quot;</span>,</span>
+<span id="cb18-4"><a href="#cb18-4"></a>            <span class="dt">values_from =</span> valor)</span></code></pre></div>
 <pre><code>## # A tibble: 142 x 38
 ##    continente pais  poblacion_1952 poblacion_1957 poblacion_1962 poblacion_1967
 ##    &lt;chr&gt;      &lt;chr&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;          &lt;dbl&gt;
@@ -743,9 +677,9 @@ div.tocify {
 ## #   pib_per_capita_1987 &lt;dbl&gt;, pib_per_capita_1992 &lt;dbl&gt;,
 ## #   pib_per_capita_1997 &lt;dbl&gt;, pib_per_capita_2002 &lt;dbl&gt;,
 ## #   pib_per_capita_2007 &lt;dbl&gt;</code></pre>
-<p>En esta llamada también está el argumento <code>names_sep</code>, que detemrina el caracter que se usa para crear el nombre de las nuevas columnas.</p>
+<p>En esta llamada también está el argumento <code>names_sep</code>, que determina el caracter que se usa para crear el nombre de las nuevas columnas.</p>
 <div class="alert alert-info">
-<p><strong>Desafio</strong></p>
+<p><strong>Desafío</strong></p>
 <ul>
 <li><p>Creá una nueva tabla, llamada <code>paises_superduper_ancho</code> que tenga una columna para cada variable, anio y país. (Consejo: la tabla final tiene que tener 5 filas).</p></li>
 <li><p>¿Cómo es la tabla más ancha posible que podés generar con estos datos? ¿Cuántas filas y columnas tiene?</p></li>
@@ -764,12 +698,12 @@ div.tocify {
 <li><p><code>inner_join()</code>: devuelve todas las filas de <code>x</code> donde hay coincidencias con <code>y</code> y todas las columnas de <code>x</code> e <code>y</code>. Si hay múltiples coincidencias entre <code>x</code> e <code>y</code>, entonces devuelve todas las coincidencias. Esto significa que eliminará las filas (observaciones) que no coincidan en ambas tablas, lo que puede ser peligroso.</p></li>
 </ul>
 <p><img src="img/join_family.png" /></p>
-<p>Ahora vamos a seguir trabajando con las base de datos de <code>paises</code> pero nos vamos a quedar solo con las observaciones del 2007 y de paso unirlo a una nueva base de datos <code>co2</code> que contiene información de la emisión de dióxido de carbono de cada pais para ese mismo año.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">paises_<span class="dv">2007</span> &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) </a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb20-4" data-line-number="4">co2_<span class="dv">2007</span> &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/co2_2007.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb20-5" data-line-number="5">co2_<span class="dv">2007</span></a></code></pre></div>
+<p>Ahora vamos a seguir trabajando con las base de datos de <code>paises</code> pero nos vamos a quedar solo con las observaciones del 2007 y de paso unirlo a una nueva base de datos <code>co2</code> que contiene información de la emisión de dióxido de carbono de cada país para ese mismo año.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1"></a>paises_<span class="dv">2007</span> &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/paises.csv&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb20-2"><a href="#cb20-2"></a><span class="st">  </span><span class="kw">filter</span>(anio <span class="op">==</span><span class="st"> </span><span class="dv">2007</span>) </span>
+<span id="cb20-3"><a href="#cb20-3"></a></span>
+<span id="cb20-4"><a href="#cb20-4"></a>co2_<span class="dv">2007</span> &lt;-<span class="st"> </span>readr<span class="op">::</span><span class="kw">read_csv</span>(<span class="st">&quot;datos/co2_2007.csv&quot;</span>)</span>
+<span id="cb20-5"><a href="#cb20-5"></a>co2_<span class="dv">2007</span></span></code></pre></div>
 <pre><code>## # A tibble: 218 x 3
 ##    codigo_iso emision_co2 pais                  
 ##    &lt;chr&gt;            &lt;dbl&gt; &lt;chr&gt;                 
@@ -784,15 +718,15 @@ div.tocify {
 ##  9 ARM             1.73   Armenia               
 ## 10 ATG             5.14   Antigua y Barbuda     
 ## # … with 208 more rows</code></pre>
-<p>Esta nueva tabla tiene 3 columnas: <code>codigo_iso</code> tiene el código ISO de 3 letreas de (abreviaturas que se usan internacionalmente), <code>emision_co2</code> tiene las emisiones anuales per cápita de CO2 en toneladas, <code>pais</code> tiene el nombre del país. Esta última columna también está presente en la tabla <code>paises_2007</code> y es la que va a servir como variable llave para unir las dos tablas.</p>
+<p>Esta nueva tabla tiene 3 columnas: <code>codigo_iso</code> tiene el código ISO de 3 letras de (abreviaturas que se usan internacionalmente), <code>emision_co2</code> tiene las emisiones anuales per cápita de CO2 en toneladas, <code>pais</code> tiene el nombre del país. Esta última columna también está presente en la tabla <code>paises_2007</code> y es la que va a servir como variable llave para unir las dos tablas.</p>
 <p>Para unir las dos tablas, cualquier función <em>join</em> requiere cierta información:</p>
 <ul>
 <li>las tablas a unir: son los dos primeros argumentos.</li>
 <li>qué variable o variables (se puede usar más de una!) usar para identificar coincidencias: el argumento <code>by</code>.</li>
 </ul>
 <p>Unamos <code>paises_2007</code> y <code>co2_2007</code> primero con <code>full_join()</code>:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">paises_co2_<span class="dv">2007</span> &lt;-<span class="st"> </span><span class="kw">full_join</span>(paises_<span class="dv">2007</span>, co2_<span class="dv">2007</span>, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>)</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2">paises_co2_<span class="dv">2007</span></a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1"></a>paises_co2_<span class="dv">2007</span> &lt;-<span class="st"> </span><span class="kw">full_join</span>(paises_<span class="dv">2007</span>, co2_<span class="dv">2007</span>, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>)</span>
+<span id="cb22-2"><a href="#cb22-2"></a>paises_co2_<span class="dv">2007</span></span></code></pre></div>
 <pre><code>## # A tibble: 241 x 8
 ##    pais  continente  anio esperanza_de_vi… poblacion pib_per_capita codigo_iso
 ##    &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;     
@@ -810,12 +744,12 @@ div.tocify {
 <p>Si miramos de cerca la tabla unida veremos un par de cosas:</p>
 <ul>
 <li>Todas las columnas de <code>paises_2007</code> y de <code>co2_2007</code> están presentes.</li>
-<li>Todas las observaciones están presentes, aún los paises que están presentes en <code>co2_2007</code> pero no en <code>paises_2007</code> y viceversa. En esos casos ahora tenemos <code>NA</code>. Esto genera una tabla con 241 filas.</li>
+<li>Todas las observaciones están presentes, aún los países que están presentes en <code>co2_2007</code> pero no en <code>paises_2007</code> y viceversa. En esos casos ahora tenemos <code>NA</code>. Esto genera una tabla con 241 filas.</li>
 </ul>
 <p>Esta es la opción más segura si no sabemos si todas las observaciones de una tabla están presente en a otra.</p>
 <p>Si solo nos interesa conservar las filas de la tabla <em>de la izquierda</em>, en este caso <code>paises_2007</code> entonces:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">paises_co2_<span class="dv">2007</span> &lt;-<span class="st"> </span><span class="kw">left_join</span>(paises_<span class="dv">2007</span>, co2_<span class="dv">2007</span>, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>)</a>
-<a class="sourceLine" id="cb24-2" data-line-number="2">paises_co2_<span class="dv">2007</span></a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1"></a>paises_co2_<span class="dv">2007</span> &lt;-<span class="st"> </span><span class="kw">left_join</span>(paises_<span class="dv">2007</span>, co2_<span class="dv">2007</span>, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>)</span>
+<span id="cb24-2"><a href="#cb24-2"></a>paises_co2_<span class="dv">2007</span></span></code></pre></div>
 <pre><code>## # A tibble: 142 x 8
 ##    pais  continente  anio esperanza_de_vi… poblacion pib_per_capita codigo_iso
 ##    &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;     
@@ -830,10 +764,10 @@ div.tocify {
 ##  9 Bang… Asia        2007             64.1 150448339          1391. BGD       
 ## 10 Bélg… Europa      2007             79.4  10392226         33693. BEL       
 ## # … with 132 more rows, and 1 more variable: emision_co2 &lt;dbl&gt;</code></pre>
-<p>Ahora esperamos que la tabla resultante tenga la misma cantidad de filas que <code>paises_2007</code> y efectivamente eso ocurre. Pero al mismo tiempo varios paises en esa tabla no encontraron coincidencia en <code>co2_2007</code> y por esa razón, la columna nueva columna <code>emisiones_co2</code> tiene <code>NA</code>.</p>
-<p>Finalmente, si quiseramos quedarnos solo con las observaciones que están presentes en ambas tablas usamos <code>inner_join()</code>.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">paises_co2_<span class="dv">2007</span> &lt;-<span class="st"> </span><span class="kw">inner_join</span>(paises_<span class="dv">2007</span>, co2_<span class="dv">2007</span>, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>)</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">paises_co2_<span class="dv">2007</span></a></code></pre></div>
+<p>Ahora esperamos que la tabla resultante tenga la misma cantidad de filas que <code>paises_2007</code> y efectivamente eso ocurre. Pero al mismo tiempo varios países en esa tabla no encontraron coincidencia en <code>co2_2007</code> y por esa razón, la columna nueva columna <code>emisiones_co2</code> tiene <code>NA</code>.</p>
+<p>Finalmente, si quisiéramos quedarnos solo con las observaciones que están presentes en ambas tablas usamos <code>inner_join()</code>.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1"></a>paises_co2_<span class="dv">2007</span> &lt;-<span class="st"> </span><span class="kw">inner_join</span>(paises_<span class="dv">2007</span>, co2_<span class="dv">2007</span>, <span class="dt">by =</span> <span class="st">&quot;pais&quot;</span>)</span>
+<span id="cb26-2"><a href="#cb26-2"></a>paises_co2_<span class="dv">2007</span></span></code></pre></div>
 <pre><code>## # A tibble: 119 x 8
 ##    pais  continente  anio esperanza_de_vi… poblacion pib_per_capita codigo_iso
 ##    &lt;chr&gt; &lt;chr&gt;      &lt;dbl&gt;            &lt;dbl&gt;     &lt;dbl&gt;          &lt;dbl&gt; &lt;chr&gt;     
@@ -850,8 +784,8 @@ div.tocify {
 ## # … with 109 more rows, and 1 more variable: emision_co2 &lt;dbl&gt;</code></pre>
 <p>En este caso, perdemos las filas de <code>co2_2007</code> que no encontraron coincidencia en <code>paises_2007</code> y viceversa y la tabla resultante tiene aún menos filas (119).</p>
 <div class="alert alert-info">
-<p><strong>Desafio</strong></p>
-<p>Estuvimos trabajando con una parte de la base de datos de emisiones. Pero también está disponible <code>co2_completo.csv</code> que contiene las emisiones para distintos años. El objetivo es que unas <code>paises</code> y <code>co2</code> teniendo en cuenta tanto el pais como el año. Para eso:</p>
+<p><strong>Desafío</strong></p>
+<p>Estuvimos trabajando con una parte de la base de datos de emisiones. Pero también está disponible <code>co2_completo.csv</code> que contiene las emisiones para distintos años. El objetivo es que unas <code>paises</code> y <code>co2</code> teniendo en cuenta tanto el país como el año. Para eso:</p>
 <ol style="list-style-type: decimal">
 <li>Lee la base de datos <code>co2_completo.csv</code> en una nueva variable que se llame <code>co2</code>.</li>
 <li>Revisá el nombre de las variables en esta base de datos, ¿se llaman igual que las variables en <code>paises</code>?</li>
@@ -859,13 +793,14 @@ div.tocify {
 </li>
 </ol>
 </div>
-</div>
-
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiTWFuaXB1bGFjacOzbiBkZSBkYXRvcyBvcmRlbmFkb3MgdXNhbmRvIHtkcGx5cn0geSB7dGlkeXJ9IElJIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCiAgICB0b2M6IHRydWUKICAgIHRvY19mbG9hdDogdHJ1ZQogICAgaGlnaGxpZ2h0OiB0YW5nbyAgCi0tLQoKYGBge3Igc2V0dXAsIGluY2x1ZGU9RkFMU0V9CmtuaXRyOjpvcHRzX2NodW5rJHNldChlY2hvID0gVFJVRSkKYGBgCgoKRW4gW2xhIMO6bHRpbWEgc2VjY2nDs24gZGUgbGVjdHVyYSBkZSBkYXRvc10oMDQtbGVjdHVyYS1kYXRvcy5odG1sI0Zvcm1hdG9zX2RlX3RhYmxhcykgdmlzdGUgZWwgY29uY2VwdG8gZGUgZGF0b3MgImFuY2hvcyIgeSAibGFyZ29zIi4gCgpMb3MgZGF0b3MgZW4gZm9ybWF0byAibGFyZ28iIG8gInRpZHkiLCBzb24gYXF1ZWxsb3MgZW4gbG9zIGN1YWxlczoKCiogY2FkYSBmaWxhIGVzIHVuYSBvYnNlcnZhY2nDs24KKiBjYWRhIGNvbHVtbmEgZXMgdW5hIHZhcmlhYmxlCgpFbiBlbCBmb3JtYXRvICJhbmNobyIgZXMgdW4gcG9jbyBtw6FzIGNvbXBsZWpvIGRlIGRlZmluaXJsbyBwZXJvIGxhIGlkZWEgZ2VuZXJhbCBlcyBxdWU6CgoqIGNhZGEgZmlsYSBlcyB1biAiaXRlbSIKKiBjYWRhIGNvbHVtbmEgZXMgdW5hIHZhcmlhYmxlCgohW10oaW1nL2xhcmdvLWFuY2hvLnBuZykKClVuYSB0YWJsYSBlbiBmb3JtYXRvIGxhcmdvIHZhIGEgdGVuZXIgdW5hIGNpZXJ0YSBjYW50aWRhZCBkZSBjb2x1bW5hcyBxdWUgY3VtcGxlbiBlbCByb2wgZGUgKmlkZW50aWZpY2Fkb3JlcyAqIHkgY3V5YSBjb21iaW5hY2nDs24gaWRlbnRpZmljYW4gdW5hIMO6bmljYSBvYnNlcnZhY2nDs24geSB1bmEgw7puaWNhIGNvbHVtbmEgY29uIGVsIHZhbG9yIGRlIGxhIG9ic2VydmFjacOzbi4gRW4gZWwgZWplbXBsbyBkZSBhcnJpYmEsIGBwYWlzYCB5IGBhbmlvYCBzb24gbGFzIGNvbHVtbmFzIGlkZW50aWZpY2Fkb3JhcyB5IGBjYXNvc2AgZXMgbGEgY29sdW1uYSBxdWUgY29udGllbmUgZWwgdmFsb3IgZGUgbGFzIG9ic2VydmFjaW9uZXMuIAoKRW4gdW5hIHRhYmxhIGFuY2hhLCBjYWRhIG9ic2VydmFjacOzbiDDum5pY2Egc2UgaWRlbnRpZmljYSBhIHBhcnRpciBkZSBsYSBpbnRlcnNlY2Npw7NuIGRlIGZpbGFzIHkgY29sdW1uYXMuIEVuIGVsIGVqZW1wbG8sIGxvcyBwYcOtc2VzIGVzdMOhbiBlbiBsYXMgZmlsYXMgeSBsb3MgYcOxb3MgZW4gbGFzIGNvbHVtbmFzLiAKCkVuIGdlbmVyYWwsIGVsIGZvcm1hdG8gYW5jaG8gZXMgbcOhcyBjb21wYWN0byB5IGxlZ2libGUgcG9yIGh1bWFub3MgbWllbnRyYXMgcXVlIGVsIGxhcmdvIGVzIG3DoXMgZsOhY2lsIGRlIG1hbmVqYXIgY29uIGxhIGNvbXB1dGFkb3JhLiBTaSB0ZSBmaWrDoXMgZW4gbGFzIHRhYmxhcyBkZSBhcnJpYmEsIGVzIG3DoXMgZsOhY2lsIGNvbXBhcmFyIGxvcyB2YWxvcmVzIGVudHJlIHBhaXNlcyB5IGVudHJlIGHDsW9zIGVuIGxhIHRhYmxhIGFuY2hhLiBQZXJvIGVsIG5vbWJyZSBkZSBsYXMgY29sdW1uYXMgKCIxOTk5IiwgIjIwMDAiKSBlbiByZWFsaWRhZCDCoXNvbiBkYXRvcyEgQWRlbcOhcyBlc3RlIGZvcm1hdG8gc2UgZW1waWV6YSBhIGNvbXBsaWNhciBlbiBjdWFudG8gaGF5IG3DoXMgZGUgZG9zIGlkZW50aWZpY2Fkb3Jlcy4gCgpVbiBtaXNtbyBzZXQgZGUgZGF0b3MgcHVlZGUgc2VyIHJlcHJlc2VudGFkbyBkZSBmb3JtYSBjb21wbGV0YW1lbnRlICJsYXJnYSIsIGNvbXBsZXRhbWVudGUgImFuY2hhIiBvIC0tbG8gcXVlIGVzIG3DoXMgY29tw7puLS0gZW4gdW4gZm9ybWF0byBpbnRlcm1lZGlvIHBlcm8gbm8gZXhpc3RlIHVuYSBmb3JtYSAiY29ycmVjdGEiIGRlIG9yZ2FuaXphciBsb3MgZGF0b3M7IGNhZGEgdW5hIHRpZW5lIHN1cyB2ZW50YWphcyB5IGRlc3ZlbnRhamFzLiBQb3IgZXN0byBlcyBxdWUgZXMgbXV5IG5vcm1hbCBxdWUgZHVyYW50ZSB1biBhbsOhbGlzaXMgbG9zIGRhdG9zIHZheWFuIHkgdnVlbHZhbiBlbnRyZSBkaXN0aW50b3MgZm9ybWF0b3MgZGVwZW5kaWVuZG8gZGUgbG9zIG3DqXRvZG9zIGVzdGFkw61zdGljb3MgcXVlIHNlIGxlIGFwbGljYW4uIEVudG9uY2VzLCBhcHJlbmRlciBhIHRyYW5zZm9ybWFyIGRhdG9zIGFuY2hvcyBlbiBsYXJnb3MgeSB2aWNldmVyc2EgZXMgdW4gaGFiaWxpZGFkIG11eSDDunRpbC4gCgoKOjo6IHsuYWxlcnQgLmFsZXJ0LWluZm99CioqRGVzYWbDrW8qKgoKRW4gbGFzIHRhYmxhcyBkZSBlamVtcGxvIGNhZGEgcGHDrXMgdGllbmUgZWwgdW4gdmFsb3Igb2JzZXJ2YWRvIGRlICJjYXNvcyIgcGFyYSBjYWRhIGHDsW8uIMK/Q8OzbW8gYWdyZWdhcsOtYXMgdW5hIG51ZXZhIHZhcmlhYmxlIGNvbiBpbmZvcm1hY2nDs24gc29icmUgInByZWNpb3MiPyBEaWJ1asOhIHVuIGVzcXVlbWEgZW4gcGFwZWwgeSBsw6FwaXogZW4gZm9ybWF0byBhbmNobyB5IHVubyBlbiBmb3JtYXRvIGxhcmdvLiDCv0VuIHF1w6kgZm9ybWF0byBlcyBtw6FzICJuYXR1cmFsIiBlc2EgZXh0ZW5zacOzbj8KCjo6OgoKCkVuIGVzdGEgc2VjY2nDs24gdmFzIGEgdXNhciBlbCBwYXF1ZXRlIHt0aWR5cn0gcGFyYSBtYW5pcHVsYXIgZGF0b3MuIFNpIG5vIGxvIHRlbsOpcyBpbnN0YWxhZG8sIGluc3RhbGFsbyBjb24gZWwgY29tYW5kbzoKCmBgYHtyIGV2YWwgPSBGQUxTRX0KaW5zdGFsbC5wYWNrYWdlcygidGlkeXIiKQpgYGAKCihjb21vIHNpZW1wcmUsIHJlY29yZMOhIHF1ZSBlc3RvIGhheSBxdWUgaGFjZXJsbyB1bmEgw7puaWNhIHZleikKClkgbHVlZ28gY2FyZ8OhIHt0aWR5cn0geSB7ZHBseXJ9IChxdWUgdXNhc3RlIGVuIFt1bmEgc2VjY2nDs24gYW50ZXJpb3JdKDA1LWRwbHlyLUkuaHRtbCkpIGNvbjogCgpgYGB7cn0KbGlicmFyeSh0aWR5cikKbGlicmFyeShkcGx5cikKYGBgCgojIyBEZSBhbmNobyBhIGxhcmdvIGNvbiBgcGl2b3RfbG9uZ2VyKClgCgpFbiBzZWNjaW9uZXMgYW50ZXJpb3JlcyB1c2FzdGUgdW5hIHZlcnNpw7NuIGRlIGxvcyBkYXRvcyBkZSBbZ2FwbWluZGVyXShodHRwczovL3d3dy5nYXBtaW5kZXIub3JnLykuIEFob3JhIHZhcyBhIGxlZXIgbG9zIGRhdG9zIGVuIHN1IGZvcm1hdG8gb3JpZ2luYWw6CgpgYGB7cn0KcGFpc2VzX2FuY2hvIDwtIHJlYWRyOjpyZWFkX2NzdigiZGF0b3MvcGFpc2VzX2FuY2hvLmNzdiIpCnBhaXNlc19hbmNobwpgYGAKCjo6OiB7LmFsZXJ0IC5hbGVydC1zdWNjZXNzfQoKwr9Ob3Rhc3RlIHF1ZSBlbiBlbCBjw7NkaWdvIGFudGVyaW9yIG5vIHVzYXN0ZSBgbGlicmFyeShyZWFkcilgIHBhcmEgY2FyZ2FyIGVsIHBhcXVldGUgeSBsdWVnbyBsZWVyPyBDb24gbGEgbm90YWNpw7NuIGBwYXF1ZXRlOjpmdW5jaW9uKClgIHBvZMOpcyBhY2NlZGVyIGEgbGFzIGZ1bmNpb25lcyBkZSB1biBwYXF1ZXRlIHNpbiB0ZW5lciBxdWUgY2FyZ2FybG8uIEVzIHVuYSBidWVuYSBmb3JtYSBkZSBubyB0ZW5lciBxdWUgY2FyZ2FyIHVuIG1vbnTDs24gZGUgcGFxdWV0ZXMgaW5uZWNlc2FyaW9zIHNpIHZhcyBhIGNvcnJlciB1bmEgw7puaWNhIGZ1bmNpw7NuIGRlIHVuIHBhcXVldGUgcG9jYXMgdmVjZXMuIAoKOjo6CgpFc3RhIHRhYmxhLCBpbmNyZcOtYmxlbWVudGUgYW5jaGEsIGVzIG11eSBkaWbDrWNpbCBkZSBtYW5lamFyLiBQb3IgZWplbXBsbywgZXMgaW1wb3NpYmxlIGhhY2VyIHVuYSBzZXJpZSBkZSB0aWVtcG8gZGUgdW5hIHZhcmlhYmxlLCBvIGNhbGN1bGFyIGVsIHByb21lZGlvIHBvciB2YXJpYWJsZSB5IHBhw61zOyBuaSBoYWJsYXIgZGUgY2FsY3VsYXIgdW5hIHJlZ3Jlc2nDs24gbGluZWFsLiAKClBhcmEgY29udmVydGlybG8gZW4gdW5hIHRhYmxhIG3DoXMgbGFyZ2EsIHNlIHVzYSBgcGl2b3RfbG9uZ2VyKClgICgibG9uZ2VyIiBlcyAibcOhcyBsYXJnbyIgZW4gaW5nbMOpcyk6CgpgYGB7cn0KcGFpc2VzX2xhcmdvIDwtIHBpdm90X2xvbmdlcihwYWlzZXNfYW5jaG8sCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgY29scyA9IGMoc3RhcnRzX3dpdGgoJ3BvYicpLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICBzdGFydHNfd2l0aCgnZXNwZXJhbnphJyksIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0YXJ0c193aXRoKCdwaWJfcGVyJykpLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIG5hbWVzX3RvID0gInZhcmlhYmxlX2FuaW8iLCAKICAgICAgICAgICAgICAgICAgICAgICAgICAgICB2YWx1ZXNfdG8gPSAidmFsb3IiCikKcGFpc2VzX2xhcmdvCmBgYAoKRWwgcHJpbWVyIGFyZ3VtZW50byBkZWBwaXZvdF9sb25nZXIoKWAgZXMgbGEgdGFibGEgcXVlIHZhIGEgbW9kaWZpY2FyOiBgcGFpc2VzX2FuY2hvYC4gRWwgc2VndW5kbyBhcmd1bWVudG8gc2UgbGxhbWEgYGNvbHNgIHkgZXMgdW4gdmVjdG9yIGNvbiBsYXMgY29sdW1uYXMgcXVlIHRpZW5lbiBsb3MgdmFsb3JlcyBhICJhbGFyZ2FyIi4gUG9kcsOtYSBzZXIgdW4gdmVjdG9yIGVzY3JpdG8gYSBtYW5vIChhbGdvIGNvbW8gYGMoInBpYl9wZXJfY2FwaXRhXzE5NTIiLCAicGliX3Blcl9jYXBpdGFfMTk1NyIuLi4pYCkgcGVybyBjb24gbcOhcyBkZSAzMCBjb2x1bW5hcywgZXNjcmliaXIgdG9kbyBlc28gc2Vyw61hIHRlZGlvc28geSBwcm9iYWJsZW1lbnRlIGVzdGFyw61hIGxsZW5vIGRlIGVyb3JyZXMuIFBvciBlc28ge3RpZHlyfSBwcm92ZWUgZnVuY2lvbmVzIGRlIGF5dWRhIHBhcmEgc2VsZWNjaW9uYXIgY29sdW1uYXMgZW4gYmFzZSBhIHBhdHJvbmVzLiBFbCBjw7NkaWdvIGRlIGFycmliYSB1c2EgYHN0YXJ0c193aXRoKClgIHF1ZSwgY29tbyBzdSBub21icmUgZW4gaW5nbMOpcyBsbyBpbmRpY2EsIHNlbGVjY2lvbmEgbGFzIGNvbHVtbmFzIHF1ZSAqZW1waWV6YW4gY29uKiB1bmEgZGV0ZXJtaW5hZGEgY2FkZW5hIGRlIGNhcmFjdGVyZXMuIEVsIHZlY3RvciBgYyhzdGFydHNfd2l0aCgncG9iJyksIHN0YXJ0c193aXRoKCdlc3BlcmFuemEnKSwgc3RhcnRzX3dpdGgoJ3BpYl9wZXInKSlgIGxlIGRpY2UgYSBgcGl2b3RfbG9uZ2VyKClgIHF1ZSBzZWxlY2Npb25lIGxhcyBjb2x1bW5hcyBxdWUgZW1waWV6YSBjb24gInBvYiIsIGxhcyBxdWUgZW1waWV6YW4gY29uICJlc3BlcmFuemEiIHkgbGFzIHF1ZSBlbXBpZXphbiBjb24gInBpYl9wZXIiLiAKCjo6OiB7LmFsZXJ0IC5hbGVydC1zdWNjZXNzfQoKRXN0YXMgZnVuY2lvbmVzIGFjY2Vzb3JpYXMgcGFyYSBzZWxlY2Npb25hciBtdWNoYXMgZnVuY2lvbmVzIHNlIGxsYW1hbiAidGlkeXNlbGVjdCIuIFNpIHF1ZXLDqXMgbGVlciBtw6FzIGRldGFsbGVzIGRlIGxhcyBkaXN0aW50YXMgZm9ybWFzIHF1ZSBwb2TDqXMgc2VsZWNjaW9uYXIgdmFyaWFibGVzIGxlw6kgbGEgZG9jdW1lbnRhY2nDs24gdXNhbmRvIGA/dGlkeXNlbGVjdDo6bGFuZ3VhZ2VgLgoKOjo6CgpFbCB0ZXJjZXIgeSBjdWFydG8gYXJndW1lbnRvIHNvbiBsb3Mgbm9tYnJlcyBkZSBsYXMgY29sdW1uYXMgZGUgIm5vbWJyZSIgeSBkZSAidmFsb3IiIHF1ZSB2YSBhIHRlbmVyIGxhIG51ZXZhIHRhYmxhLiBDb21vIGxhIG51ZXZhIGNvbHVtbmEgZGUgaWRlbnRpZmljYWNpw7NuIHRpZW5lIGxvcyBkYXRvcyBkZSBsYSB2YXJpYWJsZSB5IGVsIGHDsW8gYSBtZWRpciwgInZhcmlhYmxlX2FuaW8iIGVzIHVuIGJ1ZW4gbm9tYnJlLiBZIGxhIGNvbHVtbmEgZGUgdmFsb3IgdmEgYSB0ZW5lci4uLiBidWVubywgZWwgdmFsb3IuIAoKVG9tYXRlIHVuIG1vbWVudG8gcGFyYSB2aXN1YWxpemFyIGxvIHF1ZSBhY2FiYSBkZSBwYXNhci4gTGEgdGFibGEgYW5jaGEgdGVuw61hIHVuIG1vbnTDs24gZGUgY29sdW1uYXMgY29uIGRpc3RpbnRvcyBkYXRvcy4gQWhvcmEgZXN0b3MgZGF0b3MgZXN0w6FuIHVubyBhcnJpYmEgZGUgb3RybyBlbiBsYSBjb2x1bW5hICJ2YWxvciIsIHBlcm8gcGFyYSBpZGVudGlmaWNhciBlbCBub21icmUgZGUgbGEgY29sdW1uYSBkZSBsYSBjdWFsIHZpbmllcm9uLCBzZSBhZ3JlZ2EgbGEgY29sdW1uYSAidmFyaWFibGVfYW5pbyIuIAoKCiFbUHJvY2VzbyBkZSBsYXJnbyBhIGFuY2hvXShpbWcvYW5jaG8tYS1sYXJnby5wbmcpCgpMYSBjb2x1bW5hIGB2YXJpYWJsZV9hbmlvYCB0b2RhdsOtYSBubyBlcyBtdXkgw7p0aWwgcG9ycXVlIGNvbnRpZW5lIDIgZGF0b3MsIGxhIHZhcmlhYmxlIChwb2JsYWNpw7NuLCBleHBlY3RhdGl2YSBkZSB2aWRhIG8gUEJJIHBlciBjw6FwaXRhKSB5IGVsIGHDsW8uIFNlcsOtYSBtZWpvciBzZXBhcmFyIGVzdGEgaW5mb3JtYWNpw7NuIGVuIGRvcyBjb2x1bW5hcyBsbGFtYWRhcyAidmFyaWFibGUiIHkgImFuaW8iLiBQYXJhIGVzbyBlc3TDoSBsYSBmdW5jacOzbiBgc2VwYXJhdGUoKWAuCgpgYGB7cn0Kc2VwYXJhdGUocGFpc2VzX2xhcmdvLCAKICAgICAgICAgY29sID0gdmFyaWFibGVfYW5pbywgCiAgICAgICAgIGludG8gPSBjKCJ2YXJpYWJsZSIsICJhbmlvIiksIAogICAgICAgICBzZXAgPSAtNCkKYGBgCgpFbCBwcmltZXIgYXJndW1lbnRvLCBjb21vIHNpZW1wcmUsIGVzIGxhIHRhYmxhIGEgcHJvY2VzYXIuIEVsIHNlZ3VuZG8sIGBjb2xgLCBlcyBsYSBjb2x1bW5hIGEgc2VwYXJhciBlbiBkb3MgKG8gbcOhcykgY29sdW1uYXMgbnVldmFzLiBFbCB0ZXJjZXJvLCBgaW50b2AgZXMgZWwgbm9tYnJlIGRlIGxhcyBudWV2YXMgY29sdW1uYXMgcXVlIGBzZXBhcmF0ZSgpYCB2YSBhIGNyZWFyLiBFbCDDumx0aW1vIGFyZ3VtZW50byBlcyBgc2VwYCBxdWUgZGVmaW5lIGPDs21vIHJlYWxpemFyIGxhIHNlcGFyYWNpw7NuLiBQb3IgZGVmZWN0bywgYHNlcGAgZXMgdW5hIFtleHByZXNpw7NuIHJlZ3VsYXJdKGh0dHBzOi8vZXMud2lraXBlZGlhLm9yZy93aWtpL0V4cHJlc2klQzMlQjNuX3JlZ3VsYXIpIHF1ZSBjYXB0dXJhIGN1YWxxdWllciBjYXJhY3RlciBubyBhbGZhbnVtw6lyaWNvLiBFbiBlbCBjYXNvIGRlIGB2YXJpYWJsZV9hbmlvYCBubyBzaXJ2ZSwgcG9ycXVlIHBhcmEgdmFsb3JlcyBjb21vIGAiZXNwZXJhbnphX2RlX3ZpZGFfMTk1MiJgLCBzZXBhcmFyw61hIGVuIGAiZXNwZXJhbnphImAsIGAiZGUiYCwgYCJ2aWRhImAgeSBgIjE5NTIiYC4gQ29tbyBlbCBhw7FvIHRpZW5lIHNpZW1wcmUgNCBjYXJhY3RlcmVzLCB1bmEgc29sdWNpw7NuIHNpbXBsZSBlcyB1c2FyIGBzZXAgPSAtNGAsIHF1ZSBzaWduaWZpY2EgcXVlIGxhIHNlcGFyYWNpb24gZXMgNCBjYXJhY3RlcmVzIGNvbnRhbmRvIGRlc2RlIGVsIGZpbmFsLiAKCkhhYnLDoXMgbm90YWRvIHVuIHByb2JsZW1hLiBFbCB0ZXh0byBlbiBsYSBjb2x1bW5hcyBgdmFyaWFibGVgIHRvYXbDrWEgdGllbmUgdW4gIl8iIGFsIGZpbmFsLiBQb2Ryw61hcyB1c2FyIGBtdXRhdGUoKWAgeSB1biBwb2NvIGRlIGZ1bmNpb25lcyBkZSBtYW5pcHVsYWNpw7NuIGRlIGNhcmFjdGVyZXMgcGFyYSBxdWl0YXJsbywgcGVybyBoYXkgdW5hIGZvcm1hIHVuIHBvY28gbcOhcyBzaW1wbGUgeSBlcyBzZXBhcmFuZG8gbGEgY29sdW1uYSBgdmFyaWFibGVfYW5pb2AgZW4gdHJlcywgaW5jbHV5ZW5kbyB1bmEgY29sdW1uYSBjb24gZWwgZ3Vpw7NuOgoKYGBge3J9CnBhaXNlc19sYXJnbyA8LSBzZXBhcmF0ZShwYWlzZXNfbGFyZ28sIAogICAgICAgICBjb2wgPSB2YXJpYWJsZV9hbmlvLCAKICAgICAgICAgaW50byA9IGMoInZhcmlhYmxlIiwgImd1aW9uIiwgImFuaW8iKSwgCiAgICAgICAgIHNlcCA9IGMoLTUsIC00KSkKcGFpc2VzX2xhcmdvCmBgYAoKWSB5YSBjYXNpLiBIYXkgcXVlIGVsaW1pbmFyIGxhIGNvbHVtbmEgYGd1aW9uYCwgcXVlIG5vIHNpcnZlIHBhcmEgbmFkYS4gUGVybyBmaWphdGUgcXVlIGRlYmFqbyBkZSBsYSBjb2x1bW5hIGBhbmlvYCBkaWNlIGA8Y2hyPmA7IGVzbyBzaWduaWZpY2EgcXVlIGVsIHRpcG8gZGUgbGEgY29sdW1uYSBlcyBjYXJhY3RlciwgcGVybyBsb3MgYcOxb3Mgc29uIG7Dum1lcm9zLiBVc2FuZG8gYG11dGF0ZSgpYCBwb2TDqXMgZWxpbWluYXIgbGEgY29sdW1uYSBgZ3Vpb25gIGFzaWduw6FuZG9sZSBlbCB2YWxvciBgTlVMTGAgKG51bG8pIHkgY29lcmNlciAocmVjb3Jkw6EgW2VzdGEgc2VjY2nDs25dKDA0LWxlY3R1cmEtZGF0b3MuaHRtbCNWZWN0b3JlcykpIGxhIGNvbHVtbmEgYGFuaW9gIGEgZW50ZXJvIHVzYW5kbyBgYXMuaW50ZWdlcigpYDoKCmBgYHtyfQpwYWlzZXNfbGFyZ28gPC0gbXV0YXRlKHBhaXNlc19sYXJnbywgCiAgICAgICAgICAgICAgICAgICAgICAgZ3Vpb24gPSBOVUxMLAogICAgICAgICAgICAgICAgICAgICAgIGFuaW8gPSBhcy5pbnRlZ2VyKGFuaW8pKQpwYWlzZXNfbGFyZ28KYGBgCgo6Ojogey5hbGVydCAuYWxlcnQtaW5mb30KKipEZXNhZsOtbyoqCgpKdW50w6EgdG9kb3MgbG9zIHBhc29zIGFudGVyaW9yZXMgZW4gdW5hIHNvbGEgY2FkZW5hIGRlIG9wZXJhY2lvbmVzIHVzYW5kbyBgJT4lYC4KCjo6OgoKCgojIyBEZSBsYXJnbyBhIGFuY2hvIGNvbiBgcGl2b3Rfd2lkZXIoKWAKCkFob3JhIGxhIHZhcmlhYmxlIGBwYWlzZXNfbGFyZ29gIGVzdMOhIGVuIGVsIGZvcm1hdG8gbcOhcyBsYXJnbyBwb3NpYmxlLiBUaWVuZSA1IGNvbHVtbmFzLCBkZSBsYXMgY3VhbGVzIHPDs2xvIHVuYSBlcyBsYSBjb2x1bW5hcyBjb24gdmFsb3Jlcy4gUGVybyBjb24gbG9zIGRhdG9zIGFzw60gbm8gcG9kcsOtYXMgaGFjZXIgdW4gZ3LDoWZpY28gZGUgcHVudG9zIHF1ZSBtdWVzdHJlIGxhIHJlbGFjacOzbiBlbnRyZSBlbCBQQkkgcGVyIGPDoXBpdGEgeSBsYSBleHBlY3RhdGl2YSBkZSB2aWRhIGNvbW8gZW4gbGEgW3NlY2Npw7NuIGRlIGdyw6FmaWNvc10oMDYtZ3JhZmljb3MtSS5odG1sI1NlZ3VuZGFfY2FwYTpfZ2VvbWV0csOtYXMpLiBGaWphdGUgcXVlIGxvcyB2YWxvcmVzIGRlIGxhIGNvbHVtbmEgYHZhbG9yYCBubyB0aWVuZW4gdG9kb3MgbGFzIG1pc21hcyB1bmlkYWRlcywgcG9yIGxvIHF1ZSBvcGVyYXIgY29uIGVzZSB2ZWN0b3IgcG9kcsOtYSBkYXIgcmVzdWx0YWRvcyBzaW4gc2VudGlkby4gTXVjaGFzIHZlY2VzIGVzIGNvbnZlbmllbnRlIHkgbmF0dXJhbCB0ZW5lciBsb3MgZGF0b3MgZW4gdW4gZm9ybWF0byBpbnRlcm1lZGlvIGVuIGRvbmRlIGhheSBtw7psdGlwbGVzIGNvbHVtbmFzIGNvbiBsb3MgdmFsb3JlcyBkZSBkaXN0aW50YXMgdmFyaWFibGVzIG9ic2VydmFkYXMuIAoKUGFzYSAiZW5zYW5jaGFyIiB1bmEgdGFibGEgZXN0w6EgbGEgZnVuY2nDs24gYHBpdm90X3dpZGVyKClgICgid2lkZXIiIGVzICJtw6FzIGFuY2hhIiBlbiBpbmdsw6lzKSB5IGVsIGPDs2RpZ28gcGFyYSBjb25zZWd1aXIgZXN0ZSBmb3JtYXRvIGludGVybWVkaW8gZXM6CgpgYGB7cn0KcGFpc2VzX21lZGlvIDwtIHBpdm90X3dpZGVyKHBhaXNlc19sYXJnbywgbmFtZXNfZnJvbSA9IHZhcmlhYmxlLCB2YWx1ZXNfZnJvbSA9IHZhbG9yKQpwYWlzZXNfbWVkaW8KYGBgCgpOdWV2YW1lbnRlIGVsIHByaW1lciBhcmd1bWVudG8gZXMgbGEgdGFibGEgb3JpZ2luYWwuIEVsIHNlZ3VuZG8sIGBuYW1lc19mcm9tYCBlcyBsYSBjb2x1bW5hIGN1eW9zIHZhbG9yZXMgw7puaWNvcyB2YW4gYSBjb252ZXJ0aXJzZSBlbiBudWV2YXMgY29sdW1uYXMuIExhIGNvbHVtbmEgYHZhcmlhYmxlYCB0aWVuZSBsb3MgdmFsb3JlcyBgInBvYmxhY2nDs24iYCwgYCJlc3BlcmFuemFfZGVfdmlkYSJgIHkgYCJwaWJfcGVyX2NhcGl0YSJgIHkgZW50b25jZXMgbGEgdGFibGEgbnVldmEgdGVuZHLDoSB0cmVzIGNvbHVtbmFzIGNvbiBlc29zIG5vbWJyZXMuIEVsIHRlcmNlciBhcmd1bWVudG8sIGB2YWx1ZXNfZnJvbWAsIGVzIGxhIGNvbHVtbmEgZGUgbGEgY3VhbCBzYWNhciBsb3MgdmFsb3Jlcy4gCgpQYXJhIHZvbHZlciBhbCBmb3JtYXRvIG3DoXMgYW5jaG8sIGJhc3RhIGNvbiBhZ3JlZ2FyIG3DoXMgY29sdW1uYXMgZW4gZWwgYXJndW1lbnRvIGBuYW1lc19mcm9tYDoKCmBgYHtyfQpwaXZvdF93aWRlcihwYWlzZXNfbGFyZ28sIAogICAgICAgICAgICBuYW1lc19mcm9tID0gYyh2YXJpYWJsZSwgYW5pbyksIAogICAgICAgICAgICBuYW1lc19zZXAgPSAiXyIsCiAgICAgICAgICAgIHZhbHVlc19mcm9tID0gdmFsb3IpCmBgYAoKRW4gZXN0YSBsbGFtYWRhIHRhbWJpw6luIGVzdMOhIGVsIGFyZ3VtZW50byBgbmFtZXNfc2VwYCwgcXVlIGRldGVtcmluYSBlbCBjYXJhY3RlciBxdWUgc2UgdXNhIHBhcmEgY3JlYXIgZWwgbm9tYnJlIGRlIGxhcyBudWV2YXMgY29sdW1uYXMuIAoKCjo6OiB7LmFsZXJ0ICAuYWxlcnQtaW5mb30KKipEZXNhZmlvKioKCiogQ3Jlw6EgdW5hIG51ZXZhIHRhYmxhLCBsbGFtYWRhIGBwYWlzZXNfc3VwZXJkdXBlcl9hbmNob2AgcXVlIHRlbmdhIHVuYSBjb2x1bW5hIHBhcmEgY2FkYSB2YXJpYWJsZSwgYW5pbyB5IHBhw61zLiAoQ29uc2VqbzogbGEgdGFibGEgZmluYWwgdGllbmUgcXVlIHRlbmVyIDUgZmlsYXMpLgoKKiDCv0PDs21vIGVzIGxhIHRhYmxhIG3DoXMgYW5jaGEgcG9zaWJsZSBxdWUgcG9kw6lzIGdlbmVyYXIgY29uIGVzdG9zIGRhdG9zPyDCv0N1w6FudGFzIGZpbGFzIHkgY29sdW1uYXMgdGllbmU/Cgo6OjoKCgojIyBVbmllbmRvIHRhYmxhcwoKSGFzdGEgYWhvcmEgdG9kbyBsbyBxdWUgdXNhc3RlIGRlIHtkcGx5cn0gaW52b2x1Y3JhIHRyYWJhamFyIHkgbW9kaWZpY2FyIGNvbiB1bmEgc29sYSB0YWJsYSBhIGxhIHZleiwgcGVybyBlcyBtdXkgY29tw7puIHRlbmVyIGRvcyBvIG3DoXMgdGFibGFzIGNvbiBkYXRvcyByZWxhY2lvbmFkb3MuIEVuIGVzZSBjYXNvLCB0ZW5lbW9zIHF1ZSAqdW5pciogZXN0YXMgdGFibGFzLiBhIHBhcnRpciBkZSB1bmEgbyBtw6FzIHZhcmlhYmxlcyBlbiBjb23Dum4gbyAqa2V5cyouIEVuIEV4Y2VsIHUgb3RybyBwcm9ncmFtYSBkZSBob2phcyBkZSBjw6FsY3VsbywgZXN0byBzZSByZXN1ZWx2ZSBjb24gbGEgZnVuY2nDs24gIlZMT09LVVAiIG8gICJCVVNDQVJWIiwgZW4gUiB5IGVuIHBhcnRpY3VsYXIgZGVudHJvIGRlbCBtdW5kbyBkZSB7ZHBseXJ9IGhheSBxdWUgdXNhciBsYSBmYW1pbGlhIGRlIGZ1bmNpb25lcyBgKl9qb2luKClgLiBIYXkgdW5hIGZ1bmNpw7NuIGNhZGEgdGlwbyBkZSB1bmnDs24gcXVlIHF1ZXJhbW9zIGhhY2VyLiAKCkFzdW1pZW5kbyBxdWUgcXVlcsOpcyB1bmlyIGRvcyBkYXRhLmZyYW1lcyBvIHRhYmxhcyBgeGAgZSBgeWAgcXVlIHRpZW5lbiBlbiBjb23Dum4gdW5hIHZhcmlhYmxlIGBBYDoKCiFbXShpbWcvam9pbi5wbmcpCgoqIGBmdWxsX2pvaW4oKWA6IGRldnVlbHZlIHRvZGFzIGxhcyBmaWxhcyB5IHRvZGFzIGxhcyBjb2x1bW5hcyBkZSBhbWJhcyB0YWJsYXMgYHhgIGUgYHlgLiBDdWFuZG8gbm8gY29pbmNpZGVuIGxvcyBlbGVtZW50b3MgZW4gYHgxYCwgZGV2dWVsdmUgYE5BYCAoZGF0byBmYWx0YW50ZSkuIEVzdG8gc2lnbmlmaWNhIHF1ZSBubyBzZSBwaWVyZGVuIGZpbGFzIGRlIG5pbmd1bmEgZGUgbGFzIGRvcyB0YWJsYXMgYcO6biBjdWFuZG8gbm8gaGF5IGNvaW5jaWRlbmNpYS4gRXN0w6EgZXMgbGEgbWFuZXJhIG3DoXMgc2VndXJhIGRlIHVuaXIgdGFibGFzLgoKKiBgbGVmdF9qb2luKClgOiBkZXZ1ZWx2ZSB0b2RhcyBsYXMgZmlsYXMgZGUgYHhgIHkgdG9kYXMgbGFzIGNvbHVtbmFzIGRlIGB4YCBlIGB5YC4gTGFzIGZpbGFzIGVuIGB4YCBxdWUgbm8gdGVuZ2FuIGNvaW5jaWRlbmNpYSBjb24gYHlgIHRlbmRyw6FuIGBOQWAgZW4gbGFzIG51ZXZhcyBjb2x1bW5hcy4gU2kgaGF5IG3Dumx0aXBsZXMgY29pbmNpZGVuY2lhcyBlbnRyZSBgeGBlIGB5YCwgZGV2dWVsdmUgdG9kYXMgbGFzIGNvaW5jaWRlbmNpYXMgcG9zaWJsZXMuIAoKKiBgcmlnaHRfam9pbigpYDogZXMgaWd1YWwgcXVlIGBsZWZ0X2pvaW4oKWAgcGVybyBpbnRlcmNhbWJpYW5kbyBlbCBvcmRlbiBkZSBgeGAgZSBgeWAuIEVuIG90cmFzIHBhbGFicmFzLCBgcmlnaHRfam9pbih4LCB5KWAgZXMgaWTDqW50aWNvIGEgYGxlZnRfam9pbih5LCB4KWAuCgoqIGBpbm5lcl9qb2luKClgOiBkZXZ1ZWx2ZSB0b2RhcyBsYXMgZmlsYXMgZGUgYHhgIGRvbmRlIGhheSBjb2luY2lkZW5jaWFzIGNvbiBgeWAgeSB0b2RhcyBsYXMgY29sdW1uYXMgZGUgYHhgIGUgYHlgLiBTaSBoYXkgbcO6bHRpcGxlcyBjb2luY2lkZW5jaWFzIGVudHJlIGB4YCBlIGB5YCwgZW50b25jZXMgZGV2dWVsdmUgdG9kYXMgbGFzIGNvaW5jaWRlbmNpYXMuIEVzdG8gc2lnbmlmaWNhIHF1ZSBlbGltaW5hcsOhIGxhcyBmaWxhcyAob2JzZXJ2YWNpb25lcykgcXVlIG5vIGNvaW5jaWRhbiBlbiBhbWJhcyB0YWJsYXMsIGxvIHF1ZSBwdWVkZSBzZXIgcGVsaWdyb3NvLgoKIVtdKGltZy9qb2luX2ZhbWlseS5wbmcpCgpBaG9yYSB2YW1vcyBhIHNlZ3VpciB0cmFiYWphbmRvIGNvbiBsYXMgYmFzZSBkZSBkYXRvcyBkZSBgcGFpc2VzYCBwZXJvIG5vcyB2YW1vcyBhIHF1ZWRhciBzb2xvIGNvbiBsYXMgb2JzZXJ2YWNpb25lcyBkZWwgMjAwNyB5IGRlIHBhc28gdW5pcmxvIGEgdW5hIG51ZXZhIGJhc2UgZGUgZGF0b3MgYGNvMmAgcXVlIGNvbnRpZW5lIGluZm9ybWFjacOzbiBkZSBsYSBlbWlzacOzbiBkZSBkacOzeGlkbyBkZSBjYXJib25vIGRlIGNhZGEgcGFpcyBwYXJhIGVzZSBtaXNtbyBhw7FvLiAKCmBgYHtyLCBtZXNzYWdlPUZBTFNFfQpwYWlzZXNfMjAwNyA8LSByZWFkcjo6cmVhZF9jc3YoImRhdG9zL3BhaXNlcy5jc3YiKSAlPiUgCiAgZmlsdGVyKGFuaW8gPT0gMjAwNykgCgpjbzJfMjAwNyA8LSByZWFkcjo6cmVhZF9jc3YoImRhdG9zL2NvMl8yMDA3LmNzdiIpCmNvMl8yMDA3CmBgYAoKRXN0YSBudWV2YSB0YWJsYSB0aWVuZSAzIGNvbHVtbmFzOiBgY29kaWdvX2lzb2AgdGllbmUgZWwgY8OzZGlnbyBJU08gZGUgMyBsZXRyZWFzIGRlIChhYnJldmlhdHVyYXMgcXVlIHNlIHVzYW4gaW50ZXJuYWNpb25hbG1lbnRlKSwgYGVtaXNpb25fY28yYCB0aWVuZSBsYXMgZW1pc2lvbmVzIGFudWFsZXMgcGVyIGPDoXBpdGEgZGUgQ08yIGVuIHRvbmVsYWRhcywgYHBhaXNgIHRpZW5lIGVsIG5vbWJyZSBkZWwgcGHDrXMuIEVzdGEgw7psdGltYSBjb2x1bW5hIHRhbWJpw6luIGVzdMOhIHByZXNlbnRlIGVuIGxhIHRhYmxhIGBwYWlzZXNfMjAwN2AgeSBlcyBsYSBxdWUgdmEgYSBzZXJ2aXIgY29tbyB2YXJpYWJsZSBsbGF2ZSBwYXJhIHVuaXIgbGFzIGRvcyB0YWJsYXMuIAoKUGFyYSB1bmlyIGxhcyBkb3MgdGFibGFzLCBjdWFscXVpZXIgZnVuY2nDs24gKmpvaW4qIHJlcXVpZXJlIGNpZXJ0YSBpbmZvcm1hY2nDs246CgoqIGxhcyB0YWJsYXMgYSB1bmlyOiBzb24gbG9zIGRvcyBwcmltZXJvcyBhcmd1bWVudG9zLgoqIHF1w6kgdmFyaWFibGUgbyB2YXJpYWJsZXMgKHNlIHB1ZWRlIHVzYXIgbcOhcyBkZSB1bmEhKSB1c2FyIHBhcmEgaWRlbnRpZmljYXIgY29pbmNpZGVuY2lhczogZWwgYXJndW1lbnRvIGBieWAuCgpVbmFtb3MgYHBhaXNlc18yMDA3YCB5IGBjbzJfMjAwN2AgcHJpbWVybyBjb24gYGZ1bGxfam9pbigpYDoKCmBgYHtyfQpwYWlzZXNfY28yXzIwMDcgPC0gZnVsbF9qb2luKHBhaXNlc18yMDA3LCBjbzJfMjAwNywgYnkgPSAicGFpcyIpCnBhaXNlc19jbzJfMjAwNwpgYGAKClNpIG1pcmFtb3MgZGUgY2VyY2EgbGEgdGFibGEgdW5pZGEgdmVyZW1vcyB1biBwYXIgZGUgY29zYXM6CgoqIFRvZGFzIGxhcyBjb2x1bW5hcyBkZSBgcGFpc2VzXzIwMDdgIHkgZGUgYGNvMl8yMDA3YCBlc3TDoW4gcHJlc2VudGVzLgoqIFRvZGFzIGxhcyBvYnNlcnZhY2lvbmVzIGVzdMOhbiBwcmVzZW50ZXMsIGHDum4gbG9zIHBhaXNlcyBxdWUgZXN0w6FuIHByZXNlbnRlcyBlbiBgY28yXzIwMDdgIHBlcm8gbm8gZW4gYHBhaXNlc18yMDA3YCB5IHZpY2V2ZXJzYS4gRW4gZXNvcyBjYXNvcyBhaG9yYSB0ZW5lbW9zIGBOQWAuIEVzdG8gZ2VuZXJhIHVuYSB0YWJsYSBjb24gMjQxIGZpbGFzLgoKRXN0YSBlcyBsYSBvcGNpw7NuIG3DoXMgc2VndXJhIHNpIG5vIHNhYmVtb3Mgc2kgdG9kYXMgbGFzIG9ic2VydmFjaW9uZXMgZGUgdW5hIHRhYmxhIGVzdMOhbiBwcmVzZW50ZSBlbiBhIG90cmEuIAoKU2kgc29sbyBub3MgaW50ZXJlc2EgY29uc2VydmFyIGxhcyBmaWxhcyBkZSBsYSB0YWJsYSAqZGUgbGEgaXpxdWllcmRhKiwgZW4gZXN0ZSBjYXNvIGBwYWlzZXNfMjAwN2AgZW50b25jZXM6CgpgYGB7cn0KcGFpc2VzX2NvMl8yMDA3IDwtIGxlZnRfam9pbihwYWlzZXNfMjAwNywgY28yXzIwMDcsIGJ5ID0gInBhaXMiKQpwYWlzZXNfY28yXzIwMDcKYGBgCgpBaG9yYSBlc3BlcmFtb3MgcXVlIGxhIHRhYmxhIHJlc3VsdGFudGUgdGVuZ2EgbGEgbWlzbWEgY2FudGlkYWQgZGUgZmlsYXMgcXVlIGBwYWlzZXNfMjAwN2AgeSBlZmVjdGl2YW1lbnRlIGVzbyBvY3VycmUuIFBlcm8gYWwgbWlzbW8gdGllbXBvIHZhcmlvcyBwYWlzZXMgZW4gZXNhIHRhYmxhIG5vIGVuY29udHJhcm9uIGNvaW5jaWRlbmNpYSBlbiBgY28yXzIwMDdgIHkgcG9yIGVzYSByYXrDs24sIGxhIGNvbHVtbmEgbnVldmEgY29sdW1uYSBgZW1pc2lvbmVzX2NvMmAgdGllbmUgYE5BYC4gCgoKRmluYWxtZW50ZSwgc2kgcXVpc2VyYW1vcyBxdWVkYXJub3Mgc29sbyBjb24gbGFzIG9ic2VydmFjaW9uZXMgcXVlIGVzdMOhbiBwcmVzZW50ZXMgZW4gYW1iYXMgdGFibGFzIHVzYW1vcyBgaW5uZXJfam9pbigpYC4KCmBgYHtyfQpwYWlzZXNfY28yXzIwMDcgPC0gaW5uZXJfam9pbihwYWlzZXNfMjAwNywgY28yXzIwMDcsIGJ5ID0gInBhaXMiKQpwYWlzZXNfY28yXzIwMDcKYGBgCgpFbiBlc3RlIGNhc28sIHBlcmRlbW9zIGxhcyBmaWxhcyBkZSBgY28yXzIwMDdgIHF1ZSBubyBlbmNvbnRyYXJvbiBjb2luY2lkZW5jaWEgZW4gYHBhaXNlc18yMDA3YCB5IHZpY2V2ZXJzYSB5IGxhIHRhYmxhIHJlc3VsdGFudGUgdGllbmUgYcO6biBtZW5vcyBmaWxhcyAoMTE5KS4KCjo6OiB7LmFsZXJ0ICAuYWxlcnQtaW5mb30KKipEZXNhZmlvKioKCkVzdHV2aW1vcyB0cmFiYWphbmRvIGNvbiB1bmEgcGFydGUgZGUgbGEgYmFzZSBkZSBkYXRvcyBkZSBlbWlzaW9uZXMuIFBlcm8gdGFtYmnDqW4gZXN0w6EgZGlzcG9uaWJsZSBgY28yX2NvbXBsZXRvLmNzdmAgcXVlIGNvbnRpZW5lIGxhcyBlbWlzaW9uZXMgcGFyYSBkaXN0aW50b3MgYcOxb3MuIEVsIG9iamV0aXZvIGVzIHF1ZSB1bmFzIGBwYWlzZXNgIHkgYGNvMmAgdGVuaWVuZG8gZW4gY3VlbnRhIHRhbnRvIGVsIHBhaXMgY29tbyBlbCBhw7FvLiBQYXJhIGVzbzoKCjEuIExlZSBsYSBiYXNlIGRlIGRhdG9zIGBjbzJfY29tcGxldG8uY3N2YCBlbiB1bmEgbnVldmEgdmFyaWFibGUgcXVlIHNlIGxsYW1lIGBjbzJgLgoyLiBSZXZpc8OhIGVsIG5vbWJyZSBkZSBsYXMgdmFyaWFibGVzIGVuIGVzdGEgYmFzZSBkZSBkYXRvcywgwr9zZSBsbGFtYW4gaWd1YWwgcXVlIGxhcyB2YXJpYWJsZXMgZW4gYHBhaXNlc2A/CjMuIFVuw60gbGFzIGRvcyB0YWJsYXMgdXNhbmRvIGBmdWxsX2pvaW4oKWAsIHRlbsOpIGVuIGN1ZW50YSBxdWUgYWhvcmEgdXNhbW9zIGRvcyB2YXJpYWJsZXMgbGxhdmUgYHBhaXNgIHkgYGFuaW9gLiBCdXNjw6EgZW4gbGEgZG9jdW1lbnRhY2nDs24gY8OzbW8gaW5kaWNhcmxlIGVzbyBhIGxhIGZ1bmNpw7NuIGBmdWxsX2pvaW4oKWAuICAKOjo6Cg==</div>
-
-
+<div class="btn-group" role="group" aria-label="Navegación">
+<p><a href= "07-graficos-II.html" class = "btn btn-primary">Anterior</a> <a href= "09-funciones.html" class = "btn btn-primary">Siguiente</a></p>
 </div>
 </div>
+
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiTWFuaXB1bGFjacOzbiBkZSBkYXRvcyBvcmRlbmFkb3MgdXNhbmRvIHtkcGx5cn0geSB7dGlkeXJ9IElJIgpvdXRwdXQ6IAogIGh0bWxfZG9jdW1lbnQ6CiAgICBjb2RlX2Rvd25sb2FkOiB0cnVlCiAgICB0b2M6IHRydWUKICAgIHRvY19mbG9hdDogZmFsc2UKICAgIGhpZ2hsaWdodDogdGFuZ28gIAotLS0KCmBgYHtyIHNldHVwLCBpbmNsdWRlPUZBTFNFfQprbml0cjo6b3B0c19jaHVuayRzZXQoZWNobyA9IFRSVUUpCmBgYAoKCkVuIFtsYSDDumx0aW1hIHNlY2Npw7NuIGRlIGxlY3R1cmEgZGUgZGF0b3NdKDA0LWxlY3R1cmEtZGF0b3MuaHRtbCNGb3JtYXRvc19kZV90YWJsYXMpIHZpc3RlIGVsIGNvbmNlcHRvIGRlIGRhdG9zICJhbmNob3MiIHkgImxhcmdvcyIuIAoKTG9zIGRhdG9zIGVuIGZvcm1hdG8gImxhcmdvIiBvICJ0aWR5Iiwgc29uIGFxdWVsbG9zIGVuIGxvcyBjdWFsZXM6CgoqIGNhZGEgZmlsYSBlcyB1bmEgb2JzZXJ2YWNpw7NuCiogY2FkYSBjb2x1bW5hIGVzIHVuYSB2YXJpYWJsZQoKRW4gZWwgZm9ybWF0byAiYW5jaG8iIGVzIHVuIHBvY28gbcOhcyBjb21wbGVqbyBkZSBkZWZpbmlybG8gcGVybyBsYSBpZGVhIGdlbmVyYWwgZXMgcXVlOgoKKiBjYWRhIGZpbGEgZXMgdW4gIml0ZW0iCiogY2FkYSBjb2x1bW5hIGVzIHVuYSB2YXJpYWJsZQoKIVtdKGltZy9sYXJnby1hbmNoby5wbmcpCgpVbmEgdGFibGEgZW4gZm9ybWF0byBsYXJnbyB2YSBhIHRlbmVyIHVuYSBjaWVydGEgY2FudGlkYWQgZGUgY29sdW1uYXMgcXVlIGN1bXBsZW4gZWwgcm9sIGRlICppZGVudGlmaWNhZG9yZXMgKiB5IGN1eWEgY29tYmluYWNpw7NuIGlkZW50aWZpY2FuIHVuYSDDum5pY2Egb2JzZXJ2YWNpw7NuIHkgdW5hIMO6bmljYSBjb2x1bW5hIGNvbiBlbCB2YWxvciBkZSBsYSBvYnNlcnZhY2nDs24uIEVuIGVsIGVqZW1wbG8gZGUgYXJyaWJhLCBgcGFpc2AgeSBgYW5pb2Agc29uIGxhcyBjb2x1bW5hcyBpZGVudGlmaWNhZG9yYXMgeSBgY2Fzb3NgIGVzIGxhIGNvbHVtbmEgcXVlIGNvbnRpZW5lIGVsIHZhbG9yIGRlIGxhcyBvYnNlcnZhY2lvbmVzLiAKCkVuIHVuYSB0YWJsYSBhbmNoYSwgY2FkYSBvYnNlcnZhY2nDs24gw7puaWNhIHNlIGlkZW50aWZpY2EgYSBwYXJ0aXIgZGUgbGEgaW50ZXJzZWNjacOzbiBkZSBmaWxhcyB5IGNvbHVtbmFzLiBFbiBlbCBlamVtcGxvLCBsb3MgcGHDrXNlcyBlc3TDoW4gZW4gbGFzIGZpbGFzIHkgbG9zIGHDsW9zIGVuIGxhcyBjb2x1bW5hcy4gCgpFbiBnZW5lcmFsLCBlbCBmb3JtYXRvIGFuY2hvIGVzIG3DoXMgY29tcGFjdG8geSBsZWdpYmxlIHBvciBodW1hbm9zIG1pZW50cmFzIHF1ZSBlbCBsYXJnbyBlcyBtw6FzIGbDoWNpbCBkZSBtYW5lamFyIGNvbiBsYSBjb21wdXRhZG9yYS4gU2kgdGUgZmlqw6FzIGVuIGxhcyB0YWJsYXMgZGUgYXJyaWJhLCBlcyBtw6FzIGbDoWNpbCBjb21wYXJhciBsb3MgdmFsb3JlcyBlbnRyZSBwYcOtc2VzIHkgZW50cmUgYcOxb3MgZW4gbGEgdGFibGEgYW5jaGEuIFBlcm8gZWwgbm9tYnJlIGRlIGxhcyBjb2x1bW5hcyAoIjE5OTkiLCAiMjAwMCIpIGVuIHJlYWxpZGFkIMKhc29uIGRhdG9zISBBZGVtw6FzIGVzdGUgZm9ybWF0byBzZSBlbXBpZXphIGEgY29tcGxpY2FyIGVuIGN1YW50byBoYXkgbcOhcyBkZSBkb3MgaWRlbnRpZmljYWRvcmVzLiAKClVuIG1pc21vIHNldCBkZSBkYXRvcyBwdWVkZSBzZXIgcmVwcmVzZW50YWRvIGRlIGZvcm1hIGNvbXBsZXRhbWVudGUgImxhcmdhIiwgY29tcGxldGFtZW50ZSAiYW5jaGEiIG8gLS1sbyBxdWUgZXMgbcOhcyBjb23Dum4tLSBlbiB1biBmb3JtYXRvIGludGVybWVkaW8gcGVybyBubyBleGlzdGUgdW5hIGZvcm1hICJjb3JyZWN0YSIgZGUgb3JnYW5pemFyIGxvcyBkYXRvczsgY2FkYSB1bmEgdGllbmUgc3VzIHZlbnRhamFzIHkgZGVzdmVudGFqYXMuIFBvciBlc3RvIGVzIHF1ZSBlcyBtdXkgbm9ybWFsIHF1ZSBkdXJhbnRlIHVuIGFuw6FsaXNpcyBsb3MgZGF0b3MgdmF5YW4geSB2dWVsdmFuIGVudHJlIGRpc3RpbnRvcyBmb3JtYXRvcyBkZXBlbmRpZW5kbyBkZSBsb3MgbcOpdG9kb3MgZXN0YWTDrXN0aWNvcyBxdWUgc2UgbGUgYXBsaWNhbi4gRW50b25jZXMsIGFwcmVuZGVyIGEgdHJhbnNmb3JtYXIgZGF0b3MgYW5jaG9zIGVuIGxhcmdvcyB5IHZpY2V2ZXJzYSBlcyB1biBoYWJpbGlkYWQgbXV5IMO6dGlsLiAKCgo6Ojogey5hbGVydCAuYWxlcnQtaW5mb30KKipEZXNhZsOtbyoqCgpFbiBsYXMgdGFibGFzIGRlIGVqZW1wbG8gY2FkYSBwYcOtcyB0aWVuZSBlbCB1biB2YWxvciBvYnNlcnZhZG8gZGUgImNhc29zIiBwYXJhIGNhZGEgYcOxby4gwr9Dw7NtbyBhZ3JlZ2Fyw61hcyB1bmEgbnVldmEgdmFyaWFibGUgY29uIGluZm9ybWFjacOzbiBzb2JyZSAicHJlY2lvcyI/IERpYnVqw6EgdW4gZXNxdWVtYSBlbiBwYXBlbCB5IGzDoXBpeiBlbiBmb3JtYXRvIGFuY2hvIHkgdW5vIGVuIGZvcm1hdG8gbGFyZ28uIMK/RW4gcXXDqSBmb3JtYXRvIGVzIG3DoXMgIm5hdHVyYWwiIGVzYSBleHRlbnNpw7NuPwoKOjo6CgoKRW4gZXN0YSBzZWNjacOzbiB2YXMgYSB1c2FyIGVsIHBhcXVldGUge3RpZHlyfSBwYXJhIG1hbmlwdWxhciBkYXRvcy4gU2kgbm8gbG8gdGVuw6lzIGluc3RhbGFkbywgaW5zdGFsYWxvIGNvbiBlbCBjb21hbmRvOgoKYGBge3IgZXZhbCA9IEZBTFNFfQppbnN0YWxsLnBhY2thZ2VzKCJ0aWR5ciIpCmBgYAoKKGNvbW8gc2llbXByZSwgcmVjb3Jkw6EgcXVlIGVzdG8gaGF5IHF1ZSBoYWNlcmxvIHVuYSDDum5pY2EgdmV6KQoKWSBsdWVnbyBjYXJnw6Ege3RpZHlyfSB5IHtkcGx5cn0gKHF1ZSB1c2FzdGUgZW4gW3VuYSBzZWNjacOzbiBhbnRlcmlvcl0oMDUtZHBseXItSS5odG1sKSkgY29uOiAKCmBgYHtyfQpsaWJyYXJ5KHRpZHlyKQpsaWJyYXJ5KGRwbHlyKQpgYGAKCiMjIERlIGFuY2hvIGEgbGFyZ28gY29uIGBwaXZvdF9sb25nZXIoKWAKCkVuIHNlY2Npb25lcyBhbnRlcmlvcmVzIHVzYXN0ZSB1bmEgdmVyc2nDs24gZGUgbG9zIGRhdG9zIGRlIFtnYXBtaW5kZXJdKGh0dHBzOi8vd3d3LmdhcG1pbmRlci5vcmcvKS4gQWhvcmEgdmFzIGEgbGVlciBsb3MgZGF0b3MgZW4gc3UgZm9ybWF0byBvcmlnaW5hbDoKCmBgYHtyfQpwYWlzZXNfYW5jaG8gPC0gcmVhZHI6OnJlYWRfY3N2KCJkYXRvcy9wYWlzZXNfYW5jaG8uY3N2IikKcGFpc2VzX2FuY2hvCmBgYAoKOjo6IHsuYWxlcnQgLmFsZXJ0LXN1Y2Nlc3N9CgrCv05vdGFzdGUgcXVlIGVuIGVsIGPDs2RpZ28gYW50ZXJpb3Igbm8gdXNhc3RlIGBsaWJyYXJ5KHJlYWRyKWAgcGFyYSBjYXJnYXIgZWwgcGFxdWV0ZSB5IGx1ZWdvIGxlZXI/IENvbiBsYSBub3RhY2nDs24gYHBhcXVldGU6OmZ1bmNpb24oKWAgcG9kw6lzIGFjY2VkZXIgYSBsYXMgZnVuY2lvbmVzIGRlIHVuIHBhcXVldGUgc2luIHRlbmVyIHF1ZSBjYXJnYXJsby4gRXMgdW5hIGJ1ZW5hIGZvcm1hIGRlIG5vIHRlbmVyIHF1ZSBjYXJnYXIgdW4gbW9udMOzbiBkZSBwYXF1ZXRlcyBpbm5lY2VzYXJpb3Mgc2kgdmFzIGEgY29ycmVyIHVuYSDDum5pY2EgZnVuY2nDs24gZGUgdW4gcGFxdWV0ZSBwb2NhcyB2ZWNlcy4gCgo6OjoKCkVzdGEgdGFibGEsIGluY3Jlw61ibGVtZW50ZSBhbmNoYSwgZXMgbXV5IGRpZsOtY2lsIGRlIG1hbmVqYXIuIFBvciBlamVtcGxvLCBlcyBpbXBvc2libGUgaGFjZXIgdW5hIHNlcmllIGRlIHRpZW1wbyBkZSB1bmEgdmFyaWFibGUsIG8gY2FsY3VsYXIgZWwgcHJvbWVkaW8gcG9yIHZhcmlhYmxlIHkgcGHDrXM7IG5pIGhhYmxhciBkZSBjYWxjdWxhciB1bmEgcmVncmVzacOzbiBsaW5lYWwuIAoKUGFyYSBjb252ZXJ0aXJsbyBlbiB1bmEgdGFibGEgbcOhcyBsYXJnYSwgc2UgdXNhIGBwaXZvdF9sb25nZXIoKWAgKCJsb25nZXIiIGVzICJtw6FzIGxhcmdvIiBlbiBpbmdsw6lzKToKCmBgYHtyfQpwYWlzZXNfbGFyZ28gPC0gcGl2b3RfbG9uZ2VyKHBhaXNlc19hbmNobywKICAgICAgICAgICAgICAgICAgICAgICAgICAgICBjb2xzID0gYyhzdGFydHNfd2l0aCgncG9iJyksIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0YXJ0c193aXRoKCdlc3BlcmFuemEnKSwgCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgc3RhcnRzX3dpdGgoJ3BpYl9wZXInKSksCiAgICAgICAgICAgICAgICAgICAgICAgICAgICAgbmFtZXNfdG8gPSAidmFyaWFibGVfYW5pbyIsIAogICAgICAgICAgICAgICAgICAgICAgICAgICAgIHZhbHVlc190byA9ICJ2YWxvciIKKQpwYWlzZXNfbGFyZ28KYGBgCgpFbCBwcmltZXIgYXJndW1lbnRvIGRlYHBpdm90X2xvbmdlcigpYCBlcyBsYSB0YWJsYSBxdWUgdmEgYSBtb2RpZmljYXI6IGBwYWlzZXNfYW5jaG9gLiBFbCBzZWd1bmRvIGFyZ3VtZW50byBzZSBsbGFtYSBgY29sc2AgeSBlcyB1biB2ZWN0b3IgY29uIGxhcyBjb2x1bW5hcyBxdWUgdGllbmVuIGxvcyB2YWxvcmVzIGEgImFsYXJnYXIiLiBQb2Ryw61hIHNlciB1biB2ZWN0b3IgZXNjcml0byBhIG1hbm8gKGFsZ28gY29tbyBgYygicGliX3Blcl9jYXBpdGFfMTk1MiIsICJwaWJfcGVyX2NhcGl0YV8xOTU3Ii4uLilgKSBwZXJvIGNvbiBtw6FzIGRlIDMwIGNvbHVtbmFzLCBlc2NyaWJpciB0b2RvIGVzbyBzZXLDrWEgdGVkaW9zbyB5IHByb2JhYmxlbWVudGUgZXN0YXLDrWEgbGxlbm8gZGUgZXJyb3Jlcy4gUG9yIGVzbyB7dGlkeXJ9IHByb3ZlZSBmdW5jaW9uZXMgZGUgYXl1ZGEgcGFyYSBzZWxlY2Npb25hciBjb2x1bW5hcyBlbiBiYXNlIGEgcGF0cm9uZXMuIEVsIGPDs2RpZ28gZGUgYXJyaWJhIHVzYSBgc3RhcnRzX3dpdGgoKWAgcXVlLCBjb21vIHN1IG5vbWJyZSBlbiBpbmdsw6lzIGxvIGluZGljYSwgc2VsZWNjaW9uYSBsYXMgY29sdW1uYXMgcXVlICplbXBpZXphbiBjb24qIHVuYSBkZXRlcm1pbmFkYSBjYWRlbmEgZGUgY2FyYWN0ZXJlcy4gRWwgdmVjdG9yIGBjKHN0YXJ0c193aXRoKCdwb2InKSwgc3RhcnRzX3dpdGgoJ2VzcGVyYW56YScpLCBzdGFydHNfd2l0aCgncGliX3BlcicpKWAgbGUgZGljZSBhIGBwaXZvdF9sb25nZXIoKWAgcXVlIHNlbGVjY2lvbmUgbGFzIGNvbHVtbmFzIHF1ZSBlbXBpZXphIGNvbiAicG9iIiwgbGFzIHF1ZSBlbXBpZXphbiBjb24gImVzcGVyYW56YSIgeSBsYXMgcXVlIGVtcGllemFuIGNvbiAicGliX3BlciIuIAoKOjo6IHsuYWxlcnQgLmFsZXJ0LXN1Y2Nlc3N9CgpFc3RhcyBmdW5jaW9uZXMgYWNjZXNvcmlhcyBwYXJhIHNlbGVjY2lvbmFyIG11Y2hhcyBmdW5jaW9uZXMgc2UgbGxhbWFuICJ0aWR5c2VsZWN0Ii4gU2kgcXVlcsOpcyBsZWVyIG3DoXMgZGV0YWxsZXMgZGUgbGFzIGRpc3RpbnRhcyBmb3JtYXMgcXVlIHBvZMOpcyBzZWxlY2Npb25hciB2YXJpYWJsZXMgbGXDqSBsYSBkb2N1bWVudGFjacOzbiB1c2FuZG8gYD90aWR5c2VsZWN0OjpsYW5ndWFnZWAuCgo6OjoKCkVsIHRlcmNlciB5IGN1YXJ0byBhcmd1bWVudG8gc29uIGxvcyBub21icmVzIGRlIGxhcyBjb2x1bW5hcyBkZSAibm9tYnJlIiB5IGRlICJ2YWxvciIgcXVlIHZhIGEgdGVuZXIgbGEgbnVldmEgdGFibGEuIENvbW8gbGEgbnVldmEgY29sdW1uYSBkZSBpZGVudGlmaWNhY2nDs24gdGllbmUgbG9zIGRhdG9zIGRlIGxhIHZhcmlhYmxlIHkgZWwgYcOxbyBhIG1lZGlyLCAidmFyaWFibGVfYW5pbyIgZXMgdW4gYnVlbiBub21icmUuIFkgbGEgY29sdW1uYSBkZSB2YWxvciB2YSBhIHRlbmVyLi4uIGJ1ZW5vLCBlbCB2YWxvci4gCgpUb21hdGUgdW4gbW9tZW50byBwYXJhIHZpc3VhbGl6YXIgbG8gcXVlIGFjYWJhIGRlIHBhc2FyLiBMYSB0YWJsYSBhbmNoYSB0ZW7DrWEgdW4gbW9udMOzbiBkZSBjb2x1bW5hcyBjb24gZGlzdGludG9zIGRhdG9zLiBBaG9yYSBlc3RvcyBkYXRvcyBlc3TDoW4gdW5vIGFycmliYSBkZSBvdHJvIGVuIGxhIGNvbHVtbmEgInZhbG9yIiwgcGVybyBwYXJhIGlkZW50aWZpY2FyIGVsIG5vbWJyZSBkZSBsYSBjb2x1bW5hIGRlIGxhIGN1YWwgdmluaWVyb24sIHNlIGFncmVnYSBsYSBjb2x1bW5hICJ2YXJpYWJsZV9hbmlvIi4gCgoKIVtQcm9jZXNvIGRlIGxhcmdvIGEgYW5jaG9dKGltZy9hbmNoby1hLWxhcmdvLnBuZykKCkxhIGNvbHVtbmEgYHZhcmlhYmxlX2FuaW9gIHRvZGF2w61hIG5vIGVzIG11eSDDunRpbCBwb3JxdWUgY29udGllbmUgMiBkYXRvcywgbGEgdmFyaWFibGUgKHBvYmxhY2nDs24sIGV4cGVjdGF0aXZhIGRlIHZpZGEgbyBQQkkgcGVyIGPDoXBpdGEpIHkgZWwgYcOxby4gU2Vyw61hIG1lam9yIHNlcGFyYXIgZXN0YSBpbmZvcm1hY2nDs24gZW4gZG9zIGNvbHVtbmFzIGxsYW1hZGFzICJ2YXJpYWJsZSIgeSAiYW5pbyIuIFBhcmEgZXNvIGVzdMOhIGxhIGZ1bmNpw7NuIGBzZXBhcmF0ZSgpYC4KCmBgYHtyfQpzZXBhcmF0ZShwYWlzZXNfbGFyZ28sIAogICAgICAgICBjb2wgPSB2YXJpYWJsZV9hbmlvLCAKICAgICAgICAgaW50byA9IGMoInZhcmlhYmxlIiwgImFuaW8iKSwgCiAgICAgICAgIHNlcCA9IC00KQpgYGAKCkVsIHByaW1lciBhcmd1bWVudG8sIGNvbW8gc2llbXByZSwgZXMgbGEgdGFibGEgYSBwcm9jZXNhci4gRWwgc2VndW5kbywgYGNvbGAsIGVzIGxhIGNvbHVtbmEgYSBzZXBhcmFyIGVuIGRvcyAobyBtw6FzKSBjb2x1bW5hcyBudWV2YXMuIEVsIHRlcmNlcm8sIGBpbnRvYCBlcyBlbCBub21icmUgZGUgbGFzIG51ZXZhcyBjb2x1bW5hcyBxdWUgYHNlcGFyYXRlKClgIHZhIGEgY3JlYXIuIEVsIMO6bHRpbW8gYXJndW1lbnRvIGVzIGBzZXBgIHF1ZSBkZWZpbmUgY8OzbW8gcmVhbGl6YXIgbGEgc2VwYXJhY2nDs24uIFBvciBkZWZlY3RvLCBgc2VwYCBlcyB1bmEgW2V4cHJlc2nDs24gcmVndWxhcl0oaHR0cHM6Ly9lcy53aWtpcGVkaWEub3JnL3dpa2kvRXhwcmVzaSVDMyVCM25fcmVndWxhcikgcXVlIGNhcHR1cmEgY3VhbHF1aWVyIGNhcmFjdGVyIG5vIGFsZmFudW3DqXJpY28uIEVuIGVsIGNhc28gZGUgYHZhcmlhYmxlX2FuaW9gIG5vIHNpcnZlLCBwb3JxdWUgcGFyYSB2YWxvcmVzIGNvbW8gYCJlc3BlcmFuemFfZGVfdmlkYV8xOTUyImAsIHNlcGFyYXLDrWEgZW4gYCJlc3BlcmFuemEiYCwgYCJkZSJgLCBgInZpZGEiYCB5IGAiMTk1MiJgLiBDb21vIGVsIGHDsW8gdGllbmUgc2llbXByZSA0IGNhcmFjdGVyZXMsIHVuYSBzb2x1Y2nDs24gc2ltcGxlIGVzIHVzYXIgYHNlcCA9IC00YCwgcXVlIHNpZ25pZmljYSBxdWUgbGEgc2VwYXJhY2nDs24gZXMgNCBjYXJhY3RlcmVzIGNvbnRhbmRvIGRlc2RlIGVsIGZpbmFsLiAKCkhhYnLDoXMgbm90YWRvIHVuIHByb2JsZW1hLiBFbCB0ZXh0byBlbiBsYSBjb2x1bW5hcyBgdmFyaWFibGVgIHRvZGF2w61hIHRpZW5lIHVuICJfIiBhbCBmaW5hbC4gUG9kcsOtYXMgdXNhciBgbXV0YXRlKClgIHkgdW4gcG9jbyBkZSBmdW5jaW9uZXMgZGUgbWFuaXB1bGFjacOzbiBkZSBjYXJhY3RlcmVzIHBhcmEgcXVpdGFybG8sIHBlcm8gaGF5IHVuYSBmb3JtYSB1biBwb2NvIG3DoXMgc2ltcGxlIHkgZXMgc2VwYXJhbmRvIGxhIGNvbHVtbmEgYHZhcmlhYmxlX2FuaW9gIGVuIHRyZXMsIGluY2x1eWVuZG8gdW5hIGNvbHVtbmEgY29uIGVsIGd1acOzbjoKCmBgYHtyfQpwYWlzZXNfbGFyZ28gPC0gc2VwYXJhdGUocGFpc2VzX2xhcmdvLCAKICAgICAgICAgY29sID0gdmFyaWFibGVfYW5pbywgCiAgICAgICAgIGludG8gPSBjKCJ2YXJpYWJsZSIsICJndWlvbiIsICJhbmlvIiksIAogICAgICAgICBzZXAgPSBjKC01LCAtNCkpCnBhaXNlc19sYXJnbwpgYGAKClkgeWEgY2FzaS4gSGF5IHF1ZSBlbGltaW5hciBsYSBjb2x1bW5hIGBndWlvbmAsIHF1ZSBubyBzaXJ2ZSBwYXJhIG5hZGEuIFBlcm8gZmlqYXRlIHF1ZSBkZWJham8gZGUgbGEgY29sdW1uYSBgYW5pb2AgZGljZSBgPGNocj5gOyBlc28gc2lnbmlmaWNhIHF1ZSBlbCB0aXBvIGRlIGxhIGNvbHVtbmEgZXMgY2FyYWN0ZXIsIHBlcm8gbG9zIGHDsW9zIHNvbiBuw7ptZXJvcy4gVXNhbmRvIGBtdXRhdGUoKWAgcG9kw6lzIGVsaW1pbmFyIGxhIGNvbHVtbmEgYGd1aW9uYCBhc2lnbsOhbmRvbGUgZWwgdmFsb3IgYE5VTExgIChudWxvKSB5IGNvZXJjZXIgKHJlY29yZMOhIFtlc3RhIHNlY2Npw7NuXSgwNC1sZWN0dXJhLWRhdG9zLmh0bWwjVmVjdG9yZXMpKSBsYSBjb2x1bW5hIGBhbmlvYCBhIGVudGVybyB1c2FuZG8gYGFzLmludGVnZXIoKWA6CgpgYGB7cn0KcGFpc2VzX2xhcmdvIDwtIG11dGF0ZShwYWlzZXNfbGFyZ28sIAogICAgICAgICAgICAgICAgICAgICAgIGd1aW9uID0gTlVMTCwKICAgICAgICAgICAgICAgICAgICAgICBhbmlvID0gYXMuaW50ZWdlcihhbmlvKSkKcGFpc2VzX2xhcmdvCmBgYAoKOjo6IHsuYWxlcnQgLmFsZXJ0LWluZm99CioqRGVzYWbDrW8qKgoKSnVudMOhIHRvZG9zIGxvcyBwYXNvcyBhbnRlcmlvcmVzIGVuIHVuYSBzb2xhIGNhZGVuYSBkZSBvcGVyYWNpb25lcyB1c2FuZG8gYCU+JWAuCgo6OjoKCgoKIyMgRGUgbGFyZ28gYSBhbmNobyBjb24gYHBpdm90X3dpZGVyKClgCgpBaG9yYSBsYSB2YXJpYWJsZSBgcGFpc2VzX2xhcmdvYCBlc3TDoSBlbiBlbCBmb3JtYXRvIG3DoXMgbGFyZ28gcG9zaWJsZS4gVGllbmUgNSBjb2x1bW5hcywgZGUgbGFzIGN1YWxlcyBzw7NsbyB1bmEgZXMgbGEgY29sdW1uYXMgY29uIHZhbG9yZXMuIFBlcm8gY29uIGxvcyBkYXRvcyBhc8OtIG5vIHBvZHLDrWFzIGhhY2VyIHVuIGdyw6FmaWNvIGRlIHB1bnRvcyBxdWUgbXVlc3RyZSBsYSByZWxhY2nDs24gZW50cmUgZWwgUEJJIHBlciBjw6FwaXRhIHkgbGEgZXhwZWN0YXRpdmEgZGUgdmlkYSBjb21vIGVuIGxhIFtzZWNjacOzbiBkZSBncsOhZmljb3NdKDA2LWdyYWZpY29zLUkuaHRtbCNTZWd1bmRhX2NhcGE6X2dlb21ldHLDrWFzKS4gRmlqYXRlIHF1ZSBsb3MgdmFsb3JlcyBkZSBsYSBjb2x1bW5hIGB2YWxvcmAgbm8gdGllbmVuIHRvZG9zIGxhcyBtaXNtYXMgdW5pZGFkZXMsIHBvciBsbyBxdWUgb3BlcmFyIGNvbiBlc2UgdmVjdG9yIHBvZHLDrWEgZGFyIHJlc3VsdGFkb3Mgc2luIHNlbnRpZG8uIE11Y2hhcyB2ZWNlcyBlcyBjb252ZW5pZW50ZSB5IG5hdHVyYWwgdGVuZXIgbG9zIGRhdG9zIGVuIHVuIGZvcm1hdG8gaW50ZXJtZWRpbyBlbiBkb25kZSBoYXkgbcO6bHRpcGxlcyBjb2x1bW5hcyBjb24gbG9zIHZhbG9yZXMgZGUgZGlzdGludGFzIHZhcmlhYmxlcyBvYnNlcnZhZGFzLiAKClBhc2EgImVuc2FuY2hhciIgdW5hIHRhYmxhIGVzdMOhIGxhIGZ1bmNpw7NuIGBwaXZvdF93aWRlcigpYCAoIndpZGVyIiBlcyAibcOhcyBhbmNoYSIgZW4gaW5nbMOpcykgeSBlbCBjw7NkaWdvIHBhcmEgY29uc2VndWlyIGVzdGUgZm9ybWF0byBpbnRlcm1lZGlvIGVzOgoKYGBge3J9CnBhaXNlc19tZWRpbyA8LSBwaXZvdF93aWRlcihwYWlzZXNfbGFyZ28sIG5hbWVzX2Zyb20gPSB2YXJpYWJsZSwgdmFsdWVzX2Zyb20gPSB2YWxvcikKcGFpc2VzX21lZGlvCmBgYAoKTnVldmFtZW50ZSBlbCBwcmltZXIgYXJndW1lbnRvIGVzIGxhIHRhYmxhIG9yaWdpbmFsLiBFbCBzZWd1bmRvLCBgbmFtZXNfZnJvbWAgZXMgbGEgY29sdW1uYSBjdXlvcyB2YWxvcmVzIMO6bmljb3MgdmFuIGEgY29udmVydGlyc2UgZW4gbnVldmFzIGNvbHVtbmFzLiBMYSBjb2x1bW5hIGB2YXJpYWJsZWAgdGllbmUgbG9zIHZhbG9yZXMgYCJwb2JsYWNpw7NuImAsIGAiZXNwZXJhbnphX2RlX3ZpZGEiYCB5IGAicGliX3Blcl9jYXBpdGEiYCB5IGVudG9uY2VzIGxhIHRhYmxhIG51ZXZhIHRlbmRyw6EgdHJlcyBjb2x1bW5hcyBjb24gZXNvcyBub21icmVzLiBFbCB0ZXJjZXIgYXJndW1lbnRvLCBgdmFsdWVzX2Zyb21gLCBlcyBsYSBjb2x1bW5hIGRlIGxhIGN1YWwgc2FjYXIgbG9zIHZhbG9yZXMuIAoKUGFyYSB2b2x2ZXIgYWwgZm9ybWF0byBtw6FzIGFuY2hvLCBiYXN0YSBjb24gYWdyZWdhciBtw6FzIGNvbHVtbmFzIGVuIGVsIGFyZ3VtZW50byBgbmFtZXNfZnJvbWA6CgpgYGB7cn0KcGl2b3Rfd2lkZXIocGFpc2VzX2xhcmdvLCAKICAgICAgICAgICAgbmFtZXNfZnJvbSA9IGModmFyaWFibGUsIGFuaW8pLCAKICAgICAgICAgICAgbmFtZXNfc2VwID0gIl8iLAogICAgICAgICAgICB2YWx1ZXNfZnJvbSA9IHZhbG9yKQpgYGAKCkVuIGVzdGEgbGxhbWFkYSB0YW1iacOpbiBlc3TDoSBlbCBhcmd1bWVudG8gYG5hbWVzX3NlcGAsIHF1ZSBkZXRlcm1pbmEgZWwgY2FyYWN0ZXIgcXVlIHNlIHVzYSBwYXJhIGNyZWFyIGVsIG5vbWJyZSBkZSBsYXMgbnVldmFzIGNvbHVtbmFzLiAKCgo6Ojogey5hbGVydCAgLmFsZXJ0LWluZm99CioqRGVzYWbDrW8qKgoKKiBDcmXDoSB1bmEgbnVldmEgdGFibGEsIGxsYW1hZGEgYHBhaXNlc19zdXBlcmR1cGVyX2FuY2hvYCBxdWUgdGVuZ2EgdW5hIGNvbHVtbmEgcGFyYSBjYWRhIHZhcmlhYmxlLCBhbmlvIHkgcGHDrXMuIChDb25zZWpvOiBsYSB0YWJsYSBmaW5hbCB0aWVuZSBxdWUgdGVuZXIgNSBmaWxhcykuCgoqIMK/Q8OzbW8gZXMgbGEgdGFibGEgbcOhcyBhbmNoYSBwb3NpYmxlIHF1ZSBwb2TDqXMgZ2VuZXJhciBjb24gZXN0b3MgZGF0b3M/IMK/Q3XDoW50YXMgZmlsYXMgeSBjb2x1bW5hcyB0aWVuZT8KCjo6OgoKCiMjIFVuaWVuZG8gdGFibGFzCgpIYXN0YSBhaG9yYSB0b2RvIGxvIHF1ZSB1c2FzdGUgZGUge2RwbHlyfSBpbnZvbHVjcmEgdHJhYmFqYXIgeSBtb2RpZmljYXIgY29uIHVuYSBzb2xhIHRhYmxhIGEgbGEgdmV6LCBwZXJvIGVzIG11eSBjb23Dum4gdGVuZXIgZG9zIG8gbcOhcyB0YWJsYXMgY29uIGRhdG9zIHJlbGFjaW9uYWRvcy4gRW4gZXNlIGNhc28sIHRlbmVtb3MgcXVlICp1bmlyKiBlc3RhcyB0YWJsYXMuIGEgcGFydGlyIGRlIHVuYSBvIG3DoXMgdmFyaWFibGVzIGVuIGNvbcO6biBvICprZXlzKi4gRW4gRXhjZWwgdSBvdHJvIHByb2dyYW1hIGRlIGhvamFzIGRlIGPDoWxjdWxvLCBlc3RvIHNlIHJlc3VlbHZlIGNvbiBsYSBmdW5jacOzbiAiVkxPT0tVUCIgbyAgIkJVU0NBUlYiLCBlbiBSIHkgZW4gcGFydGljdWxhciBkZW50cm8gZGVsIG11bmRvIGRlIHtkcGx5cn0gaGF5IHF1ZSB1c2FyIGxhIGZhbWlsaWEgZGUgZnVuY2lvbmVzIGAqX2pvaW4oKWAuIEhheSB1bmEgZnVuY2nDs24gY2FkYSB0aXBvIGRlIHVuacOzbiBxdWUgcXVlcmFtb3MgaGFjZXIuIAoKQXN1bWllbmRvIHF1ZSBxdWVyw6lzIHVuaXIgZG9zIGRhdGEuZnJhbWVzIG8gdGFibGFzIGB4YCBlIGB5YCBxdWUgdGllbmVuIGVuIGNvbcO6biB1bmEgdmFyaWFibGUgYEFgOgoKIVtdKGltZy9qb2luLnBuZykKCiogYGZ1bGxfam9pbigpYDogZGV2dWVsdmUgdG9kYXMgbGFzIGZpbGFzIHkgdG9kYXMgbGFzIGNvbHVtbmFzIGRlIGFtYmFzIHRhYmxhcyBgeGAgZSBgeWAuIEN1YW5kbyBubyBjb2luY2lkZW4gbG9zIGVsZW1lbnRvcyBlbiBgeDFgLCBkZXZ1ZWx2ZSBgTkFgIChkYXRvIGZhbHRhbnRlKS4gRXN0byBzaWduaWZpY2EgcXVlIG5vIHNlIHBpZXJkZW4gZmlsYXMgZGUgbmluZ3VuYSBkZSBsYXMgZG9zIHRhYmxhcyBhw7puIGN1YW5kbyBubyBoYXkgY29pbmNpZGVuY2lhLiBFc3TDoSBlcyBsYSBtYW5lcmEgbcOhcyBzZWd1cmEgZGUgdW5pciB0YWJsYXMuCgoqIGBsZWZ0X2pvaW4oKWA6IGRldnVlbHZlIHRvZGFzIGxhcyBmaWxhcyBkZSBgeGAgeSB0b2RhcyBsYXMgY29sdW1uYXMgZGUgYHhgIGUgYHlgLiBMYXMgZmlsYXMgZW4gYHhgIHF1ZSBubyB0ZW5nYW4gY29pbmNpZGVuY2lhIGNvbiBgeWAgdGVuZHLDoW4gYE5BYCBlbiBsYXMgbnVldmFzIGNvbHVtbmFzLiBTaSBoYXkgbcO6bHRpcGxlcyBjb2luY2lkZW5jaWFzIGVudHJlIGB4YGUgYHlgLCBkZXZ1ZWx2ZSB0b2RhcyBsYXMgY29pbmNpZGVuY2lhcyBwb3NpYmxlcy4gCgoqIGByaWdodF9qb2luKClgOiBlcyBpZ3VhbCBxdWUgYGxlZnRfam9pbigpYCBwZXJvIGludGVyY2FtYmlhbmRvIGVsIG9yZGVuIGRlIGB4YCBlIGB5YC4gRW4gb3RyYXMgcGFsYWJyYXMsIGByaWdodF9qb2luKHgsIHkpYCBlcyBpZMOpbnRpY28gYSBgbGVmdF9qb2luKHksIHgpYC4KCiogYGlubmVyX2pvaW4oKWA6IGRldnVlbHZlIHRvZGFzIGxhcyBmaWxhcyBkZSBgeGAgZG9uZGUgaGF5IGNvaW5jaWRlbmNpYXMgY29uIGB5YCB5IHRvZGFzIGxhcyBjb2x1bW5hcyBkZSBgeGAgZSBgeWAuIFNpIGhheSBtw7psdGlwbGVzIGNvaW5jaWRlbmNpYXMgZW50cmUgYHhgIGUgYHlgLCBlbnRvbmNlcyBkZXZ1ZWx2ZSB0b2RhcyBsYXMgY29pbmNpZGVuY2lhcy4gRXN0byBzaWduaWZpY2EgcXVlIGVsaW1pbmFyw6EgbGFzIGZpbGFzIChvYnNlcnZhY2lvbmVzKSBxdWUgbm8gY29pbmNpZGFuIGVuIGFtYmFzIHRhYmxhcywgbG8gcXVlIHB1ZWRlIHNlciBwZWxpZ3Jvc28uCgohW10oaW1nL2pvaW5fZmFtaWx5LnBuZykKCkFob3JhIHZhbW9zIGEgc2VndWlyIHRyYWJhamFuZG8gY29uIGxhcyBiYXNlIGRlIGRhdG9zIGRlIGBwYWlzZXNgIHBlcm8gbm9zIHZhbW9zIGEgcXVlZGFyIHNvbG8gY29uIGxhcyBvYnNlcnZhY2lvbmVzIGRlbCAyMDA3IHkgZGUgcGFzbyB1bmlybG8gYSB1bmEgbnVldmEgYmFzZSBkZSBkYXRvcyBgY28yYCBxdWUgY29udGllbmUgaW5mb3JtYWNpw7NuIGRlIGxhIGVtaXNpw7NuIGRlIGRpw7N4aWRvIGRlIGNhcmJvbm8gZGUgY2FkYSBwYcOtcyBwYXJhIGVzZSBtaXNtbyBhw7FvLiAKCmBgYHtyLCBtZXNzYWdlPUZBTFNFfQpwYWlzZXNfMjAwNyA8LSByZWFkcjo6cmVhZF9jc3YoImRhdG9zL3BhaXNlcy5jc3YiKSAlPiUgCiAgZmlsdGVyKGFuaW8gPT0gMjAwNykgCgpjbzJfMjAwNyA8LSByZWFkcjo6cmVhZF9jc3YoImRhdG9zL2NvMl8yMDA3LmNzdiIpCmNvMl8yMDA3CmBgYAoKRXN0YSBudWV2YSB0YWJsYSB0aWVuZSAzIGNvbHVtbmFzOiBgY29kaWdvX2lzb2AgdGllbmUgZWwgY8OzZGlnbyBJU08gZGUgMyBsZXRyYXMgZGUgKGFicmV2aWF0dXJhcyBxdWUgc2UgdXNhbiBpbnRlcm5hY2lvbmFsbWVudGUpLCBgZW1pc2lvbl9jbzJgIHRpZW5lIGxhcyBlbWlzaW9uZXMgYW51YWxlcyBwZXIgY8OhcGl0YSBkZSBDTzIgZW4gdG9uZWxhZGFzLCBgcGFpc2AgdGllbmUgZWwgbm9tYnJlIGRlbCBwYcOtcy4gRXN0YSDDumx0aW1hIGNvbHVtbmEgdGFtYmnDqW4gZXN0w6EgcHJlc2VudGUgZW4gbGEgdGFibGEgYHBhaXNlc18yMDA3YCB5IGVzIGxhIHF1ZSB2YSBhIHNlcnZpciBjb21vIHZhcmlhYmxlIGxsYXZlIHBhcmEgdW5pciBsYXMgZG9zIHRhYmxhcy4gCgpQYXJhIHVuaXIgbGFzIGRvcyB0YWJsYXMsIGN1YWxxdWllciBmdW5jacOzbiAqam9pbiogcmVxdWllcmUgY2llcnRhIGluZm9ybWFjacOzbjoKCiogbGFzIHRhYmxhcyBhIHVuaXI6IHNvbiBsb3MgZG9zIHByaW1lcm9zIGFyZ3VtZW50b3MuCiogcXXDqSB2YXJpYWJsZSBvIHZhcmlhYmxlcyAoc2UgcHVlZGUgdXNhciBtw6FzIGRlIHVuYSEpIHVzYXIgcGFyYSBpZGVudGlmaWNhciBjb2luY2lkZW5jaWFzOiBlbCBhcmd1bWVudG8gYGJ5YC4KClVuYW1vcyBgcGFpc2VzXzIwMDdgIHkgYGNvMl8yMDA3YCBwcmltZXJvIGNvbiBgZnVsbF9qb2luKClgOgoKYGBge3J9CnBhaXNlc19jbzJfMjAwNyA8LSBmdWxsX2pvaW4ocGFpc2VzXzIwMDcsIGNvMl8yMDA3LCBieSA9ICJwYWlzIikKcGFpc2VzX2NvMl8yMDA3CmBgYAoKU2kgbWlyYW1vcyBkZSBjZXJjYSBsYSB0YWJsYSB1bmlkYSB2ZXJlbW9zIHVuIHBhciBkZSBjb3NhczoKCiogVG9kYXMgbGFzIGNvbHVtbmFzIGRlIGBwYWlzZXNfMjAwN2AgeSBkZSBgY28yXzIwMDdgIGVzdMOhbiBwcmVzZW50ZXMuCiogVG9kYXMgbGFzIG9ic2VydmFjaW9uZXMgZXN0w6FuIHByZXNlbnRlcywgYcO6biBsb3MgcGHDrXNlcyBxdWUgZXN0w6FuIHByZXNlbnRlcyBlbiBgY28yXzIwMDdgIHBlcm8gbm8gZW4gYHBhaXNlc18yMDA3YCB5IHZpY2V2ZXJzYS4gRW4gZXNvcyBjYXNvcyBhaG9yYSB0ZW5lbW9zIGBOQWAuIEVzdG8gZ2VuZXJhIHVuYSB0YWJsYSBjb24gMjQxIGZpbGFzLgoKRXN0YSBlcyBsYSBvcGNpw7NuIG3DoXMgc2VndXJhIHNpIG5vIHNhYmVtb3Mgc2kgdG9kYXMgbGFzIG9ic2VydmFjaW9uZXMgZGUgdW5hIHRhYmxhIGVzdMOhbiBwcmVzZW50ZSBlbiBhIG90cmEuIAoKU2kgc29sbyBub3MgaW50ZXJlc2EgY29uc2VydmFyIGxhcyBmaWxhcyBkZSBsYSB0YWJsYSAqZGUgbGEgaXpxdWllcmRhKiwgZW4gZXN0ZSBjYXNvIGBwYWlzZXNfMjAwN2AgZW50b25jZXM6CgpgYGB7cn0KcGFpc2VzX2NvMl8yMDA3IDwtIGxlZnRfam9pbihwYWlzZXNfMjAwNywgY28yXzIwMDcsIGJ5ID0gInBhaXMiKQpwYWlzZXNfY28yXzIwMDcKYGBgCgpBaG9yYSBlc3BlcmFtb3MgcXVlIGxhIHRhYmxhIHJlc3VsdGFudGUgdGVuZ2EgbGEgbWlzbWEgY2FudGlkYWQgZGUgZmlsYXMgcXVlIGBwYWlzZXNfMjAwN2AgeSBlZmVjdGl2YW1lbnRlIGVzbyBvY3VycmUuIFBlcm8gYWwgbWlzbW8gdGllbXBvIHZhcmlvcyBwYcOtc2VzIGVuIGVzYSB0YWJsYSBubyBlbmNvbnRyYXJvbiBjb2luY2lkZW5jaWEgZW4gYGNvMl8yMDA3YCB5IHBvciBlc2EgcmF6w7NuLCBsYSBjb2x1bW5hIG51ZXZhIGNvbHVtbmEgYGVtaXNpb25lc19jbzJgIHRpZW5lIGBOQWAuIAoKCkZpbmFsbWVudGUsIHNpIHF1aXNpw6lyYW1vcyBxdWVkYXJub3Mgc29sbyBjb24gbGFzIG9ic2VydmFjaW9uZXMgcXVlIGVzdMOhbiBwcmVzZW50ZXMgZW4gYW1iYXMgdGFibGFzIHVzYW1vcyBgaW5uZXJfam9pbigpYC4KCmBgYHtyfQpwYWlzZXNfY28yXzIwMDcgPC0gaW5uZXJfam9pbihwYWlzZXNfMjAwNywgY28yXzIwMDcsIGJ5ID0gInBhaXMiKQpwYWlzZXNfY28yXzIwMDcKYGBgCgpFbiBlc3RlIGNhc28sIHBlcmRlbW9zIGxhcyBmaWxhcyBkZSBgY28yXzIwMDdgIHF1ZSBubyBlbmNvbnRyYXJvbiBjb2luY2lkZW5jaWEgZW4gYHBhaXNlc18yMDA3YCB5IHZpY2V2ZXJzYSB5IGxhIHRhYmxhIHJlc3VsdGFudGUgdGllbmUgYcO6biBtZW5vcyBmaWxhcyAoMTE5KS4KCjo6OiB7LmFsZXJ0ICAuYWxlcnQtaW5mb30KKipEZXNhZsOtbyoqCgpFc3R1dmltb3MgdHJhYmFqYW5kbyBjb24gdW5hIHBhcnRlIGRlIGxhIGJhc2UgZGUgZGF0b3MgZGUgZW1pc2lvbmVzLiBQZXJvIHRhbWJpw6luIGVzdMOhIGRpc3BvbmlibGUgYGNvMl9jb21wbGV0by5jc3ZgIHF1ZSBjb250aWVuZSBsYXMgZW1pc2lvbmVzIHBhcmEgZGlzdGludG9zIGHDsW9zLiBFbCBvYmpldGl2byBlcyBxdWUgdW5hcyBgcGFpc2VzYCB5IGBjbzJgIHRlbmllbmRvIGVuIGN1ZW50YSB0YW50byBlbCBwYcOtcyBjb21vIGVsIGHDsW8uIFBhcmEgZXNvOgoKMS4gTGVlIGxhIGJhc2UgZGUgZGF0b3MgYGNvMl9jb21wbGV0by5jc3ZgIGVuIHVuYSBudWV2YSB2YXJpYWJsZSBxdWUgc2UgbGxhbWUgYGNvMmAuCjIuIFJldmlzw6EgZWwgbm9tYnJlIGRlIGxhcyB2YXJpYWJsZXMgZW4gZXN0YSBiYXNlIGRlIGRhdG9zLCDCv3NlIGxsYW1hbiBpZ3VhbCBxdWUgbGFzIHZhcmlhYmxlcyBlbiBgcGFpc2VzYD8KMy4gVW7DrSBsYXMgZG9zIHRhYmxhcyB1c2FuZG8gYGZ1bGxfam9pbigpYCwgdGVuw6kgZW4gY3VlbnRhIHF1ZSBhaG9yYSB1c2Ftb3MgZG9zIHZhcmlhYmxlcyBsbGF2ZSBgcGFpc2AgeSBgYW5pb2AuIEJ1c2PDoSBlbiBsYSBkb2N1bWVudGFjacOzbiBjw7NtbyBpbmRpY2FybGUgZXNvIGEgbGEgZnVuY2nDs24gYGZ1bGxfam9pbigpYC4gIAo6OjoKCjxkaXYgY2xhc3M9ImJ0bi1ncm91cCIgcm9sZT0iZ3JvdXAiIGFyaWEtbGFiZWw9Ik5hdmVnYWNpw7NuIj4KICA8YSBocmVmPSAiMDctZ3JhZmljb3MtSUkuaHRtbCIgY2xhc3MgPSAiYnRuIGJ0bi1wcmltYXJ5Ij5BbnRlcmlvcjwvYT4KICA8YSBocmVmPSAiMDktZnVuY2lvbmVzLmh0bWwiIGNsYXNzID0gImJ0biBidG4tcHJpbWFyeSI+U2lndWllbnRlPC9hPgo8L2Rpdj4=</div>
+
+
 
 </div>
 
@@ -903,32 +838,6 @@ $(document).ready(function () {
 });
 </script>
 
-<script>
-$(document).ready(function ()  {
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

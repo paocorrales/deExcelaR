@@ -19,7 +19,7 @@ Abrí tu proyecto desde el explorador de archivos (haciendo doble click en el ar
 
 Agregá títulos y mejorá las etiquetas en tus gráficos, si querés, también podés cambiar el tema o alguna escala para que tenga una apariencia distinta (tenés todo [acá](12-ggplot-III.html)). 
 
-Si generaste tablas, podés mejorar su apariencia con algua de las opciones de [{kable} o {kableExtra}](11-tablas.html).
+Si generaste tablas, podés mejorar su apariencia con alguna de las opciones de [{kable} o {kableExtra}](11-tablas.html).
 
 ### 3. Definí el formato final
 

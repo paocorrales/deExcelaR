@@ -4,7 +4,7 @@ output:
   html_document:
     code_download: true
     toc: true
-    toc_float: true
+    toc_float: false
     highlight: tango   
 ---
 
@@ -13,7 +13,7 @@ output:
 
 Existen muchas funciones distintas para leer datos dependiendo del formato en el que están guardados. Para datos tabulares, la forma más útil es el formato csv, que es un archivo de texto plano con datos separados por coma. 
 
-Para importar datos hace falta escrbir el códgo correspondiente pero también podés aprovechar el entorno gráfico de RStudio:
+Para importar datos hace falta escribir el código correspondiente pero también podés aprovechar el entorno gráfico de RStudio:
 
 ::: {.alert .alert-secondary}
 File → Import Dataset → From Text (readr)...
@@ -25,7 +25,7 @@ Esto nos va abrir una ventana donde podemos elegir el archivo que queremos impor
 
 En la pantalla principal vas a poder previsualizar los datos y ver que pinta tienen. Abajo a la izquierda tenés varias opciones: el nombre que vas a usar para la variable (en este caso llamaremos `paises`), si la primera fila contiene los nombres de las columnas (`First Row as Names`), qué delimitador tienen los datos (en este caso `comma`, pero podría ser punto y coma u otro), etc... 
 
-Y abajo a la derecha generael es el código que vas a necesitar para efectivamente importar los datos. Podrías apretar el boton "Import" para leeer los datos pero si bien es posible, al mismo tiempo esas líneas de código no se guardan en ningún lado y entonces nuestro trabajo luego no se puede reproducir desde un script. Por eso, te proponemos que copies ese código, cierres esa ventana con el botón "Cancel", y pegues el código en el archivo donde estés trabajando. Cuando lo ejecutes, se va a generr la variable `paises` con los datos.  
+Y abajo a la derecha es el código que vas a necesitar para efectivamente importar los datos. Podrías apretar el botón "Import" para leer los datos pero si bien es posible, al mismo tiempo esas líneas de código no se guardan en ningún lado y entonces nuestro trabajo luego no se puede reproducir desde un script. Por eso, te proponemos que copies ese código, cierres esa ventana con el botón "Cancel", y pegues el código en el archivo donde estés trabajando. Cuando lo ejecutes, se va a generar la variable `paises` con los datos.  
 
 
 ```{r}
@@ -48,7 +48,7 @@ Todo ese texto naranja/rojo es intimidante pero no te preocupes, es sólo un men
 str(paises)
 ```
 
-Esto nos dice un montón. La primera línea dice que es una `tibble`, que es un caso especial de la estructura de datos tabular básica de R llamada `data.frame`. Tiene 1704 filas (las **observaciones**) y 6 columnas (o **variables** que describen las observaciones). Las siguienes líneas nos dicen los nombres de las columnas ("pais", "continente", "anio", "esperanza_de_vida", "poblacion" y "pbi_per_capita"), su tipo de dato (`chr` o `num`), la longitud (`[1:1704]`) y sus primeros elementos. Cada columna de la tabla `paises` es un **vector**. Dado que los vectores son como los "ladrillos" que hacen a los data.frames, merecen una atención especial.
+Esto nos dice un montón. La primera línea dice que es una `tibble`, que es un caso especial de la estructura de datos tabular básica de R llamada `data.frame`. Tiene 1704 filas (las **observaciones**) y 6 columnas (o **variables** que describen las observaciones). Las siguientes líneas nos dicen los nombres de las columnas ("pais", "continente", "anio", "esperanza_de_vida", "poblacion" y "pbi_per_capita"), su tipo de dato (`chr` o `num`), la longitud (`[1:1704]`) y sus primeros elementos. Cada columna de la tabla `paises` es un **vector**. Dado que los vectores son como los "ladrillos" que hacen a los data.frames, merecen una atención especial.
 
 
 ## Vectores
@@ -107,7 +107,7 @@ as.numeric(x)
 La mayoría de las funciones de R pueden trabajar sobre vectores y lo hacen **elemento a elemento**. Esto significa que si creás estos dos vectores:
 
 ```{r}
-x <- 1:4   # 1:4 crea un vector que empieza en 1 y terminaen 4,
+x <- 1:4   # 1:4 crea un vector que empieza en 1 y termina en 4,
 y <- 6:9
 ```
 
@@ -166,7 +166,7 @@ R emite una advertencia **sólo si la longitud del vector largo no es múltiplo 
 
 ## Leer datos de excel
 
-Si tenés la vista avispada, habrás notado que en el menu de "Import Dataset" hay una opción para leer datos de Excel. En efecto, RStudio provee la misma ayuda para leer este tipo de datos:
+Si tenés la vista avispada, habrás notado que en el menú de "Import Dataset" hay una opción para leer datos de Excel. En efecto, RStudio provee la misma ayuda para leer este tipo de datos:
 
 ::: {.alert .alert-secondary}
 File → Import Dataset → From Excel...
@@ -174,7 +174,7 @@ File → Import Dataset → From Excel...
 
 ![](img/importar-paises-xl.png)
 
-Notá que entre las opciones de abajo a la izquierda aparecen dos variables importantes. Podés seleccionar de qué hoja leer los datos y qué rango usar. Esto seguro que te va a ser muy útil para esos archivos de Excel con mútiples tablas en un archivo, o incluso múltiples tablas en cada hoja!
+Notá que entre las opciones de abajo a la izquierda aparecen dos variables importantes. Podés seleccionar de qué hoja leer los datos y qué rango usar. Esto seguro que te va a ser muy útil para esos archivos de Excel con múltiples tablas en un archivo, o incluso múltiples tablas en cada hoja!
 
 En este caso paises.xlsx es un Excel buena onda, y el código para leer los datos es muy simple:
 
@@ -183,7 +183,7 @@ library(readxl)
 paises <- read_excel("datos/paises.xlsx")
 ```
 
-Con la función `str()` podés confirmar que los datos leídos son los mísmos que para el csv.
+Con la función `str()` podés confirmar que los datos leídos son los mismos que para el csv.
 
 ```{r}
 str(paises)
@@ -200,14 +200,14 @@ str(paises)
 
 ## Formatos de tablas
 
-Pensá un momento en la estructura de los datos de `paises`. Tiene seis columnas, pero sólo tres de ellas contienen valores observados (`esperanza_de_vida`, `poblacion` y `pib_per_capita`) y las otras tres son las "coordenadas": `pais`, `continente` y `anio` son columnas que identifican la obsevación. De hecho, la columna `pais` tiene un montón de datos repetidos! 
+Pensá un momento en la estructura de los datos de `paises`. Tiene seis columnas, pero sólo tres de ellas contienen valores observados (`esperanza_de_vida`, `poblacion` y `pib_per_capita`) y las otras tres son las "coordenadas": `pais`, `continente` y `anio` son columnas que identifican la observación. De hecho, la columna `pais` tiene un montón de datos repetidos! 
 
 Esto es un ejemplo de formato "largo" (o "tidy" en inglés). La idea básica de datos "largos" es que: 
 
 * cada fila es una observación
 * cada columna es una variable
 
-La tabla `paises` es basante larga (tiene 1704 filas y 6 columnas!) pero podría ser más larga aún
+La tabla `paises` es bastante larga (tiene 1704 filas y 6 columnas!) pero podría ser más larga aún
 
 
 ```{r, message=FALSE}
@@ -227,3 +227,9 @@ str(paises_ancho)
 `paises_ancho` tiene una sola fila para cada país, y los datos de cada variable y año está en una columna propia. 
 
 Ninguna estructura de datos es "la correcta"; distintos análisis y distintas funciones se llevan mejor con los datos en distinto "grado de longitud". Es muy normal empezar con datos largos, tener que pasarlos a anchos para hacer un análisis y luego volver a pasar a largos (tan normal que hay [un paquete de R que encapsula ese proceso](https://github.com/dgrtwo/widyr)). 
+
+
+<div class="btn-group" role="group" aria-label="Navegación">
+  <a href= "03-reportes-I.html" class = "btn btn-primary">Anterior</a>
+  <a href= "05-dplyr-I.html" class = "btn btn-primary">Siguiente</a>
+</div>

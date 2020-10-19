@@ -9,7 +9,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-El objetivo de este desafío es analizar los datos que leíste en el [primer desafío](desafio-1.html) utlizando los verbos de `dplyr`.
+El objetivo de este desafío es analizar los datos que leíste en el [primer desafío](desafio-1.html) utilizando los verbos de `dplyr`.
 
 ### 1. Abrí tu proyecto
 

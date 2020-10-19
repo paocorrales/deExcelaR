@@ -4,7 +4,7 @@ output:
   html_document:
     code_download: true
     toc: true
-    toc_float: true
+    toc_float: false
     highlight: tango
 ---
 
@@ -76,7 +76,7 @@ ggplot(data = diamantes) +
   geom_bar(aes(x = corte, fill = claridad))
 ```
 
-Al *mapear* una variable distinta, la claridad de los diamantes, podemmos visualizar información extra. Este "apilamiento" de las barras es la opción de posición por defecto `position = "stack"`, pero podrías usar una de las otras tres opciones: `"identity"`, `"dodge"` o `"fill"`.
+Al *mapear* una variable distinta, la claridad de los diamantes, podemos visualizar información extra. Este "apilamiento" de las barras es la opción de posición por defecto `position = "stack"`, pero podrías usar una de las otras tres opciones: `"identity"`, `"dodge"` o `"fill"`.
 
 * `position = "identity"` colocará cada barra comenzando en cero quedando todas superpuestas. Para ver esa superposición, debemos hacer que las barras sean ligeramente transparentes configurando el `alpha` a un valor pequeño.
 
@@ -113,7 +113,7 @@ ggplot(diamantes, aes(quilate, precio)) +
 
 Los diagramas de caja, mejor conocidos como boxplots calculan un resumen robusto de la distribución y luego muestran una caja con formato especial. 
 
-La línea central de la caja corresponde a la **mediana** (el valor que toma el dato central) y los extremos de la caja son los **cuartiles 1 y 3**, definiendo así el **rango intercuartil** (IQR). Los extremos están definidos como el valor observado que no esté más lejos de **1.5\*IQR** de la mediana y los puntos son los las observaciones que se escapan de ese rango, que pueden ser considerados **outliners** o **valores extremos**.
+La línea central de la caja corresponde a la **mediana** (el valor que toma el dato central) y los extremos de la caja son los **cuartiles 1 y 3**, definiendo así el **rango intercuartil** (IQR). Los extremos están definidos como el valor observado que no esté más lejos de **1.5\*IQR** de la mediana y los puntos son los las observaciones que se escapan de ese rango, que pueden ser considerados **outliers** o **valores extremos**.
 
 ```{r}
 ggplot(diamantes, aes(claridad, precio)) +
@@ -142,7 +142,7 @@ ggplot(diamantes, aes(claridad, precio)) +
 ::: {.alert .alert-success}
 Cuando nuestra base de datos es muy grande corremos el riesgo de generar de que los elementos del gráfico estén tan juntos que se solapen y no se vean. Esto se conoce como **overplotting**. La base de datos `diamantes` tiene 53940 observaciones y al graficar un punto por cada una, aún si están separados por la claridad, quedan superpuestos. 
 
-Para resolver este problema se suele modificar la estética de los elementos, cambiando el tamaño o  `size` para que ocupen menos lugar y se vean mejor, cambiando la forma  o `shape` por alguna que no tenga relleno y permita ver los elemenos que hay atrás o modificando la transparencia o `alpha` por la misma razón. En bases de datos tan grandes como la de diamantes, muchas veces hay que utilizar varios de estos recursos. 
+Para resolver este problema se suele modificar la estética de los elementos, cambiando el tamaño o  `size` para que ocupen menos lugar y se vean mejor, cambiando la forma  o `shape` por alguna que no tenga relleno y permita ver los elementos que hay atrás o modificando la transparencia o `alpha` por la misma razón. En bases de datos tan grandes como la de diamantes, muchas veces hay que utilizar varios de estos recursos. 
 :::
 
 ## Graficando en múltiples paneles
@@ -174,7 +174,7 @@ ggplot(diamantes, aes(quilate, precio)) +
 
 Esta nueva capa con `facet_wrap()` divide al gráfico inicial en 7 paneles o *facets*, uno por cada color. Esta función requiere saber que variable será la responsable de separar los paneles y para eso se usa la **notación de funciones** de R: `~color`. Esto se lee como generar paneles *"en función del color"*.
 
-¿Y si quisieramos generar paneles a partir de 2 variables? Para eso existe `facet_grid()`. En este gráfico generamos paneles viendo la *"relación entre el corte y el color"* y por ejemplo en el primer panel arriba a la izquierda podremos observar los diamantes que son al mismo tiempo de color D y corte Regular. En este caso *mapear* la variable color al color de los diamantes no parece ser encesario ya que cada columna ya nos permite identificar eso, sin embargo en algunos casos ayuda a leer el gráfico más rápido. 
+¿Y si quisiéramos generar paneles a partir de 2 variables? Para eso existe `facet_grid()`. En este gráfico generamos paneles viendo la *"relación entre el corte y el color"* y por ejemplo en el primer panel arriba a la izquierda podremos observar los diamantes que son al mismo tiempo de color D y corte Regular. En este caso *mapear* la variable color al color de los diamantes no parece ser necesario ya que cada columna ya nos permite identificar eso, sin embargo en algunos casos ayuda a leer el gráfico más rápido. 
 
 ```{r}
 ggplot(diamantes, aes(quilate, precio)) +
@@ -197,3 +197,7 @@ ggplot(diamantes, aes(claridad, precio, fill = claridad)) +
 
 
 
+<div class="btn-group" role="group" aria-label="Navegación">
+  <a href= "06-graficos-I.html" class = "btn btn-primary">Anterior</a>
+  <a href= "08-dplyr-tidyr-II.html" class = "btn btn-primary">Siguiente</a>
+</div>
